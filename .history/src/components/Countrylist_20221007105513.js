@@ -155,7 +155,13 @@ function Countrylist({ country }) {
 
 
                                                     <td class="py-4 px-8"
-                                                    >
+                                                        onClick={() => {
+                                                            localStorage.setItem("companyName", item.company_name)
+                                                            localStorage.setItem("countryFlag", item.country_flag)
+                                                            alert(item.name)
+                                                            navigate(`/country/${item.pk}`)
+
+                                                        }}>
 
                                                         <span class="font-medium">{index + 1}</span>
 
@@ -190,15 +196,9 @@ function Countrylist({ country }) {
                                                     </td>
 
                                                     <td class="py-4 px-8  ">
-
-                                                        <span class="font-medium text-cyan-400 "
-                                                            onClick={() => {
-                                                                localStorage.setItem("companyName", item.company_name)
-                                                                localStorage.setItem("countryFlag", item.country_flag)
-                                                                navigate(`/country/${item.pk}`)
-
-                                                            }}>View Dashboard</span>
-
+                                                        <Link to='/country'>
+                                                            <span class="font-medium text-cyan-400 ">View Dashboard</span>
+                                                        </Link>
 
                                                     </td>
 

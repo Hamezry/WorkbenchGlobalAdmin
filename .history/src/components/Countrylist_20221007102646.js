@@ -145,25 +145,30 @@ function Countrylist({ country }) {
                                         country?.data?.map((item, index) => {
                                             return (
 
-                                                <tr key={index} class=" text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]"
-                                                    onClick={() => {
-                                                        localStorage.setItem("companyName", item.company_name)
-                                                        localStorage.setItem("countryFlag", item.country_flag)
-                                                        navigate(`/country/${item.pk}`)
-
-                                                    }}>
+                                                <tr key={index} class=" text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]">
 
 
                                                     <td class="py-4 px-8"
-                                                    >
+                                                        onClick={() => {
+                                                            localStorage.setItem("companyName", item.company_name)
+                                                            localStorage.setItem("countryFlag", item.country_flag)
+                                                            alert(item.name)
+                                                            navigate(`/country/${item.pk}`)
+
+                                                        }}>
 
                                                         <span class="font-medium">{index + 1}</span>
 
                                                     </td>
 
                                                     <td class=" flex mt-2 gap-2 py-4 px-8 w-[190px]"
-                                                    >
+                                                        onClick={() => {
+                                                            localStorage.setItem("companyName", item.company_name)
+                                                            localStorage.setItem("countryFlag", item.country_flag)
+                                                            navigate(`/country/${item.pk}`)
 
+                                                        }}>
+                                                    
                                                         <div className='flex gap-3'>
                                                             <img src={item.country_flag} className="w-[22px] rounded" alt='' />
                                                             <span class="font-medium ">{item.name}</span>
@@ -190,15 +195,9 @@ function Countrylist({ country }) {
                                                     </td>
 
                                                     <td class="py-4 px-8  ">
-
-                                                        <span class="font-medium text-cyan-400 "
-                                                            onClick={() => {
-                                                                localStorage.setItem("companyName", item.company_name)
-                                                                localStorage.setItem("countryFlag", item.country_flag)
-                                                                navigate(`/country/${item.pk}`)
-
-                                                            }}>View Dashboard</span>
-
+                                                        <Link to='/country'>
+                                                            <span class="font-medium text-cyan-400 ">View Dashboard</span>
+                                                        </Link>
 
                                                     </td>
 

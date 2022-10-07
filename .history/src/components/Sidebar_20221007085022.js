@@ -3,8 +3,8 @@ import { useState } from "react";
 import orgIcon from "../Assets/building.svg";
 import prodIcon from '../Assets/box.svg'
 import globeIcon from "../Assets/world.svg";
+import bulkIcon from "../Assets/folder-2.svg";
 import { useNavigate } from "react-router-dom";
-//import bulkIcon from "../Assets/folder-2.svg";
 
 function Sidebar() {
   const navigate = useNavigate();

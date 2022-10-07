@@ -253,7 +253,7 @@ function Organisationlist({ list, setViewActivate, openModal, setViewDeactivate 
                                                 </td>
 
                                                 <td className="py-4 px-4">
-                                                    <span className="font-medium ">{`${formDate(item.created)} . ${formTime(item.created)}`}</span>
+                                                   sz {/* <span className="font-medium ">{`${formDate(item.created)} . ${formTime(item.created)}`}</span> */}
                                                 </td>
 
                                                 <td className="py-4 px-4 text-center">

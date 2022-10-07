@@ -23,6 +23,7 @@ function Organisationlist({ list, setViewActivate, openModal, setViewDeactivate 
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = list?.data?.slice(indexOfFirstPost, indexOfLastPost);
 
+    console.log(currentPosts.length)
 
 
 

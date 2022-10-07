@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format } from "date-fns";
 import { AiOutlineSearch } from 'react-icons/ai';
 import recieptIcon from '../Assets/receipt-text.png'
 import filterIcon from '../Assets/filter.svg'
 import calenderIcon from '../Assets/calendar.svg'
-//import successIcon from '../Assets/Success-icon.svg'
+import successIcon from '../Assets/Success-icon.svg'
 import Pagination from './Pagination';
 import {BsThreeDots} from "react-icons/bs";
 
@@ -23,12 +23,12 @@ function Productlist({ list, setViewFilter, setModal, setProductsLoaded, product
     return `${format(date, 'K')}:${format(date, "mm")} ${format(date, "aaa")}`
   }
 
-  // const [showElement, setShowElement] = React.useState(true);
-  // useEffect(() => {
-  //   setTimeout(function () {
-  //     setShowElement(false);
-  //   }, 2000);
-  // }, []);
+  const [showElement, setShowElement] = React.useState(true);
+  useEffect(() => {
+    setTimeout(function () {
+      setShowElement(false);
+    }, 2000);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(7);
@@ -43,12 +43,12 @@ function Productlist({ list, setViewFilter, setModal, setProductsLoaded, product
   return (
     <div className='w-[85%] relative flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)] gap-14 overflow-y-auto'>
 
-      {/* {showElement ? (<div className='absolute top-3 z-50 right-0 '>
+      {showElement ? (<div className='absolute top-3 z-50 right-0 '>
         <img src={successIcon} alt='' />
       </div>) :
         (
           <div></div>
-        )} */}
+        )}
 
       <div className="w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-3">
         <div className="px-8 py-2 w-full ml-7">

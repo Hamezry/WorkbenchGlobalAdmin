@@ -26,14 +26,14 @@ import { FaLessThan } from 'react-icons/fa';
 
 
 
-const Pagination = ({ totalPosts, setCurrentPage }) => {
+const Pagination = ({ setCurrentPage }) => {
     return (
         <div className='my-2 w-[86%] mx-auto rounded flex items-center justify-end'>
             <div
                 className={setCurrentPage === 1 ? 'bg-[#F3F3F3] text-[#9FA19C] rounded cursor-pointer p-3' : 'bg-[#F3F3F3] text-[#9FA19C]  rounded cursor-pointer p-3'}
                 onClick={() => {
-                    
-                    setCurrentPage(-1)
+                    if (setCurrentPage !== 1)
+                        return setCurrentPage(-1)
                 }}
             ><FaLessThan className=""/></div>
             <div className='grid grid-cols-6 gap-2 mx-4'>
@@ -83,8 +83,8 @@ const Pagination = ({ totalPosts, setCurrentPage }) => {
             <div
                 className={setCurrentPage === 6 ? 'bg-[#38CB89] p-3 cursor-pointer' : 'bg-[#38CB89] p-3  rounded cursor-pointer '}
                 onClick={() => {
-                   
-                     setCurrentPage(+1)
+                    if (setCurrentPage !== 10)
+                        return setCurrentPage(+1)
                 }}
             > <FaGreaterThan className=" text-white font-thin text-[18px]"/> </div>
         </div>

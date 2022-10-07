@@ -23,6 +23,7 @@ function Organisationlist({ list, setViewActivate, openModal, setViewDeactivate 
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = list?.data?.slice(indexOfFirstPost, indexOfLastPost);
 
+    console.log(list.data.length)
 
 
 
@@ -288,7 +289,7 @@ function Organisationlist({ list, setViewActivate, openModal, setViewDeactivate 
                         <div className="flex justify-between p-3 mt-4 bg-[#F9F9F9] items-center">
                             <p>1 - 7 of 80 Entries</p>
                             <Pagination postsPerPage={postsPerPage}
-                                totalPosts={list.length}
+                                totalPosts={list.data.length}
                                 setCurrentPage={setCurrentPage} />
 
                             {/* <div className="flex items-center gap-5">

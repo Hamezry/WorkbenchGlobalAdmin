@@ -26,7 +26,7 @@ function Landingpage() {
 
   return (
     <div className="flex w-full h-[100vh] z-50 fixed top-0 left-0 bg-white">
-      <img src={background} alt="bg" class="w-1/2" />
+      <img src={background} alt="bg" className="w-1/2" />
 
       <div className="bg[#F5F5F5] w-1/2">
         <div className="flex justify-end p-[60px]">
@@ -35,12 +35,12 @@ function Landingpage() {
         </div>
 
         <div className="w-[500px] ml-[150px] mt-[100px] p-8 rounded-xl ">
-          <h1 class="text-[#54565B] text-[28px] font-medium">Login</h1>
+          <h1 className="text-[#54565B] text-[28px] font-medium">Login</h1>
 
-          <form action="" class="my-10">
+          <form action="" className="my-10">
             <div className="flex flex-col space-y-5">
               <label>
-                <p class="text-[14px] text-[#54565B] pb-2">Username</p>
+                <p className="text-[14px] text-[#54565B] pb-2">Username</p>
                 <input
                   value={userName}
                   onChange={(e) => handleInputChange(e)}
@@ -52,14 +52,14 @@ function Landingpage() {
                 />
               </label>
               <label>
-                <p class="font-medium text-slate-700 pb-2">Password</p>
+                <p className="font-medium text-slate-700 pb-2">Password</p>
                 <input
                   value={password}
                   onChange={(e) => handleInputChange(e)}
                   id="password"
                   name="password"
                   type="password"
-                  class="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                   placeholder="..........."
                 />
               </label>

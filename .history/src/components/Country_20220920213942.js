@@ -95,32 +95,32 @@ function Country() {
                             <table className='w-full over p-6'>
 
                                 <thead>
-                                    <tr class="bg-[#F9F9F9] text-left text-[#54565B] text-[14px]">
-                                        <th class="py-2 px-2 ">Commodity</th>
-                                        <th class="py-2 px-2 ">Grade</th>
-                                        <th class="py-2 px-2 ">Volume (MT)</th>
-                                        <th class="py-2 px-2 ">Lien(MT)</th>
+                                    <tr className="bg-[#F9F9F9] text-left text-[#54565B] text-[14px]">
+                                        <th className="py-2 px-2 ">Commodity</th>
+                                        <th className="py-2 px-2 ">Grade</th>
+                                        <th className="py-2 px-2 ">Volume (MT)</th>
+                                        <th className="py-2 px-2 ">Lien(MT)</th>
                                     </tr>
                                 </thead>
 
-                                <tbody class="text-[#54565B] text-[12px] font-light">
+                                <tbody className="text-[#54565B] text-[12px] font-light">
 
 
-                                    <tr class="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+                                    <tr className="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
 
-                                        <td class="py-2 px-7">
-                                            <span class="font-medium">item.item_code</span>
+                                        <td className="py-2 px-7">
+                                            <span className="font-medium">item.item_code</span>
                                         </td>
 
-                                        <td class="py-2 px-7 ">
-                                            <span class="font-medium">grade</span>
+                                        <td className="py-2 px-7 ">
+                                            <span className="font-medium">grade</span>
                                         </td>
 
-                                        <td class="py-2 px-7">
+                                        <td className="py-2 px-7">
 
 
 
-                                            <span class="font-medium ">total_lien_weight</span>
+                                            <span className="font-medium ">total_lien_weight</span>
 
 
 
@@ -128,8 +128,8 @@ function Country() {
 
                                         </td>
 
-                                        <td class="py-2 px-7">
-                                            <span class="font-medium ">total_lien_weight</span>
+                                        <td className="py-2 px-7">
+                                            <span className="font-medium ">total_lien_weight</span>
                                         </td>
 
                                     </tr>

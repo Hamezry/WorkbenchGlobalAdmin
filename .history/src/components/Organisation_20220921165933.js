@@ -150,7 +150,7 @@ function Organisation() {
               </div>
 
               <div className='flex gap-6'>
-                <div class=" flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]">
+                <div className=" flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]">
                   <p>Filter by date</p>
                   <p>&#62;</p>
                 </div>
@@ -169,118 +169,118 @@ function Organisation() {
 
             {/*TABLE */}
             <div className='p-3 mt-4'>
-              <table class="border-collapse w-full">
+              <table className="border-collapse w-full">
                 <thead>
                   <tr>
-                    <th class="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Transaction</th>
-                    <th class="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Gross Weight (KG)</th>
-                    <th class="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Net Weight (KG)</th>
-                    <th class="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Units</th>
+                    <th className="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Transaction</th>
+                    <th className="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Gross Weight (KG)</th>
+                    <th className="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Net Weight (KG)</th>
+                    <th className="p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell">Units</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
                       Uploaded Balance
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       123.435
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       123.367
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       123
                     </td>
                   </tr>
 
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
                       Goods Received
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       300.543
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       300.589
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       300
                     </td>
                   </tr>
 
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
                       Received Transfer
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       21.780
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       21
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       21
                     </td>
                   </tr>
 
                   {/*TOTAL IN */}
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="w-full bg-white lg:w-auto p-3 text-gray-800 text-center">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="w-full bg-white lg:w-auto p-3 text-gray-800 text-center">
                       Total IN
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       444.45
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       444.325
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       444.325
                     </td>
                   </tr>
 
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
                       Dispatches
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       32
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       32
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       32
                     </td>
                   </tr>
 
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static">
                       IWH Transfers
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       12.32
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       12
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       12
                     </td>
                   </tr>
 
-                  <tr class="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                    <td class="bg-white w-auto p-3 text-gray-800 text-center">
+                  <tr className="bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                    <td className="bg-white w-auto p-3 text-gray-800 text-center">
                       Total OUT
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       44.32
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       44
                     </td>
-                    <td class="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
+                    <td className="w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static">
                       44
                     </td>
                   </tr>
@@ -307,7 +307,7 @@ function Organisation() {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>CSD Access</p>
-                <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                <label className="inline-flex relative items-center mr-5 cursor-pointer">
                   <input
                     type="checkbox"
                     className="sr-only peer"
@@ -327,7 +327,7 @@ function Organisation() {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Accounting Module</p>
-                <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                <label className="inline-flex relative items-center mr-5 cursor-pointer">
                   <input
                     type="checkbox"
                     className="sr-only peer"
@@ -347,7 +347,7 @@ function Organisation() {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Logistics Module</p>
-                <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                <label className="inline-flex relative items-center mr-5 cursor-pointer">
                   <input
                     type="checkbox"
                     className="sr-only peer"
@@ -367,7 +367,7 @@ function Organisation() {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Payment Portal</p>
-                <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                <label className="inline-flex relative items-center mr-5 cursor-pointer">
                   <input
                     type="checkbox"
                     className="sr-only peer"
@@ -420,37 +420,37 @@ function Organisation() {
               <table className='w-full over p-6'>
 
                 <thead>
-                  <tr class="bg-[#F9F9F9] text-left text-[#54565B] text-[14px]">
-                    <th class="py-2 px-2 ">Commodity</th>
-                    <th class="py-2 px-2 ">Grade</th>
-                    <th class="py-2 px-2 ">Volume (MT)</th>
-                    <th class="py-2 px-2 ">Lien(MT)</th>
+                  <tr className="bg-[#F9F9F9] text-left text-[#54565B] text-[14px]">
+                    <th className="py-2 px-2 ">Commodity</th>
+                    <th className="py-2 px-2 ">Grade</th>
+                    <th className="py-2 px-2 ">Volume (MT)</th>
+                    <th className="py-2 px-2 ">Lien(MT)</th>
                   </tr>
                 </thead>
 
-                <tbody class="text-[#54565B] text-[12px] font-light">
+                <tbody className="text-[#54565B] text-[12px] font-light">
                   {
                     summary?.data?.map((item) => {
                       return (
-                        <tr class="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+                        <tr className="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
 
-                          <td class="py-2 px-7">
-                            <span class="font-medium">{item.item_code}</span>
+                          <td className="py-2 px-7">
+                            <span className="font-medium">{item.item_code}</span>
                           </td>
 
-                          <td class="py-2 px-7 ">
-                            <span class="font-medium">Grade{item.grade}</span>
+                          <td className="py-2 px-7 ">
+                            <span className="font-medium">Grade{item.grade}</span>
                           </td>
 
-                          <td class="py-2 px-7">
+                          <td className="py-2 px-7">
                             
-                             <span class="font-medium ">{item.location_breakdown.volume}</span>
+                             <span className="font-medium ">{item.location_breakdown.volume}</span>
 
 
                           </td>
 
-                          <td class="py-2 px-7">
-                            <span class="font-medium ">{item.total_lien_weight}</span>
+                          <td className="py-2 px-7">
+                            <span className="font-medium ">{item.total_lien_weight}</span>
                           </td>
 
                         </tr>

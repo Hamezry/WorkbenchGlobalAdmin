@@ -52,7 +52,7 @@ function Sidebar() {
               <span>
                 <img src={prodIcon} alt="" />
               </span>
-              <span class="">Products</span>
+              <span className="">Products</span>
             </li>
           </button>
 
@@ -71,7 +71,7 @@ function Sidebar() {
               <span>
                 <img src={globeIcon} alt="" />
               </span>
-              <span class="">Countries</span>
+              <span className="">Countries</span>
             </li>
           </button>
 

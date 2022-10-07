@@ -7,13 +7,13 @@ import bulkIcon from '../Assets/folder-2.svg'
 
 function Sidebar() {
     return (
-        <div class="sticky flex flex-col font-muli left-0 w-[14%] bg-[#FFFFFF] h-[calc(100vh-90px)] border-none">
+        <div className="sticky flex flex-col font-muli left-0 w-[14%] bg-[#FFFFFF] h-[calc(100vh-90px)] border-none">
 
-            <div class="overflow-x-hidden text-[#8B908B] h-full border-r-1 flex flex-col">
-                <ul class="flex flex-col border-r-2 h-[100%] mr-6 gap-6 pl-4 py-4">
+            <div className="overflow-x-hidden text-[#8B908B] h-full border-r-1 flex flex-col">
+                <ul className="flex flex-col border-r-2 h-[100%] mr-6 gap-6 pl-4 py-4">
 
                     <li className='mt-4'>
-                        <div class="text-sm font-light text-gray-400 uppercase">PAGES</div>
+                        <div className="text-sm font-light text-gray-400 uppercase">PAGES</div>
 
                     </li>
 
@@ -33,7 +33,7 @@ function Sidebar() {
                             <span>
                                 <img src={orgIcon} alt='' />
                             </span>
-                            <span class="ml-2">Tenants</span>
+                            <span className="ml-2">Tenants</span>
                         </li>
                     </Link>
 
@@ -51,7 +51,7 @@ function Sidebar() {
                             <span>
                                 <img src={productIcon} alt='' />
                             </span>
-                            <span class="ml-2 text-[#54565B]">Products</span>
+                            <span className="ml-2 text-[#54565B]">Products</span>
                         </li>
                     </Link>
 
@@ -68,7 +68,7 @@ function Sidebar() {
                             <span>
                                 <img src={globeIcon} alt='' />
                             </span>
-                            <span class="ml-2">Countries</span>
+                            <span className="ml-2">Countries</span>
                         </li>
 
                     </Link>
@@ -78,7 +78,7 @@ function Sidebar() {
                         <span>
                             <img src={bulkIcon} alt='' />
                         </span>
-                        <span class="ml-2">Bulk Uploads</span>
+                        <span className="ml-2">Bulk Uploads</span>
                     </li>
 
                 </ul>

@@ -22,32 +22,32 @@ function Filtermodal({setViewFilter}) {
             </div>
 
 
-            <form action="" class="my-10">
+            <form action="" className="my-10">
 
                 <div className='flex flex-col gap-8'>
 
-                        <select id="type" class="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[16px] px-5">
+                        <select id="type" className="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[16px] px-5">
                             <option value="certified">Certified</option>
                             <option value="input">input</option>
                             <option value="commodities">commodities</option>
                             <option value="fees">fees</option>
                         </select>
 
-                        <select id="type" class="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[14px] px-5">
+                        <select id="type" className="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[14px] px-5">
                             <option value="certified">Unit Type</option>
                             <option value="input">input</option>
                             <option value="commodities">commodities</option>
                             <option value="fees">fees</option>
                         </select>
 
-                        <select id="type" class="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[14px] px-5">
+                        <select id="type" className="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[14px] px-5">
                             <option value="certified">Code</option>
                             <option value="input">input</option>
                             <option value="commodities">commodities</option>
                             <option value="fees">fees</option>
                         </select>
 
-                        <select id="type" class="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[14px] px-5">
+                        <select id="type" className="className='bg-[#38CB89] w-full py-3 border-b-2 text-[#151615] text-[14px] px-5">
                             <option value="certified">Type</option>
                             <option value="input">input</option>
                             <option value="commodities">commodities</option>
@@ -56,7 +56,7 @@ function Filtermodal({setViewFilter}) {
 
             
                     
-                    <button class="w-[90px] mt-[100px] self-center py-3 font-medium text-white bg-[#38CB89] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center">
+                    <button className="w-[90px] mt-[100px] self-center py-3 font-medium text-white bg-[#38CB89] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center">
                         <span>Search</span>
                     </button>
                     

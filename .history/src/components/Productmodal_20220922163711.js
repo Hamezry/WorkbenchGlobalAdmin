@@ -24,24 +24,24 @@ function Productmodal ({setModal}) {
             </div>
 
 
-            <form action="" class="my-10">
+            <form action="" className="my-10">
 
                 <div className='flex flex-col gap-8'>
                     <label for="product name">
-                        <p class="text-[14px] text-[#54565B] pb-2">Product Name</p>
-                        <input id="name" name="name" type="text" class="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Insert Name"/>
+                        <p className="text-[14px] text-[#54565B] pb-2">Product Name</p>
+                        <input id="name" name="name" type="text" className="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Insert Name"/>
                     </label>
 
                     <label for="code">
-                        <p class="text-[14px] text-[#54565B] pb-2">Code</p>
-                        <input id="volume" name="volume" type="text" class="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Insert Volume"/>
+                        <p className="text-[14px] text-[#54565B] pb-2">Code</p>
+                        <input id="volume" name="volume" type="text" className="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Insert Volume"/>
                     </label>
 
                     <label for="type">
 
-                       <p class="text-[14px] text-[#54565B] pb-2">Type</p>
+                       <p className="text-[14px] text-[#54565B] pb-2">Type</p>
 
-                        <select id="type" class="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow">
+                        <select id="type" className="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow">
                             <option value="Type">Select Type</option>
                             <option value="input">input</option>
                             <option value="commodities">commodities</option>
@@ -52,9 +52,9 @@ function Productmodal ({setModal}) {
 
                      <label for="unit type">
 
-                       <p class="text-[14px] text-[#54565B] pb-2">Unit Type</p>
+                       <p className="text-[14px] text-[#54565B] pb-2">Unit Type</p>
 
-                        <select id="type" class="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow">
+                        <select id="type" className="w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow">
                             <option value="Type" className='bg-[#F1F2F3]'>Select Unit Type</option>
                             <option value="input">input</option>
                             <option value="commodities">commodities</option>
@@ -63,10 +63,10 @@ function Productmodal ({setModal}) {
 
                     </label>
                     
-                    <div class="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
 
-                        <label for="remember" class="">
-                            <input type="checkbox" id="remember" class="w-4 h-4 focus:bg-[#38CB89]"/>
+                        <label for="remember" className="">
+                            <input type="checkbox" id="remember" className="w-4 h-4 focus:bg-[#38CB89]"/>
                             
                         </label>
                         <p>Sustainable Product?</p>

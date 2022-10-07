@@ -51,13 +51,13 @@ function Productlist({ setViewFilter, setModal }) {
 
           <div className='flex justify-end items-center p-4 gap-5'>
 
-            <div class=" flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]">
+            <div className=" flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]">
               <p>Date Created</p>
               <img src={calenderIcon} alt='' />
             </div>
 
             <div className='relative'>
-              <input type="search" name="" id="" placeholder="Search" class="w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]" />
+              <input type="search" name="" id="" placeholder="Search" className="w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]" />
               <span className='absolute left-[300px] top-3'>
                 < AiOutlineSearch />
               </span>
@@ -96,62 +96,62 @@ function Productlist({ setViewFilter, setModal }) {
             <table className='min-w-max w-full table-auto'>
 
               <thead>
-                <tr class="bg-[#F9F9F9] text-[#54565B] text-left text-[14px]">
-                  <th class="py-3 px-6 ">S/N</th>
-                  <th class="py-3 px-6 ">Product Name</th>
-                  <th class="py-3 px-6 ">Code</th>
-                  <th class="py-3 px-6 ">Type</th>
-                  <th class="py-3 px-6 ">Certified</th>
-                  <th class="py-3 px-6 ">Unit Type</th>
-                  <th class="py-3 px-6 ">Date Created</th>
-                  <th class="py-3 px-6 ">Last Updated</th>
-                  <th class="py-3 px-6 ">Action</th>
+                <tr className="bg-[#F9F9F9] text-[#54565B] text-left text-[14px]">
+                  <th className="py-3 px-6 ">S/N</th>
+                  <th className="py-3 px-6 ">Product Name</th>
+                  <th className="py-3 px-6 ">Code</th>
+                  <th className="py-3 px-6 ">Type</th>
+                  <th className="py-3 px-6 ">Certified</th>
+                  <th className="py-3 px-6 ">Unit Type</th>
+                  <th className="py-3 px-6 ">Date Created</th>
+                  <th className="py-3 px-6 ">Last Updated</th>
+                  <th className="py-3 px-6 ">Action</th>
                 </tr>
               </thead>
 
-              <tbody class="text-[#54565B] text-[12px] font-light">
+              <tbody className="text-[#54565B] text-[12px] font-light">
 
                 {
                   list?.data?.map((item, index) => {
 
                     return (
 
-                      <tr key={index} class="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+                      <tr key={index} className="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium">{index + 1}</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium">{index + 1}</span>
                         </td>
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium ">{item.name}</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium ">{item.name}</span>
                         </td>
 
-                        <td class="py-14 px-14">
-                          <span class="font-medium ">{item.code}</span>
+                        <td className="py-14 px-14">
+                          <span className="font-medium ">{item.code}</span>
                         </td>
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium ">{item.product_typ}</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium ">{item.product_typ}</span>
                         </td>
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium ">Yes</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium ">Yes</span>
                         </td>
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium ">{item.unit_type}</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium ">{item.unit_type}</span>
                         </td>
 
-                        <td class="py-14 px-6  ">
-                          <span class="font-medium ">{item.created}</span>
+                        <td className="py-14 px-6  ">
+                          <span className="font-medium ">{item.created}</span>
                         </td>
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium ">{item.updated}</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium ">{item.updated}</span>
                         </td>
 
-                        <td class="py-14 px-6">
-                          <span class="font-medium ">...</span>
+                        <td className="py-14 px-6">
+                          <span className="font-medium ">...</span>
                         </td>
 
                       </tr>

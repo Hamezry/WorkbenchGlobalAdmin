@@ -31,101 +31,101 @@ function Adminlist() {
       <div className="px-5 overflow-y-auto mt-4  overflow-x-auto">
         <table className="min-w-max w-full table-auto">
           <thead>
-            <tr class="bg-[#F9F9F9] text-[#54565B] text-[14px] text-left">
-              <th class="py-3 px-6 ">S/N</th>
-              <th class="py-3 px-6 ">States</th>
-              <th class="py-3 px-6 ">LGAs</th>
-              <th class="py-3 px-6 ">Wards</th>
-              <th class="py-3 px-6 ">Action</th>
+            <tr className="bg-[#F9F9F9] text-[#54565B] text-[14px] text-left">
+              <th className="py-3 px-6 ">S/N</th>
+              <th className="py-3 px-6 ">States</th>
+              <th className="py-3 px-6 ">LGAs</th>
+              <th className="py-3 px-6 ">Wards</th>
+              <th className="py-3 px-6 ">Action</th>
             </tr>
           </thead>
 
-          <tbody class="text-[#54565B] text-[12px] font-light">
-            <tr class=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
-              <td class="py-6 px-6">
-                <span class="font-medium">1</span>
+          <tbody className="text-[#54565B] text-[12px] font-light">
+            <tr className=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+              <td className="py-6 px-6">
+                <span className="font-medium">1</span>
               </td>
 
-              <td class=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
-                <span class="font-medium ">Abia</span>
+              <td className=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
+                <span className="font-medium ">Abia</span>
               </td>
 
-              <td class="py-6 px-6">
-                <span class="font-medium ">12</span>
+              <td className="py-6 px-6">
+                <span className="font-medium ">12</span>
               </td>
 
-              <td class="py-6 px-6">
-                <span class="font-medium ">10</span>
+              <td className="py-6 px-6">
+                <span className="font-medium ">10</span>
               </td>
 
-              <td class="py-6 px-6  ">
-                <span class="font-medium text-cyan-400 ">View Details</span>
-              </td>
-            </tr>
-
-            <tr class=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
-              <td class="py-6 px-6">
-                <span class="font-medium">2</span>
-              </td>
-
-              <td class=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
-                <span class="font-medium ">Adamawa</span>
-              </td>
-
-              <td class="py-6 px-6">
-                <span class="font-medium ">12</span>
-              </td>
-
-              <td class="py-6 px-6">
-                <span class="font-medium ">10</span>
-              </td>
-
-              <td class="py-6 px-6  ">
-                <span class="font-medium text-cyan-400 ">View Details</span>
+              <td className="py-6 px-6  ">
+                <span className="font-medium text-cyan-400 ">View Details</span>
               </td>
             </tr>
 
-            <tr class=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
-              <td class="py-6 px-6">
-                <span class="font-medium">3</span>
+            <tr className=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+              <td className="py-6 px-6">
+                <span className="font-medium">2</span>
               </td>
 
-              <td class=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
-                <span class="font-medium ">Kaduna</span>
+              <td className=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
+                <span className="font-medium ">Adamawa</span>
               </td>
 
-              <td class="py-6 px-6">
-                <span class="font-medium ">12</span>
+              <td className="py-6 px-6">
+                <span className="font-medium ">12</span>
               </td>
 
-              <td class="py-6 px-6">
-                <span class="font-medium ">10</span>
+              <td className="py-6 px-6">
+                <span className="font-medium ">10</span>
               </td>
 
-              <td class="py-6 px-6  ">
-                <span class="font-medium text-cyan-400 ">View Details</span>
+              <td className="py-6 px-6  ">
+                <span className="font-medium text-cyan-400 ">View Details</span>
               </td>
             </tr>
 
-            <tr class=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
-              <td class="py-6 px-6">
-                <span class="font-medium">4</span>
+            <tr className=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+              <td className="py-6 px-6">
+                <span className="font-medium">3</span>
               </td>
 
-              <td class=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
-                <span class="font-medium ">Sokoto</span>
+              <td className=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
+                <span className="font-medium ">Kaduna</span>
               </td>
 
-              <td class="py-6 px-6">
-                <span class="font-medium ">12</span>
+              <td className="py-6 px-6">
+                <span className="font-medium ">12</span>
               </td>
 
-              <td class="py-6 px-6">
-                <span class="font-medium ">10</span>
+              <td className="py-6 px-6">
+                <span className="font-medium ">10</span>
               </td>
 
-              <td class="py-6 px-6  ">
-                <span class="font-medium text-cyan-400 ">View Details</span>
+              <td className="py-6 px-6  ">
+                <span className="font-medium text-cyan-400 ">View Details</span>
+              </td>
+            </tr>
+
+            <tr className=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+              <td className="py-6 px-6">
+                <span className="font-medium">4</span>
+              </td>
+
+              <td className=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
+                <span className="font-medium ">Sokoto</span>
+              </td>
+
+              <td className="py-6 px-6">
+                <span className="font-medium ">12</span>
+              </td>
+
+              <td className="py-6 px-6">
+                <span className="font-medium ">10</span>
+              </td>
+
+              <td className="py-6 px-6  ">
+                <span className="font-medium text-cyan-400 ">View Details</span>
               </td>
             </tr>
           </tbody>

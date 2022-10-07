@@ -31,7 +31,7 @@ function Administrativemodal() {
                 </div>
 
 
-                <form action="" class="my-10">
+                <form action="" className="my-10">
 
                     <div className='flex flex-col gap-8'>
 

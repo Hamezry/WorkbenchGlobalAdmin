@@ -133,34 +133,34 @@ function Country() {
                             <table className='w-full over p-6'>
 
                                 <thead>
-                                    <tr class="bg-[#F9F9F9] text-left text-[#54565B] text-[14px]">
-                                        <th class="py-2 px-7">Commodity</th>
-                                        <th class="py-2 px-7">Grade</th>
-                                        <th class="py-2 px-7">Volume (MT)</th>
-                                        <th class="py-2 px-7">Lien(MT)</th>
+                                    <tr className="bg-[#F9F9F9] text-left text-[#54565B] text-[14px]">
+                                        <th className="py-2 px-7">Commodity</th>
+                                        <th className="py-2 px-7">Grade</th>
+                                        <th className="py-2 px-7">Volume (MT)</th>
+                                        <th className="py-2 px-7">Lien(MT)</th>
                                     </tr>
                                 </thead>
 
-                                <tbody class="text-[#54565B] text-[12px] font-light">
+                                <tbody className="text-[#54565B] text-[12px] font-light">
 
 
-                                    <tr class="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+                                    <tr className="text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
 
-                                        <td class="py-2 px-7">
-                                            <span class="font-medium">CC0</span>
+                                        <td className="py-2 px-7">
+                                            <span className="font-medium">CC0</span>
                                         </td>
 
-                                        <td class="py-2 px-7 ">
-                                            <span class="font-medium">grade 1</span>
+                                        <td className="py-2 px-7 ">
+                                            <span className="font-medium">grade 1</span>
                                         </td>
 
-                                        <td class="py-2 px-7">
-                                            <span class="font-medium ">3000</span>
+                                        <td className="py-2 px-7">
+                                            <span className="font-medium ">3000</span>
 
                                         </td>
 
-                                        <td class="py-2 px-7">
-                                            <span class="font-medium ">1,000</span>
+                                        <td className="py-2 px-7">
+                                            <span className="font-medium ">1,000</span>
                                         </td>
 
                                     </tr>

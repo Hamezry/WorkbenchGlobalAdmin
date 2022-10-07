@@ -12,9 +12,9 @@ function Navbar({ setViewNotification }) {
   const [enabled, setEnabled] = useState(false);
 
   return (
-    <div class="sticky font-muli bg-[#FFFFFF] shadow shadow-gray-100  w-full flex items-center justify-between p-[35px] h-[90px] z-10">
+    <div className="sticky font-muli bg-[#FFFFFF] shadow shadow-gray-100  w-full flex items-center justify-between p-[35px] h-[90px] z-10">
 
-      <div class="flex items-center border-none">
+      <div className="flex items-center border-none">
         <img src={logo1} alt='logo-icon' />
 
         <div className='ml-[70px] text-[20px]'>
@@ -24,7 +24,7 @@ function Navbar({ setViewNotification }) {
       </div>
 
       <div className='relative'>
-        <input type="search" placeholder="Search" class="w-full p-3 rounded-2xl text-sm text-gray-500 border-none  focus:ring-0  bg-[#F9F9F9] h-[54px w-[360px]" />
+        <input type="search" placeholder="Search" className="w-full p-3 rounded-2xl text-sm text-gray-500 border-none  focus:ring-0  bg-[#F9F9F9] h-[54px w-[360px]" />
         <span className='absolute left-[300px] top-3'>
           < AiOutlineSearch />
         </span>
@@ -35,7 +35,7 @@ function Navbar({ setViewNotification }) {
 
         <div className='flex items-center gap-3'>
           <img src={moonIcon} alt='' />
-          <label class="inline-flex relative items-center mr-5 cursor-pointer">
+          <label className="inline-flex relative items-center mr-5 cursor-pointer">
             <input
               type="checkbox"
               className="sr-only peer"

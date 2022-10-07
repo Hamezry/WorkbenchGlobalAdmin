@@ -53,7 +53,7 @@ function Countrylist() {
 
                     <div className='flex justify-between items-center pl-5 gap-5'>
 
-                        <div class=" flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]">
+                        <div className=" flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]">
                             <p> <span>Show </span> 100 Entries </p>
                             <img src={calenderIcon} alt='' />
                         </div>
@@ -63,13 +63,13 @@ function Countrylist() {
                             <p className='text-[12px]'>Sort By</p>
 
 
-                            <div class=" flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px">
+                            <div className=" flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px">
                                 <p>Date Registered</p>
                                 <img src={calenderIcon} alt='' />
                             </div>
 
                             <div className='relative'>
-                                <input type="search" name="" id="" placeholder="Search by Company Name" class="w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]" />
+                                <input type="search" name="" id="" placeholder="Search by Company Name" className="w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]" />
                                 <span className='absolute left-[300px] top-3'>
                                     < AiOutlineSearch />
                                 </span>
@@ -97,55 +97,55 @@ function Countrylist() {
                         <table className='min-w-max w-full table-auto'>
 
                             <thead>
-                                <tr class="bg-[#F9F9F9] text-[#54565B] text-[14px]">
-                                    <th class="py-3 px-6 ">S/N</th>
-                                    <th class="py-3 px-6 ">Country Name</th>
-                                    <th class="py-3 px-6 ">No. of Tenants</th>
-                                    <th class="py-3 px-6 ">No. of Locations</th>
-                                    <th class="py-3 px-6 ">No. of Farmers</th>
-                                    <th class="py-3 px-6 ">Commodities Available</th>
-                                    <th class="py-3 px-6 ">Action</th>
+                                <tr className="bg-[#F9F9F9] text-[#54565B] text-[14px]">
+                                    <th className="py-3 px-6 ">S/N</th>
+                                    <th className="py-3 px-6 ">Country Name</th>
+                                    <th className="py-3 px-6 ">No. of Tenants</th>
+                                    <th className="py-3 px-6 ">No. of Locations</th>
+                                    <th className="py-3 px-6 ">No. of Farmers</th>
+                                    <th className="py-3 px-6 ">Commodities Available</th>
+                                    <th className="py-3 px-6 ">Action</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="text-[#54565B] text-[12px] font-light">
+                            <tbody className="text-[#54565B] text-[12px] font-light">
 
                                 {
                                     list?.data?.map((item, index) => {
                                         return (
 
-                                            <tr key={index} class=" text-center border-b border-gray-200 hover:bg-[#e3f7ee]">
+                                            <tr key={index} className=" text-center border-b border-gray-200 hover:bg-[#e3f7ee]">
 
 
-                                                <td class="py-3 px-6">
+                                                <td className="py-3 px-6">
                                                     <Link to='/organisation'>
-                                                        <span class="font-medium">{index + 1}</span>
+                                                        <span className="font-medium">{index + 1}</span>
                                                     </Link>
                                                 </td>
 
-                                                <td class=" flex mt-2 gap-2 py-3 px-14">
+                                                <td className=" flex mt-2 gap-2 py-3 px-14">
                                                     <img src={item.flag_url} alt='' />
-                                                    <span class="font-medium ">{item.name}</span>
+                                                    <span className="font-medium ">{item.name}</span>
                                                 </td>
 
-                                                <td class="py-3 px-6">
-                                                    <span class="font-medium ">{item.no_of_tenants}</span>
+                                                <td className="py-3 px-6">
+                                                    <span className="font-medium ">{item.no_of_tenants}</span>
                                                 </td>
 
-                                                <td class="py-3 px-6">
-                                                    <span class="font-medium ">{item.no_of_locations}</span>
+                                                <td className="py-3 px-6">
+                                                    <span className="font-medium ">{item.no_of_locations}</span>
                                                 </td>
 
-                                                <td class="py-3 px-6">
-                                                    <span class="font-medium ">{item.no_of_farmers}</span>
+                                                <td className="py-3 px-6">
+                                                    <span className="font-medium ">{item.no_of_farmers}</span>
                                                 </td>
 
-                                                <td class="py-3 px-6 overflow-hidden w-[50px] bg-black truncate ">
-                                                    <span class="font-medium ">{item.available_commodities}</span>
+                                                <td className="py-3 px-6 overflow-hidden w-[50px] bg-black truncate ">
+                                                    <span className="font-medium ">{item.available_commodities}</span>
                                                 </td>
 
-                                                <td class="py-3 px-6  ">
-                                                    <span class="font-medium ">View Dashboard</span>
+                                                <td className="py-3 px-6  ">
+                                                    <span className="font-medium ">View Dashboard</span>
                                                 </td>
 
 

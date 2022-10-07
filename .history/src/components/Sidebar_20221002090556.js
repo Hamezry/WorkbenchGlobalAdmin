@@ -11,11 +11,11 @@ function Sidebar() {
   const [navlink, setNavlink] = useState("");
 
   return (
-    <div class="sticky flex flex-col font-muli left-0 w-[16%] bg-[#FFFFFF] h-[calc(100vh-90px)] border-none">
-      <div class="overflow-x-hidden text-[#8B908B] h-full border-r-1 flex flex-col">
-        <ul class="flex flex-col border-r-2 h-[100%] mr-6 gap-6 pl-4 py-4">
+    <div className="sticky flex flex-col font-muli left-0 w-[16%] bg-[#FFFFFF] h-[calc(100vh-90px)] border-none">
+      <div className="overflow-x-hidden text-[#8B908B] h-full border-r-1 flex flex-col">
+        <ul className="flex flex-col border-r-2 h-[100%] mr-6 gap-6 pl-4 py-4">
           <li className="mt-4">
-            <div class="text-sm font-light text-gray-400 uppercase">PAGES</div>
+            <div className="text-sm font-light text-gray-400 uppercase">PAGES</div>
           </li>
 
           <button
@@ -33,7 +33,7 @@ function Sidebar() {
               <span>
                 <img src={orgIcon} alt="" />
               </span>
-              <span class="ml-2">Tenants</span>
+              <span className="ml-2">Tenants</span>
             </li>
           </button>
 
@@ -52,7 +52,7 @@ function Sidebar() {
               <span>
                 <img src={prodIcon} alt="" />
               </span>
-              <span class="ml-2">Products</span>
+              <span className="ml-2">Products</span>
             </li>
           </button>
 
@@ -71,7 +71,7 @@ function Sidebar() {
               <span>
                 <img src={globeIcon} alt="" />
               </span>
-              <span class="ml-2">Countries</span>
+              <span className="ml-2">Countries</span>
             </li>
           </button>
 
@@ -83,7 +83,7 @@ function Sidebar() {
             <span>
               <img src={bulkIcon} alt="" />
             </span>
-            <span class="ml-2">Bulk Uploads</span>
+            <span className="ml-2">Bulk Uploads</span>
           </li>
         </ul>
       </div>

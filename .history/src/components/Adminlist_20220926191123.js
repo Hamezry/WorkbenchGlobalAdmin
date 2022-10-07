@@ -11,46 +11,46 @@ function Adminlist() {
       <div className="px-5 overflow-y-auto h-[65%] overflow-x-auto">
         <table className="min-w-max w-full table-auto">
           <thead>
-            <tr class="bg-[#F9F9F9] text-[#54565B] text-[14px] text-left">
-              <th class="py-3 px-6 ">S/N</th>
-              <th class="py-3 px-6 ">Country Name</th>
-              <th class="py-3 px-6 ">No. of Tenants</th>
-              <th class="py-3 px-6 ">No. of Locations</th>
-              <th class="py-3 px-6 ">No. of Farmers</th>
-              <th class="py-3 px-6 ">Commodities Available</th>
-              <th class="py-3 px-6 ">Action</th>
+            <tr className="bg-[#F9F9F9] text-[#54565B] text-[14px] text-left">
+              <th className="py-3 px-6 ">S/N</th>
+              <th className="py-3 px-6 ">Country Name</th>
+              <th className="py-3 px-6 ">No. of Tenants</th>
+              <th className="py-3 px-6 ">No. of Locations</th>
+              <th className="py-3 px-6 ">No. of Farmers</th>
+              <th className="py-3 px-6 ">Commodities Available</th>
+              <th className="py-3 px-6 ">Action</th>
             </tr>
           </thead>
 
-          <tbody class="text-[#54565B] text-[12px] font-light">
+          <tbody className="text-[#54565B] text-[12px] font-light">
             {list?.data?.map((item, index) => {
               return (
-                <tr class=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
-                  <td class="py-6 px-6">
+                <tr className=" text-left border-b border-gray-200 hover:bg-[#e3f7ee]">
+                  <td className="py-6 px-6">
                     
-                      <span class="font-medium">1</span>
+                      <span className="font-medium">1</span>
                 
                   </td>
 
-                  <td class=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
+                  <td className=" flex mt-2 gap-2 py-6 px-6 w-[190px]">
                     
-                      <span class="font-medium ">Abia</span>
+                      <span className="font-medium ">Abia</span>
                     
                   </td>
 
-                  <td class="py-6 px-6">
-                    <span class="font-medium ">12</span>
+                  <td className="py-6 px-6">
+                    <span className="font-medium ">12</span>
                   </td>
 
-                  <td class="py-6 px-6">
-                    <span class="font-medium ">10</span>
+                  <td className="py-6 px-6">
+                    <span className="font-medium ">10</span>
                   </td>
 
                  
 
-                  <td class="py-6 px-6  ">
+                  <td className="py-6 px-6  ">
                     
-                      <span class="font-medium text-cyan-400 ">
+                      <span className="font-medium text-cyan-400 ">
                         View Details
                       </span>
                   </td>

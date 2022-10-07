@@ -15,7 +15,7 @@ function Sidebar() {
       <div classname="overflow-x-hidden text-[#8B908B] h-full border-r-1 flex flex-col">
         <ul classname="flex flex-col border-r-2 h-[100%] mr-6 pl-4 py-4">
           <li className="mt-4">
-            <div class="text-sm font-light text-gray-400 uppercase">PAGES</div>
+            <div className="text-sm font-light text-gray-400 uppercase">PAGES</div>
           </li>
 
           <button
@@ -33,7 +33,7 @@ function Sidebar() {
               <span>
                 <img src={orgIcon} alt="" />
               </span>
-              <span class="">Tenants</span>
+              <span className="">Tenants</span>
             </li>
           </button>
 
@@ -52,7 +52,7 @@ function Sidebar() {
               <span>
                 <img src={prodIcon} alt="" />
               </span>
-              <span class="">Products</span>
+              <span className="">Products</span>
             </li>
           </button>
 
@@ -71,7 +71,7 @@ function Sidebar() {
               <span>
                 <img src={globeIcon} alt="" />
               </span>
-              <span class="">Countries</span>
+              <span className="">Countries</span>
             </li>
           </button>
 

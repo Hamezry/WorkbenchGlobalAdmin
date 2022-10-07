@@ -55,19 +55,19 @@ function Organisationlist() {
 
                     <div className='flex justify-between items-center pl-5 gap-5'>
 
-                        <div class="">
+                        <div className="">
 
-                            <div class="dropdown inline-block relative">
+                            <div className="dropdown inline-block relative">
 
-                                <button class="bg-[#F9F9F9] text-gray-700 text-[12px] py-1 px-4 rounded-2xl inline-flex gap-8 items-center h-[50px] w-[186px]">
+                                <button className="bg-[#F9F9F9] text-gray-700 text-[12px] py-1 px-4 rounded-2xl inline-flex gap-8 items-center h-[50px] w-[186px]">
                                     <p className="mr-1"> <span>Show</span> 100 Entries </p>
                                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> </svg>
                                 </button>
 
-                                <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-                                    <li class="">One</li>
-                                    <li class="">Two</li>
-                                    <li class="">the magic number</li>
+                                <ul className="dropdown-menu absolute hidden text-gray-700 pt-1">
+                                    <li className="">One</li>
+                                    <li className="">Two</li>
+                                    <li className="">the magic number</li>
                                 </ul>
                             </div>
 
@@ -79,13 +79,13 @@ function Organisationlist() {
                             <p className='text-[12px]'>Sort By</p>
 
 
-                            <div class=" flex gap-2 p-3 rounded-2xl text-sm  text-gray-700 bg-[#F9F9F9] h-[54px">
+                            <div className=" flex gap-2 p-3 rounded-2xl text-sm  text-gray-700 bg-[#F9F9F9] h-[54px">
                                 <p>Date Registered</p>
                                 <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> </svg>
                             </div>
 
                             <div className='relative'>
-                                <input type="search" name="" id="" placeholder="Search by Company Name" class="w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]" />
+                                <input type="search" name="" id="" placeholder="Search by Company Name" className="w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]" />
                                 <span className='absolute left-[300px] top-3'>
                                     < AiOutlineSearch />
                                 </span>
@@ -113,21 +113,21 @@ function Organisationlist() {
                         <table className='min-w-max table-auto'>
 
                             <thead>
-                                <tr class="bg-[#F9F9F9] text-[#54565B] text-left  text-[14px]">
-                                    <th class="py-3 px-4 ">S/N</th>
-                                    <th class="py-3 px-4 ">Company Name</th>
-                                    <th class="py-3 px-4 ">Country</th>
-                                    <th class="py-3 px-4 ">Location</th>
-                                    <th class="py-3 px-4 ">Status</th>
-                                    <th class="py-3 px-4 ">E-mail</th>
-                                    <th class="py-3 px-4 ">Phone Number</th>
-                                    <th class="py-3 px-4 ">CSD Access</th>
-                                    <th class="py-3 px-4 ">Registered On</th>
-                                    <th class="py-3 px-4 ">Action</th>
+                                <tr className="bg-[#F9F9F9] text-[#54565B] text-left  text-[14px]">
+                                    <th className="py-3 px-4 ">S/N</th>
+                                    <th className="py-3 px-4 ">Company Name</th>
+                                    <th className="py-3 px-4 ">Country</th>
+                                    <th className="py-3 px-4 ">Location</th>
+                                    <th className="py-3 px-4 ">Status</th>
+                                    <th className="py-3 px-4 ">E-mail</th>
+                                    <th className="py-3 px-4 ">Phone Number</th>
+                                    <th className="py-3 px-4 ">CSD Access</th>
+                                    <th className="py-3 px-4 ">Registered On</th>
+                                    <th className="py-3 px-4 ">Action</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="text-[#54565B] text-[12px] font-light">
+                            <tbody className="text-[#54565B] text-[12px] font-light">
 
                                 {
                                     list?.data?.map((item, index) => {
@@ -135,48 +135,48 @@ function Organisationlist() {
                                         return (
                                             <tr key={index} className=" text-left  border-b border-gray-200 hover:bg-[#e3f7ee]">
 
-                                                <td class="py-3 px-4 mr-10">
+                                                <td className="py-3 px-4 mr-10">
                                                     <Link to='/organisation'>
-                                                        <span class="font-medium">{index + 1}</span>
+                                                        <span className="font-medium">{index + 1}</span>
                                                     </Link>
                                                 </td>
 
-                                                <td class="py-3 px-4 mr-10 text-start ">
-                                                    <span class="font-medium ">{item.company_name}</span>
+                                                <td className="py-3 px-4 mr-10 text-start ">
+                                                    <span className="font-medium ">{item.company_name}</span>
                                                 </td>
 
-                                                <td class=" flex mt-2 gap-2 py-3 px-4 mr-10">
+                                                <td className=" flex mt-2 gap-2 py-3 px-4 mr-10">
                                                     <img src={nigerianFlag} alt='' />
-                                                    <span class="font-medium ">{item.country.name}</span>
+                                                    <span className="font-medium ">{item.country.name}</span>
                                                 </td>
 
-                                                <td class="py-3 px-4 mr-10 w-[50px]">
-                                                    <span class="font-medium ">{item.location}</span>
+                                                <td className="py-3 px-4 mr-10 w-[50px]">
+                                                    <span className="font-medium ">{item.location}</span>
                                                 </td>
 
-                                                <td class="py-3 px-4 mr-10">
-                                                    <span class="font-medium ">
+                                                <td className="py-3 px-4 mr-10">
+                                                    <span className="font-medium ">
                                                        yes
                                                     </span>
                                                 </td>
 
-                                                <td class="py-3 px-4 mr-10">
-                                                    <span class="font-medium ">{item.email}</span>
+                                                <td className="py-3 px-4 mr-10">
+                                                    <span className="font-medium ">{item.email}</span>
                                                 </td>
 
-                                                <td class="py-3 px-4 mr-10  ">
-                                                    <span class="font-medium ">{item.phone_number}</span>
+                                                <td className="py-3 px-4 mr-10  ">
+                                                    <span className="font-medium ">{item.phone_number}</span>
                                                 </td>
 
-                                                <td class="py-3 px-4">
-                                                    <span class="font-medium ">{item.csd}</span>
+                                                <td className="py-3 px-4">
+                                                    <span className="font-medium ">{item.csd}</span>
                                                 </td>
 
-                                                <td class="py-3 px-4">
-                                                    <span class="font-medium ">{item.created}</span>
+                                                <td className="py-3 px-4">
+                                                    <span className="font-medium ">{item.created}</span>
                                                 </td>
 
-                                                <td class="py-3 px-4 text-center">
+                                                <td className="py-3 px-4 text-center">
                                                     <div className=' bg-[#38CB89] rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'>
                                                         <p>Activate</p>
 

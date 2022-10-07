@@ -44,7 +44,7 @@ const Authenticated = () => {
                 const response = res.data.data;
                 manager.decrypt(response);
                 setList(res.data);
-                console.log(res.data)
+                // console.log(res.data)
             })
             .catch((err) => {
                 console.log(err)

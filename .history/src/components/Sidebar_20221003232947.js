@@ -71,7 +71,7 @@ function Sidebar() {
               <span>
                 <img src={globeIcon} alt="" />
               </span>
-              <span class="">Countries</span>
+              <span className="">Countries</span>
             </li>
           </button>
 

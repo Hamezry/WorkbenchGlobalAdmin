@@ -4,13 +4,22 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from './contexts/auth';
+import CountryProvider from './contexts/countries';
+import GlobalProductsCardProvider from './contexts/productsCard';
+import GlobalTenantsCardProvider from './contexts/tenantsCard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <CountryProvider>
+          <GlobalProductsCardProvider>
+            <GlobalTenantsCardProvider>
+              <App />
+            </GlobalTenantsCardProvider>
+          </GlobalProductsCardProvider>
+        </CountryProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

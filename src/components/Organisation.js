@@ -35,16 +35,18 @@ function Organisation({ list, setList }) {
   const { id } = useParams();
 
   //SERVICE TOGGLE BUTTON FUNCTIONS
-  const [account, setAccount] = useState(false);
-  const [csd, setCsd] = useState(false);
-  const [ewr, setEwr] = useState(false);
-  const [logistic, setLogistic] = useState(false);
-  const [overage, setOverage] = useState(false);
-  const [plant, setPlant] = useState(false);
-  const [reg, setReg] = useState(false);
-  const [verification, setVerification] = useState(false);
+  const [switch_list, setSwitchList] = useState({
+    accounting_setting: false,
+    csd_setting: false,
+    ewr_setting: false,
+    logistics_setting: false,
+    overage_setting: false,
+    plant_setting: false,
+    registration_setting: false,
+    verification_setting: false,
+  });
 
-  // Modal Toggle
+  // Modal Toggle State. Sets all the modals to false to hide all modals
   const intial_modal_state = {
     account: false,
     csd: false,
@@ -115,17 +117,10 @@ function Organisation({ list, setList }) {
       )
       .then((res) => {
         setService(res.data.data);
-        console.log(res.data.data);
+
         const switchList = res.data.data.service_list;
-        setAccount(switchList.accounting_setting);
-        setCsd(switchList.csd_setting);
-        setEwr(switchList.ewr_setting);
-        setLogistic(switchList.logistics_setting);
-        setOverage(switchList.overage_setting);
-        setPlant(switchList.plant_setting);
-        setReg(switchList.registration_setting);
-        setVerification(switchList.verification_setting);
-        // console.log(res.data.data.warehouse_count)
+
+        setSwitchList((prev) => ({ ...prev, switchList }));
       })
       .catch((err) => {
         console.log(err);
@@ -143,8 +138,7 @@ function Organisation({ list, setList }) {
       .catch((err) => {
         console.log(err);
       });
-    // eslint-disable-next-line
-  }, []);
+  }, [id, token]);
 
   return (
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
@@ -184,7 +178,9 @@ function Organisation({ list, setList }) {
 
                 {client?.data?.map((item, index) => {
                   return (
-                    <div className='flex justify-between items-center gap-6 px-5 bg-[#FAFBFC] rounded-3xl w-[300px] h-[36px]'>
+                    <div
+                      className='flex justify-between items-center gap-6 px-5 bg-[#FAFBFC] rounded-3xl w-[300px] h-[36px]'
+                      key={index}>
                       <div className='flex gap-5'>
                         <img src={dot} alt='' />
                         <span>{item.category}</span>
@@ -397,7 +393,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={account}
+                    checked={switch_list.accounting_setting}
                     readOnly
                   />
                   <div
@@ -410,9 +406,19 @@ function Organisation({ list, setList }) {
                     <AccountingModal
                       show={modalsService.account}
                       close={closeModal}
-                      activate={() => setAccount(true)}
-                      active={account}
-                      deactivate={() => setAccount(false)}
+                      activate={() =>
+                        setSwitchList((prev) => ({
+                          ...prev,
+                          accounting_setting: true,
+                        }))
+                      }
+                      active={switch_list.accounting_setting}
+                      deactivate={() =>
+                        setSwitchList((prev) => ({
+                          ...prev,
+                          accounting_setting: false,
+                        }))
+                      }
                     />
                   )}
                 </label>
@@ -424,7 +430,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={csd}
+                    checked={switch_list.csd_setting}
                     readOnly
                   />
                   <div
@@ -436,9 +442,19 @@ function Organisation({ list, setList }) {
                     <CSDModal
                       show={modalsService.csd}
                       close={closeModal}
-                      activate={() => setCsd(true)}
-                      active={csd}
-                      deactivate={() => setCsd(false)}
+                      activate={() =>
+                        setSwitchList((prev) => ({
+                          ...prev,
+                          csd_setting: true,
+                        }))
+                      }
+                      active={switch_list.csd_setting}
+                      deactivate={() =>
+                        setSwitchList((prev) => ({
+                          ...prev,
+                          csd_setting: false,
+                        }))
+                      }
                     />
                   )}
                 </label>
@@ -450,7 +466,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={ewr}
+                    checked={switch_list.ewr_setting}
                     readOnly
                   />
                   <div
@@ -463,9 +479,13 @@ function Organisation({ list, setList }) {
                   <EWRModal
                     show={modalsService.ewr}
                     close={closeModal}
-                    activate={() => setEwr(true)}
-                    active={ewr}
-                    deactivate={() => setEwr(false)}
+                    activate={() =>
+                      setSwitchList((prev) => ({ ...prev, ewr_setting: true }))
+                    }
+                    active={switch_list.ewr_setting}
+                    deactivate={() =>
+                      setSwitchList((prev) => ({ ...prev, ewr_setting: false }))
+                    }
                   />
                 )}
               </div>
@@ -476,7 +496,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={logistic}
+                    checked={switch_list.logistics_setting}
                     readOnly
                   />
                   <div
@@ -489,9 +509,19 @@ function Organisation({ list, setList }) {
                   <LogisticsModal
                     show={modalsService.logistic}
                     close={closeModal}
-                    activate={() => setLogistic(true)}
-                    active={logistic}
-                    deactivate={() => setLogistic(false)}
+                    activate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        logistics_setting: true,
+                      }))
+                    }
+                    active={switch_list.logistics_setting}
+                    deactivate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        logistics_setting: false,
+                      }))
+                    }
                   />
                 )}
               </div>
@@ -502,7 +532,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={overage}
+                    checked={switch_list.overage_setting}
                     readOnly
                   />
                   <div
@@ -515,9 +545,19 @@ function Organisation({ list, setList }) {
                   <OverageModal
                     show={modalsService.overage}
                     close={closeModal}
-                    activate={() => setOverage(true)}
-                    active={overage}
-                    deactivate={() => setOverage(false)}
+                    activate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        overage_setting: true,
+                      }))
+                    }
+                    active={switch_list.overage_setting}
+                    deactivate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        overage_setting: false,
+                      }))
+                    }
                   />
                 )}
               </div>
@@ -528,7 +568,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={plant}
+                    checked={switch_list.plant_setting}
                     readOnly
                   />
                   <div
@@ -541,9 +581,19 @@ function Organisation({ list, setList }) {
                   <PlantModal
                     show={modalsService.plant}
                     close={closeModal}
-                    activate={() => setPlant(true)}
-                    active={plant}
-                    deactivate={() => setPlant(false)}
+                    activate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        plant_setting: true,
+                      }))
+                    }
+                    active={switch_list.plant_setting}
+                    deactivate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        plant_setting: false,
+                      }))
+                    }
                   />
                 )}
               </div>
@@ -554,7 +604,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={reg}
+                    checked={switch_list.registration_setting}
                     readOnly
                   />
                   <div
@@ -567,9 +617,19 @@ function Organisation({ list, setList }) {
                   <RegistrationModal
                     show={modalsService.reg}
                     close={closeModal}
-                    activate={() => setReg(true)}
-                    active={reg}
-                    deactivate={() => setReg(false)}
+                    activate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        registration_setting: true,
+                      }))
+                    }
+                    active={switch_list.registration_setting}
+                    deactivate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        registration_setting: false,
+                      }))
+                    }
                   />
                 )}
               </div>
@@ -580,7 +640,7 @@ function Organisation({ list, setList }) {
                   <input
                     type='checkbox'
                     className='sr-only peer'
-                    checked={verification}
+                    checked={switch_list.verification_setting}
                     readOnly
                   />
                   <div
@@ -593,9 +653,19 @@ function Organisation({ list, setList }) {
                   <VerificationModal
                     show={modalsService.verification}
                     close={closeModal}
-                    activate={() => setVerification(true)}
-                    active={verification}
-                    deactivate={() => setVerification(false)}
+                    activate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        registration_setting: true,
+                      }))
+                    }
+                    active={switch_list.registration_setting}
+                    deactivate={() =>
+                      setSwitchList((prev) => ({
+                        ...prev,
+                        registration_setting: false,
+                      }))
+                    }
                   />
                 )}
               </div>

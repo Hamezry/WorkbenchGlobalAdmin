@@ -30,7 +30,7 @@ const ProductsCardProvider = ({ children }) => {
 
     const { summary } = response.data;
 
-    setCardData(summary);
+    setCardData((prev) => ({ ...prev, ...summary }));
   };
 
   useEffect(() => {

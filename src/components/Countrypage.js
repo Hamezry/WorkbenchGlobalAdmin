@@ -1,57 +1,13 @@
 import React from "react";
 import africanMap from "../Assets/Map of Africa.svg";
 import { Link } from "react-router-dom";
+import CountryTile from "./page-tiles/CountryTile";
 
 function Countrypage() {
   return (
-    <div className='w-[85%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto'>
-      <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] mt-[3%] rounded-3xl gap-3 p-3'>
-        <div className='px-8 py-2 w-full ml-7'>
-          <p>Overview</p>
-        </div>
-
-        {/*CARDS */}
-        <div className='flex p-5 justify-evenly'>
-          <div className=' flex flex-col p-5 gap-4 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4 text-[#47494E] text-[16px]'>
-              Total Active Tenants
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>In-active Tenants:</span>4000
-            </p>
-          </div>
-
-          <div className=' flex flex-col p-5 gap-4 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[16px]'>
-              Total Tenants (CSD)
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>Last Month:</span>3500
-            </p>
-          </div>
-
-          <div className=' flex flex-col p-5 gap-3 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[16px]'>
-              Total Tenants Available
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>In-active Tenants:</span>4000
-            </p>
-          </div>
-          <div className=' flex flex-col p-5 gap-3 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[14px]'>
-              Highest Number of Tenants
-            </p>
-            <p className='text-[25px]'>Kenya</p>
-            <p className='text-[14px]'>
-              <span>Registered tenants: </span>248
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className='w-[82%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto'>
+      {/*CARDS */}
+      <CountryTile />
 
       <div className='bg-[#F9F9F9] flex flex-col h-[calc(100%-3%)] gap-8 p-6 rounded-3xl'>
         <div className='flex  p-4 items-center w-[100%] h-[10%]'>

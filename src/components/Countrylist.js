@@ -3,65 +3,22 @@ import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import filterIcon from "../Assets/filter.svg";
 import calenderIcon from "../Assets/calendar.svg";
+import CountryTile from "./page-tiles/CountryTile";
 
 function Countrylist({ country }) {
   const navigate = useNavigate();
 
   return (
-    <div className='w-[84%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
-      <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] mt-[3%] rounded-3xl gap-3 p-3'>
-        <div className='px-8 py-2 w-full ml-7'>
-          <p>Overview</p>
-        </div>
-
-        {/*CARDS */}
-        <div className='flex p-5 justify-evenly'>
-          <div className=' flex flex-col p-5 gap-4 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4 text-[#47494E] text-[16px]'>
-              Total Active Tenants
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>In-active Tenants:</span>4000
-            </p>
-          </div>
-
-          <div className=' flex flex-col p-5 gap-4 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[16px]'>
-              Total Tenants (CSD)
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>Last Month:</span>3500
-            </p>
-          </div>
-
-          <div className=' flex flex-col p-5 gap-3 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[16px]'>
-              Total Tenants Available
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>In-active Tenants:</span>4000
-            </p>
-          </div>
-          <div className=' flex flex-col p-5 gap-3 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[14px]'>
-              Highest Number of Tenants
-            </p>
-            <p className='text-[25px]'>Kenya</p>
-            <p className='text-[14px]'>
-              <span>Registered tenants: </span>248
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className='w-[82%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
+      {/*CARDS */}
+      <CountryTile />
 
       <div className='bg-[#F9F9F9] flex flex-col gap-8 p-6 h-[calc(100%-3%)] rounded-3xl'>
         <div className='flex items-center w-[100%] h-[10%] p-4'>
           <div className='flex w-full border-b-2 items-center gap-8'>
             <Link to='/countrypage'>
-              <p>Heat Map</p>
+              {" "}
+              <p>Heat Map</p>{" "}
             </Link>
             <span className='border-b-2 py-5  border-b-[#38CB89] '>
               Country List
@@ -82,7 +39,8 @@ function Countrylist({ country }) {
             <div className='flex justify-between items-center pl-5 gap-5'>
               <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
                 <p>
-                  <span>Show </span> 100 Entries
+                  {" "}
+                  <span>Show </span> 100 Entries{" "}
                 </p>
                 <img src={calenderIcon} alt='' />
               </div>
@@ -101,7 +59,7 @@ function Countrylist({ country }) {
                     name=''
                     id=''
                     placeholder='Search by Company Name'
-                    className='w-full p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                    className='p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
                   />
                   <span className='absolute left-[300px] top-3'>
                     <AiOutlineSearch />
@@ -136,23 +94,37 @@ function Countrylist({ country }) {
                     return (
                       <tr
                         key={index}
-                        className=' text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]'
-                        onClick={() => {
-                          localStorage.setItem(
-                            "companyName",
-                            item.company_name
-                          );
-                          localStorage.setItem(
-                            "countryFlag",
-                            item.country_flag
-                          );
-                          navigate(`/country/${item.pk}`);
-                        }}>
-                        <td className='py-4 px-8'>
+                        className=' text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]'>
+                        <td
+                          className='py-4 px-8'
+                          onClick={() => {
+                            localStorage.setItem(
+                              "companyName",
+                              item.company_name
+                            );
+                            localStorage.setItem(
+                              "countryFlag",
+                              item.country_flag
+                            );
+                            alert(item.name);
+                            navigate(`/country/${item.pk}`);
+                          }}>
                           <span className='font-medium'>{index + 1}</span>
                         </td>
 
-                        <td className=' flex mt-2 gap-2 py-4 px-8 w-[190px]'>
+                        <td
+                          className=' flex mt-2 gap-2 py-4 px-8 w-[190px]'
+                          onClick={() => {
+                            localStorage.setItem(
+                              "companyName",
+                              item.company_name
+                            );
+                            localStorage.setItem(
+                              "countryFlag",
+                              item.country_flag
+                            );
+                            navigate(`/country/${item.pk}`);
+                          }}>
                           <div className='flex gap-3'>
                             <img
                               src={item.country_flag}
@@ -164,7 +136,9 @@ function Countrylist({ country }) {
                         </td>
 
                         <td className='py-4 px-8'>
-                          <span className='font-medium '>{item.no_of_tenants}</span>
+                          <span className='font-medium '>
+                            {item.no_of_tenants}
+                          </span>
                         </td>
 
                         <td className='py-4 px-8'>
@@ -174,7 +148,9 @@ function Countrylist({ country }) {
                         </td>
 
                         <td className='py-4 px-8'>
-                          <span className='font-medium '>{item.no_of_farmers}</span>
+                          <span className='font-medium '>
+                            {item.no_of_farmers}
+                          </span>
                         </td>
 
                         <td className='px-8 '>
@@ -186,21 +162,11 @@ function Countrylist({ country }) {
                         </td>
 
                         <td className='py-4 px-8  '>
-                          <span
-                            className='font-medium text-cyan-400 '
-                            onClick={() => {
-                              localStorage.setItem(
-                                "companyName",
-                                item.company_name
-                              );
-                              localStorage.setItem(
-                                "countryFlag",
-                                item.country_flag
-                              );
-                              navigate(`/country/${item.pk}`);
-                            }}>
-                            View Dashboard
-                          </span>
+                          <Link to='/country'>
+                            <span className='font-medium text-cyan-400 '>
+                              View Dashboard
+                            </span>
+                          </Link>
                         </td>
                       </tr>
                     );

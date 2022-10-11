@@ -1,0 +1,24 @@
+.mantine-Modal-modal {
+  border-radius: 1.75rem;
+}
+.mantine-Pagination-item {
+  border: none;
+}
+.mantine-Pagination-item[data-active] {
+  background-color: transparent;
+  color: #38cb89;
+}
+
+.mantine-Pagination-item:first-child,
+.mantine-Pagination-item:last-child {
+  background-color: #38cb89;
+  color: #fff;
+}
+.mantine-Popover-dropdown[mantine-ydnhxu] {
+  background-color: #38cb89;
+}
+/* .mantine-Pagination-item:first-child:active,
+.mantine-Pagination-item:last-child:active {
+  background-color: #38cb89;
+  color: #fff;
+} */

@@ -10,13 +10,13 @@ import { Navigate } from 'react-router-dom';
 function Products({ setList, setModal, productsLoaded, setProductsLoaded }) {
 
   useEffect(() => {
-    axios.get(`https://wb3test.afexnigeria.com/WB3/api/v1/encrypted-products`)
+    axios.get(`https://wb-temp.afexnigeria.com/WB3/api/v1/encrypted-products`)
       .then(res => {
         const response = res.data.data
         manager.decrypt(response)
         setList(res.data)
         setProductsLoaded(true)
-        console.log(res.data)
+        console.log(res.data.pk)
       }).catch(err => {
         console.log(err)
       })

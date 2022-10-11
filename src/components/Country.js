@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ProgressBar from "@ramonak/react-progress-bar";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import nigerianFlag from "..//Assets/Nigeriaflag.svg";
+import nigerianFlag from "../Assets/Nigeriaflag.svg";
 import Adminlist from "../components/adminlist/Adminlist";
 
-function Country() {
+function Country({ totalFarmers }) {
+  console.log(totalFarmers);
   const [stock, setStock] = useState([]);
   const [list, setList] = useState();
   const token = localStorage.getItem("workbench-app-token");
@@ -17,28 +19,28 @@ function Country() {
     };
     axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/country/stock/position/${id}`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/country/stock/position/${id}`,
         options
       )
       .then((res) => {
         setStock(res.data);
-        // console.log(res.data);
+        //console.log(res.data)
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       });
 
     axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${id}`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/admin/levels/${id}`,
         options
       )
       .then((res) => {
         setList(res.data);
-        // console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       });
   });
 
@@ -52,7 +54,8 @@ function Country() {
 
         <div className=' rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3'>
           <Link to='/countrylist'>
-            <button> Back</button>
+            {" "}
+            <button> Back</button>{" "}
           </Link>
         </div>
       </div>
@@ -66,6 +69,7 @@ function Country() {
 
             <div className='flex  flex-col gap-3 py-3 px-6'>
               <p>Farmers</p>
+              <ProgressBar completed={180} maxCompleted={1000} />
 
               <div className='w-[100%] bg-gray-300 rounded-3xl h-[15px]'>
                 <div className='w-[85%] bg-green-500 rounded-3xl h-[15px]'></div>
@@ -109,34 +113,34 @@ function Country() {
             <div className='w-full overflow-x-auto p-3'>
               <table className='w-full over p-6'>
                 <thead>
-                  <tr className='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
-                    <th className='py-4 px-4'>Commodity</th>
-                    <th className='py-4 px-4'>Grade</th>
-                    <th className='py-4 px-4'>Volume(MT) </th>
-                    <th className='py-4 px-4'>Lien(MT)</th>
+                  <tr class='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
+                    <th class='py-4 px-4'>Commodity</th>
+                    <th class='py-4 px-4'>Grade</th>
+                    <th class='py-4 px-4'>Volume(MT) </th>
+                    <th class='py-4 px-4'>Lien(MT)</th>
                   </tr>
                 </thead>
 
-                <tbody className='text-[#54565B] text-[12px] font-light'>
+                <tbody class='text-[#54565B] text-[12px] font-light'>
                   {stock?.data?.map((item) => {
                     return (
-                      <tr className='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
-                        <td className='py-4 px-4'>
-                          <span className='font-medium'>{item.item_code}</span>
+                      <tr class='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
+                        <td class='py-4 px-4'>
+                          <span class='font-medium'>{item.item_code}</span>
                         </td>
 
-                        <td className='py-4 px-4 '>
-                          <span className='font-medium'>Grade{item.grade}</span>
+                        <td class='py-4 px-4 '>
+                          <span class='font-medium'>Grade{item.grade}</span>
                         </td>
 
-                        <td className='py-4 px-4'>
-                          <span className='font-medium '>
+                        <td class='py-4 px-4'>
+                          <span class='font-medium '>
                             {item.location_breakdown[0].volume}
                           </span>
                         </td>
 
-                        <td className='py-4 px-4'>
-                          <span className='font-medium '>
+                        <td class='py-4 px-4'>
+                          <span class='font-medium '>
                             {item.total_lien_weight}
                           </span>
                         </td>

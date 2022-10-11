@@ -1,11 +1,12 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import DateModule from "./Datemodule";
 import filterIcon from "../Assets/filter.svg";
-import { useState } from "react";
 import { format } from "date-fns";
 import Selectmodule from "./Selectmodule";
 import Pagination from "./Pagination";
+import OrganisationlistTile from "./page-tiles/OrganizationlistTile";
 
 function Organisationlist({
   list,
@@ -15,6 +16,12 @@ function Organisationlist({
 }) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+
+  const [posts, setPosts] = useState([]);
+
+  const populate = () => {
+    setPosts(list.data ?? []);
+  };
 
   const [isDate, setIsDate] = useState(false);
 
@@ -36,56 +43,18 @@ function Organisationlist({
     return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
 
+  useEffect(() => {
+    populate();
+
+    // eslint-disable-next-line
+  }, [list]);
+
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
       {/*TENANT STATISTICS*/}
-      <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] mt-[3%] rounded-3xl gap-3 p-3'>
-        <div className='px-8 py-2 w-full ml-7'>
-          <p>Overview</p>
-        </div>
 
-        {/*CARDS */}
-        <div className='flex p-5 justify-evenly'>
-          <div className=' flex flex-col p-5 gap-4 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4 text-[#47494E] text-[16px]'>
-              Total Active Tenants
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>In-active Tenants:</span>4000
-            </p>
-          </div>
-
-          <div className=' flex flex-col p-5 gap-4 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[16px]'>
-              Total Tenants (CSD)
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>Last Month:</span>3500
-            </p>
-          </div>
-
-          <div className=' flex flex-col p-5 gap-3 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[16px]'>
-              Total Tenants Available
-            </p>
-            <p className='text-[25px]'>4,500</p>
-            <p className='text-[14px]'>
-              <span>In-active Tenants:</span>4000
-            </p>
-          </div>
-          <div className=' flex flex-col p-5 gap-3 bg-[#FFFFFF] rounded-3xl w-[300px] h-[180px]'>
-            <p className=' mb-4  text-[#47494E] text-[14px]'>
-              Highest Number of Tenants
-            </p>
-            <p className='text-[25px]'>Kenya</p>
-            <p className='text-[14px]'>
-              <span>Registered tenants: </span>248
-            </p>
-          </div>
-        </div>
-      </div>
+      {/*CARDS */}
+      <OrganisationlistTile />
 
       <div className=' h-[calc(100vh-5%)] bg-[#F9F9F9] rounded-3xl'>
         <div className='flex w-full mt-6 px-14 text-[20px]'>
@@ -144,7 +113,7 @@ function Organisationlist({
                     name=''
                     id=''
                     placeholder='Search by Company Name'
-                    className='w-full p-3 rounded-2xl text-sm text-gray-400 border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                    className='p-3 rounded-2xl text-sm text-gray-400 border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
                     onChange={(e) => setQuery(e.target.value)}
                   />
                   <span className='absolute left-[300px] top-3'>
@@ -287,11 +256,13 @@ function Organisationlist({
 
             {/*SLIDER*/}
             <div className='flex justify-between p-3 mt-4 bg-[#F9F9F9] items-center'>
-              <p>1 - 7 of 80 Entries</p>
+              <p>1 - 7 of {posts.length} Entries</p>
               <Pagination
                 postsPerPage={postsPerPage}
-                totalPosts={list.length}
+                totalPosts={posts.length}
                 setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                perPage={postsPerPage}
               />
 
               {/* <div className="flex items-center gap-5">

@@ -3,7 +3,7 @@ import background from "../Assets/backround.png";
 import logo from "../Assets/afex-logo.png";
 import { useAuth } from "../contexts/auth";
 import axios from "axios";
-const url = "https://wb3test.afexnigeria.com/WB3/api/v1/api-token-auth/";
+const url = "https://wb-temp.afexnigeria.com/WB3/api/v1/api-token-auth/";
 
 function Landingpage() {
   const { signin } = useAuth();

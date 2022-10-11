@@ -1,0 +1,24 @@
+.mantine-Paper-root {
+  width: 85%;
+  /* height: 90%; */
+  height: -webkit-fill-available;
+}
+.mantine-1abbsss {
+  margin-left: 0;
+}
+.table th,
+.table td {
+  @apply px-[14px] py-[18px] whitespace-nowrap text-start capitalize border-b border-textgrey-lighter;
+}
+
+.maps .gmnoprint {
+  @apply !bottom-40 !left-4 child:!rounded-3xl  child:!bg-transparent child:!w-[45px];
+}
+.maps .gmnoprint button {
+  @apply !w-[45px] !py-1 !bg-white first:!rounded-t-xl first:!mb-1 last:!rounded-b-xl last:!mt-[0.125rem];
+
+  /* !rounded-xl */
+}
+.maps .gmnoprint button + div {
+  @apply hidden;
+}

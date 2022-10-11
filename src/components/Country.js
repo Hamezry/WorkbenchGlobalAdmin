@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import nigerianFlag from "../Assets/Nigeriaflag.svg";
-import Adminlist from "../components/Adminlist";
+import nigerianFlag from "..//Assets/Nigeriaflag.svg";
+import Adminlist from "../components/adminlist/Adminlist";
 
 function Country() {
   const [stock, setStock] = useState([]);

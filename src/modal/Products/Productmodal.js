@@ -1,7 +1,42 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+
+const url = 'https://wb-temp.afexnigeria.com/WB3/api/v1/create-product';
 
 function Productmodal({ setModal }) {
+  const [productName, setProductName] = useState('');
+  const [productVolume, setProductVolume] = useState('');
+  const [productType, setProductType] = useState('');
+  const [unitType, setUnitType] = useState('');
+  const [certified, setCertified] = useState(false);
+
+  console.log(certified);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const resp = await axios.post(url, {
+      name: productName,
+      product_type: productType,
+      unit_type: unitType,
+      code: productVolume,
+      certified: certified,
+    });
+
+    console.log(resp);
+
+    console.log(
+      JSON.stringify({
+        name: productName,
+        product_type: productType,
+        unit_type: unitType,
+        code: productVolume,
+        certified: certified,
+      })
+    );
+    setModal(false);
+  };
+
   return (
     <div className='w-[100vw] font-muli h-[100vh] bg-[rgba(50,59,75,0.7)] fixed z-50 top-0 left-0'>
       <div className='bg-[#FFFFFF] absolute w-[450px] h-[700px] left-[38%] mt-[8%] rounded-3xl px-10'>
@@ -18,9 +53,9 @@ function Productmodal({ setModal }) {
           </div>
         </div>
 
-        <form action='' className='my-10'>
+        <form onSubmit={handleSubmit} className='my-10'>
           <div className='flex flex-col gap-8'>
-            <label for='product name'>
+            <label>
               <p className='text-[14px] text-[#54565B] pb-2'>Product Name</p>
               <input
                 id='name'
@@ -28,10 +63,12 @@ function Productmodal({ setModal }) {
                 type='text'
                 className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
                 placeholder='Insert Name'
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
               />
             </label>
 
-            <label for='code'>
+            <label>
               <p className='text-[14px] text-[#54565B] pb-2'>Code</p>
               <input
                 id='volume'
@@ -39,59 +76,72 @@ function Productmodal({ setModal }) {
                 type='text'
                 className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
                 placeholder='Insert Volume'
+                value={productVolume}
+                onChange={(e) => setProductVolume(e.target.value)}
               />
             </label>
 
-            <label for='type'>
+            <label>
               <p className='text-[14px] text-[#54565B] pb-2'>Type</p>
 
               <select
                 id='type'
-                className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow'>
-                <option value='Type'>Select Type</option>
-                <option value='input'>input</option>
-                <option value='commodities'>commodities</option>
-                <option value='fees'>fees</option>
+                className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow'
+                value={productType}
+                onChange={(e) => setProductType(e.target.value)}>
+                <option value=''>Select Type</option>
+                <option value='Input'>Input</option>
+                <option value='Commodity'>Commodity</option>
+                <option value='Fees'>Fees</option>
               </select>
             </label>
 
-            <label for='unit type'>
+            <label>
               <p className='text-[14px] text-[#54565B] pb-2'>Unit Type</p>
 
               <select
                 id='type'
-                className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow'>
+                className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow'
+                value={unitType}
+                onChange={(e) => setUnitType(e.target.value)}>
                 <option value='Type' className='bg-[#F1F2F3]'>
                   Select Unit Type
                 </option>
-                <option value='input'>input</option>
-                <option value='commodities'>commodities</option>
-                <option value='fees'>fees</option>
+                <option value='Bags'>Bags</option>
+                <option value='Carton'>Carton</option>
+                <option value='Bottle'>Bottle</option>
+                <option value='Kilogram'>Kilogram</option>
+                <option value='Metric Tonne'>Metric Tonne</option>
               </select>
             </label>
 
             <div className='flex items-center gap-3'>
-              <label for='remember' className=''>
+              <label className=''>
                 <input
                   type='checkbox'
                   id='remember'
                   className='w-4 h-4 focus:bg-[#38CB89]'
+                  // value={certified}
+                  checked={certified}
+                  onChange={(e) => setCertified(e.target.checked)}
                 />
               </label>
               <p>Sustainable Product?</p>
             </div>
 
-            <div className='self-center'>
-              <Link
-                to='/productlist'
-                onClick={() => {
-                  setModal(false);
-                }}>
-                <span className='w-[400px] py-3 font-medium text-white bg-[#38CB89] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center'>
-                  Submit
-                </span>
-              </Link>
-            </div>
+            {/* <div className='self-center'>
+                            <Link to="/productlist"
+                                onClick={() => {
+                                    
+                                }}> */}
+
+            <button
+              className='w-full py-3 font-medium text-white bg-[#38CB89] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center'
+              type='submit'>
+              Submit
+            </button>
+            {/* </Link> */}
+            {/* </div> */}
           </div>
         </form>
       </div>

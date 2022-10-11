@@ -38,18 +38,19 @@ const Authenticated = () => {
     };
 
     axios
-      .get(`https://wb3test.afexnigeria.com/WB3/api/v1/tenant/list`)
+      .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/list`)
       .then((res) => {
         const response = res.data.data;
         manager.decrypt(response);
         setList(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
 
     axios
-      .get(`https://wb3test.afexnigeria.com/WB3/api/v1/countries`, options)
+      .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/countries`, options)
       .then((res) => {
         setCountry(res.data);
         //console.log(res.data)

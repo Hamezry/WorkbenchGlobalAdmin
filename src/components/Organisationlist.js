@@ -20,7 +20,7 @@ function Organisationlist({
   const [isDate, setIsDate] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
+  const [postsPerPage] = useState(10);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -139,7 +139,7 @@ function Organisationlist({
                       return (
                         <tr
                           key={index}
-                          className=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
+                          classNameName=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
                           <td
                             className='py-4 px-4 mr-10'
                             onClick={() => {

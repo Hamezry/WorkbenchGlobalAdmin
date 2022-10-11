@@ -3,16 +3,16 @@ import { format } from 'date-fns';
 import { AiOutlineSearch } from 'react-icons/ai';
 import recieptIcon from '../Assets/receipt-text.png';
 import filterIcon from '../Assets/filter.svg';
-import calenderIcon from '../Assets/calendar.svg';
+import Dropdown from './Dropdown';
 //import successIcon from '../Assets/Success-icon.svg'
 import Pagination from './Pagination';
-import { BsThreeDots } from 'react-icons/bs';
-import GlobalProductTile from './page-tiles/GlobalProductTile';
 
 function Productlist({
   list,
   setViewFilter,
   setModal,
+  openModal,
+  setDeactivateProduct,
   setProductsLoaded,
   productsLoaded,
 }) {
@@ -62,11 +62,6 @@ function Productlist({
           </div>
 
           <div className='flex justify-end items-center p-4 gap-5'>
-            <div className=' flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
-              <p>Date Created</p>
-              <img src={calenderIcon} alt='' />
-            </div>
-
             <div className='relative'>
               <input
                 type='search'
@@ -112,7 +107,7 @@ function Productlist({
                   <th className='py-3 px-6 '>Product Name</th>
                   <th className='py-3 px-6 '>Code</th>
                   <th className='py-3 px-6 '>Type</th>
-                  <th className='py-3 px-6 '>Certified</th>
+                  <th className='py-3 px-6 '>Sustainable</th>
                   <th className='py-3 px-6 '>Unit Type</th>
                   <th className='py-3 px-6 '>Date Created</th>
                   <th className='py-3 px-6 '>Last Updated</th>
@@ -166,9 +161,12 @@ function Productlist({
                           )} . ${formTime(item.updated)}`}</span>
                         </td>
 
-                        <td className='py-5 px-6'>
-                          <BsThreeDots className='text-[20px]' />
-                        </td>
+                        <td className='py-5 px-6'></td>
+                        <Dropdown
+                          setDeactivateProduct={setDeactivateProduct}
+                          item={item}
+                          openModal={openModal}
+                        />
                       </tr>
                     );
                   })}

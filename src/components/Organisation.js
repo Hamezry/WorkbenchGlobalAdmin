@@ -78,17 +78,21 @@ function Organisation({ list, setList }) {
     //CLIENT API CALL
     axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/client/graph/${id}`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/client/graph/${id}`,
         options
       )
       .then((res) => {
         setClient(res.data);
-        console.log(res.data);
+        //console.log(res.data)
         const handleSum = (array) => {
           return array.reduce((acc, obj) => acc + obj.count, 0);
         };
+
         const count = handleSum(res.data.data);
         setOverallCount(count);
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .catch((err) => {
         console.log(err);
@@ -97,7 +101,7 @@ function Organisation({ list, setList }) {
     //TRANSACTION SUMMARY API CALL
     axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/transaction/summary/${id}`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/transaction/summary/${id}`,
         options
       )
       .then((res) => {
@@ -112,7 +116,7 @@ function Organisation({ list, setList }) {
     //TENANT SERVICE INFO API CALL
     axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/tenant/info/${id}`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/info/${id}`,
         options
       )
       .then((res) => {
@@ -129,11 +133,14 @@ function Organisation({ list, setList }) {
     //STOCK POSITION API CALL
     axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/stock/position/${id}`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/stock/position/${id}`,
         options
       )
       .then((res) => {
         setSummary(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .catch((err) => {
         console.log(err);
@@ -763,34 +770,34 @@ function Organisation({ list, setList }) {
             <div className='w-full overflow-x-auto p-5'>
               <table className='w-full over p-6'>
                 <thead>
-                  <tr class='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
-                    <th class='py-2 px-2 '>Commodity</th>
-                    <th class='py-2 px-2 '>Grade</th>
-                    <th class='py-2 px-2 '>Volume(MT)</th>
-                    <th class='py-2 px-2 '>Lien(MT)</th>
+                  <tr className='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
+                    <th className='py-2 px-2 '>Commodity</th>
+                    <th className='py-2 px-2 '>Grade</th>
+                    <th className='py-2 px-2 '>Volume(MT)</th>
+                    <th className='py-2 px-2 '>Lien(MT)</th>
                   </tr>
                 </thead>
 
-                <tbody class='text-[#54565B] text-[12px] font-light'>
+                <tbody className='text-[#54565B] text-[12px] font-light'>
                   {summary?.data?.map((item) => {
                     return (
-                      <tr class='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
-                        <td class='py-4 px-2'>
-                          <span class='font-medium'>{item.item_code}</span>
+                      <tr className='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
+                        <td className='py-4 px-2'>
+                          <span className='font-medium'>{item.item_code}</span>
                         </td>
 
-                        <td class='py-4 px-2 '>
-                          <span class='font-medium'>Grade{item.grade}</span>
+                        <td className='py-4 px-2 '>
+                          <span className='font-medium'>Grade{item.grade}</span>
                         </td>
 
-                        <td class='py-4 px-2'>
-                          <span class='font-medium '>
+                        <td className='py-4 px-2'>
+                          <span className='font-medium '>
                             {item.location_breakdown[0].volume}
                           </span>
                         </td>
 
-                        <td class='py-4 px-2'>
-                          <span class='font-medium '>
+                        <td className='py-4 px-2'>
+                          <span className='font-medium '>
                             {item.total_lien_weight}
                           </span>
                         </td>

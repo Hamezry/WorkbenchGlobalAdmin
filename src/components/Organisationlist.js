@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
-import DateModule from './Datemodule';
-import filterIcon from '../Assets/filter.svg';
-import { format } from 'date-fns';
-import Selectmodule from './Selectmodule';
-import Pagination from './Pagination';
-import OrganisationlistTile from './page-tiles/OrganizationlistTile';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
+import DateModule from "./Datemodule";
+import filterIcon from "../Assets/filter.svg";
+import { format } from "date-fns";
+import Selectmodule from "./Selectmodule";
+import Pagination from "./Pagination";
+import OrganisationlistTile from "./page-tiles/OrganizationlistTile";
 
 function Organisationlist({
   list,
@@ -15,14 +15,13 @@ function Organisationlist({
   setViewDeactivate,
 }) {
   const navigate = useNavigate();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const [posts, setPosts] = useState([]);
 
-
   const populate = () => {
-    setPosts(list.data ?? [])
-  }
+    setPosts(list.data ?? []);
+  };
 
   const [isDate, setIsDate] = useState(false);
 
@@ -37,18 +36,18 @@ function Organisationlist({
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
+    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
   };
   const formTime = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
+    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
 
   useEffect(() => {
-    populate()
+    populate();
 
     // eslint-disable-next-line
-  }, [list])
+  }, [list]);
 
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
@@ -85,7 +84,7 @@ function Organisationlist({
                     className='fill-current h-4 w-4'
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
                   </svg>
                 </button>
               </div>
@@ -103,7 +102,7 @@ function Organisationlist({
                     onClick={() => {
                       setIsDate(!isDate);
                     }}>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
                   </svg>
                   {isDate && <DateModule />}
                 </div>
@@ -157,7 +156,7 @@ function Organisationlist({
                             className='py-4 px-4 mr-10'
                             onClick={() => {
                               localStorage.setItem(
-                                'companyName',
+                                "companyName",
                                 item.company_name
                               );
                               navigate(`/organisation/${item.id}`);
@@ -169,7 +168,7 @@ function Organisationlist({
                             <div
                               onClick={() => {
                                 localStorage.setItem(
-                                  'companyName',
+                                  "companyName",
                                   item.company_name
                                 );
                                 navigate(`/organisation/${item.id}`);
@@ -199,9 +198,9 @@ function Organisationlist({
 
                           <td className='py-4 px-4 mr-10'>
                             <span className='font-medium '>
-                              {item.is_active === 'True'
-                                ? 'Active'
-                                : 'Inactive'}
+                              {item.is_active === "True"
+                                ? "Active"
+                                : "Inactive"}
                             </span>
                           </td>
 
@@ -217,7 +216,7 @@ function Organisationlist({
 
                           <td className='py-4 px-4'>
                             <span className='font-medium '>
-                              {item.csd_access === 'True' ? 'Yes' : 'No'}
+                              {item.csd_access === "True" ? "Yes" : "No"}
                             </span>
                           </td>
 
@@ -228,7 +227,7 @@ function Organisationlist({
                           </td>
 
                           <td className='py-4 px-4 text-center'>
-                            {item.is_active === 'True' ? (
+                            {item.is_active === "True" ? (
                               <div
                                 className=' bg-[#e55851] cursor-pointer rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'
                                 onClick={() => {

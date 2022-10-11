@@ -1,7 +1,7 @@
-import React from 'react';
-import africanMap from '../Assets/Map of Africa.svg';
-import { Link } from 'react-router-dom';
-import CountryTile from './page-tiles/CountryTile';
+import React from "react";
+import africanMap from "../Assets/Map of Africa.svg";
+import { Link } from "react-router-dom";
+import CountryTile from "./page-tiles/CountryTile";
 
 function Countrypage() {
   return (
@@ -14,8 +14,8 @@ function Countrypage() {
           <div className='flex border-b-2 w-full items-center gap-8'>
             <p className='border-b-2 border-b-[#38CB89]  py-5'>Heat Map</p>
             <Link to='/countrylist'>
-              {' '}
-              <span>Country List</span>{' '}
+              {" "}
+              <span>Country List</span>{" "}
             </Link>
           </div>
         </div>

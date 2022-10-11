@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
-import filterIcon from '../Assets/filter.svg';
-import calenderIcon from '../Assets/calendar.svg';
-import CountryTile from './page-tiles/CountryTile';
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
+import filterIcon from "../Assets/filter.svg";
+import calenderIcon from "../Assets/calendar.svg";
+import CountryTile from "./page-tiles/CountryTile";
 
 function Countrylist({ country }) {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ function Countrylist({ country }) {
         <div className='flex items-center w-[100%] h-[10%] p-4'>
           <div className='flex w-full border-b-2 items-center gap-8'>
             <Link to='/countrypage'>
-              {' '}
-              <p>Heat Map</p>{' '}
+              {" "}
+              <p>Heat Map</p>{" "}
             </Link>
             <span className='border-b-2 py-5  border-b-[#38CB89] '>
               Country List
@@ -39,8 +39,8 @@ function Countrylist({ country }) {
             <div className='flex justify-between items-center pl-5 gap-5'>
               <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
                 <p>
-                  {' '}
-                  <span>Show </span> 100 Entries{' '}
+                  {" "}
+                  <span>Show </span> 100 Entries{" "}
                 </p>
                 <img src={calenderIcon} alt='' />
               </div>
@@ -99,11 +99,11 @@ function Countrylist({ country }) {
                           className='py-4 px-8'
                           onClick={() => {
                             localStorage.setItem(
-                              'companyName',
+                              "companyName",
                               item.company_name
                             );
                             localStorage.setItem(
-                              'countryFlag',
+                              "countryFlag",
                               item.country_flag
                             );
                             alert(item.name);
@@ -116,11 +116,11 @@ function Countrylist({ country }) {
                           className=' flex mt-2 gap-2 py-4 px-8 w-[190px]'
                           onClick={() => {
                             localStorage.setItem(
-                              'companyName',
+                              "companyName",
                               item.company_name
                             );
                             localStorage.setItem(
-                              'countryFlag',
+                              "countryFlag",
                               item.country_flag
                             );
                             navigate(`/country/${item.pk}`);

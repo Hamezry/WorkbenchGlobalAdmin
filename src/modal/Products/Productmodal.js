@@ -1,14 +1,14 @@
-import React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
 
-const url = 'https://wb-temp.afexnigeria.com/WB3/api/v1/create-product';
+const url = "https://wb-temp.afexnigeria.com/WB3/api/v1/create-product";
 
 function Productmodal({ setModal }) {
-  const [productName, setProductName] = useState('');
-  const [productVolume, setProductVolume] = useState('');
-  const [productType, setProductType] = useState('');
-  const [unitType, setUnitType] = useState('');
+  const [productName, setProductName] = useState("");
+  const [productVolume, setProductVolume] = useState("");
+  const [productType, setProductType] = useState("");
+  const [unitType, setUnitType] = useState("");
   const [certified, setCertified] = useState(false);
 
   console.log(certified);

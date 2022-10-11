@@ -38,11 +38,9 @@ const ServiceModal = ({ show, close, activate, deactivate, active }) => {
               !active
                 ? () => {
                     activate();
-                    close();
                   }
                 : () => {
                     deactivate();
-                    close();
                   }
             }
             className={`p-3 flex-1 w-full rounded-xl ring-1 text-white hover:bg-white ${

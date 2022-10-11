@@ -123,7 +123,7 @@ function Productlist({
                     return (
                       <tr
                         key={index}
-                        className='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
+                        className='text-left border-b border-gray-200 hover:bg-[#e3f7ee] relative'>
                         <td className='py-5 px-6'>
                           <span className='font-medium'>{index + 1}</span>
                         </td>
@@ -162,12 +162,14 @@ function Productlist({
                           )} . ${formTime(item.updated)}`}</span>
                         </td>
 
-                        <td className='py-5 px-6'></td>
-                        <Dropdown
-                          setDeactivateProduct={setDeactivateProduct}
-                          item={item}
-                          openModal={openModal}
-                        />
+                        <td className='py-5 px-6 relative'>
+
+                          <Dropdown
+                            setDeactivateProduct={setDeactivateProduct}
+                            item={item}
+                            openModal={openModal}
+                          />
+                        </td>
                       </tr>
                     );
                   })}

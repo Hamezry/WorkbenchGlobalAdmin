@@ -17,139 +17,150 @@ import Products from '../components/Products';
 import Sidebar from '../components/Sidebar';
 import Activatemodal from '../modal/Tenants/Activatemodal';
 import Deactivatemodal from '../modal/Tenants/Deactivatemodal';
+import DeactivateProductmodal from '../modal/Products/DeactivateProductmodal'
 
 const Authenticated = () => {
-  const [modal, setModal] = useState(false);
-  const [viewNotification, setViewNotification] = useState(false);
-  const [viewFilter, setViewFilter] = useState(false);
-  const [viewAdminModal, setViewAdminModal] = useState(false);
-  const [viewActivate, setViewActivate] = useState(false);
-  const [viewDeactivate, setViewDeactivate] = useState(false);
-  const [list, setList] = useState([]);
-  const [plist, setPlist] = useState([]);
-  const [country, setCountry] = useState([]);
-  const [productsLoaded, setProductsLoaded] = useState(false);
-  const [modalData, setModalData] = useState({});
-  const token = localStorage.getItem('workbench-app-token');
+    const [modal, setModal] = useState(false);
+    const [viewNotification, setViewNotification] = useState(false);
+    const [viewFilter, setViewFilter] = useState(false);
+    const [viewAdminModal, setViewAdminModal] = useState(false);
+    const [viewActivate, setViewActivate] = useState(false);
+    const [viewDeactivate, setViewDeactivate] = useState(false);
+    const [deactivateProduct, setDeactivateProduct] = useState(false);
+    const [list, setList] = useState([]);
+    const [plist, setPlist] = useState([]);
+    const [country, setCountry] = useState([]);
+    const [productsLoaded, setProductsLoaded] = useState(false);
+    const [modalData, setModalData] = useState({});
+    const token = localStorage.getItem('workbench-app-token');
 
-  useEffect(() => {
-    const options = {
-      headers: { Authorization: `WB3 ${token}` },
-    };
+    useEffect(() => {
+        const options = {
+            headers: { Authorization: `WB3 ${token}` },
+        };
 
-    axios
-      .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/list`)
-      .then((res) => {
-        const response = res.data.data;
-        manager.decrypt(response);
-        setList(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        axios
+            .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/list`)
+            .then((res) => {
+                const response = res.data.data;
+                manager.decrypt(response);
+                setList(res.data);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
-    axios
-      .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/countries`, options)
-      .then((res) => {
-        setCountry(res.data);
-        //console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+        axios
+            .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/countries`, options)
+            .then((res) => {
+                setCountry(res.data);
+                //console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // eslint-disable-next-line
+    }, []);
 
-  function openModal(item) {
-    setModalData(item);
-  }
+    function openModal(item) {
+        setModalData(item);
+    }
 
-  return (
-    <div className='bg-[#FFFFFF] text-[#54565B]'>
-      <Navbar setViewNotification={setViewNotification} />
+    return (
+        <div className='bg-[#FFFFFF] text-[#54565B]'>
+            <Navbar setViewNotification={setViewNotification} />
 
-      <div className='flex h-[calc(100vh-90px)]'>
-        <Sidebar />
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Organisationlist
-                list={list}
-                setList={setList}
-                setViewActivate={setViewActivate}
-                setViewDeactivate={setViewDeactivate}
-                openModal={openModal}
-              />
-            }
-          />
-          <Route
-            path='/organisation/:id'
-            element={<Organisation list={list} setList={setList} />}
-          />
-          <Route
-            path='/products'
-            element={
-              <Products
-                setList={setPlist}
-                productsLoaded={productsLoaded}
-                setProductsLoaded={setProductsLoaded}
-                setModal={setModal}
-              />
-            }
-          />
-          <Route
-            path='/productlist'
-            element={
-              <Productlist
-                list={plist}
-                setViewFilter={setViewFilter}
-                setProductsLoaded={setProductsLoaded}
-                productsLoaded={productsLoaded}
-                setModal={setModal}
-              />
-            }
-          />
-          <Route path='/countrypage' element={<Countrypage />} />
-          <Route
-            path='/countrylist'
-            element={<Countrylist country={country} setCountry={setCountry} />}
-          />
-          <Route
-            path='/country/:id'
-            element={
-              <Country
-                setViewAdminModal={setViewAdminModal}
-                country={country}
-                setCountry={setCountry}
-              />
-            }
-          />
-        </Routes>
-      </div>
+            <div className='flex h-[calc(100vh-90px)]'>
+                <Sidebar />
+                <Routes>
+                    <Route
+                        path='/'
+                        element={
+                            <Organisationlist
+                                list={list}
+                                setList={setList}
+                                setViewActivate={setViewActivate}
+                                setViewDeactivate={setViewDeactivate}
+                                openModal={openModal}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/organisation/:id'
+                        element={<Organisation list={list} setList={setList} />}
+                    />
+                    <Route
+                        path='/products'
+                        element={
+                            <Products
+                                setList={setPlist}
+                                productsLoaded={productsLoaded}
+                                setProductsLoaded={setProductsLoaded}
+                                setModal={setModal}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/productlist'
+                        element={
+                            <Productlist
+                                list={plist}
+                                setViewFilter={setViewFilter}
+                                setProductsLoaded={setProductsLoaded}
+                                productsLoaded={productsLoaded}
+                                setModal={setModal}
+                                setDeactivateProduct={setDeactivateProduct}
+                            />
+                        }
+                    />
+                    <Route path='/countrypage' element={<Countrypage />} />
+                    <Route
+                        path='/countrylist'
+                        element={<Countrylist country={country} setCountry={setCountry} />}
+                    />
+                    <Route
+                        path='/country/:id'
+                        element={
+                            <Country
+                                setViewAdminModal={setViewAdminModal}
+                                country={country}
+                                setCountry={setCountry}
+                            />
+                        }
+                    />
+                </Routes>
+            </div>
 
-      {modal && <Productmodal setModal={setModal} />}
-      {viewNotification && (
-        <Notificationmodal setViewNotification={setViewNotification} />
-      )}
-      {viewFilter && <Filtermodal setViewFilter={setViewFilter} />}
-      {viewAdminModal && <Adminmodal setViewAdminModal={setViewAdminModal} />}
-      {viewActivate && (
-        <Activatemodal
-          modalData={modalData}
-          setViewActivate={setViewActivate}
-          openModal={openModal}
-        />
-      )}
-      {viewDeactivate && (
-        <Deactivatemodal
-          modalData={modalData}
-          setViewDeactivate={setViewDeactivate}
-          openModal={openModal}
-        />
-      )}
-    </div>
-  );
+            {modal && <Productmodal setModal={setModal} />}
+            {viewNotification && (
+                <Notificationmodal setViewNotification={setViewNotification} />
+            )}
+            {viewFilter && <Filtermodal setViewFilter={setViewFilter} />}
+            {viewAdminModal && <Adminmodal setViewAdminModal={setViewAdminModal} />}
+            {viewActivate && (
+                <Activatemodal
+                    modalData={modalData}
+                    setViewActivate={setViewActivate}
+                    openModal={openModal}
+                />
+            )}
+            {viewDeactivate && (
+                <Deactivatemodal
+                    modalData={modalData}
+                    setViewDeactivate={setViewDeactivate}
+                    openModal={openModal}
+                />
+            )}
+            {deactivateProduct && (
+                <DeactivateProductmodal
+                    modalData={modalData}
+                    setDeactivateProduct={setDeactivateProduct}
+                    openModal={openModal}
+                />
+            )}
+        </div>
+    );
 };
 
 export default Authenticated;

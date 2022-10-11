@@ -2,7 +2,7 @@ import React from "react";
 import ladyIcon from "../Assets/ladyicon.svg";
 
 
-function Activatesuccess({ setView, setPage, setViewActivate, setViewDeactivate }) {
+function Activatesuccess({ setViewActivate, setViewDeactivate }) {
   return (
     <div className="bg-[#FFFFFF] flex flex-col items-center absolute w-[600px] h-[490px] left-[35%] mt-[10%] rounded-3xl px-6">
       <div className="flex flex-col gap-5 mb-6 mt-14 items-center p-1 text-center">
@@ -18,8 +18,6 @@ function Activatesuccess({ setView, setPage, setViewActivate, setViewDeactivate 
           <button
             onClick={() => {
               setViewActivate(false);
-              setPage(false);
-              setView(true);
             }}
           >
             Close

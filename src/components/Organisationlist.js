@@ -1,8 +1,8 @@
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import DateModule from './Datemodule';
 import filterIcon from '../Assets/filter.svg';
-import { useState } from 'react';
 import { format } from 'date-fns';
 import Selectmodule from './Selectmodule';
 import Pagination from './Pagination';
@@ -17,10 +17,17 @@ function Organisationlist({
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
+  const [posts, setPosts] = useState([]);
+
+
+  const populate = () => {
+    setPosts(list.data ?? [])
+  }
+
   const [isDate, setIsDate] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
+  const [postsPerPage] = useState(7);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -36,6 +43,12 @@ function Organisationlist({
     const date = new Date(datex);
     return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
   };
+
+  useEffect(() => {
+    populate()
+
+    // eslint-disable-next-line
+  }, [list])
 
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
@@ -139,7 +152,7 @@ function Organisationlist({
                       return (
                         <tr
                           key={index}
-                          classNameName=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
+                          className=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
                           <td
                             className='py-4 px-4 mr-10'
                             onClick={() => {
@@ -244,11 +257,13 @@ function Organisationlist({
 
             {/*SLIDER*/}
             <div className='flex justify-between p-3 mt-4 bg-[#F9F9F9] items-center'>
-              <p>1 - 7 of 80 Entries</p>
+              <p>1 - 7 of {posts.length} Entries</p>
               <Pagination
                 postsPerPage={postsPerPage}
-                totalPosts={list.length}
+                totalPosts={posts.length}
                 setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                perPage={postsPerPage}
               />
 
               {/* <div className="flex items-center gap-5">

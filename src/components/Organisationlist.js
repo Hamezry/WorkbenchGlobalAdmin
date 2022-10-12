@@ -21,11 +21,11 @@ function Organisationlist({
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
+    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
   };
   const formTime = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
+    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
 
   //PAGINATION FUNCTION
@@ -44,10 +44,10 @@ function Organisationlist({
 
 
   useEffect(() => {
-    populate()
+    populate();
 
     // eslint-disable-next-line
-  }, [list])
+  }, [list]);
 
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
@@ -84,7 +84,7 @@ function Organisationlist({
                     className='fill-current h-4 w-4'
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
                   </svg>
                 </button>
               </div>
@@ -102,7 +102,7 @@ function Organisationlist({
                     onClick={() => {
                       setIsDate(!isDate);
                     }}>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
                   </svg>
                   {isDate && <DateModule />}
                 </div>
@@ -206,9 +206,9 @@ function Organisationlist({
 
                           <td className='py-4 px-4 mr-10'>
                             <span className='font-medium '>
-                              {item.is_active === 'True'
-                                ? 'Active'
-                                : 'Inactive'}
+                              {item.is_active === "True"
+                                ? "Active"
+                                : "Inactive"}
                             </span>
                           </td>
 
@@ -224,7 +224,7 @@ function Organisationlist({
 
                           <td className='py-4 px-4'>
                             <span className='font-medium '>
-                              {item.csd_access === 'True' ? 'Yes' : 'No'}
+                              {item.csd_access === "True" ? "Yes" : "No"}
                             </span>
                           </td>
 
@@ -235,7 +235,7 @@ function Organisationlist({
                           </td>
 
                           <td className='py-4 px-4 text-center'>
-                            {item.is_active === 'True' ? (
+                            {item.is_active === "True" ? (
                               <div
                                 className=' bg-[#e55851] cursor-pointer rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'
                                 onClick={() => {

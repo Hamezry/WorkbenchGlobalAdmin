@@ -17,8 +17,8 @@ function Countrylist({ country, openModal }) {
         <div className='flex items-center w-[100%] h-[10%] p-4'>
           <div className='flex w-full border-b-2 items-center gap-8'>
             <Link to='/countrypage'>
-              {' '}
-              <p>Heat Map</p>{' '}
+              {" "}
+              <p>Heat Map</p>{" "}
             </Link>
             <span className='border-b-2 py-5  border-b-[#38CB89] '>
               Country List
@@ -39,8 +39,8 @@ function Countrylist({ country, openModal }) {
             <div className='flex justify-between items-center pl-5 gap-5'>
               <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
                 <p>
-                  {' '}
-                  <span>Show </span> 100 Entries{' '}
+                  {" "}
+                  <span>Show </span> 100 Entries{" "}
                 </p>
                 <img src={calenderIcon} alt='' />
               </div>

@@ -29,7 +29,7 @@ function Productlist({
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
+    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
   };
 
   // const [showElement, setShowElement] = React.useState(true);
@@ -88,7 +88,7 @@ function Productlist({
       <div className=' flex justify-between items-center w-full h-[calc(100vh-3%)] rounded py-8 px-8 bg-[#F9F9F9] text-[#54565B] text-[14px]'>
         <div className='bg-[#FFFFFF] rounded-3xl w-full py-5 px-8 h-[100%]'>
           <div className='p-4 text-[18px] border-b-2'>
-            {' '}
+            {" "}
             <p>Overview</p>
           </div>
 
@@ -198,7 +198,6 @@ function Productlist({
                         </td>
 
                         <td className='py-5 px-6 relative'>
-
                           <Dropdown
                             setDeactivateProduct={setDeactivateProduct}
                             item={item}

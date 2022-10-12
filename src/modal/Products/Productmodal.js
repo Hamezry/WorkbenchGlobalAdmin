@@ -1,8 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
 
-const url = 'https://wb-temp.afexnigeria.com/WB3/api/v1/create-product';
+const url = "https://wb-temp.afexnigeria.com/WB3/api/v1/create-product";
 
 function Productmodal({ setModal, modalData }) {
   const [product, setProduct] = useState(modalData)

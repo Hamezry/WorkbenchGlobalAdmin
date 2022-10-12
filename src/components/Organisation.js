@@ -18,9 +18,14 @@ import {
   PlantModal,
   RegistrationModal,
   VerificationModal,
-} from '../modal/service-list';
+} from "../modal/service-list";
 
 function Organisation({ list, setList }) {
+  const token = localStorage.getItem('workbench-app-token');
+  const options = {
+    headers: { Authorization: `WB3 ${token}` },
+  };
+
   const [isDate, setIsDate] = useState(false);
 
   const [userCount, setUserCount] = useState(true);
@@ -69,84 +74,99 @@ function Organisation({ list, setList }) {
   const closeModal = () => {
     setModals(intial_modal_state);
   };
+  /**
+   *
+   * @param {'accounting_setting' | 'csd_setting' | 'ewr_setting' | 'logistics_setting' | 'overage_setting' | 'plant_setting' | 'registration_setting' | 'verification_setting'} setting
+   * @param {'True' | 'False'} value
+   */
+  const change_status = async (setting, value) => {
+    console.log(switch_list);
+    const response = await axios.post(
+      `https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/update/setting/${id}`,
+      {
+        setting: setting,
+        value: value,
+      },
+      options
+    );
 
-  const token = localStorage.getItem('workbench-app-token');
+    if (!response.data || response.data.responseCode !== '100') return;
 
-  useEffect(() => {
-    const options = {
-      headers: { Authorization: `WB3 ${token}` },
+    await fetchServiceListInfo();
+    closeModal();
+  };
+
+  // API Requests
+  const fetchClientGraph = async () => {
+    const res = await axios.get(
+      `https://wb-temp.afexnigeria.com/WB3/api/v1/client/graph/${id}`,
+      options
+    );
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setClient(res.data);
+
+    const handleSum = (array) => {
+      return array.reduce((acc, obj) => acc + obj.count, 0);
     };
 
-    //CLIENT API CALL
-    axios
-      .get(
-        `https://wb-temp.afexnigeria.com/WB3/api/v1/client/graph/${id}`,
-        options
-      )
-      .then((res) => {
-        setClient(res.data);
-        //console.log(res.data)
-        const handleSum = (array) => {
-          return array.reduce((acc, obj) => acc + obj.count, 0);
-        };
+    const count = handleSum(res.data.data);
+    setOverallCount(count);
+  };
 
-        const count = handleSum(res.data.data);
-        setOverallCount(count);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const fetchClientTransactions = async () => {
+    const res = await axios.get(
+      `https://wb-temp.afexnigeria.com/WB3/api/v1/transaction/summary/${id}`,
+      options
+    );
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setTransaction(res.data.data);
+  };
+
+  const fetchServiceListInfo = async () => {
+    const res = await axios.get(
+      `https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/info/${id}`,
+      options
+    );
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setService(res.data.data);
+
+    const switchList = res.data.data.service_list;
+
+    setSwitchList((prev) => ({ ...prev, ...switchList }));
+  };
+
+  const fetchStockPositon = async () => {
+    const res = axios.get(
+      `https://wb-temp.afexnigeria.com/WB3/api/v1/stock/position/${id}`,
+      options
+    );
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setSummary(res.data);
+  };
+
+  useEffect(() => {
+    //CLIENT API CALL
+    fetchClientGraph();
 
     //TRANSACTION SUMMARY API CALL
-    axios
-      .get(
-        `https://wb-temp.afexnigeria.com/WB3/api/v1/transaction/summary/${id}`,
-        options
-      )
-      .then((res) => {
-        setTransaction(res.data.data);
-        //console.log(res.data)
-        //console.log(res.data.data.dispatches.total_net_weight)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchClientTransactions();
 
     //TENANT SERVICE INFO API CALL
-    axios
-      .get(
-        `https://wb-temp.afexnigeria.com/WB3/api/v1/tenant/info/${id}`,
-        options
-      )
-      .then((res) => {
-        setService(res.data.data);
-
-        const switchList = res.data.data.service_list;
-
-        setSwitchList((prev) => ({ ...prev, switchList }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchServiceListInfo();
 
     //STOCK POSITION API CALL
-    axios
-      .get(
-        `https://wb-temp.afexnigeria.com/WB3/api/v1/stock/position/${id}`,
-        options
-      )
-      .then((res) => {
-        setSummary(res.data);
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    fetchStockPositon();
 
-  }, [id, token]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
@@ -257,17 +277,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_gross_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_net_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_units
-                        : '0'}
+                        : "0"}
                     </td>
                   </tr>
 
@@ -278,17 +298,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_gross_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_net_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_units
-                        : '0'}
+                        : "0"}
                     </td>
                   </tr>
 
@@ -315,17 +335,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_gross_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_net_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_units
-                        : '0'}
+                        : "0"}
                     </td>
                   </tr>
 
@@ -336,17 +356,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_gross_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_net_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_units
-                        : '0'}
+                        : "0"}
                     </td>
                   </tr>
 
@@ -372,17 +392,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_gross_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_net_weight
-                        : '0'}
+                        : "0"}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_units
-                        : '0'}
+                        : "0"}
                     </td>
                   </tr>
                 </tbody>
@@ -408,7 +428,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('account');
+                      showModal("account");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
 
@@ -417,17 +437,11 @@ function Organisation({ list, setList }) {
                       show={modalsService.account}
                       close={closeModal}
                       activate={() =>
-                        setSwitchList((prev) => ({
-                          ...prev,
-                          accounting_setting: true,
-                        }))
+                        change_status('accounting_setting', 'True')
                       }
                       active={switch_list.accounting_setting}
                       deactivate={() =>
-                        setSwitchList((prev) => ({
-                          ...prev,
-                          accounting_setting: false,
-                        }))
+                        change_status('accounting_setting', 'False')
                       }
                     />
                   )}
@@ -445,26 +459,16 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('csd');
+                      showModal("csd");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                   {modalsService.csd && (
                     <CSDModal
                       show={modalsService.csd}
                       close={closeModal}
-                      activate={() =>
-                        setSwitchList((prev) => ({
-                          ...prev,
-                          csd_setting: true,
-                        }))
-                      }
+                      activate={() => change_status('csd_setting', 'True')}
                       active={switch_list.csd_setting}
-                      deactivate={() =>
-                        setSwitchList((prev) => ({
-                          ...prev,
-                          csd_setting: false,
-                        }))
-                      }
+                      deactivate={() => change_status('csd_setting', 'False')}
                     />
                   )}
                 </label>
@@ -481,7 +485,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('ewr');
+                      showModal("ewr");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -489,13 +493,9 @@ function Organisation({ list, setList }) {
                   <EWRModal
                     show={modalsService.ewr}
                     close={closeModal}
-                    activate={() =>
-                      setSwitchList((prev) => ({ ...prev, ewr_setting: true }))
-                    }
+                    activate={() => change_status('ewr_setting', 'True')}
                     active={switch_list.ewr_setting}
-                    deactivate={() =>
-                      setSwitchList((prev) => ({ ...prev, ewr_setting: false }))
-                    }
+                    deactivate={() => change_status('ewr_setting', 'False')}
                   />
                 )}
               </div>
@@ -511,7 +511,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('logistic');
+                      showModal("logistic");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -519,18 +519,10 @@ function Organisation({ list, setList }) {
                   <LogisticsModal
                     show={modalsService.logistic}
                     close={closeModal}
-                    activate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        logistics_setting: true,
-                      }))
-                    }
+                    activate={() => change_status('logistics_setting', 'True')}
                     active={switch_list.logistics_setting}
                     deactivate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        logistics_setting: false,
-                      }))
+                      change_status('logistics_setting', 'False')
                     }
                   />
                 )}
@@ -547,7 +539,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('overage');
+                      showModal("overage");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -555,19 +547,9 @@ function Organisation({ list, setList }) {
                   <OverageModal
                     show={modalsService.overage}
                     close={closeModal}
-                    activate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        overage_setting: true,
-                      }))
-                    }
+                    activate={() => change_status('overage_setting', 'True')}
                     active={switch_list.overage_setting}
-                    deactivate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        overage_setting: false,
-                      }))
-                    }
+                    deactivate={() => change_status('overage_setting', 'False')}
                   />
                 )}
               </div>
@@ -583,7 +565,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('plant');
+                      showModal("plant");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -591,19 +573,9 @@ function Organisation({ list, setList }) {
                   <PlantModal
                     show={modalsService.plant}
                     close={closeModal}
-                    activate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        plant_setting: true,
-                      }))
-                    }
+                    activate={() => change_status('plant_setting', 'True')}
                     active={switch_list.plant_setting}
-                    deactivate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        plant_setting: false,
-                      }))
-                    }
+                    deactivate={() => change_status('plant_setting', 'False')}
                   />
                 )}
               </div>
@@ -619,7 +591,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('reg');
+                      showModal("reg");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -628,17 +600,11 @@ function Organisation({ list, setList }) {
                     show={modalsService.reg}
                     close={closeModal}
                     activate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        registration_setting: true,
-                      }))
+                      change_status('registration_setting', 'True')
                     }
                     active={switch_list.registration_setting}
                     deactivate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        registration_setting: false,
-                      }))
+                      change_status('registration_setting', 'False')
                     }
                   />
                 )}
@@ -655,7 +621,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal('verification');
+                      showModal("verification");
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -664,17 +630,11 @@ function Organisation({ list, setList }) {
                     show={modalsService.verification}
                     close={closeModal}
                     activate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        registration_setting: true,
-                      }))
+                      change_status('verification_setting', 'True')
                     }
                     active={switch_list.registration_setting}
                     deactivate={() =>
-                      setSwitchList((prev) => ({
-                        ...prev,
-                        registration_setting: false,
-                      }))
+                      change_status('verification_setting', 'False')
                     }
                   />
                 )}
@@ -691,11 +651,11 @@ function Organisation({ list, setList }) {
                       User Account
                     </p>
                     <p>
-                      {' '}
+                      {" "}
                       <span className='text-[#9FA19C]'>
-                        {service.users ? service.users.active : '0'}{' '}
+                        {service.users ? service.users.active : "0"}{" "}
                       </span>
-                      /{service.users ? service.users.total : '0'}
+                      /{service.users ? service.users.total : "0"}
                     </p>
                   </div>
 
@@ -723,16 +683,16 @@ function Organisation({ list, setList }) {
                       Storage Capacity (MT)
                     </p>
                     <p>
-                      {' '}
+                      {" "}
                       <span className='text-[#9FA19C]'>
                         {service.storage_capacity
                           ? service.storage_capacity.total_capacity
-                          : '0'}{' '}
+                          : "0"}{" "}
                       </span>
                       /
                       {service.storage_capacity
                         ? service.storage_capacity.total_utilization
-                        : '0'}
+                        : "0"}
                     </p>
                   </div>
 
@@ -753,11 +713,11 @@ function Organisation({ list, setList }) {
 
               <div className=' bg-[#FFFF] w-full h-[50%] rounded-xl p-8 items-center flex gap-14'>
                 <p className='text-[25px]'>
-                  {' '}
+                  {" "}
                   <span className='text-[14px]'>
                     Warehouse Count
-                  </span> <br />{' '}
-                  {service.warehouse_count ? service.warehouse_count : '0'}
+                  </span> <br />{" "}
+                  {service.warehouse_count ? service.warehouse_count : "0"}
                 </p>
               </div>
             </div>

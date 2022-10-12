@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+
 import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import filterIcon from '../Assets/filter.svg';
 import calenderIcon from '../Assets/calendar.svg';
 import CountryTile from './page-tiles/CountryTile';
+import Pagination from './Pagination';
 
-function Countrylist({ country }) {
-  const navigate = useNavigate();
+function Countrylist({ country, openModal }) {
 
   return (
     <div className='w-[82%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
@@ -97,42 +97,37 @@ function Countrylist({ country }) {
                         className=' text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]'>
                         <td
                           className='py-4 px-8'
-                          onClick={() => {
-                            localStorage.setItem(
-                              'companyName',
-                              item.company_name
-                            );
-                            localStorage.setItem(
-                              'countryFlag',
-                              item.country_flag
-                            );
-                            alert(item.name);
-                            navigate(`/country/${item.pk}`);
-                          }}>
+                        // onClick={() => {
+                        //   localStorage.setItem(
+                        //     'companyName',
+                        //     item.company_name
+                        //   );
+                        //   localStorage.setItem(
+                        //     'countryFlag',
+                        //     item.country_flag
+                        //   );
+                        //   alert(item.name);
+                        //   navigate(`/country/${item.pk}`);
+                        // }}
+                        >
                           <span className='font-medium'>{index + 1}</span>
                         </td>
 
                         <td
-                          className=' flex mt-2 gap-2 py-4 px-8 w-[190px]'
-                          onClick={() => {
-                            localStorage.setItem(
-                              'companyName',
-                              item.company_name
-                            );
-                            localStorage.setItem(
-                              'countryFlag',
-                              item.country_flag
-                            );
-                            navigate(`/country/${item.pk}`);
-                          }}>
-                          <div className='flex gap-3'>
-                            <img
-                              src={item.country_flag}
-                              className='w-[22px] rounded'
-                              alt=''
-                            />
-                            <span className='font-medium '>{item.name}</span>
-                          </div>
+                          className=' flex mt-2 gap-2 py-4 px-8 w-[190px]' >
+
+                          <Link to={`/country/${item.pk}`}>
+                            <div className='flex gap-3'>
+                              <img
+                                src={item.country_flag}
+                                className='w-[22px] rounded'
+                                alt=''
+                              />
+                              <span className='font-medium '>{item.name}</span>
+                            </div>
+                          </Link>
+
+
                         </td>
 
                         <td className='py-4 px-8'>
@@ -162,7 +157,7 @@ function Countrylist({ country }) {
                         </td>
 
                         <td className='py-4 px-8  '>
-                          <Link to='/country'>
+                          <Link to={`/country/${item.pk}`}>
                             <span className='font-medium text-cyan-400 '>
                               View Dashboard
                             </span>
@@ -178,19 +173,7 @@ function Countrylist({ country }) {
             <div className='flex justify-between p-2 rounded-2xl bg-[#F9F9F9] items-center'>
               <p>1 - 7 of 80 Entries</p>
 
-              <div className='flex items-center gap-5'>
-                <span className='py-2 px-3 text-[#9FA19C] rounded-lg  bg-[#F3F3F3]'>
-                  &#60;
-                </span>
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>....</span>
-                <span>10</span>
-                <span className='py-2 px-3 text-white rounded-lg  bg-[#38CB89] '>
-                  &#62;
-                </span>
-              </div>
+              <Pagination />
             </div>
           </div>
         </div>

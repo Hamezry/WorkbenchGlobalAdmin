@@ -12,21 +12,18 @@ import Notificationmodal from '../modal/Navbar/Notificationmodal';
 import Organisation from '../components/Organisation';
 import Organisationlist from '../components/Organisationlist';
 import Productlist from '../components/Productlist';
-import Productmodal from '../modal/Products/Productmodal';
 import Products from '../components/Products';
 import Sidebar from '../components/Sidebar';
 import Activatemodal from '../modal/Tenants/Activatemodal';
 import Deactivatemodal from '../modal/Tenants/Deactivatemodal';
-import DeactivateProductmodal from '../modal/Products/DeactivateProductmodal'
+
 
 const Authenticated = () => {
-    const [modal, setModal] = useState(false);
     const [viewNotification, setViewNotification] = useState(false);
     const [viewFilter, setViewFilter] = useState(false);
     const [viewAdminModal, setViewAdminModal] = useState(false);
     const [viewActivate, setViewActivate] = useState(false);
     const [viewDeactivate, setViewDeactivate] = useState(false);
-    const [deactivateProduct, setDeactivateProduct] = useState(false);
     const [list, setList] = useState([]);
     const [plist, setPlist] = useState([]);
     const [country, setCountry] = useState([]);
@@ -45,7 +42,7 @@ const Authenticated = () => {
                 const response = res.data.data;
                 manager.decrypt(response);
                 setList(res.data);
-                console.log(res.data);
+                //console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -55,13 +52,13 @@ const Authenticated = () => {
             .get(`https://wb-temp.afexnigeria.com/WB3/api/v1/countries`, options)
             .then((res) => {
                 setCountry(res.data);
-                //console.log(res.data)
+                //console.log(res.data.data)
             })
             .catch((err) => {
                 console.log(err);
             });
-        // eslint-disable-next-line
-    }, []);
+
+    }, [token]);
 
     function openModal(item) {
         setModalData(item);
@@ -97,7 +94,7 @@ const Authenticated = () => {
                                 setList={setPlist}
                                 productsLoaded={productsLoaded}
                                 setProductsLoaded={setProductsLoaded}
-                                setModal={setModal}
+
                             />
                         }
                     />
@@ -109,15 +106,19 @@ const Authenticated = () => {
                                 setViewFilter={setViewFilter}
                                 setProductsLoaded={setProductsLoaded}
                                 productsLoaded={productsLoaded}
-                                setModal={setModal}
-                                setDeactivateProduct={setDeactivateProduct}
                             />
                         }
                     />
                     <Route path='/countrypage' element={<Countrypage />} />
                     <Route
                         path='/countrylist'
-                        element={<Countrylist country={country} setCountry={setCountry} />}
+                        element={
+                            <Countrylist
+                                country={country}
+                                setCountry={setCountry}
+                                openModal={openModal}
+                            />
+                        }
                     />
                     <Route
                         path='/country/:id'
@@ -132,7 +133,6 @@ const Authenticated = () => {
                 </Routes>
             </div>
 
-            {modal && <Productmodal setModal={setModal} />}
             {viewNotification && (
                 <Notificationmodal setViewNotification={setViewNotification} />
             )}
@@ -152,13 +152,7 @@ const Authenticated = () => {
                     openModal={openModal}
                 />
             )}
-            {deactivateProduct && (
-                <DeactivateProductmodal
-                    modalData={modalData}
-                    setDeactivateProduct={setDeactivateProduct}
-                    openModal={openModal}
-                />
-            )}
+
         </div>
     );
 };

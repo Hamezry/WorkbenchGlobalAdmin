@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Popover, Text } from '@mantine/core';
 import { BsThreeDots } from "react-icons/bs";
 
-function Dropdown({ setDeactivateProduct, item, openModal }) {
+function ProductDropdown({ setDeactivateProduct, item, setModal, openModal }) {
     const [opened, setOpened] = useState(false);
 
     return (
@@ -21,12 +21,18 @@ function Dropdown({ setDeactivateProduct, item, openModal }) {
             </Popover.Target>
 
             <Popover.Dropdown>
-                <Text size="sm" >Update</Text>
+                <Text size="sm"
+                    onClick={() => {
+
+                        setModal(true)
+                        setOpened(false)
+
+
+                    }} >Update</Text>
                 <Text size="sm"
                     onClick={() => {
                         setOpened(false)
                         setDeactivateProduct(true);
-                        console.log(openModal(item.pk))
 
 
                     }}>Deactivate</Text>
@@ -35,4 +41,4 @@ function Dropdown({ setDeactivateProduct, item, openModal }) {
     )
 }
 
-export default Dropdown;
+export default ProductDropdown;

@@ -1,18 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import ladyIcon from "../../Assets/ladyicon.svg";
 
-function Deactivate({ setDeactivateProduct, modalData }) {
-    const changeStatus = () => {
+function Deactivate({ setDeactivateProduct, modalData, deactivate }) {
 
-        axios.get(`https://wb3test.afexnigeria.com/WB3/api/v1/product/change/status/${modalData.id}`)
-            .then((res) => {
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }
 
 
 
@@ -42,7 +32,7 @@ function Deactivate({ setDeactivateProduct, modalData }) {
                         <button
                             onClick={() => {
                                 setDeactivateProduct(false)
-                                changeStatus();
+                                deactivate();
                                 console.log(modalData)
                             }}
                         >

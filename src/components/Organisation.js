@@ -4,7 +4,6 @@ import chatIcon from '../Assets/circBar.svg';
 import profIcon from '../Assets/profile.svg';
 import dot from '../Assets/Ellipse.svg';
 import filterIcon from '../Assets/filter.svg';
-import jetfarmsIcon from '../Assets/jetfarms.svg';
 import { FaGreaterThan } from 'react-icons/fa';
 import { FaLessThan } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -33,6 +32,9 @@ function Organisation({ list, setList }) {
   const [summary, setSummary] = useState([]);
   const [overallCount, setOverallCount] = useState(0);
   const { id } = useParams();
+
+  const org = list?.data.filter(el => el.id === id)[0];
+
 
   //SERVICE TOGGLE BUTTON FUNCTIONS
   const [switch_list, setSwitchList] = useState({
@@ -138,21 +140,22 @@ function Organisation({ list, setList }) {
       )
       .then((res) => {
         setSummary(res.data);
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+
   }, [id, token]);
 
   return (
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
-          <img src={jetfarmsIcon} alt='' />
-          <p>{localStorage.getItem('companyName')} </p>
+          <img src={org.country.country_flag} alt=''
+            className='w-[22px] rounded'
+          />
+          <p>{org.company_name} </p>
         </div>
 
         <div className='flex gap-3 rounded-lg items-center text-[12px] text-[#38CB89]'>

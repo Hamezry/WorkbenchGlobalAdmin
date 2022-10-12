@@ -4,38 +4,28 @@ import axios from 'axios';
 
 const url = 'https://wb-temp.afexnigeria.com/WB3/api/v1/create-product';
 
-function Productmodal({ setModal }) {
-  const [productName, setProductName] = useState('');
-  const [productVolume, setProductVolume] = useState('');
-  const [productType, setProductType] = useState('');
-  const [unitType, setUnitType] = useState('');
-  const [certified, setCertified] = useState(false);
+function Productmodal({ setModal, modalData }) {
+  const [product, setProduct] = useState(modalData)
 
-  console.log(certified);
+  console.log(product);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await axios.post(url, {
-      name: productName,
-      product_type: productType,
-      unit_type: unitType,
-      code: productVolume,
-      certified: certified,
-    });
+    const resp = await axios.post(url, product);
 
     console.log(resp);
-
-    console.log(
-      JSON.stringify({
-        name: productName,
-        product_type: productType,
-        unit_type: unitType,
-        code: productVolume,
-        certified: certified,
-      })
-    );
     setModal(false);
   };
+
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
+
+    setProduct((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const hanldeChecked = (e) => {
+    setProduct((prev) => ({ ...prev, certified: e.target.checked }))
+  }
 
   return (
     <div className='w-[100vw] font-muli h-[100vh] bg-[rgba(50,59,75,0.7)] fixed z-50 top-0 left-0'>
@@ -63,21 +53,21 @@ function Productmodal({ setModal }) {
                 type='text'
                 className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
                 placeholder='Insert Name'
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
+                value={product?.name}
+                onChange={handleInputChange}
               />
             </label>
 
             <label>
               <p className='text-[14px] text-[#54565B] pb-2'>Code</p>
               <input
-                id='volume'
-                name='volume'
+                id='code'
+                name='code'
                 type='text'
                 className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
                 placeholder='Insert Volume'
-                value={productVolume}
-                onChange={(e) => setProductVolume(e.target.value)}
+                value={product?.code}
+                onChange={handleInputChange}
               />
             </label>
 
@@ -85,10 +75,11 @@ function Productmodal({ setModal }) {
               <p className='text-[14px] text-[#54565B] pb-2'>Type</p>
 
               <select
-                id='type'
+                id='product_type'
+                name='product_type'
                 className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow'
-                value={productType}
-                onChange={(e) => setProductType(e.target.value)}>
+                value={product?.product_type}
+                onChange={handleInputChange}>
                 <option value=''>Select Type</option>
                 <option value='Input'>Input</option>
                 <option value='Commodity'>Commodity</option>
@@ -100,10 +91,11 @@ function Productmodal({ setModal }) {
               <p className='text-[14px] text-[#54565B] pb-2'>Unit Type</p>
 
               <select
-                id='type'
+                id='unit_type'
                 className='w-full py-3 border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow'
-                value={unitType}
-                onChange={(e) => setUnitType(e.target.value)}>
+                value={product?.unit_type}
+                name='unit_type'
+                onChange={handleInputChange}>
                 <option value='Type' className='bg-[#F1F2F3]'>
                   Select Unit Type
                 </option>
@@ -121,9 +113,9 @@ function Productmodal({ setModal }) {
                   type='checkbox'
                   id='remember'
                   className='w-4 h-4 focus:bg-[#38CB89]'
-                  // value={certified}
-                  checked={certified}
-                  onChange={(e) => setCertified(e.target.checked)}
+                  value={product?.certified}
+                  checked={false}
+                  onChange={hanldeChecked}
                 />
               </label>
               <p>Sustainable Product?</p>

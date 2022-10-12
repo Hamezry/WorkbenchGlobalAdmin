@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import DateModule from './Datemodule';
 import filterIcon from '../Assets/filter.svg';
 import { format } from 'date-fns';
-import Selectmodule from './Selectmodule';
+import TenantDropdown from './Dropdown/TenantDropdown';
 import Pagination from './Pagination';
 import OrganisationlistTile from './page-tiles/OrganizationlistTile';
 
@@ -14,25 +14,9 @@ function Organisationlist({
   openModal,
   setViewDeactivate,
 }) {
-  const navigate = useNavigate();
   const [query, setQuery] = useState('');
-
-  const [posts, setPosts] = useState([]);
-
-
-  const populate = () => {
-    setPosts(list.data ?? [])
-  }
-
   const [isDate, setIsDate] = useState(false);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
-
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = list?.data?.slice(indexOfFirstPost, indexOfLastPost);
 
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
@@ -43,6 +27,21 @@ function Organisationlist({
     const date = new Date(datex);
     return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
   };
+
+  //PAGINATION FUNCTION
+  const [posts, setPosts] = useState([]);
+
+  const populate = () => {
+    setPosts(list.data ?? [])
+  }
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(7);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = list?.data?.slice(indexOfFirstPost, indexOfLastPost);
+
 
   useEffect(() => {
     populate()
@@ -68,7 +67,7 @@ function Organisationlist({
             {/*ORGANISATION LIST HEADING*/}
             <div className='flex justify-between p-3 border-b-2 '>
               <p className='text-[18px]'>Organisation List</p>
-              <div className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
+              <div className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
                 <img src={filterIcon} alt='rficon' />
                 <button>Filter</button>
               </div>
@@ -91,7 +90,7 @@ function Organisationlist({
               </div>
 
               {/*TASK BAR*/}
-              <div className='flex justify-end items-center p-5 gap-5'>
+              <div className='flex justify-end items-center p-5 gap-5 '>
                 <p className='text-[12px]'>Sort By</p>
 
                 <div className=' flex gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-[54px'>
@@ -121,7 +120,9 @@ function Organisationlist({
                     <AiOutlineSearch />
                   </span>
                 </div>
-                <Selectmodule />
+                <div className='relative'>
+                  <TenantDropdown />
+                </div>
               </div>
             </div>
 
@@ -130,6 +131,15 @@ function Organisationlist({
               <table className='min-w-max table-auto'>
                 <thead className='sticky'>
                   <tr className='bg-[#F9F9F9] text-[#54565B] text-left  text-[14px]'>
+                    <th>
+                      <input
+                        type="checkbox"
+
+                        id="remember"
+                        className="w-4 h-4 border-slate-200 checked:bg-green-400"
+                      />
+                    </th>
+
                     <th className='py-3 px-4 '>S/N</th>
                     <th className='py-3 px-4 '>Company Name</th>
                     <th className='py-3 px-4 '>Country</th>
@@ -153,31 +163,28 @@ function Organisationlist({
                         <tr
                           key={index}
                           className=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
+
+                          <td>
+                            <input
+                              type="checkbox"
+                              id="remember"
+                              className="w-4 h-4 border-slate-200 focus:bg-green-400"
+                            />
+                          </td>
+
                           <td
                             className='py-4 px-4 mr-10'
-                            onClick={() => {
-                              localStorage.setItem(
-                                'companyName',
-                                item.company_name
-                              );
-                              navigate(`/organisation/${item.id}`);
-                            }}>
+                          >
+
                             <span className='font-medium'>{index + 1}</span>
                           </td>
 
                           <td className='py-4 px-4 mr-10 text-start '>
-                            <div
-                              onClick={() => {
-                                localStorage.setItem(
-                                  'companyName',
-                                  item.company_name
-                                );
-                                navigate(`/organisation/${item.id}`);
-                              }}>
-                              <span className='font-medium '>
-                                {item.company_name}
-                              </span>
-                            </div>
+
+                            <Link to={`/organisation/${item.id}`} className='font-medium '>
+                              {item.company_name}
+                            </Link>
+
                           </td>
 
                           <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
@@ -243,6 +250,7 @@ function Organisationlist({
                                 onClick={() => {
                                   setViewActivate(true);
                                   openModal(item);
+
                                 }}>
                                 <p>Activate</p>
                               </div>

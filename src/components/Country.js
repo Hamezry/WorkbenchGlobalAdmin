@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Progress } from '@mantine/core';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Adminlist from '../components/adminlist/Adminlist';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Progress } from "@mantine/core";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Adminlist from "../components/adminlist/Adminlist";
 
 function Country({ country }) {
   const [stock, setStock] = useState([]);
   const [list, setList] = useState();
-  const token = localStorage.getItem('workbench-app-token');
+  const token = localStorage.getItem("workbench-app-token");
   const { id } = useParams();
 
   const singleCountry = country.data.filter((el) => el.pk === Number(id))[0];
@@ -39,19 +39,19 @@ function Country({ country }) {
         //console.log(res.data)
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
 
     axios
       .get(
-        `https://wb-temp.afexnigeria.com/WB3/api/v1/admin/levels/${id}`,
+        `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${id}`,
         options
       )
       .then((res) => {
         setList(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     // eslint-disable-next-line
   }, []);
@@ -70,8 +70,8 @@ function Country({ country }) {
 
         <div className=' rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3'>
           <Link to='/countrylist'>
-            {' '}
-            <button> Back</button>{' '}
+            {" "}
+            <button> Back</button>{" "}
           </Link>
         </div>
       </div>
@@ -128,34 +128,34 @@ function Country({ country }) {
             <div className='w-full overflow-x-auto p-3'>
               <table className='w-full over p-6'>
                 <thead>
-                  <tr class='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
-                    <th class='py-4 px-4'>Commodity</th>
-                    <th class='py-4 px-4'>Grade</th>
-                    <th class='py-4 px-4'>Volume(MT) </th>
-                    <th class='py-4 px-4'>Lien(MT)</th>
+                  <tr className='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
+                    <th className='py-4 px-4'>Commodity</th>
+                    <th className='py-4 px-4'>Grade</th>
+                    <th className='py-4 px-4'>Volume(MT) </th>
+                    <th className='py-4 px-4'>Lien(MT)</th>
                   </tr>
                 </thead>
 
-                <tbody class='text-[#54565B] text-[12px] font-light'>
+                <tbody className='text-[#54565B] text-[12px] font-light'>
                   {stock?.data?.map((item) => {
                     return (
-                      <tr class='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
-                        <td class='py-4 px-4'>
-                          <span class='font-medium'>{item.item_code}</span>
+                      <tr className='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
+                        <td className='py-4 px-4'>
+                          <span className='font-medium'>{item.item_code}</span>
                         </td>
 
-                        <td class='py-4 px-4 '>
-                          <span class='font-medium'>Grade{item.grade}</span>
+                        <td className='py-4 px-4 '>
+                          <span className='font-medium'>Grade{item.grade}</span>
                         </td>
 
-                        <td class='py-4 px-4'>
-                          <span class='font-medium '>
+                        <td className='py-4 px-4'>
+                          <span className='font-medium '>
                             {item.location_breakdown[0].volume}
                           </span>
                         </td>
 
-                        <td class='py-4 px-4'>
-                          <span class='font-medium '>
+                        <td className='py-4 px-4'>
+                          <span className='font-medium '>
                             {item.total_lien_weight}
                           </span>
                         </td>

@@ -232,7 +232,7 @@ function Organisation({ list, setList }) {
               </div>
 
               <div className='flex gap-6'>
-                <div class=' flex gap-12 p-3 cursor-pointer rounded-2xl text-sm text-[#C9C8C6] bg-[#F9F9F9] h-[54px w-[186px]'>
+                <div className=' flex gap-12 p-3 cursor-pointer rounded-2xl text-sm text-[#C9C8C6] bg-[#F9F9F9] h-[54px w-[186px]'>
                   <p>Filter by date</p>
                   <p
                     onClick={() => {
@@ -252,155 +252,155 @@ function Organisation({ list, setList }) {
 
             {/*TABLE */}
             <div className='p-3 mt-4'>
-              <table class='border-collapse w-full'>
+              <table className='border-collapse w-full'>
                 <thead>
                   <tr>
-                    <th class='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
+                    <th className='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
                       Transaction
                     </th>
-                    <th class='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
+                    <th className='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
                       Gross Weight (KG)
                     </th>
-                    <th class='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
+                    <th className='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
                       Net Weight (KG)
                     </th>
-                    <th class='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
+                    <th className='p-2 font-bold bg-[#F2F2F2] text-gray-600 border border-gray-300 table-cell'>
                       Units
                     </th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
                       Uploaded Balance
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_gross_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_net_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_units
                         : '0'}
                     </td>
                   </tr>
 
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
                       Goods Received
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_gross_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_net_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_units
                         : '0'}
                     </td>
                   </tr>
 
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
                       Received Transfer
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       21.780
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       21
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       21
                     </td>
                   </tr>
 
                   {/*TOTAL IN */}
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='w-full bg-white lg:w-auto p-3 text-gray-800 text-center'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='w-full bg-white lg:w-auto p-3 text-gray-800 text-center'>
                       Total IN
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_gross_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_net_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_units
                         : '0'}
                     </td>
                   </tr>
 
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
                       Dispatches
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_gross_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_net_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_units
                         : '0'}
                     </td>
                   </tr>
 
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 text-center border border-b table-cell relative lg:static'>
                       IWH Transfers
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       12.32
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       12
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       12
                     </td>
                   </tr>
 
-                  <tr class='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
-                    <td class='bg-white w-auto p-3 text-gray-800 text-center'>
+                  <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+                    <td className='bg-white w-auto p-3 text-gray-800 text-center'>
                       Total OUT
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_gross_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_net_weight
                         : '0'}
                     </td>
-                    <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
+                    <td className='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_units
                         : '0'}
@@ -420,7 +420,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Accounting Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -451,7 +451,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>CSD Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -477,7 +477,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>EWR Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -503,7 +503,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Logistics Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -531,7 +531,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Overage Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -557,7 +557,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Plant Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -583,7 +583,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Registration Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'
@@ -613,7 +613,7 @@ function Organisation({ list, setList }) {
 
               <div className='flex justify-between mt-6 items-center'>
                 <p>Verification Module</p>
-                <label class='inline-flex relative items-center mr-5 cursor-pointer'>
+                <label className='inline-flex relative items-center mr-5 cursor-pointer'>
                   <input
                     type='checkbox'
                     className='sr-only peer'

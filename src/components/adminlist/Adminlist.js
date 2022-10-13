@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Modal, Popover, Skeleton } from "@mantine/core";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
 import { ArrowDown2, Refresh, LocationTick } from "iconsax-react";
 import cancel from "../../Assets/cancel.svg";
 
@@ -14,6 +14,7 @@ function Adminlist({ list }) {
   const [popover, setPopover] = useState();
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [locationpopoverOpened, setLocationPopoverOpened] = useState(false);
+  const [coordinates, setCoordinates] = useState([]);
   const [updateData, setUpdateData] = useState({
     locationName: "",
     lga: "",
@@ -23,8 +24,8 @@ function Adminlist({ list }) {
   const [modalData, setModalData] = useState({
     title: null,
     position: {
-      lat: -3.745,
-      lng: -38.523,
+      lat: 8.6753,
+      lng: 9.082,
     },
     data: [
       {
@@ -132,62 +133,42 @@ function Adminlist({ list }) {
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   });
-  const [map, setMap] = useState(null);
 
-  const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(position);
-    map.fitBounds(bounds);
-    setMap(map);
-    // eslint-disable-next-line
-  }, []);
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
   const arrowClicked = (id) => {
     if (id === currentlyDisplayed) return true;
     else return false;
   };
-  const settingModal = async (pk) => {
-    console.log("here", pk);
+  const settingModal = async (pk, center) => {
     await axios
       .get(
         `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${pk}/locations`,
         options
       )
       .then((res) => {
-        console.log(res.data);
         const temp = [];
-        res.data.data.forEach((item, index) => {
+        res.data.data.forEach((item) => {
+          const tempExtras = [];
+          item.lgas.forEach((innerItem) => {
+            tempExtras.push({
+              date: "Sept 1, 2022",
+              lga: innerItem.name,
+              wards: innerItem.no_of_wards,
+            });
+          });
+
           temp.push({
             exchange_location: item.name,
-            lgas: 10,
-            wards: 20,
+            lgas: item.no_of_lgas,
+            wards: item.no_of_wards,
             action: "update",
-            extras: [
-              {
-                date: "Sept 1, 2022",
-                lga: "chikun",
-                wards: 2,
-              },
-              {
-                date: "Sept 1, 2022",
-                lga: "chikun",
-                wards: 2,
-              },
-              {
-                date: "Sept 1, 2022",
-                lga: "chikun",
-                wards: 2,
-              },
-            ],
+            extras: tempExtras,
           });
         });
-        console.log(modalData);
         setModalData({
           title: res.data.message,
           position: {
-            lat: -3.745,
-            lng: -38.523,
+            lat: (+center.lat).toFixed(2),
+            lng: (+center.long).toFixed(2),
           },
           data: temp,
         });
@@ -200,12 +181,12 @@ function Adminlist({ list }) {
   }, [popoverOpened, locationpopoverOpened]);
   useEffect(() => {
     if (!opened) {
-      console.log(map); //eslint issue
       setCurrentlyDisplayed(null);
       setLocationPopoverOpened(false);
       setPopoverOpened(false);
       setTimeout(() => setModalData({ ...modalData, title: null }), 300);
     }
+    // eslint-disable-next-line
   }, [opened]);
   return (
     <div className='p-3 rounded-3xl w-full bg-[#FFFF] h-[400px] overflow-y-auto'>
@@ -219,22 +200,65 @@ function Adminlist({ list }) {
               <div className='w-[45%] maps relative rounded-md overflow-hidden'>
                 {isLoaded ? (
                   <>
-                    {" "}
                     <GoogleMap
                       mapContainerStyle={{
                         width: "100%",
                         height: "100%",
+                        fillColor: "#000",
+                        fillOpacity: 0.8,
                       }}
-                      center={position}
+                      center={{
+                        lat: parseFloat(
+                          coordinates[coordinates.length - 1].lat
+                        ),
+                        lng: parseFloat(
+                          coordinates[coordinates.length - 1].lng
+                        ),
+                      }}
                       zoom={10}
-                      onLoad={onLoad}
-                      onUnmount={onUnmount}
+                      onLoad={(map) => {
+                        map.setZoom(10);
+                        // const boundaryAreas = new window.google.maps.Polygon({
+                        //   path: coordinates,
+                        //   strokeColor: "#FF0000",
+                        //   strokeOpacity: 0.8,
+                        //   strokeWeight: 2,
+                        // });
+
+                        // map.setMap(boundaryAreas);
+                      }}
+                      onUnmount={(map) => {}}
                       options={{
                         streetViewControl: false,
                         mapTypeControl: false,
                         fullscreenControl: false,
                       }}>
-                      {/* Child components, such as markers, info windows, etc. */}
+                      <Polygon
+                        path={coordinates}
+                        key={1}
+                        onLoad={(polygon) => {
+                          console.log("polygon: ", polygon);
+                        }}
+                        onMouseOver={() => {
+                          console.log("polygon====> mouseover");
+                        }}
+                        onUnmount={() => {
+                          console.log("polygon====> unmounts yup yup");
+                        }}
+                        options={{
+                          strokeColor: "#d24e01",
+                          strokeOpacity: 0.8,
+                          strokeWeight: 1,
+                          fillColor: "00ffffff",
+                          fillOpacity: 0,
+                          clickable: false,
+                          draggable: false,
+                          editable: false,
+                          geodesic: false,
+                          zIndex: 1,
+                          // filter: "grayscale(0%)",
+                        }}
+                      />
                       <></>
                     </GoogleMap>
                     <div className='z-20 bg-white absolute top-4 left-4 rounded-3xl py-6 px-10 flex'>
@@ -244,14 +268,20 @@ function Adminlist({ list }) {
 
                         <div className='flex pt-6'>
                           <div className=' pr-14 border-r border-r-gray-200'>
-                            <p>{position.lng} </p>
+                            <p>
+                              {position.lng}&nbsp;&#xb0;
+                              {position.lng < 0 ? "S" : "N"}
+                            </p>
                             <p className='text-xs text-afexgreen pt-2'>
                               Longitude
                             </p>
                           </div>
 
                           <div className=' pl-14'>
-                            <p>{position.lat} </p>
+                            <p>
+                              {position.lat}&nbsp;&#xb0;
+                              {position.lat < 0 ? "W" : "E"}
+                            </p>
                             <p className='text-xs text-afexgreen pt-2'>
                               Latitude
                             </p>
@@ -299,7 +329,6 @@ function Adminlist({ list }) {
                           onSubmit={(e) => {
                             e.preventDefault();
                             setLocationPopoverOpened(false);
-                            console.log(updateData);
                           }}>
                           <div className='pb-7 child:capitalize'>
                             <label className='px-2 pb-3 block'>
@@ -437,7 +466,6 @@ function Adminlist({ list }) {
                                                 onSubmit={(e) => {
                                                   e.preventDefault();
                                                   setPopoverOpened(false);
-                                                  console.log(updateData);
                                                 }}>
                                                 <div className='pb-7 child:capitalize'>
                                                   <label className='px-2 pb-3 block'>
@@ -517,7 +545,14 @@ function Adminlist({ list }) {
                               })}
                             </tr>
                             {/* EXPAND */}
-                            <tr key={`exp${oldIndex}`} className={``}>
+                            <tr
+                              key={`exp${oldIndex}`}
+                              // className={`${
+                              //   data[oldIndex].extras.length > 0
+                              //     ? "table-row"
+                              //     : "hidden"
+                              // }`}
+                            >
                               <td
                                 colSpan={6}
                                 className={`${
@@ -561,10 +596,10 @@ function Adminlist({ list }) {
                                       </tbody>
                                     </table>
                                     <div className='text-sm border-t border-t-textgrey-lighter pt-3 flex justify-between '>
-                                      <div className='flex items-center'>
+                                      <button className='flex items-center'>
                                         <Refresh size='16' color='#555555' />
                                         <span className='pl-2'>Refresh</span>
-                                      </div>
+                                      </button>
                                       <div className='text-textgrey-light '>
                                         Last updated: Today @ 2:30pm
                                       </div>
@@ -632,7 +667,12 @@ function Adminlist({ list }) {
                       className='font-medium text-cyan-400 '
                       onClick={() => {
                         setOpened(true);
-                        settingModal(item.pk);
+                        settingModal(item.pk, item.coordinates[0]);
+                        const newCordinates = item.coordinates.map((item) => ({
+                          lat: parseFloat(item.lat),
+                          lng: parseFloat(item.long),
+                        }));
+                        setCoordinates(newCordinates);
                       }}>
                       View Details
                     </button>

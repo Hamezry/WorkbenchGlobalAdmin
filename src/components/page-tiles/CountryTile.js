@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUp, ArrowDown } from 'iconsax-react';
+import { Skeleton } from '@mantine/core';
 
 import { useCountryCardCtx } from '../../contexts/countries';
 
@@ -26,7 +27,7 @@ const getPercentageDifference = (current, previous) => {
 };
 
 const CountryTile = () => {
-  const { cardData } = useCountryCardCtx();
+  const { cardData, dataLoaded } = useCountryCardCtx();
 
   const grn_diff = getPercentageDifference(
     cardData.total_grn,
@@ -38,71 +39,97 @@ const CountryTile = () => {
       <p className='px-8 py-2'>Overview</p>
       <div className='flex p-6 justify-between gap-6 '>
         <div className=' flex flex-col space-y-4 justify-between flex-1'>
-          <div className='bg-white rounded-3xl flex-1 p-6'>
-            Total Farmers:{' '}
-            <span className='text-[25px] font-semibold'>
-              {cardData.total_farmers}{' '}
-            </span>
-          </div>
-          <div className='bg-white rounded-3xl flex-1 p-6'>
-            Total Tenants:{' '}
-            <span className='text-[25px] font-semibold'>
-              {cardData.total_tenants}{' '}
-            </span>
-          </div>
+          {/* Total Farmers */}
+          {!dataLoaded ? (
+            <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />
+          ) : (
+            <div className='bg-white rounded-3xl flex-1 p-6'>
+              Total Farmers:{' '}
+              <span className='text-[25px] font-semibold'>
+                {cardData.total_farmers}{' '}
+              </span>
+            </div>
+          )}
+          {/* Total Tenants */}
+          {!dataLoaded ? (
+            <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />
+          ) : (
+            <div className='bg-white rounded-3xl flex-1 p-6'>
+              Total Tenants:{' '}
+              <span className='text-[25px] font-semibold'>
+                {cardData.total_tenants}{' '}
+              </span>
+            </div>
+          )}
         </div>
 
-        <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1 justify-between'>
-          <p className=' text-[#47494E] text-[16px] mb-4'>Total GRN Raised</p>
+        {/* GRN Raised */}
+        {!dataLoaded ? (
+          <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
+        ) : (
+          <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1 justify-between'>
+            <p className=' text-[#47494E] text-[16px] mb-4'>Total GRN Raised</p>
 
-          <div className='text-[14px] flex justify-between items-end'>
-            <p className='flex flex-col space-y-3'>
-              <span className='text-[25px] font-bold '>
-                {Intl.NumberFormat('en-US').format(cardData.total_grn)} MT
-              </span>
-              <span className='text-gray-400'>
-                Last Month:{' '}
-                {Intl.NumberFormat('en-US').format(cardData.last_month_grn)} MT
-              </span>
-            </p>
-            <div className='flex flex-col space-y-1 items-center pb-2'>
-              {grn_diff > 0 ? (
-                <>
-                  <Increase />
-                  <span className='text-[#38CB89]'>+{grn_diff}% </span>
-                </>
-              ) : (
-                <>
-                  <Decrease />
-                  <span className='text-red-500'>{grn_diff}% </span>
-                </>
-              )}
+            <div className='text-[14px] flex justify-between items-end'>
+              <p className='flex flex-col space-y-3'>
+                <span className='text-[25px] font-bold '>
+                  {Intl.NumberFormat('en-US').format(cardData.total_grn)} MT
+                </span>
+                <span className='text-gray-400'>
+                  Last Month:{' '}
+                  {Intl.NumberFormat('en-US').format(cardData.last_month_grn)}{' '}
+                  MT
+                </span>
+              </p>
+              <div className='flex flex-col space-y-1 items-center pb-2'>
+                {grn_diff > 0 ? (
+                  <>
+                    <Increase />
+                    <span className='text-[#38CB89]'>+{grn_diff}% </span>
+                  </>
+                ) : (
+                  <>
+                    <Decrease />
+                    <span className='text-red-500'>{grn_diff}% </span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1 justify-between'>
-          <p className=' text-[#47494E] text-[16px] mb-4'>Total Countries</p>
+        {/* Total Countries */}
+        {!dataLoaded ? (
+          <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
+        ) : (
+          <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1 justify-between'>
+            <p className=' text-[#47494E] text-[16px] mb-4'>Total Countries</p>
 
-          <div className='text-[14px] flex justify-between items-end'>
-            <p className='flex flex-col space-y-3'>
-              <span className='text-[25px] font-bold '>
-                {Intl.NumberFormat('en-US').format(cardData.total_countries)}
-              </span>
-              <span className='text-gray-400'>
-                Active:{' '}
-                {Intl.NumberFormat('en-US').format(cardData.total_countries)}
-              </span>
+            <div className='text-[14px] flex justify-between items-end'>
+              <p className='flex flex-col space-y-3'>
+                <span className='text-[25px] font-bold '>
+                  {Intl.NumberFormat('en-US').format(cardData.total_countries)}
+                </span>
+                <span className='text-gray-400'>
+                  Active:{' '}
+                  {Intl.NumberFormat('en-US').format(cardData.total_countries)}
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
+        {/* Total Warehouses */}
+        {!dataLoaded ? (
+          <Skeleton className='flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
+        ) : (
+          <div className=' flex flex-col justify-between p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1'>
+            <p className=' text-[#47494E] text-[16px] mb-4'>Total Warehouses</p>
+
+            <p className='text-[25px] font-semibold'>
+              {cardData.total_warehouses}{' '}
             </p>
           </div>
-        </div>
-        <div className=' flex flex-col justify-between p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1'>
-          <p className=' text-[#47494E] text-[16px] mb-4'>Total Warehouses</p>
-
-          <p className='text-[25px] font-semibold'>
-            {cardData.total_warehouses}{' '}
-          </p>
-        </div>
+        )}
       </div>
     </div>
   );

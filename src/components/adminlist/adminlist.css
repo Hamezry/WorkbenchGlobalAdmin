@@ -1,8 +1,11 @@
-.mantine-Paper-root {
+/* This is commented out because this overrides all the modals being used in the application. If you need to force an 85% width, create a new class and set width: 85% !important */
+/* Check the Adminlist.js */
+/* .mantine-Paper-root {
   width: 85%;
-  /* height: 90%; */
+  height: 90%;
   height: -webkit-fill-available;
-}
+} */
+
 .mantine-1abbsss {
   margin-left: 0;
 }

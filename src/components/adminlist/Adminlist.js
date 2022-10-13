@@ -315,7 +315,7 @@ function Adminlist({ list }) {
                     <Popover.Dropdown>
                       <div className='whitespace-normal text-textgrey text-start'>
                         <div className='flex justify-between items-center border-b border-b-textgrey-lighter p-2 py-4'>
-                          <span>Update Details </span>
+                          <span>Add Location </span>
                           <button
                             className='w-5'
                             onClick={() => {
@@ -561,13 +561,13 @@ function Adminlist({ list }) {
                                     : "!p-0 "
                                 }`}>
                                 <div
-                                  className={`flex justify-end transition-all duration-400 ${
+                                  className={`flex justify-end transition-all duration-400 overflow-hidden ${
                                     arrowClicked(oldIndex)
-                                      ? "opacity-100 max-h-96"
-                                      : "opacity-0 max-h-0 "
+                                      ? "opacity-100 h-auto"
+                                      : "opacity-0 h-0 "
                                   }`}>
                                   <div className=' min-w-[60%] '>
-                                    <table className=' w-full pb-3'>
+                                    <table className={` w-full pb-3 `}>
                                       <thead className='sticky top-0 '>
                                         <tr className='table-head bg-bggrey p-6'>
                                           <td>Date Added</td>

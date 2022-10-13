@@ -1,32 +1,35 @@
-import React, { useState } from "react";
-import { format } from "date-fns";
-import { AiOutlineSearch } from "react-icons/ai";
-import recieptIcon from "../Assets/receipt-text.png";
-import filterIcon from "../Assets/filter.svg";
-import Dropdown from "./Dropdown";
+import React, { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { AiOutlineSearch } from 'react-icons/ai';
+import recieptIcon from '../Assets/receipt-text.png';
+import filterIcon from '../Assets/filter.svg';
+import calenderIcon from '../Assets/calendar.svg';
+import Dropdown from './Dropdown/ProductDropdown';
 //import successIcon from '../Assets/Success-icon.svg'
-import Pagination from "./Pagination";
-import GlobalProductTile from "./page-tiles/GlobalProductTile";
+import axios from 'axios';
+import Pagination from './Pagination';
+import GlobalProductTile from './page-tiles/GlobalProductTile';
+
+import ProductModal from '../modal/Products/Productmodal'
+import DeactivateProductmodal from '../modal/Products/DeactivateProductmodal'
+
 
 function Productlist({
   list,
   setViewFilter,
-  setModal,
   openModal,
-  setDeactivateProduct,
-  setProductsLoaded,
-  productsLoaded,
 }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
+  const [singleProduct, setSingleProduct] = useState({});
+  const [modal, setModal] = useState(false)
+  const [deactivateProduct, setDeactivateProduct] = useState(false);
+
+  //console.log(list)
 
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
     return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
-  };
-  const formTime = (datex) => {
-    const date = new Date(datex);
-    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
 
   // const [showElement, setShowElement] = React.useState(true);
@@ -35,14 +38,41 @@ function Productlist({
   //     setShowElement(false);
   //   }, 2000);
   // }, []);
+  const [posts, setPosts] = useState([]);
+
+
+  const populate = () => {
+    setPosts(list.data ?? [])
+  }
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(7);
+
+  const changeStatus = (pk) => {
+
+    axios.get(`https://wb3test.afexnigeria.com/WB3/api/v1/product/change/status/${pk}`)
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = list?.data?.slice(indexOfFirstPost, indexOfLastPost);
+
+  useEffect(() => {
+    populate()
+
+    // eslint-disable-next-line
+  }, [list])
+
+
+
 
   return (
     <div className='w-[82%] relative flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)] gap-14 overflow-y-auto'>
@@ -63,17 +93,22 @@ function Productlist({
           </div>
 
           <div className='flex justify-end items-center p-4 gap-5'>
+            <div className=' flex gap-12 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] h-[54px'>
+              <p>Date Registered</p>
+              <img src={calenderIcon} alt='' />
+            </div>
+
             <div className='relative'>
               <input
                 type='search'
                 name=''
                 id=''
                 placeholder='Search'
-                className='p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                className='p-3 rounded-2xl text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
                 onChange={(e) => setQuery(e.target.value)}
               />
               <span className='absolute left-[300px] top-3'>
-                <AiOutlineSearch className='text-[18px]' />
+                <AiOutlineSearch className='text-[25px] text-gray-400' />
               </span>
             </div>
 
@@ -87,7 +122,7 @@ function Productlist({
               <img src={recieptIcon} alt='' />
             </div>
 
-            <div className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'>
+            <div className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'>
               <img src={filterIcon} alt='' />
               <button
                 onClick={() => {
@@ -123,7 +158,7 @@ function Productlist({
                     return (
                       <tr
                         key={index}
-                        className='text-left border-b border-gray-200 hover:bg-[#e3f7ee] relative'>
+                        className='text-left border-b border-gray-200 hover:bg-[#e3f7ee]'>
                         <td className='py-5 px-6'>
                           <span className='font-medium'>{index + 1}</span>
                         </td>
@@ -132,7 +167,7 @@ function Productlist({
                           <span className='font-medium '>{item.name}</span>
                         </td>
 
-                        <td className='py-5 px-14'>
+                        <td className='py-5 px-6'>
                           <span className='font-medium '>{item.code}</span>
                         </td>
 
@@ -153,40 +188,59 @@ function Productlist({
                         <td className='py-5 px-6  '>
                           <span className='font-medium '>{`${formDate(
                             item.created
-                          )} . ${formTime(item.created)}`}</span>
+                          )}`}</span>
                         </td>
 
                         <td className='py-5 px-6'>
                           <span className='font-medium '>{`${formDate(
                             item.updated
-                          )} . ${formTime(item.updated)}`}</span>
+                          )} `}</span>
                         </td>
 
                         <td className='py-5 px-6 relative'>
                           <Dropdown
                             setDeactivateProduct={setDeactivateProduct}
                             item={item}
+                            setModal={() => {
+                              setModal(true);
+                              setSingleProduct(list.data.filter(el => el.pk === item.pk)[0])
+                            }}
                             openModal={openModal}
+                            modalData={singleProduct}
                           />
                         </td>
                       </tr>
                     );
                   })}
+
+                {
+                  modal && <ProductModal setModal={setModal} modalData={singleProduct} />
+                }
+                {deactivateProduct && (
+                  <DeactivateProductmodal
+                    setDeactivateProduct={setDeactivateProduct}
+                    openModal={openModal}
+                    deactivate={() => changeStatus(singleProduct.pk)}
+                  />
+                )}
               </tbody>
             </table>
           </div>
 
           <div className='flex items-center justify-between mb-3 bg-[#F9F9F9] p-3 rounded-2xl'>
-            <p>1 - 7 of 80 Entries</p>
+            <p>1 - 7 of {posts.length} Entries</p>
 
             <Pagination
               postsPerPage={postsPerPage}
-              totalPosts={list.length}
+              totalPosts={posts.length}
               setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              perPage={postsPerPage}
             />
           </div>
         </div>
       </div>
+
     </div>
   );
 }

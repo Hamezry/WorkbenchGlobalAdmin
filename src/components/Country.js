@@ -1,17 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProgressBar from "@ramonak/react-progress-bar";
+import { Progress } from "@mantine/core";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import nigerianFlag from "../Assets/Nigeriaflag.svg";
 import Adminlist from "../components/adminlist/Adminlist";
 
-function Country({ totalFarmers }) {
-  // console.log(totalFarmers);
+function Country({ country }) {
   const [stock, setStock] = useState([]);
   const [list, setList] = useState();
   const token = localStorage.getItem("workbench-app-token");
   const { id } = useParams();
+
+  const singleCountry = country.data.filter((el) => el.pk === Number(id))[0];
+  const totalFarmers = country?.summary?.total_farmers;
+  const totalTenants = country?.summary?.total_tenants;
+  const singleTenant = singleCountry.no_of_tenants;
+  const singleFarmer = singleCountry.no_of_farmers;
+
+  //Farmers calculation
+  const farmerProgress = singleFarmer / totalFarmers;
+  const farmerValue = farmerProgress * 100;
+
+  //Tenants calculation
+  const tenantProgress = singleTenant / totalTenants;
+  const tenantValue = tenantProgress * 100;
 
   useEffect(() => {
     const options = {
@@ -37,19 +49,23 @@ function Country({ totalFarmers }) {
       )
       .then((res) => {
         setList(res.data);
-        //console.log(res.data);
       })
       .catch((err) => {
         // console.log(err);
       });
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
-          <img src={nigerianFlag} alt='' />
-          <p>Kenya</p>
+          <img
+            src={singleCountry.country_flag}
+            alt=''
+            className='w-[25px] rounded'
+          />
+          <p>{singleCountry.name}</p>
         </div>
 
         <div className=' rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3'>
@@ -69,19 +85,18 @@ function Country({ totalFarmers }) {
 
             <div className='flex  flex-col gap-3 py-3 px-6'>
               <p>Farmers</p>
-              <ProgressBar completed={180} maxCompleted={1000} />
+              <Progress value={farmerValue} size='xl' radius='xl' />
 
-              <div className='w-[100%] bg-gray-300 rounded-3xl h-[15px]'>
-                <div className='w-[85%] bg-green-500 rounded-3xl h-[15px]'></div>
-              </div>
+              {/* <div className='w-[100%] bg-gray-300 rounded-3xl h-[15px]'>
+                                <div className='w-[85%] bg-green-500 rounded-3xl h-[15px]'></div>
+
+                            </div> */}
             </div>
 
             <div className='flex flex-col gap-3 py-3 px-6  '>
               <p>Tenants</p>
 
-              <div className='w-[100%] bg-gray-300  rounded-3xl h-[15px]'>
-                <div className='w-[75%] bg-green-800 rounded-3xl h-[15px]'></div>
-              </div>
+              <Progress value={tenantValue} size='xl' radius='xl' />
             </div>
 
             <div className='flex justify-around py-3 px-6 w-full mt-4 '>

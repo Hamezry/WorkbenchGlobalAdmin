@@ -16,7 +16,6 @@ function Products({ setList, setModal, productsLoaded, setProductsLoaded }) {
         manager.decrypt(response)
         setList(res.data)
         setProductsLoaded(true)
-        console.log(res.data.pk)
       }).catch(err => {
         console.log(err)
       })
@@ -57,9 +56,9 @@ function Products({ setList, setModal, productsLoaded, setProductsLoaded }) {
           </div>
         </div>}
 
-        {
-          productsLoaded && <Navigate to="/productlist"/>
-        }
+      {
+        productsLoaded && <Navigate to="/productlist" />
+      }
     </>
   )
 }

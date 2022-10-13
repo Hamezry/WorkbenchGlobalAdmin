@@ -4,6 +4,7 @@ import axios from '../utils/axios';
 const ProductsCardContext = createContext();
 
 const ProductsCardProvider = ({ children }) => {
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [cardData, setCardData] = useState({
     commodities: {
       value: 0,
@@ -24,6 +25,7 @@ const ProductsCardProvider = ({ children }) => {
   });
 
   const fetchGlobalProductsCardData = async () => {
+    setDataLoaded(false);
     const response = await axios.get('global-products');
 
     if (response.data.responseCode !== '100') return;
@@ -31,6 +33,7 @@ const ProductsCardProvider = ({ children }) => {
     const { summary } = response.data;
 
     setCardData((prev) => ({ ...prev, ...summary }));
+    setDataLoaded(true);
   };
 
   useEffect(() => {
@@ -38,7 +41,7 @@ const ProductsCardProvider = ({ children }) => {
   }, []);
 
   return (
-    <ProductsCardContext.Provider value={{ cardData }}>
+    <ProductsCardContext.Provider value={{ cardData, dataLoaded }}>
       {children}
     </ProductsCardContext.Provider>
   );

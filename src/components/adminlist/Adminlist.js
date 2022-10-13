@@ -6,7 +6,6 @@ import { ArrowDown2, Refresh, LocationTick } from "iconsax-react";
 import cancel from "../../Assets/cancel.svg";
 
 import "./adminlist.css";
-import axios from "axios";
 
 function Adminlist({ list }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
@@ -122,6 +121,7 @@ function Adminlist({ list }) {
       },
     ],
   });
+
   const { title, position, data } = modalData;
   const token = localStorage.getItem("workbench-app-token");
 
@@ -133,7 +133,6 @@ function Adminlist({ list }) {
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   });
-
   const arrowClicked = (id) => {
     if (id === currentlyDisplayed) return true;
     else return false;
@@ -141,7 +140,7 @@ function Adminlist({ list }) {
   const settingModal = async (pk, center) => {
     await axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${pk}/locations`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/admin/levels/${pk}/locations`,
         options
       )
       .then((res) => {
@@ -177,7 +176,6 @@ function Adminlist({ list }) {
   };
   useEffect(() => {
     if (popoverOpened || locationpopoverOpened) setCurrentlyDisplayed(null);
-    // eslint-disable-next-line
   }, [popoverOpened, locationpopoverOpened]);
   useEffect(() => {
     if (!opened) {
@@ -193,7 +191,8 @@ function Adminlist({ list }) {
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
-        title={`${title ? title : ""}`}>
+        title={`${title ? title : ""}`}
+        size='85%'>
         <div className=' border-t border-t-gray-200 mt-6 pt-6 flex w-full h-[75vh] px-6 text-textgrey'>
           {title ? (
             <>

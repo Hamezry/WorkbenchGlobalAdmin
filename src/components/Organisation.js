@@ -18,7 +18,7 @@ import {
   PlantModal,
   RegistrationModal,
   VerificationModal,
-} from "../modal/service-list";
+} from '../modal/service-list';
 
 function Organisation({ list, setList }) {
   const token = localStorage.getItem('workbench-app-token');
@@ -38,8 +38,7 @@ function Organisation({ list, setList }) {
   const [overallCount, setOverallCount] = useState(0);
   const { id } = useParams();
 
-  const org = list?.data.filter(el => el.id === id)[0];
-
+  const org = list?.data.filter((el) => el.id === id)[0];
 
   //SERVICE TOGGLE BUTTON FUNCTIONS
   const [switch_list, setSwitchList] = useState({
@@ -142,7 +141,7 @@ function Organisation({ list, setList }) {
   };
 
   const fetchStockPositon = async () => {
-    const res = axios.get(
+    const res = await axios.get(
       `https://wb-temp.afexnigeria.com/WB3/api/v1/stock/position/${id}`,
       options
     );
@@ -172,7 +171,9 @@ function Organisation({ list, setList }) {
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
-          <img src={org.country.country_flag} alt=''
+          <img
+            src={org.country.country_flag}
+            alt=''
             className='w-[22px] rounded'
           />
           <p>{org.company_name} </p>
@@ -277,17 +278,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_gross_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_net_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.uploaded_balance
                         ? transaction.uploaded_balance.total_units
-                        : "0"}
+                        : '0'}
                     </td>
                   </tr>
 
@@ -298,17 +299,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_gross_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_net_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.goods_recieveed
                         ? transaction.goods_recieveed.total_units
-                        : "0"}
+                        : '0'}
                     </td>
                   </tr>
 
@@ -335,17 +336,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_gross_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_net_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_in
                         ? transaction.total_in.total_units
-                        : "0"}
+                        : '0'}
                     </td>
                   </tr>
 
@@ -356,17 +357,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_gross_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_net_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.dispatches
                         ? transaction.dispatches.total_units
-                        : "0"}
+                        : '0'}
                     </td>
                   </tr>
 
@@ -392,17 +393,17 @@ function Organisation({ list, setList }) {
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_gross_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_net_weight
-                        : "0"}
+                        : '0'}
                     </td>
                     <td class='w-full lg:w-auto p-3 text-gray-800 border border-b text-center block lg:table-cell relative lg:static'>
                       {transaction.total_out
                         ? transaction.total_out.total_units
-                        : "0"}
+                        : '0'}
                     </td>
                   </tr>
                 </tbody>
@@ -428,7 +429,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("account");
+                      showModal('account');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
 
@@ -459,7 +460,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("csd");
+                      showModal('csd');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                   {modalsService.csd && (
@@ -485,7 +486,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("ewr");
+                      showModal('ewr');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -511,7 +512,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("logistic");
+                      showModal('logistic');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -539,7 +540,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("overage");
+                      showModal('overage');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -565,7 +566,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("plant");
+                      showModal('plant');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -591,7 +592,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("reg");
+                      showModal('reg');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -621,7 +622,7 @@ function Organisation({ list, setList }) {
                   />
                   <div
                     onClick={() => {
-                      showModal("verification");
+                      showModal('verification');
                     }}
                     className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
                 </label>
@@ -651,11 +652,11 @@ function Organisation({ list, setList }) {
                       User Account
                     </p>
                     <p>
-                      {" "}
+                      {' '}
                       <span className='text-[#9FA19C]'>
-                        {service.users ? service.users.active : "0"}{" "}
+                        {service.users ? service.users.active : '0'}{' '}
                       </span>
-                      /{service.users ? service.users.total : "0"}
+                      /{service.users ? service.users.total : '0'}
                     </p>
                   </div>
 
@@ -683,16 +684,16 @@ function Organisation({ list, setList }) {
                       Storage Capacity (MT)
                     </p>
                     <p>
-                      {" "}
+                      {' '}
                       <span className='text-[#9FA19C]'>
                         {service.storage_capacity
                           ? service.storage_capacity.total_capacity
-                          : "0"}{" "}
+                          : '0'}{' '}
                       </span>
                       /
                       {service.storage_capacity
                         ? service.storage_capacity.total_utilization
-                        : "0"}
+                        : '0'}
                     </p>
                   </div>
 
@@ -713,11 +714,11 @@ function Organisation({ list, setList }) {
 
               <div className=' bg-[#FFFF] w-full h-[50%] rounded-xl p-8 items-center flex gap-14'>
                 <p className='text-[25px]'>
-                  {" "}
+                  {' '}
                   <span className='text-[14px]'>
                     Warehouse Count
-                  </span> <br />{" "}
-                  {service.warehouse_count ? service.warehouse_count : "0"}
+                  </span> <br />{' '}
+                  {service.warehouse_count ? service.warehouse_count : '0'}
                 </p>
               </div>
             </div>

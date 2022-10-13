@@ -1,12 +1,12 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from 'react';
 
-import { Modal, Popover, Skeleton } from "@mantine/core";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { ArrowDown2, Refresh, LocationTick } from "iconsax-react";
-import cancel from "../../Assets/cancel.svg";
-import axios from "axios";
+import { Modal, Popover, Skeleton } from '@mantine/core';
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { ArrowDown2, Refresh, LocationTick } from 'iconsax-react';
+import cancel from '../../Assets/cancel.svg';
+import axios from 'axios';
 
-import "./adminlist.css";
+import './adminlist.css';
 
 function Adminlist({ list }) {
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
@@ -15,8 +15,8 @@ function Adminlist({ list }) {
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [locationpopoverOpened, setLocationPopoverOpened] = useState(false);
   const [updateData, setUpdateData] = useState({
-    locationName: "",
-    lga: "",
+    locationName: '',
+    lga: '',
   });
 
   // const [modalData, setModalData] = useState(null);
@@ -28,118 +28,123 @@ function Adminlist({ list }) {
     },
     data: [
       {
-        exchange_location: "kaduna 1",
+        exchange_location: 'kaduna 1',
         lgas: 10,
         wards: 20,
-        action: "update",
+        action: 'update',
         extras: [
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
         ],
       },
       {
-        exchange_location: "kaduna 1",
+        exchange_location: 'kaduna 1',
         lgas: 10,
         wards: 20,
-        action: "update",
+        action: 'update',
         extras: [
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
         ],
       },
       {
-        exchange_location: "kaduna 1",
+        exchange_location: 'kaduna 1',
         lgas: 10,
         wards: 20,
-        action: "update",
+        action: 'update',
         extras: [
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
         ],
       },
       {
-        exchange_location: "kaduna 1",
+        exchange_location: 'kaduna 1',
         lgas: 10,
         wards: 20,
-        action: "update",
+        action: 'update',
         extras: [
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
           {
-            date: "Sept 1, 2022",
-            lga: "chikun",
+            date: 'Sept 1, 2022',
+            lga: 'chikun',
             wards: 2,
           },
         ],
       },
     ],
   });
+
   const { title, position, data } = modalData;
-  const token = localStorage.getItem("workbench-app-token");
+  const token = localStorage.getItem('workbench-app-token');
 
   const options = {
     headers: { Authorization: `WB3 ${token}` },
   };
 
   const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
+    id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   });
+
   const [map, setMap] = useState(null);
 
-  const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(position);
-    map.fitBounds(bounds);
-    setMap(map);
-    // eslint-disable-next-line
-  }, []);
+  const onLoad = useCallback(
+    function callback(map) {
+      const bounds = new window.google.maps.LatLngBounds(position);
+      map.fitBounds(bounds);
+      setMap(map);
+    },
+    [position]
+  );
+
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
@@ -148,41 +153,39 @@ function Adminlist({ list }) {
     else return false;
   };
   const settingModal = async (pk) => {
-    console.log("here", pk);
+    // This isn't working because you are sendin a request to the test server but we are authenticated with the temp-server
     await axios
       .get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${pk}/locations`,
+        `https://wb-temp.afexnigeria.com/WB3/api/v1/admin/levels/${pk}/locations`,
         options
       )
       .then((res) => {
-        console.log(res.data);
         const temp = [];
-        res.data.data.forEach((item, index) => {
+        res.data.data.forEach((item) => {
           temp.push({
             exchange_location: item.name,
-            lgas: 10,
-            wards: 20,
-            action: "update",
+            lgas: item.no_of_lgas,
+            wards: item.no_of_wards,
+            action: 'update',
             extras: [
               {
-                date: "Sept 1, 2022",
-                lga: "chikun",
+                date: 'Sept 1, 2022',
+                lga: 'chikun',
                 wards: 2,
               },
               {
-                date: "Sept 1, 2022",
-                lga: "chikun",
+                date: 'Sept 1, 2022',
+                lga: 'chikun',
                 wards: 2,
               },
               {
-                date: "Sept 1, 2022",
-                lga: "chikun",
+                date: 'Sept 1, 2022',
+                lga: 'chikun',
                 wards: 2,
               },
             ],
           });
         });
-        console.log(modalData);
         setModalData({
           title: res.data.message,
           position: {
@@ -192,11 +195,10 @@ function Adminlist({ list }) {
           data: temp,
         });
       })
-      .catch((e) => console.log("error getting modal", pk, e));
+      .catch((e) => console.log('error getting modal', pk, e));
   };
   useEffect(() => {
     if (popoverOpened || locationpopoverOpened) setCurrentlyDisplayed(null);
-    // eslint-disable-next-line
   }, [popoverOpened, locationpopoverOpened]);
   useEffect(() => {
     if (!opened) {
@@ -207,24 +209,25 @@ function Adminlist({ list }) {
       setTimeout(() => setModalData({ ...modalData, title: null }), 300);
     }
     // eslint-disable-next-line
-  }, [opened]);
+  }, []);
   return (
     <div className='p-3 rounded-3xl w-full bg-[#FFFF] h-[400px] overflow-y-auto'>
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
-        title={`${title ? title : ""}`}>
+        title={`${title ? title : ''}`}
+        size='85%'>
         <div className=' border-t border-t-gray-200 mt-6 pt-6 flex w-full h-[75vh] px-6 text-textgrey'>
           {title ? (
             <>
               <div className='w-[45%] maps relative rounded-md overflow-hidden'>
                 {isLoaded ? (
                   <>
-                    {" "}
+                    {' '}
                     <GoogleMap
                       mapContainerStyle={{
-                        width: "100%",
-                        height: "100%",
+                        width: '100%',
+                        height: '100%',
                       }}
                       center={position}
                       zoom={10}
@@ -258,7 +261,7 @@ function Adminlist({ list }) {
                             </p>
                           </div>
                         </div>
-                      </div>{" "}
+                      </div>{' '}
                     </div>
                   </>
                 ) : (
@@ -329,7 +332,7 @@ function Adminlist({ list }) {
                                   lga: e.target.value,
                                 })
                               }
-                              defaultValue={"select"}
+                              defaultValue={'select'}
                               className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light'>
                               <option
                                 value='select'
@@ -373,10 +376,11 @@ function Adminlist({ list }) {
                               className={`child-hover:cursor-pointer  `}>
                               <td className='w-8'>
                                 <button
-                                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${arrowClicked(oldIndex)
-                                      ? "bg-afexgreen rotate-180"
-                                      : "bg-bggrey rotate-0"
-                                    }`}
+                                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
+                                    arrowClicked(oldIndex)
+                                      ? 'bg-afexgreen rotate-180'
+                                      : 'bg-bggrey rotate-0'
+                                  }`}
                                   onClick={() =>
                                     setCurrentlyDisplayed((s) =>
                                       s === oldIndex ? null : oldIndex
@@ -469,7 +473,7 @@ function Adminlist({ list }) {
                                                         lga: e.target.value,
                                                       })
                                                     }
-                                                    defaultValue={"select"}
+                                                    defaultValue={'select'}
                                                     className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light'>
                                                     <option
                                                       value='select'
@@ -520,15 +524,17 @@ function Adminlist({ list }) {
                             <tr key={`exp${oldIndex}`} className={``}>
                               <td
                                 colSpan={6}
-                                className={`${arrowClicked(oldIndex)
-                                    ? " px-[14px] py-[18px]"
-                                    : "!p-0 "
-                                  }`}>
+                                className={`${
+                                  arrowClicked(oldIndex)
+                                    ? ' px-[14px] py-[18px]'
+                                    : '!p-0 '
+                                }`}>
                                 <div
-                                  className={`flex justify-end transition-all duration-400 ${arrowClicked(oldIndex)
-                                      ? "opacity-100 max-h-96"
-                                      : "opacity-0 max-h-0 "
-                                    }`}>
+                                  className={`flex justify-end transition-all duration-400 ${
+                                    arrowClicked(oldIndex)
+                                      ? 'opacity-100 max-h-96'
+                                      : 'opacity-0 max-h-0 '
+                                  }`}>
                                   <div className=' min-w-[60%] '>
                                     <table className=' w-full pb-3'>
                                       <thead className='sticky top-0 '>

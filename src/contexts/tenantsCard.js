@@ -4,6 +4,7 @@ import axios from '../utils/axios';
 const GlobalTenantsCtx = createContext();
 
 const GlobalTenantsProvider = ({ children }) => {
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [cardData, setCardData] = useState({
     active_tenants: {
       total_active: 4500,
@@ -25,6 +26,7 @@ const GlobalTenantsProvider = ({ children }) => {
   });
 
   const fetchGlobalTenantsCardData = async () => {
+    setDataLoaded(false);
     const response = await axios.get('tenant/global/list');
 
     if (response.data.responseCode !== '100') return;
@@ -32,6 +34,7 @@ const GlobalTenantsProvider = ({ children }) => {
     const { summary } = response.data;
 
     setCardData((prev) => ({ ...prev, ...summary }));
+    setDataLoaded(true);
   };
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const GlobalTenantsProvider = ({ children }) => {
   }, []);
 
   return (
-    <GlobalTenantsCtx.Provider value={{ cardData }}>
+    <GlobalTenantsCtx.Provider value={{ cardData, dataLoaded }}>
       {children}
     </GlobalTenantsCtx.Provider>
   );

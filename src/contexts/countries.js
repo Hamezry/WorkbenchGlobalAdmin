@@ -4,6 +4,7 @@ import axios from '../utils/axios';
 const CountriesContext = createContext();
 
 const CountryProvider = ({ children }) => {
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [cardData, setCardData] = useState({
     grn_change: 0,
     last_month_grn: 0,
@@ -15,6 +16,7 @@ const CountryProvider = ({ children }) => {
   });
 
   const fetchCountryCardData = async () => {
+    setDataLoaded(false);
     const response = await axios.get('countries');
 
     if (response.data.responseCode !== '100') return;
@@ -22,6 +24,7 @@ const CountryProvider = ({ children }) => {
     const { summary } = response.data;
 
     setCardData((prev) => ({ ...prev, ...summary }));
+    setDataLoaded(true);
   };
 
   useEffect(() => {
@@ -29,7 +32,7 @@ const CountryProvider = ({ children }) => {
   }, []);
 
   return (
-    <CountriesContext.Provider value={{ cardData }}>
+    <CountriesContext.Provider value={{ cardData, dataLoaded }}>
       {children}
     </CountriesContext.Provider>
   );

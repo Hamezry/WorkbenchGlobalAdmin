@@ -173,7 +173,7 @@ function Countrylist() {
                         </td>
 
                         <td className='py-4 px-8  '>
-                          <Link to={`/country/${item.pk}`}>
+                          <Link to={`/countries/${item.pk}`}>
                             <span className='font-medium text-cyan-400 '>
                               View Dashboard
                             </span>

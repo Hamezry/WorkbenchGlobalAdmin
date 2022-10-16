@@ -19,8 +19,15 @@ function TenantDropdown() {
       </Popover.Target>
 
       <Popover.Dropdown>
-        <Text size='sm'>Activate Selected</Text>
-        <Text size='sm' onClick={() => {}}>
+        <Text
+          size='sm'
+          className='cursor-pointer hover:bg-afexgreen-lighter rounded-xl p-1'>
+          Activate Selected
+        </Text>
+        <Text
+          size='sm'
+          className='cursor-pointer hover:bg-afexgreen-lighter rounded-xl p-1'
+          onClick={() => {}}>
           Deactivate Selected
         </Text>
       </Popover.Dropdown>

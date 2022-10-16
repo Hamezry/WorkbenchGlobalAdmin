@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import Adminlist from './components/admin-table';
 import NoAdminLevel from './components/no-admin';
@@ -11,9 +11,9 @@ import { useCountriesCtx } from '../../../contexts';
 
 function Country() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { countries, cardData } = useCountriesCtx();
-
-  const singleCountry = countries.filter((el) => el.pk === Number(id))[0];
+  const [singleCountry, setSingleCountry] = useState({});
 
   const [stock, setStock] = useState([]);
   const [list, setList] = useState([]);
@@ -52,6 +52,17 @@ function Country() {
     countryAdminLevels();
   }, [id]);
 
+  // Redirect to countries on reload;
+  useEffect(() => {
+    const singleCountry = countries.filter((el) => el.pk === Number(id))[0];
+    if (!singleCountry || countries.length === 0) {
+      return navigate('/countries');
+    }
+    setSingleCountry(singleCountry);
+
+    //eslint-disable-next-line
+  }, [countries, id]);
+
   return (
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
@@ -64,12 +75,11 @@ function Country() {
           <p>{singleCountry.name}</p>
         </div>
 
-        <div className=' rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3'>
-          <Link to='/countries/list'>
-            {' '}
-            <button> Back</button>{' '}
-          </Link>
-        </div>
+        <Link
+          to='/countries/list'
+          className=' rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3 text-center hover:ring-1 hover:ring-gray-400'>
+          Back
+        </Link>
       </div>
 
       <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>

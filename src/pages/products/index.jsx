@@ -105,16 +105,14 @@ function Productlist({ openModal }) {
               <img src={recieptIcon} alt='receipt icon' />
             </div>
 
-            <div className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'>
+            <button
+              className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'
+              onClick={() => {
+                setViewFilter(true);
+              }}>
               <img src={filterIcon} alt='funnel' />
-              <button
-                onClick={() => {
-                  setViewFilter(true);
-                  console.log('here');
-                }}>
-                Filter
-              </button>
-            </div>
+              <span>Filter</span>
+            </button>
           </div>
 
           {/*TABLE */}

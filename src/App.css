@@ -37,13 +37,14 @@
   padding: 15px;
   border-radius: 10px;
 }
-.mantine-UnstyledButton-root {
+/* this style is affecting my modal, give your wrapper a name and style only your button -Faith */
+/* .mantine-UnstyledButton-root {
   background-color: #ffff;
   border-color: #38cb89;
   color: #38cb89;
   padding: 10px;
   border-radius: 5px;
-}
+} */
 .mantine-UnstyledButton-root:hover {
   background-color: #38cb89;
   color: #ffff;

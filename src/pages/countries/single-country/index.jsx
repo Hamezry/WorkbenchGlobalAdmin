@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
-import Adminlist from './components/admin-table';
-import NoAdminLevel from './components/no-admin';
-import People from './components/people';
-import StockPosition from './components/stock-position';
+import Adminlist from "./components/admin-table";
+import NoAdminLevel from "./components/no-admin";
+import People from "./components/people";
+import StockPosition from "./components/stock-position";
 
-import axios from '../../../utils/axios';
-import { useCountriesCtx } from '../../../contexts';
+import axios from "../../../utils/axios";
+import { useCountriesCtx } from "../../../contexts";
 
 function Country() {
   const { id } = useParams();
@@ -30,33 +30,43 @@ function Country() {
   //Tenants calculation
   const tenantProgress = singleTenant / totalTenants;
   const tenantValue = tenantProgress * 100;
+  ///till temp server is back up
+  const token = localStorage.getItem("global-admin-workbench-app-token");
 
+  const options = {
+    Authorization: `WB3 ${token}`,
+    "Content-Type": "application/json",
+  };
   useEffect(() => {
     const countryStockPosition = async () => {
       const resp = await axios.get(`country/stock/position/${id}`);
 
-      if (!resp.data || resp.data.responseCode !== '100') return;
+      if (!resp.data || resp.data.responseCode !== "100") return;
 
       setStock(resp.data.data);
     };
 
     const countryAdminLevels = async () => {
-      const resp = await axios.get(`admin/levels/${id}`);
+      const resp = await axios.get(
+        `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${id}`,
+        options
+      );
 
-      if (!resp.data || resp.data.responseCode !== '100') return;
+      if (!resp.data || resp.data.responseCode !== "100") return;
 
       setList(resp.data.data);
     };
 
     countryStockPosition();
     countryAdminLevels();
+    // eslint-disable-next-line
   }, [id]);
 
   // Redirect to countries on reload;
   useEffect(() => {
     const singleCountry = countries.filter((el) => el.pk === Number(id))[0];
     if (!singleCountry || countries.length === 0) {
-      return navigate('/countries');
+      return navigate("/countries");
     }
     setSingleCountry(singleCountry);
 
@@ -87,7 +97,11 @@ function Country() {
           <People farmerValue={farmerValue} tenantValue={tenantValue} />
 
           <div className='rounded-3xl w-full mt-8'>
-            {list.length < 1 ? <NoAdminLevel /> : <Adminlist list={list} />}
+            {list.length < 1 ? (
+              <NoAdminLevel />
+            ) : (
+              <Adminlist list={list} id={id} />
+            )}
           </div>
         </div>
 

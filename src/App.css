@@ -1,3 +1,17 @@
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 40px;
+  background-color: rgb(233, 230, 230);
+}
+
 .mantine-Modal-modal {
   border-radius: 1.75rem;
 }
@@ -40,4 +54,15 @@
 
 .mantine-Progress-bar {
   background-color: #38cb89;
+}
+
+li.selected {
+  color: #38cb89;
+}
+input[type='checkbox'] {
+  accent-color: #38cb89;
+  color: #fff;
+}
+input[type='checkbox']:checked {
+  color: #fff;
 }

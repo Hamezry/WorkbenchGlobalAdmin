@@ -1,33 +1,37 @@
-import { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const authContext = createContext()
+const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const auth_status = localStorage.getItem(
+    'global-admin-workbench-auth-status'
+  );
+  const [isAuthenticated, setAuthenticated] = useState(
+    auth_status ? true : false
+  );
 
-    const token = localStorage.getItem('workbench-app-token')
-    
+  function signin(token) {
+    localStorage.setItem('global-admin-workbench-app-token', token);
+    setAuthenticated(true);
+    localStorage.setItem('global-admin-workbench-auth-status', 'authenticated');
+    navigate('/');
+  }
 
-    const [isAuthenticated, setAuthenticated] = useState(token)
+  function signout() {
+    localStorage.removeItem('global-admin-workbench-app-token');
+    localStorage.removeItem('global-admin-workbench-auth-status');
+    navigate('/login');
+  }
 
-    function signin(data) {
-        localStorage.setItem('workbench-app-token', data.token)
-        setAuthenticated(true)
-    }
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, signin, signout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-    function signout() {
-        localStorage.removeItem('workbench-app-token')
-        setAuthenticated(false)
-    }
+export default AuthProvider;
 
-    return (
-        <authContext.Provider value={{ isAuthenticated, signin, signout }}>
-            {children}
-        </authContext.Provider>
-    )
-}
-
-export default AuthProvider
-
-export function useAuth() {
-    return useContext(authContext)
-}
+export const useAuth = () => useContext(AuthContext);

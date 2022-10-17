@@ -3,24 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import AuthProvider from './contexts/auth';
-import CountryProvider from './contexts/countries';
-import GlobalProductsCardProvider from './contexts/productsCard';
-import GlobalTenantsCardProvider from './contexts/tenantsCard';
+
+import {
+  AuthContextProvider,
+  CountriesContextProvider,
+  ProductsContextProvider,
+  TenantsContextProvider,
+} from './contexts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <CountryProvider>
-          <GlobalProductsCardProvider>
-            <GlobalTenantsCardProvider>
+      <AuthContextProvider>
+        <CountriesContextProvider>
+          <ProductsContextProvider>
+            <TenantsContextProvider>
               <App />
-            </GlobalTenantsCardProvider>
-          </GlobalProductsCardProvider>
-        </CountryProvider>
-      </AuthProvider>
+            </TenantsContextProvider>
+          </ProductsContextProvider>
+        </CountriesContextProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

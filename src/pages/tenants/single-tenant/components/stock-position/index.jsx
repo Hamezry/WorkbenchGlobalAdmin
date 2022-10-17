@@ -21,11 +21,11 @@ const StockPosition = ({ stock }) => {
               </tr>
             </thead>
 
-            <tbody className='text-[#54565B] text-[12px] font-light'>
+            <tbody className='text-[#54565B] text-[12px] font-light relative'>
               {stock?.map((item, index) => {
                 return (
                   <>
-                    <tr className='text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee]'>
+                    <tr className='text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] relative'>
                       <td className='py-4 px-2 flex gap-4'>
                         <button
                           onClick={() => {
@@ -53,32 +53,42 @@ const StockPosition = ({ stock }) => {
                         </span>
                       </td>
                     </tr>
-                    <div
-                      className={`max-h-0 overflow-hidden flex flex-col self-end p-0 transition-[max-height] ${
-                        indexToShow === index + 1
-                          ? " max-h-64 p-3 w-[200px]"
-                          : ""
-                      }`}>
-                      <tr className='text-left p-3 bg-[#F9F9F9] hover:bg-[#e3f7ee]'>
-                        <td className='py-2 px-4 '>Location</td>
-                        <td className='py-2 px-4 '>Volume(MT)</td>
-                      </tr>
-                      {item.location_breakdown.map((list) => {
-                        return (
-                          <>
-                            <tr className='text-left p-3  hover:bg-[#e3f7ee]'>
-                              <td className='py-2 px-4 '>
-                                {list.location_name}
-                              </td>
-                              <td className='py-2 px-4 '>{list.volume}</td>
-                            </tr>
-                            {/* <tr className='text-center p-3 hover:bg-[#e3f7ee]'>
-                                  <td className='px-4 '>last update: Today @ 2:30pm</td>
-                                </tr> */}
-                          </>
-                        );
-                      })}
-                    </div>
+                    <tr>
+                      <td className='col-span-4' colSpan={4}>
+                        <div
+                          className={`max-h-0 overflow-hidden flex w-full justify-end p-0 transition-[max-height] ${
+                            indexToShow === index + 1
+                              ? " max-h-64 p-3"
+                              : undefined
+                          }`}>
+                          <div className='flex flex-col'>
+                            <p className='text-left p-3 bg-[#F9F9F9] hover:bg-[#e3f7ee]'>
+                              <span className='py-2 px-4 '>Location</span>
+                              <span className='py-2 px-4 '>Volume(MT)</span>
+                            </p>
+                            {item.location_breakdown.map((list) => {
+                              return (
+                                <>
+                                  <p className='text-left p-3  hover:bg-[#e3f7ee]'>
+                                    <span className='py-2 px-4 '>
+                                      {list.location_name}
+                                    </span>
+                                    <span className='py-2 px-4 '>
+                                      {list.volume}
+                                    </span>
+                                  </p>
+                                  {/* <tr className='text-center p-3 hover:bg-[#e3f7ee]'>
+                                <td className='px-4 '>
+                                  last update: Today @ 2:30pm
+                                </td>
+                              </tr> */}
+                                </>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
                   </>
                 );
               })}

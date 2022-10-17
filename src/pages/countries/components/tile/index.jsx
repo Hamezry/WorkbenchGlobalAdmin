@@ -46,7 +46,7 @@ const CountryTile = () => {
             <div className='bg-white rounded-3xl flex-1 p-6'>
               Total Farmers:{' '}
               <span className='text-[25px] font-semibold'>
-                {cardData.total_farmers}{' '}
+                {Intl.NumberFormat('en-US').format(cardData.total_farmers)}{' '}
               </span>
             </div>
           )}
@@ -57,7 +57,7 @@ const CountryTile = () => {
             <div className='bg-white rounded-3xl flex-1 p-6'>
               Total Tenants:{' '}
               <span className='text-[25px] font-semibold'>
-                {cardData.total_tenants}{' '}
+                {Intl.NumberFormat('en-US').format(cardData.total_tenants)}{' '}
               </span>
             </div>
           )}

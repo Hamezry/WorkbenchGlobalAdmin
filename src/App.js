@@ -22,7 +22,7 @@ import {
 function App() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const token = localStorage.getItem('workbench-app-token');
+  const token = localStorage.getItem('global-admin-workbench-app-token');
 
   useEffect(() => {
     if (!token || !isAuthenticated) return navigate('/login');

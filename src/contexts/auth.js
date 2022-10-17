@@ -5,21 +5,23 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const auth_status = localStorage.getItem('workbench-auth-status');
+  const auth_status = localStorage.getItem(
+    'global-admin-workbench-auth-status'
+  );
   const [isAuthenticated, setAuthenticated] = useState(
     auth_status ? true : false
   );
 
-  function signin(data) {
-    localStorage.setItem('workbench-app-token', data.token);
+  function signin(token) {
+    localStorage.setItem('global-admin-workbench-app-token', token);
     setAuthenticated(true);
-    localStorage.setItem('workbench-auth-status', 'authenticated');
+    localStorage.setItem('global-admin-workbench-auth-status', 'authenticated');
     navigate('/');
   }
 
   function signout() {
-    localStorage.removeItem('workbench-app-token');
-    localStorage.removeItem('workbench-auth-status');
+    localStorage.removeItem('global-admin-workbench-app-token');
+    localStorage.removeItem('global-admin-workbench-auth-status');
     navigate('/login');
   }
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 const base_url = process.env.REACT_APP_BASE_API_URL;
 
 const gen_auth_header = () => {
-  const token = localStorage.getItem('workbench-app-token');
+  const token = localStorage.getItem('global-admin-workbench-app-token');
 
   if (!token) return;
 

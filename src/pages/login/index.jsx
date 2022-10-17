@@ -13,14 +13,16 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await axios.post('api-token-auth', {
+
+    const resp = await axios.post('api-token-auth/', {
       username: user,
       password: password,
     });
 
+    console.log(resp);
     if (!resp.data || resp.data.responseCode !== '100') return;
 
-    return signin(resp.data.token);
+    signin(resp.data.token);
   };
 
   return (
@@ -36,7 +38,7 @@ function Login() {
         <div className='w-[500px] ml-[150px] mt-[100px] p-8 rounded-xl '>
           <h1 className='text-[#54565B] text-[28px] font-medium'>Login</h1>
 
-          <form action='post' onSubmit={handleSubmit} className='my-10'>
+          <form className='my-10'>
             <div className='flex flex-col space-y-5'>
               <label>
                 <p className='text-[14px] text-[#54565B] pb-2'>Username</p>
@@ -80,8 +82,7 @@ function Login() {
                 </div>
               </div>
               <button
-                //onClick={signin}
-                onClick={(e) => handleSubmit(e)}
+                onClick={handleSubmit}
                 type='submit'
                 className='w-full py-3 font-medium text-white bg-[#38CB89] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center'>
                 Sign In

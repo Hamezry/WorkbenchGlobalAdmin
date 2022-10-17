@@ -1,127 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import MapModal from './components/map-modal';
+import request from "../../../../../utils/axios";
+import MapModal from "./components/map-modal";
 
-import axios from '../../../../../utils/axios';
+import "./index.css";
 
-import './index.css';
-
-// Please refactor this
-const AdminTable = ({ list }) => {
-  const [opened, setOpened] = useState(false);
-
-  const [locationpopoverOpened, setLocationPopoverOpened] = useState(false);
-  const [coordinates, setCoordinates] = useState([]);
-
-  const [updateData, setUpdateData] = useState({
-    locationName: '',
-    lga: '',
-  });
-
-  const [modalData, setModalData] = useState({
+const AdminTable = ({ list, id }) => {
+  const defaultModalData = {
     title: null,
     position: {
       lat: 8.6753,
       lng: 9.082,
     },
-    data: [
-      {
-        exchange_location: 'kaduna 1',
-        lgas: 10,
-        wards: 20,
-        action: 'update',
-        extras: [
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-        ],
-      },
-      {
-        exchange_location: 'kaduna 1',
-        lgas: 10,
-        wards: 20,
-        action: 'update',
-        extras: [
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-        ],
-      },
-      {
-        exchange_location: 'kaduna 1',
-        lgas: 10,
-        wards: 20,
-        action: 'update',
-        extras: [
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-        ],
-      },
-      {
-        exchange_location: 'kaduna 1',
-        lgas: 10,
-        wards: 20,
-        action: 'update',
-        extras: [
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-          {
-            date: 'Sept 1, 2022',
-            lga: 'chikun',
-            wards: 2,
-          },
-        ],
-      },
-    ],
-  });
+    state_id: 0,
+    data: [],
+  };
+  const defaultLocation = {
+    name: "",
+    state: 0,
+    lgas: [],
+    code: "917",
+  };
+  const [lgas, setLgas] = useState({});
+  const [lgaOptions, setLgaOptions] = useState([]);
+  const [opened, setOpened] = useState(false);
+  const [coordinates, setCoordinates] = useState([]);
+  const [modalData, setModalData] = useState(defaultModalData);
+  const [addLocation, setAddlocation] = useState(defaultLocation);
+  const [isRefreshing, setisrefreshing] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [state_id, setStateId] = useState(0);
 
-  const settingModal = async (pk, center) => {
-    await axios
+  const settingModal = async ({
+    pk = state_id,
+    center = coordinates[0],
+    refresh = false,
+  }) => {
+    await request
       .get(`admin/levels/${pk}/locations`)
       .then((res) => {
         const temp = [];
@@ -129,7 +44,7 @@ const AdminTable = ({ list }) => {
           const tempExtras = [];
           item.lgas.forEach((innerItem) => {
             tempExtras.push({
-              date: 'Sept 1, 2022',
+              date: "Sept 1, 2022",
               lga: innerItem.name,
               wards: innerItem.no_of_wards,
             });
@@ -139,21 +54,66 @@ const AdminTable = ({ list }) => {
             exchange_location: item.name,
             lgas: item.no_of_lgas,
             wards: item.no_of_wards,
-            action: 'update',
+            action: "update",
             extras: tempExtras,
           });
         });
-        setModalData({
-          title: res.data.message,
-          position: {
-            lat: (+center.lat).toFixed(2),
-            lng: (+center.long).toFixed(2),
-          },
-          data: temp,
-        });
+        setAddlocation({ ...addLocation, state: pk });
+        setLgaOptions(lgas[pk]);
+        if (refresh) {
+          console.log("refresh");
+          setModalData({
+            ...modalData,
+            data: temp,
+          });
+          setisrefreshing(false);
+          console.log(temp);
+        } else {
+          console.log("!refresh");
+          setModalData({
+            title: res.data.message,
+            position: {
+              lat: (+center.lat).toFixed(2),
+              lng: (+center.long).toFixed(2),
+            },
+            state_id: pk,
+            data: temp,
+          });
+
+          setTimeout(() => {
+            setMapLoaded(true);
+          });
+        }
       })
-      .catch((e) => console.log('error getting modal', pk, e));
+      .catch((e) => console.log("error getting modal", pk, e));
   };
+  useEffect(() => {
+    const fetchLgas = async () => {
+      await request
+        .get(`lgas`)
+        .then((res) => {
+          let temp = {};
+          res.data.data.forEach((item) => {
+            if (Object.keys(temp).includes(item.state_id.toString())) {
+              const array = [
+                ...temp[item.state_id],
+                { name: item.name, pk: item.pk },
+              ];
+              temp = { ...temp, [item.state_id]: array };
+            } else {
+              temp = {
+                ...temp,
+                [item.state_id]: [{ name: item.name, pk: item.pk }],
+              };
+            }
+          });
+          setLgas(temp);
+        })
+        .catch((e) => console.log(e));
+    };
+    Object.keys(lgas).length === 0 && fetchLgas();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className='p-3 rounded-3xl w-full bg-[#FFFF] h-[400px] overflow-y-auto'>
@@ -162,14 +122,23 @@ const AdminTable = ({ list }) => {
       </div>
 
       <MapModal
+        id={id}
+        defaultLocation={defaultLocation}
+        addLocation={addLocation}
+        setAddlocation={setAddlocation}
+        lgas={lgas}
+        settingModal={settingModal}
         opened={opened}
         setOpened={setOpened}
-        modalData={modalData}
-        locationpopoverOpened={locationpopoverOpened}
-        setLocationPopoverOpened={setLocationPopoverOpened}
-        updateData={updateData}
-        setUpdateData={setUpdateData}
         coordinates={coordinates}
+        modalData={modalData}
+        setModalData={setModalData}
+        lgaOptions={lgaOptions}
+        isRefreshing={isRefreshing}
+        setisrefreshing={setisrefreshing}
+        mapLoaded={mapLoaded}
+        setMapLoaded={setMapLoaded}
+        // showSuccessBanner={showSuccessBanner}
       />
 
       {/*ADMIN TABLE LIST */}
@@ -211,8 +180,13 @@ const AdminTable = ({ list }) => {
                     <button
                       className='font-medium text-cyan-400 '
                       onClick={() => {
+                        console.log(item);
                         setOpened(true);
-                        settingModal(item.pk, item.coordinates[0]);
+                        setStateId(item.pk);
+                        settingModal({
+                          pk: item.pk,
+                          center: item.coordinates[0],
+                        });
                         const newCordinates = item.coordinates.map((item) => ({
                           lat: parseFloat(item.lat),
                           lng: parseFloat(item.long),

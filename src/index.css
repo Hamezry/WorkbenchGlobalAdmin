@@ -3,16 +3,15 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'Muli';
-    src: local('Muli'), url("./fonts/Muli-Regular.ttf") format("truetype");
+  font-family: 'Muli';
+  src: local('Muli'), url('./Assets/fonts/Muli-Regular.ttf') format('truetype');
 }
 
-
 @font-face {
-    font-family: 'Muli';
-    src: url('./fonts/Muli-Regular.ttf') format("truetype");
+  font-family: 'Muli';
+  src: url('./Assets/fonts/Muli-Regular.ttf') format('truetype');
 }
 
 body {
-    font-family: 'Muli' !important;
+  font-family: 'Muli' !important;
 }

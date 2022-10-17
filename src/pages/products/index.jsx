@@ -4,6 +4,8 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 import Dropdown from './dropdown';
 
+import Query from './query';
+
 import recieptIcon from '../../Assets/receipt-text.png';
 import filterIcon from '../../Assets/filter.svg';
 import calenderIcon from '../../Assets/calendar.svg';
@@ -18,6 +20,14 @@ import Filtermodal from './modal/filter';
 
 function Productlist({ openModal }) {
   const { products } = useProductsCtx();
+
+  const [filterObj, setFilterObj] = useState({
+    certified: [],
+    codes: [],
+    unit_types: [],
+    types: [],
+  });
+
   const [modal, setModal] = useState(false);
   const [viewFilter, setViewFilter] = useState(false);
 
@@ -30,7 +40,13 @@ function Productlist({ openModal }) {
   const [posts, setPosts] = useState([]);
 
   const populate = () => {
-    setPosts(products);
+    const QueryBuilder = new Query(products)
+      .certified_filter(filterObj.certified)
+      .code_filter(filterObj.codes)
+      .type_filter(filterObj.types)
+      .unit_type_filter(filterObj.unit_types);
+
+    setPosts(QueryBuilder.products);
   };
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(7);
@@ -213,7 +229,13 @@ function Productlist({ openModal }) {
       </div>
 
       {modal && <CreateProductModal setModal={setModal} />}
-      {viewFilter && <Filtermodal setViewFilter={setViewFilter} />}
+      {viewFilter && (
+        <Filtermodal
+          setViewFilter={setViewFilter}
+          filterObj={filterObj}
+          setFilterObj={setFilterObj}
+        />
+      )}
     </div>
   );
 }

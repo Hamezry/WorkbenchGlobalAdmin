@@ -44,11 +44,11 @@
   color: #38cb89;
   padding: 10px;
   border-radius: 5px;
-} */
+}
 .mantine-UnstyledButton-root:hover {
   background-color: #38cb89;
   color: #ffff;
-}
+} */
 .mantine-Progress-root {
   background-color: #eeefee;
 }
@@ -60,10 +60,10 @@
 li.selected {
   color: #38cb89;
 }
-input[type='checkbox'] {
+input[type="checkbox"] {
   accent-color: #38cb89;
   color: #fff;
 }
-input[type='checkbox']:checked {
+input[type="checkbox"]:checked {
   color: #fff;
 }

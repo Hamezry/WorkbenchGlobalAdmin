@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Modal, Popover, Skeleton } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
 import { ArrowDown2, Refresh, LocationTick } from "iconsax-react";
 import request from "../../../../../../../utils/axios";
@@ -9,7 +10,7 @@ import cancel from "../../../../../../../Assets/cancel.svg";
 import check from "../../../../../../../Assets/white-check.svg";
 import successIcon from "../../../../../../../Assets/successBadge.svg";
 
-// PLEASE REFACTOR THIS CODE. I DO NOT KNOW WHERE TO DISSECT WITHOUT BREAKING
+import "./map-modal.css";
 
 const MapModal = ({
   id,
@@ -35,8 +36,22 @@ const MapModal = ({
   const [locationpopoverOpened, setLocationPopoverOpened] = useState(false);
   const [locationpopoverdropdownOpened, setLocationPopoverDropdownOpened] =
     useState(false);
-  const [showSuccessBanner, setShowSuccessBanner] = useState(false);
-
+  const notificationProps = {
+    message: (
+      <div className='flex items-start  rounded-2xl '>
+        <div className=' flex justify-between pr-4 items-center'>
+          <div className='w-10 h-10 bg-afexgreen rounded-full flex items-center justify-center'>
+            <img src={successIcon} alt='success icon' />
+          </div>
+          <div className='pl-5'>
+            <p className='font-bold '>Success!</p>
+            <p className='text-sm'>Location added successfully.</p>
+          </div>
+        </div>
+      </div>
+    ),
+    // autoClose: 3000,
+  };
   const { title, position, data, state_id } = modalData;
 
   const { isLoaded } = useJsApiLoader({
@@ -47,15 +62,6 @@ const MapModal = ({
   const arrowClicked = (id) => {
     if (id === currentlyDisplayed) return true;
     else return false;
-  };
-
-  const bannerTimeout = (request = false) => {
-    console.log(request);
-    request
-      ? setShowSuccessBanner(false)
-      : setTimeout(function () {
-          setShowSuccessBanner(false);
-        }, 3000);
   };
   const addingLocation = async () => {
     const { code, lgas, state, name } = addLocation;
@@ -74,8 +80,7 @@ const MapModal = ({
     console.log(response);
     if (response.data.responseCode === "100") {
       settingModal({ refresh: true });
-      setShowSuccessBanner(true);
-      bannerTimeout();
+      showNotification(notificationProps);
     }
   };
 
@@ -102,27 +107,6 @@ const MapModal = ({
 
   return (
     <>
-      <div
-        className={`absolute top-3 right-0 rounded-2xl  border border-afexgreen bg-white transition-all duration-300 ${
-          showSuccessBanner
-            ? "opacity-100 z-[300] right-0"
-            : "opacity-0 -z-50 right-[-100%]"
-        }`}>
-        <div className='flex items-start bg-afexgreen-lighter  p-6 rounded-2xl'>
-          <div className=' flex justify-between pr-4 items-center'>
-            <div className='w-10 h-10 bg-afexgreen rounded-full flex items-center justify-center'>
-              <img src={successIcon} alt='success icon' />
-            </div>
-            <div className='pl-5'>
-              <p className='font-bold '>Success!</p>
-              <p className='text-sm'>Location added successfully.</p>
-            </div>
-          </div>
-          <button className='w-5' onClick={() => bannerTimeout(true)}>
-            <img src={cancel} alt='cancel icon' />
-          </button>
-        </div>
-      </div>
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
@@ -213,12 +197,13 @@ const MapModal = ({
                   <></>
                 )}
               </div>
-              <div className='w-[55%] h-full pl-8 relative overflow-scroll'>
+              <div className='w-[55%] h-full pl-8 relative '>
                 <div className='text-end py-1'>
                   <Popover
                     width={350}
                     position='bottom'
                     shadow='md'
+                    zIndex={320}
                     opened={locationpopoverOpened}
                     onChange={setLocationPopoverOpened}
                     data-testid='add-location-popover'>
@@ -368,362 +353,366 @@ const MapModal = ({
                     </Popover.Dropdown>
                   </Popover>
                 </div>
-                <div className='overflow-y-scroll pt-6 min-h-full '>
-                  <table className=' table w-full'>
-                    <thead className='sticky top-0 z-10'>
-                      <tr className='table-head bg-bggrey p-6'>
-                        <th></th>
-                        <th>ID</th>
-                        <th>Exchange Location</th>
-                        <th>LGAs</th>
-                        <th>Wards</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className='transition-all duration-600'>
-                      {data.map((item, oldIndex) => {
-                        return (
-                          <>
-                            <tr
-                              key={`main${oldIndex}`}
-                              className={`child-hover:cursor-pointer  `}>
-                              <td className='w-8'>
-                                <button
-                                  className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
-                                    arrowClicked(oldIndex)
-                                      ? "bg-afexgreen rotate-180"
-                                      : "bg-bggrey rotate-0"
-                                  }`}
-                                  onClick={() =>
-                                    setCurrentlyDisplayed((s) =>
-                                      s === oldIndex ? null : oldIndex
-                                    )
-                                  }>
-                                  <ArrowDown2
-                                    size='16'
-                                    color={
+                <div className='overflow-hidden h-full '>
+                  <div className='overflow-y-scroll mt-6 h-[90%] '>
+                    <table className=' table w-full'>
+                      <thead className='sticky top-0 z-[310]'>
+                        <tr className='table-head bg-bggrey p-6'>
+                          <th></th>
+                          <th>ID</th>
+                          <th>Exchange Location</th>
+                          <th>LGAs</th>
+                          <th>Wards</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody className='transition-all duration-600'>
+                        {data.map((item, oldIndex) => {
+                          return (
+                            <>
+                              <tr
+                                key={`main${oldIndex}`}
+                                className={`child-hover:cursor-pointer  `}>
+                                <td className='w-8'>
+                                  <button
+                                    className={`w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
                                       arrowClicked(oldIndex)
-                                        ? "#fff"
-                                        : "#54565b"
-                                    }
-                                    variant='Outline'
-                                  />
-                                </button>
-                              </td>
-                              <td>{oldIndex + 1} </td>
-                              {Object.values(item).map((entry, index) => {
-                                if (index !== 4) {
-                                  if (index === 3) {
-                                    return (
-                                      <td
-                                        key={index}
-                                        className={` text-ellipsis overflow-hidden max-w-[100px] text-cyan-400`}>
-                                        <Popover
-                                          width={350}
-                                          position='bottom'
-                                          shadow='md'
-                                          opened={
-                                            popoverOpened &&
-                                            popover === oldIndex
-                                          }
-                                          onChange={setPopoverOpened}>
-                                          <Popover.Target>
-                                            <button
-                                              onClick={() => {
-                                                console.log(item);
-
-                                                const itemlgas =
-                                                  item.extras.map(
-                                                    (item) => item.lga
-                                                  );
-                                                const itemlgasPks = lgas[
-                                                  state_id
-                                                ]
-                                                  .filter((item) =>
-                                                    itemlgas.includes(item.name)
-                                                  )
-                                                  .map((item) => item.pk);
-                                                setAddlocation({
-                                                  ...addLocation,
-                                                  name: item.exchange_location,
-                                                  lgas: itemlgasPks,
-                                                  state: state_id,
-                                                });
-                                                setPopover(oldIndex);
-                                                setPopoverOpened((s) => !s);
-                                              }}
-                                              className='capitalize underline'>
-                                              {entry.toString()}
-                                            </button>
-                                          </Popover.Target>
-                                          <Popover.Dropdown>
-                                            <div className='whitespace-normal text-textgrey'>
-                                              <div className='flex justify-between items-center border-b border-b-textgrey-lighter p-2 py-4'>
-                                                <span>Update Details </span>
-                                                <button
-                                                  className='w-5'
-                                                  onClick={() => {
-                                                    setPopoverOpened(false);
-                                                    setPopover(undefined);
-                                                  }}>
-                                                  <img
-                                                    src={cancel}
-                                                    alt='cancel icon'
-                                                  />
-                                                </button>
-                                              </div>
-                                              <form
-                                                className='py-4'
-                                                onSubmit={(e) => {
-                                                  e.preventDefault();
-                                                  setPopoverOpened(false);
-                                                  addingLocation();
-                                                }}>
-                                                <div className='pb-7 child:capitalize'>
-                                                  <label className='px-2 pb-3 block'>
-                                                    Location name
-                                                  </label>
-                                                  <input
-                                                    type='text'
-                                                    className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light'
-                                                    value={addLocation.name}
-                                                    onChange={(e) =>
-                                                      setAddlocation({
-                                                        ...addLocation,
-                                                        name: e.target.value,
-                                                      })
-                                                    }
-                                                  />
-                                                </div>
-                                                <div className='pb-7 child:capitalize relative'>
-                                                  <p className='px-2 pb-3 block'>
-                                                    Select LGA
-                                                  </p>
+                                        ? "bg-afexgreen rotate-180"
+                                        : "bg-bggrey rotate-0"
+                                    }`}
+                                    onClick={() =>
+                                      setCurrentlyDisplayed((s) =>
+                                        s === oldIndex ? null : oldIndex
+                                      )
+                                    }>
+                                    <ArrowDown2
+                                      size='16'
+                                      color={
+                                        arrowClicked(oldIndex)
+                                          ? "#fff"
+                                          : "#54565b"
+                                      }
+                                      variant='Outline'
+                                    />
+                                  </button>
+                                </td>
+                                <td>{oldIndex + 1} </td>
+                                {Object.values(item).map((entry, index) => {
+                                  if (index !== 4) {
+                                    if (index === 3) {
+                                      return (
+                                        <td
+                                          key={index}
+                                          className={`relative text-ellipsis max-w-[100px] text-cyan-400 td-popover`}>
+                                          <Popover
+                                            width={350}
+                                            position='bottom'
+                                            shadow='md'
+                                            opened={
+                                              popoverOpened &&
+                                              popover === oldIndex
+                                            }
+                                            onChange={setPopoverOpened}>
+                                            <Popover.Target>
+                                              <button
+                                                onClick={() => {
+                                                  const itemlgas =
+                                                    item.extras.map(
+                                                      (item) => item.lga
+                                                    );
+                                                  const itemlgasPks = lgas[
+                                                    state_id
+                                                  ]
+                                                    .filter((item) =>
+                                                      itemlgas.includes(
+                                                        item.name
+                                                      )
+                                                    )
+                                                    .map((item) => item.pk);
+                                                  setAddlocation({
+                                                    ...addLocation,
+                                                    name: item.exchange_location,
+                                                    lgas: itemlgasPks,
+                                                    state: state_id,
+                                                  });
+                                                  setPopover(oldIndex);
+                                                  setPopoverOpened((s) => !s);
+                                                }}
+                                                className='capitalize underline'>
+                                                {entry.toString()}
+                                              </button>
+                                            </Popover.Target>
+                                            <Popover.Dropdown>
+                                              <div className='whitespace-normal text-textgrey popover-box'>
+                                                <div className='flex justify-between items-center border-b border-b-textgrey-lighter p-2 py-4  '>
+                                                  <span>Update Details </span>
                                                   <button
-                                                    onClick={(e) => {
-                                                      e.preventDefault();
-                                                      setLocationPopoverDropdownOpened(
-                                                        (s) => !s
-                                                      );
-                                                    }}
-                                                    className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light flex justify-between items-center'>
-                                                    <span className='text-[#c9c8c6]'>
-                                                      {addLocation.lgas
-                                                        .length === 0
-                                                        ? "select"
-                                                        : `${addLocation.lgas.length} selected`}
-                                                    </span>
-                                                    <ArrowDown2
-                                                      size='18'
-                                                      color='#c9c8c6'
-                                                      className={`transition-all duration-150 ${
-                                                        locationpopoverdropdownOpened
-                                                          ? "rotate-180"
-                                                          : "rotate-0"
-                                                      }`}
+                                                    className='w-5'
+                                                    onClick={() => {
+                                                      setPopoverOpened(false);
+                                                      setPopover(undefined);
+                                                    }}>
+                                                    <img
+                                                      src={cancel}
+                                                      alt='cancel icon'
                                                     />
                                                   </button>
-                                                  <div
-                                                    className={`overflow-y-auto max-h-[200%] w-full absolute transition-all duration-400  mt-1 bg-gray-100 py-5 px-2 rounded-2xl  outline-none border border-afexgreen-light   text-textgrey-light ${
-                                                      locationpopoverdropdownOpened
-                                                        ? "opacity-100 z-10"
-                                                        : "opacity-0 -z-10"
-                                                    }`}>
-                                                    <ul className='child-hover:bg-afexgreen-lighter child:pl-6 child-hover:cursor-pointer child-hover:text-textgrey'>
-                                                      {lgaOptions?.map(
-                                                        (item, index) => {
-                                                          return (
-                                                            <li
-                                                              key={index}
-                                                              className='py-2 child-hover:border-afexgreen relative'>
-                                                              <span
-                                                                className={` inline-flex items-center justify-center w-5 h-5  border border-white rounded-md ${
-                                                                  addLocation.lgas.includes(
-                                                                    item.pk
-                                                                  )
-                                                                    ? "bg-afexgreen border-afexgreen"
-                                                                    : "bg-white"
-                                                                }`}>
-                                                                <img
-                                                                  className={``}
-                                                                  alt='check mark'
-                                                                  src={check}
-                                                                />
-                                                                <input
-                                                                  type='checkbox'
-                                                                  id={
+                                                </div>
+                                                <form
+                                                  className='py-4'
+                                                  onSubmit={(e) => {
+                                                    e.preventDefault();
+                                                    setPopoverOpened(false);
+                                                    addingLocation();
+                                                  }}>
+                                                  <div className='pb-7 child:capitalize'>
+                                                    <label className='px-2 pb-3 block'>
+                                                      Location name
+                                                    </label>
+                                                    <input
+                                                      type='text'
+                                                      className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light'
+                                                      value={addLocation.name}
+                                                      onChange={(e) =>
+                                                        setAddlocation({
+                                                          ...addLocation,
+                                                          name: e.target.value,
+                                                        })
+                                                      }
+                                                    />
+                                                  </div>
+                                                  <div className='pb-7 child:capitalize relative'>
+                                                    <p className='px-2 pb-3 block'>
+                                                      Select LGA
+                                                    </p>
+                                                    <button
+                                                      onClick={(e) => {
+                                                        e.preventDefault();
+                                                        setLocationPopoverDropdownOpened(
+                                                          (s) => !s
+                                                        );
+                                                      }}
+                                                      className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light flex justify-between items-center'>
+                                                      <span className='text-[#c9c8c6]'>
+                                                        {addLocation.lgas
+                                                          .length === 0
+                                                          ? "select"
+                                                          : `${addLocation.lgas.length} selected`}
+                                                      </span>
+                                                      <ArrowDown2
+                                                        size='18'
+                                                        color='#c9c8c6'
+                                                        className={`transition-all duration-150 ${
+                                                          locationpopoverdropdownOpened
+                                                            ? "rotate-180"
+                                                            : "rotate-0"
+                                                        }`}
+                                                      />
+                                                    </button>
+                                                    <div
+                                                      className={`overflow-y-auto max-h-[200%] w-full absolute transition-all duration-400  mt-1 bg-gray-100 py-5 px-2 rounded-2xl  outline-none border border-afexgreen-light   text-textgrey-light ${
+                                                        locationpopoverdropdownOpened
+                                                          ? "opacity-100 z-10"
+                                                          : "opacity-0 -z-10"
+                                                      }`}>
+                                                      <ul className='child-hover:bg-afexgreen-lighter child:pl-6 child-hover:cursor-pointer child-hover:text-textgrey'>
+                                                        {lgaOptions?.map(
+                                                          (item, index) => {
+                                                            return (
+                                                              <li
+                                                                key={index}
+                                                                className='py-2 child-hover:border-afexgreen relative'>
+                                                                <span
+                                                                  className={` inline-flex items-center justify-center w-5 h-5  border border-white rounded-md ${
+                                                                    addLocation.lgas.includes(
+                                                                      item.pk
+                                                                    )
+                                                                      ? "bg-afexgreen border-afexgreen"
+                                                                      : "bg-white"
+                                                                  }`}>
+                                                                  <img
+                                                                    className={``}
+                                                                    alt='check mark'
+                                                                    src={check}
+                                                                  />
+                                                                  <input
+                                                                    type='checkbox'
+                                                                    id={
+                                                                      "lga-" +
+                                                                      index
+                                                                    }
+                                                                    name={
+                                                                      item.name
+                                                                    }
+                                                                    value={
+                                                                      item.pk
+                                                                    }
+                                                                    className='opacity-0 absolute inset-0 hover:cursor-pointer'
+                                                                    onChange={(
+                                                                      e
+                                                                    ) => {
+                                                                      const checked =
+                                                                        e.target
+                                                                          .checked;
+                                                                      const value =
+                                                                        +e
+                                                                          .target
+                                                                          .value;
+                                                                      const temp =
+                                                                        addLocation.lgas;
+
+                                                                      if (
+                                                                        checked
+                                                                      ) {
+                                                                        !temp.includes(
+                                                                          value
+                                                                        ) &&
+                                                                          temp.push(
+                                                                            value
+                                                                          );
+                                                                        setAddlocation(
+                                                                          {
+                                                                            ...addLocation,
+                                                                            lgas: temp,
+                                                                          }
+                                                                        );
+                                                                      } else {
+                                                                        const newTemp =
+                                                                          temp.filter(
+                                                                            (
+                                                                              item
+                                                                            ) =>
+                                                                              item !==
+                                                                              value
+                                                                          );
+                                                                        setAddlocation(
+                                                                          {
+                                                                            ...addLocation,
+                                                                            lgas: newTemp,
+                                                                          }
+                                                                        );
+                                                                      }
+                                                                    }}
+                                                                  />
+                                                                </span>
+
+                                                                <label
+                                                                  htmlFor={
                                                                     "lga-" +
                                                                     index
                                                                   }
-                                                                  name={
-                                                                    item.name
-                                                                  }
-                                                                  value={
-                                                                    item.pk
-                                                                  }
-                                                                  className='opacity-0 absolute inset-0 hover:cursor-pointer'
-                                                                  onChange={(
-                                                                    e
-                                                                  ) => {
-                                                                    const checked =
-                                                                      e.target
-                                                                        .checked;
-                                                                    const value =
-                                                                      +e.target
-                                                                        .value;
-                                                                    const temp =
-                                                                      addLocation.lgas;
-
-                                                                    if (
-                                                                      checked
-                                                                    ) {
-                                                                      !temp.includes(
-                                                                        value
-                                                                      ) &&
-                                                                        temp.push(
-                                                                          value
-                                                                        );
-                                                                      setAddlocation(
-                                                                        {
-                                                                          ...addLocation,
-                                                                          lgas: temp,
-                                                                        }
-                                                                      );
-                                                                    } else {
-                                                                      const newTemp =
-                                                                        temp.filter(
-                                                                          (
-                                                                            item
-                                                                          ) =>
-                                                                            item !==
-                                                                            value
-                                                                        );
-                                                                      setAddlocation(
-                                                                        {
-                                                                          ...addLocation,
-                                                                          lgas: newTemp,
-                                                                        }
-                                                                      );
-                                                                    }
-                                                                  }}
-                                                                />
-                                                              </span>
-
-                                                              <label
-                                                                htmlFor={
-                                                                  "lga-" + index
-                                                                }
-                                                                className='inline-block pl-2'>
-                                                                {item.name}
-                                                              </label>
-                                                            </li>
-                                                          );
-                                                        }
-                                                      )}
-                                                    </ul>
+                                                                  className='inline-block pl-2'>
+                                                                  {item.name}
+                                                                </label>
+                                                              </li>
+                                                            );
+                                                          }
+                                                        )}
+                                                      </ul>
+                                                    </div>
                                                   </div>
-                                                </div>
-                                                <button
-                                                  type='submit'
-                                                  className='bg-afexgreen w-full py-5 text-center rounded-xl text-white mb-3 mt-6'>
-                                                  Update
-                                                </button>
-                                              </form>
-                                            </div>
-                                          </Popover.Dropdown>
-                                        </Popover>
-                                      </td>
-                                    );
-                                  } else {
-                                    return (
-                                      <td
-                                        key={index}
-                                        className={` text-ellipsis overflow-hidden max-w-[100px]`}
-                                        onClick={() =>
-                                          setCurrentlyDisplayed((s) =>
-                                            s === oldIndex ? null : oldIndex
-                                          )
-                                        }>
-                                        {entry.toString()}
-                                      </td>
-                                    );
-                                  }
-                                } else return <></>;
-                              })}
-                            </tr>
-                            {/* EXPAND */}
-                            <tr key={`exp${oldIndex}`}>
-                              <td
-                                colSpan={6}
-                                className={`${
-                                  arrowClicked(oldIndex)
-                                    ? " px-[14px] py-[18px]"
-                                    : "!p-0 "
-                                }`}>
-                                <div
-                                  className={`flex justify-end transition-all duration-400 overflow-hidden ${
+                                                  <button
+                                                    type='submit'
+                                                    className='bg-afexgreen w-full py-5 text-center rounded-xl text-white mb-3 mt-6'>
+                                                    Update
+                                                  </button>
+                                                </form>
+                                              </div>
+                                            </Popover.Dropdown>
+                                          </Popover>
+                                        </td>
+                                      );
+                                    } else {
+                                      return (
+                                        <td
+                                          key={index}
+                                          className={` text-ellipsis overflow-hidden max-w-[100px]`}
+                                          onClick={() =>
+                                            setCurrentlyDisplayed((s) =>
+                                              s === oldIndex ? null : oldIndex
+                                            )
+                                          }>
+                                          {entry.toString()}
+                                        </td>
+                                      );
+                                    }
+                                  } else return <></>;
+                                })}
+                              </tr>
+                              {/* EXPAND */}
+                              <tr key={`exp${oldIndex}`}>
+                                <td
+                                  colSpan={6}
+                                  className={`${
                                     arrowClicked(oldIndex)
-                                      ? "opacity-100 h-auto"
-                                      : "opacity-0 h-0 "
+                                      ? " px-[14px] py-[18px]"
+                                      : "!p-0 "
                                   }`}>
-                                  <div className=' min-w-[400px] max-w-[70%] '>
-                                    <table className={` w-full pb-3 `}>
-                                      <thead className='sticky top-0 '>
-                                        <tr className='table-head bg-bggrey p-6'>
-                                          <td>Date Added</td>
-                                          <td>LGA</td>
-                                          <td>Wards</td>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {item.extras.map((data, newIndex) => {
-                                          return (
-                                            <tr key={newIndex}>
-                                              {Object.values(data).map(
-                                                (newEntry, index) => {
-                                                  return (
-                                                    <td
-                                                      key={index}
-                                                      className={`capitalize text-ellipsis overflow-hidden max-w-[100px]`}>
-                                                      {newEntry.toString()}
-                                                    </td>
-                                                  );
-                                                }
-                                              )}
-                                            </tr>
-                                          );
-                                        })}
-                                      </tbody>
-                                    </table>
-                                    <div className='text-xs border-t border-t-textgrey-lighter pt-3 flex justify-between '>
-                                      <button
-                                        className='flex items-center'
-                                        onClick={() => {
-                                          setisrefreshing(true);
-                                          settingModal({ refresh: true });
-                                        }}>
-                                        <Refresh
-                                          size='16'
-                                          color='#555555'
-                                          className={`${
-                                            isRefreshing && "animate-spin"
-                                          }`}
-                                        />
-                                        <span className='pl-2'>Refresh</span>
-                                      </button>
-                                      <div className='text-textgrey-light '>
-                                        Last updated: Today @ 2:30pm
+                                  <div
+                                    className={`flex justify-end transition-all duration-400 overflow-hidden ${
+                                      arrowClicked(oldIndex)
+                                        ? "opacity-100 h-auto"
+                                        : "opacity-0 h-0 "
+                                    }`}>
+                                    <div className=' min-w-[400px] max-w-[70%] '>
+                                      <table className={` w-full pb-3 `}>
+                                        <thead className='sticky top-0 '>
+                                          <tr className='table-head bg-bggrey p-6'>
+                                            <td>Date Added</td>
+                                            <td>LGA</td>
+                                            <td>Wards</td>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {item.extras.map((data, newIndex) => {
+                                            return (
+                                              <tr key={newIndex}>
+                                                {Object.values(data).map(
+                                                  (newEntry, index) => {
+                                                    return (
+                                                      <td
+                                                        key={index}
+                                                        className={`capitalize text-ellipsis overflow-hidden max-w-[100px]`}>
+                                                        {newEntry.toString()}
+                                                      </td>
+                                                    );
+                                                  }
+                                                )}
+                                              </tr>
+                                            );
+                                          })}
+                                        </tbody>
+                                      </table>
+                                      <div className='text-xs border-t border-t-textgrey-lighter pt-3 flex justify-between '>
+                                        <button
+                                          className='flex items-center'
+                                          onClick={() => {
+                                            setisrefreshing(true);
+                                            settingModal({ refresh: true });
+                                          }}>
+                                          <Refresh
+                                            size='16'
+                                            color='#555555'
+                                            className={`${
+                                              isRefreshing && "animate-spin"
+                                            }`}
+                                          />
+                                          <span className='pl-2'>Refresh</span>
+                                        </button>
+                                        <div className='text-textgrey-light '>
+                                          Last updated: Today @ 2:30pm
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </td>
-                            </tr>
-                          </>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>{" "}
                 </div>
               </div>
             </>

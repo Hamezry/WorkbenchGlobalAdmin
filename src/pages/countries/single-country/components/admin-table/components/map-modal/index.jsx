@@ -70,7 +70,7 @@ const MapModal = ({
       customNotification({
         heading: "Success!",
         text: "Location added successfully.",
-        id: "warning",
+        id: "success",
       });
     }
   };

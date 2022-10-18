@@ -1,6 +1,6 @@
-import React from "react";
-import ladyIcon from "../../../../Assets/ladyicon.svg";
-import axios from "../../../../utils/axios";
+import React from 'react';
+import ladyIcon from '../../../../Assets/ladyicon.svg';
+import axios from '../../../../utils/axios';
 
 function Activate({ setViewActivate, setSuccess, modalData }) {
   const changeStatus = () => {
@@ -25,23 +25,21 @@ function Activate({ setViewActivate, setSuccess, modalData }) {
         </span>
 
         <div className='flex mx-auto  gap-4 items-center '>
-          <div className='flex justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] h-[50px] w-[200px] p-4'>
-            <button
-              onClick={() => {
-                setViewActivate(false);
-              }}>
-              Cancel
-            </button>
+          <div
+            className='flex justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] h-[50px] w-[200px] p-4'
+            onClick={() => {
+              setViewActivate(false);
+            }}>
+            <button>Cancel</button>
           </div>
 
-          <div className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'>
-            <button
-              onClick={() => {
-                setSuccess(true);
-                changeStatus();
-              }}>
-              Activate
-            </button>
+          <div
+            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'
+            onClick={() => {
+              setSuccess(true);
+              changeStatus();
+            }}>
+            <button>Activate</button>
           </div>
         </div>
       </div>

@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
-import { format } from "date-fns";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { format } from 'date-fns';
 
-import OrganisationlistTile from "./components/tile";
-import TenantDropdown from "./dropdown";
+import OrganisationlistTile from './components/tile';
+import TenantDropdown from './dropdown';
 
-import Pagination from "../../components/Pagination";
-import DateModule from "../../components/Datemodule";
+import Pagination from '../../components/Pagination';
+import DateModule from '../../components/Datemodule';
 
-import { useTenantsCtx } from "../../contexts";
+import { useTenantsCtx } from '../../contexts';
 
-import filterIcon from "../../Assets/filter.svg";
-import ActivateModal from "./modal/activate";
-import DeactivateModal from "./modal/deactivate";
+import filterIcon from '../../Assets/filter.svg';
+import ActivateModal from './modal/activate';
+import DeactivateModal from './modal/deactivate';
 
 function Organisationlist() {
   const { tenants } = useTenantsCtx();
   const [viewActivate, setViewActivate] = useState(false);
   const [viewDeactivate, setViewDeactivate] = useState(false);
   const [modalData, setModalData] = useState({});
+  const navigate = useNavigate();
 
   const [isDate, setIsDate] = useState(false);
 
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
+    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
   };
   const formTime = (datex) => {
     const date = new Date(datex);
-    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
+    return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
   };
 
   //PAGINATION FUNCTION
@@ -88,9 +89,9 @@ function Organisationlist() {
 
         {/*ORGANISATION CONTAINER*/}
         <div className='w-[100%] rounded-2xl p-10 bg-[#F9F9F9] overflow-y-auto'>
-          <div className='bg-[#FFFFFF] rounded-3xl w-[100%] py-4 px-8'>
+          <div className='bg-[#FFFFFF] rounded-3xl w-[100%] py-4 px-8 relative'>
             {/*ORGANISATION LIST HEADING*/}
-            <div className='flex justify-between p-3 border-b-2 '>
+            <div className='flex justify-between p-3 border-b-[1px] '>
               <p className='text-[18px]'>Organisation List</p>
               <div className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
                 <img src={filterIcon} alt='rficon' />
@@ -109,7 +110,7 @@ function Organisationlist() {
                     className='fill-current h-4 w-4'
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
                   </svg>
                 </button>
               </div>
@@ -118,7 +119,7 @@ function Organisationlist() {
               <div className='flex justify-end items-center p-5 gap-5 '>
                 <p className='text-[12px]'>Sort By</p>
 
-                <div className=' flex gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-[54px'>
+                <div className=' flex gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-[54px relative'>
                   <p>Date Registered</p>
                   <svg
                     className='fill-current h-4 w-4'
@@ -127,9 +128,8 @@ function Organisationlist() {
                     onClick={() => {
                       setIsDate(!isDate);
                     }}>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
                   </svg>
-                  {isDate && <DateModule />}
                 </div>
 
                 <div className='relative text-[#C9C8C6]'>
@@ -151,6 +151,8 @@ function Organisationlist() {
               </div>
             </div>
 
+            {isDate && <DateModule setIsDate={setIsDate} />}
+
             {/*TABLE CONTAINER */}
             <div className='px-5 w-full h-auto overflow-x-auto'>
               <table className='min-w-max table-auto'>
@@ -168,7 +170,6 @@ function Organisationlist() {
                     <th className='py-3 px-4 '>Company Name</th>
                     <th className='py-3 px-4 '>Country</th>
                     <th className='py-3 px-4 '>Location</th>
-                    <th className='py-3 px-4 '>Status</th>
                     <th className='py-3 px-4 '>E-mail</th>
                     <th className='py-3 px-4 '>Phone Number</th>
                     <th className='py-3 px-4 '>CSD Access</th>
@@ -182,8 +183,9 @@ function Organisationlist() {
                     return (
                       <tr
                         key={index}
-                        className=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
-                        <td>
+                        className=' text-left  border-b-[1px] border-[#F9FAFB] hover:bg-[#e3f7ee]'
+                        onClick={() => navigate(`/tenants/${item.id}`)}>
+                        <td onClick={(e) => e.stopPropagation()}>
                           <input
                             type='checkbox'
                             id='remember'
@@ -218,13 +220,7 @@ function Organisationlist() {
                           <span className='font-medium '>{item.location}</span>
                         </td>
 
-                        <td className='py-4 px-4 mr-10'>
-                          <span className='font-medium '>
-                            {item.is_active === "True" ? "Active" : "Inactive"}
-                          </span>
-                        </td>
-
-                        <td className='py-4 px-4 mr-10'>
+                        <td className='py-4 px-4 w-[100px]'>
                           <span className='font-medium '>{item.email}</span>
                         </td>
 
@@ -236,7 +232,7 @@ function Organisationlist() {
 
                         <td className='py-4 px-4'>
                           <span className='font-medium '>
-                            {item.csd_access === "True" ? "Yes" : "No"}
+                            {item.csd_access === 'True' ? 'Yes' : 'No'}
                           </span>
                         </td>
 
@@ -246,19 +242,21 @@ function Organisationlist() {
                           )} . ${formTime(item.created)}`}</span>
                         </td>
 
-                        <td className='py-4 px-4 text-center'>
-                          {item.is_active === "True" ? (
+                        <td
+                          className='py-4 px-4 text-center'
+                          onClick={(e) => e.stopPropagation()}>
+                          {item.is_active === 'True' ? (
                             <div
-                              className=' bg-[#e55851] cursor-pointer rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'
+                              className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                               onClick={() => {
                                 setModalData(item);
                                 setViewDeactivate(true);
                               }}>
-                              <p>Deactivate</p>
+                              <p>De-activate</p>
                             </div>
                           ) : (
                             <div
-                              className=' bg-[#38CB89]  cursor-pointer  rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'
+                              className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
                               onClick={() => {
                                 setModalData(item);
                                 setViewActivate(true);
@@ -277,7 +275,7 @@ function Organisationlist() {
             {/*SLIDER*/}
             <div className='flex justify-between p-2 px-4 mt-4 bg-[#F9F9F9] items-center rounded-2xl'>
               <p>
-                {itemsOffset + 1} - {postsPerPage + itemsOffset} of{" "}
+                {itemsOffset + 1} - {postsPerPage + itemsOffset} of{' '}
                 {posts.length} Entries
               </p>
               <Pagination

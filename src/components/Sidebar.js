@@ -22,7 +22,7 @@ function Sidebar() {
           </div>
 
           <NavLink
-            to='/'
+            to='/tenants'
             className={({ isActive }) => (isActive ? activeStyle : baseStyle)}>
             <li className='flex gap-2 items-center p-2'>
               <span>

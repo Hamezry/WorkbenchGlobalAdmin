@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MdExpandMore } from "react-icons/md";
+import React, { useState } from 'react';
+import { MdExpandMore } from 'react-icons/md';
 
 const StockPosition = ({ stock }) => {
   const [indexToShow, setIndexToShow] = useState(null);
@@ -43,13 +43,13 @@ const StockPosition = ({ stock }) => {
 
                       <td className='py-4 px-2'>
                         <span className='font-medium '>
-                          {item.location_breakdown[0].volume}
+                          {Number(item.location_breakdown[0].volume).toFixed(2)}
                         </span>
                       </td>
 
                       <td className='py-4 px-2'>
                         <span className='font-medium '>
-                          {item.total_lien_weight}
+                          {Number(item.total_lien_weight).toFixed(2)}
                         </span>
                       </td>
                     </tr>
@@ -58,7 +58,7 @@ const StockPosition = ({ stock }) => {
                         <div
                           className={`max-h-0 overflow-hidden flex w-full justify-end p-0 transition-[max-height] ${
                             indexToShow === index + 1
-                              ? " max-h-64 p-3"
+                              ? ' max-h-64 p-3'
                               : undefined
                           }`}>
                           <div className='flex flex-col'>

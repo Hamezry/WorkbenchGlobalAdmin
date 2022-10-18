@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import ActivateModal from '../modal/activate';
+import DeactivateModal from '../modal/deactivate';
 
 import axios from '../../../utils/axios';
 
@@ -26,6 +28,10 @@ function SingleTenant() {
   const [overallCount, setOverallCount] = useState(0);
 
   const org = tenants.filter((el) => el.id === id)[0];
+
+  const [viewActivate, setViewActivate] = useState(false);
+  const [viewDeactivate, setViewDeactivate] = useState(false);
+  const modalData = org.id;
 
   //SERVICE TOGGLE BUTTON FUNCTIONS
   const [switch_list, setSwitchList] = useState({
@@ -150,13 +156,33 @@ function SingleTenant() {
         </div>
 
         <div className='flex gap-3 rounded-lg items-center text-[12px] text-[#38CB89]'>
-          <div className=' bg-[#38CB89] flex gap-1 rounded-lg items-center text-[12px] text-white h-[40px] w-[80px] p-3 '>
-            <p>Activate</p>
+          <div>
+            {org.is_active === 'True' ? (
+              <button
+                className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
+                onClick={() => {
+                  console.log(modalData);
+                  setViewDeactivate(true);
+                }}>
+                De-activate
+              </button>
+            ) : (
+              <button
+                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
+                onClick={() => {
+                  console.log(modalData);
+                  setViewActivate(true);
+                }}>
+                Activate
+              </button>
+            )}
           </div>
 
-          <div className='flex gap-1 rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3'>
-            <Link to='/'>Back</Link>
-          </div>
+          <Link
+            to='/'
+            className='flex justify-center gap-2 rounded items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4'>
+            Back
+          </Link>
         </div>
       </div>
 
@@ -182,6 +208,17 @@ function SingleTenant() {
 
         <StockPosition stock={summary?.data} />
       </div>
+
+      {/* Modals */}
+      {viewActivate && (
+        <ActivateModal setViewActivate={setViewActivate} modalData={org} />
+      )}
+      {viewDeactivate && (
+        <DeactivateModal
+          setViewDeactivate={setViewDeactivate}
+          modalData={org}
+        />
+      )}
     </div>
   );
 }

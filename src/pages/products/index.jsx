@@ -3,21 +3,30 @@ import { format } from 'date-fns';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import Dropdown from './dropdown';
+import Query from './query';
+import GlobalProductTile from './components/tile';
+import CreateProductModal from './modal/create-product';
+import Filtermodal from './modal/filter';
+
+import { useProductsCtx } from '../../contexts';
+import Pagination from '../../components/Pagination';
+import Select from '../../components/Select';
+import DateModule from '../../components/Datemodule';
 
 import recieptIcon from '../../Assets/receipt-text.png';
 import filterIcon from '../../Assets/filter.svg';
 import calenderIcon from '../../Assets/calendar.svg';
-//import successIcon from '../Assets/Success-icon.svg'
-import Pagination from '../../components/Pagination';
-import GlobalProductTile from './components/tile';
-
-import CreateProductModal from './modal/create-product';
-
-import { useProductsCtx } from '../../contexts';
-import Filtermodal from './modal/filter';
 
 function Productlist({ openModal }) {
   const { products } = useProductsCtx();
+
+  const [filterObj, setFilterObj] = useState({
+    certified: [],
+    codes: [],
+    unit_types: [],
+    types: [],
+  });
+
   const [modal, setModal] = useState(false);
   const [viewFilter, setViewFilter] = useState(false);
 
@@ -30,12 +39,21 @@ function Productlist({ openModal }) {
   const [posts, setPosts] = useState([]);
 
   const populate = () => {
-    setPosts(products);
+    const QueryBuilder = new Query(products)
+      .certified_filter(filterObj.certified)
+      .code_filter(filterObj.codes)
+      .type_filter(filterObj.types)
+      .unit_type_filter(filterObj.unit_types);
+
+    setPosts(QueryBuilder.products);
   };
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
+  const [postsPerPage, setPostsPerPage] = useState(7);
   const [currentPosts, setCurrentPosts] = useState([]);
   const [itemsOffset, setItemsOffset] = useState(0);
+  const [showDate, setShowDate] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const handlePageChange = (e) => {
     const newOffset = (e.selected * postsPerPage) % posts.length;
@@ -68,51 +86,80 @@ function Productlist({ openModal }) {
       {/*CARDS */}
       <GlobalProductTile />
 
-      <div className=' flex justify-between items-center w-full h-[calc(100vh-3%)] rounded py-8 px-8 bg-[#F9F9F9] text-[#54565B] text-[14px]'>
+      <div className=' flex justify-between items-center w-full h-[calc(100vh-3%)] rounded py-8 px-8 bg-[#F9F9F9] text-[#54565B] text-[14px] relative'>
         <div className='bg-[#FFFFFF] rounded-3xl w-full py-5 px-8 h-[100%]'>
-          <div className='p-4 text-[18px] border-b-2'>
+          <div className='p-4 text-[18px] border-b-[1px]'>
             {' '}
             <p>Overview</p>
           </div>
 
-          <div className='flex justify-end items-center p-4 gap-5'>
-            <div className=' flex gap-12 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] h-[54px'>
-              <p>Date Registered</p>
-              <img src={calenderIcon} alt='calendar icon' />
+          <div className='flex justify-between items-center p-4 gap-5'>
+            <div className='flex items-start gap-4 align-middle py-4'>
+              <span className='text-gray-400 mt-1'>Show Entries: </span>
+              <div className='w-12 text-center self-start'>
+                <Select
+                  defaultValue={postsPerPage}
+                  updateValue={setPostsPerPage}
+                  data={[
+                    { value: 7, label: '7' },
+                    { value: 20, label: '20' },
+                    { value: 100, label: '100' },
+                    { value: 500, label: '500' },
+                  ]}
+                  className='text-sm'
+                />
+              </div>
+              <div className='w-8 h-4'></div>
             </div>
+            <div className='flex items-center p-4 gap-5'>
+              <button
+                className=' flex gap-12 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] h-[54px'
+                onClick={() => setShowDate((s) => !s)}>
+                <span>Date Registered</span>
+                <img src={calenderIcon} alt='calendar icon' />
+              </button>
+              {showDate && (
+                <DateModule
+                  startDate={startDate}
+                  endDate={endDate}
+                  setStartDate={setStartDate}
+                  setEndDate={setEndDate}
+                  close={() => setShowDate(false)}
+                />
+              )}
 
-            <div className='relative'>
-              <input
-                type='text'
-                name=''
-                id=''
-                placeholder='Search'
-                className='p-3 rounded-2xl text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
-                onChange={handleSearch}
-              />
-              <span className='absolute left-[300px] top-3'>
-                <AiOutlineSearch className='text-[25px] text-gray-400' />
-              </span>
-            </div>
+              <div className='relative'>
+                <input
+                  type='text'
+                  name=''
+                  id=''
+                  placeholder='Search'
+                  className='p-3 rounded-2xl text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                  onChange={handleSearch}
+                />
+                <span className='absolute left-[300px] top-3'>
+                  <AiOutlineSearch className='text-[25px] text-gray-400' />
+                </span>
+              </div>
 
-            <div className='flex justify-between rounded-lg items-center text-[12px] text-white bg-[#38CB89] h-[40px] w-[142px] p-4'>
               <button
                 onClick={() => {
                   setModal(true);
-                }}>
+                }}
+                className='flex justify-between rounded-lg items-center text-[12px] text-white bg-[#38CB89] h-[40px] w-[142px] p-4'>
                 Create product
+                <img src={recieptIcon} alt='receipt icon' />
               </button>
-              <img src={recieptIcon} alt='receipt icon' />
-            </div>
 
-            <button
-              className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'
-              onClick={() => {
-                setViewFilter(true);
-              }}>
-              <img src={filterIcon} alt='funnel' />
-              <span>Filter</span>
-            </button>
+              <button
+                className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'
+                onClick={() => {
+                  setViewFilter(true);
+                }}>
+                <img src={filterIcon} alt='funnel' />
+                <span>Filter</span>
+              </button>
+            </div>
           </div>
 
           {/*TABLE */}
@@ -159,7 +206,7 @@ function Productlist({ openModal }) {
 
                       <td className='py-5 px-6'>
                         <span className='font-medium '>
-                          {item.certified ? 'Yes' : 'No'}{' '}
+                          {item.certified ? 'Yes' : 'No'}
                         </span>
                       </td>
 
@@ -213,7 +260,13 @@ function Productlist({ openModal }) {
       </div>
 
       {modal && <CreateProductModal setModal={setModal} />}
-      {viewFilter && <Filtermodal setViewFilter={setViewFilter} />}
+      {viewFilter && (
+        <Filtermodal
+          setViewFilter={setViewFilter}
+          filterObj={filterObj}
+          setFilterObj={setFilterObj}
+        />
+      )}
     </div>
   );
 }

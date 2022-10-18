@@ -6,26 +6,29 @@ const TenantsListCtx = createContext();
 
 const TenantsListProvider = ({ children }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [tenants, setTenants] = useState([]);
   const [cardData, setCardData] = useState({
     active_tenants: {
-      total_active: 4500,
-      inactive_tenants: 4000,
+      total_active: 0,
+      inactive_tenants: 0,
     },
     available_tenants: {
-      total: 3500,
-      last_month: 3200,
+      total: 0,
+      last_month: 0,
     },
     csd_access: {
-      total: 3500,
-      last_month: 3000,
+      total: 0,
+      last_month: 0,
     },
     highest_tenant_num: {
       name: 'Nigeria',
       country_flag: 'https://countryflagsapi.com/svg/nga',
-      no_of_tenants: 54,
+      no_of_tenants: 0,
     },
   });
+
+  const refreshContext = () => setRefresh((s) => !s);
 
   useEffect(() => {
     const fetchGlobalTenantsCardData = async () => {
@@ -55,9 +58,10 @@ const TenantsListProvider = ({ children }) => {
 
     fetchGlobalTenantsCardData();
     fetchTenants();
-  }, []);
+  }, [refresh]);
   return (
-    <TenantsListCtx.Provider value={{ tenants, dataLoaded, cardData }}>
+    <TenantsListCtx.Provider
+      value={{ tenants, dataLoaded, cardData, refreshContext }}>
       {children}
     </TenantsListCtx.Provider>
   );

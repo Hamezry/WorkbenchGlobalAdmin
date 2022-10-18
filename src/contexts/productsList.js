@@ -6,6 +6,7 @@ const ProductsListCtx = createContext();
 
 const ProductsListProvider = ({ children }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [products, setProducts] = useState([]);
   const [cardData, setCardData] = useState({
     commodities: {
@@ -21,10 +22,12 @@ const ProductsListProvider = ({ children }) => {
       last_added: new Date(),
     },
     total_products: {
-      value: 50,
-      certified_products: 10,
+      value: 0,
+      certified_products: 0,
     },
   });
+
+  const refreshContext = () => setRefresh((s) => !s);
 
   useEffect(() => {
     const fetchGlobalProductsCardData = async () => {
@@ -54,9 +57,10 @@ const ProductsListProvider = ({ children }) => {
 
     fetchGlobalProductsCardData();
     fetProducts();
-  }, []);
+  }, [refresh]);
   return (
-    <ProductsListCtx.Provider value={{ products, dataLoaded, cardData }}>
+    <ProductsListCtx.Provider
+      value={{ products, dataLoaded, cardData, refreshContext }}>
       {children}
     </ProductsListCtx.Provider>
   );

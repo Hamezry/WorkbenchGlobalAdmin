@@ -156,7 +156,7 @@ const AdminTable = ({ list, id }) => {
             {list.map((item, index) => {
               return (
                 <tr
-                  className=' text-left border-b border-gray-200 hover:bg-[#e3f7ee]'
+                  className=' text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee]'
                   key={index}>
                   <td className='py-6 px-6'>
                     <span className='font-medium'>{index + 1}</span>

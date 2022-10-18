@@ -4,16 +4,20 @@ import dot from '../../../../../Assets/Ellipse.svg';
 import chartIcon from '../../../../../Assets/circBar.svg';
 
 const Clients = ({ clients, overallCount }) => {
+  const formatNumber = (value) => {
+    return Intl.NumberFormat('en-US').format(Number(value));
+  };
+
   return (
     <div className='bg-[#FFFF] p-3 rounded-3xl w-full'>
-      <div className='mb-3 border-b border-gray-200 p-5'>
+      <div className='mb-3 border-b text-[20px] border-gray-200 p-5'>
         <h1>Clients</h1>
       </div>
 
       <div className='flex p-5 w-full items-center justify-around'>
-        <div className='p-5 gap-4 flex flex-col items-center'>
+        <div className='p-5 gap-4 flex text-[14px] flex-col items-center'>
           <span>Total Number </span>
-          <p>{overallCount}</p>
+          <p className='text-[25px]'>{formatNumber(overallCount)}</p>
           <img src={chartIcon} alt='circular bar chart' />
         </div>
 
@@ -29,7 +33,7 @@ const Clients = ({ clients, overallCount }) => {
                   <img src={dot} alt='notification dot' />
                   <span>{item.category}</span>
                 </div>
-                <span>{item.count}</span>
+                <span>{formatNumber(item.count)}</span>
               </div>
             );
           })}

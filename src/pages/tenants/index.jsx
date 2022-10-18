@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
-import { format } from "date-fns";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { format } from 'date-fns';
 
 import OrganisationlistTile from "./components/tile";
 import TenantDropdown from "./dropdown";
@@ -11,10 +11,16 @@ import DateModule from "../../components/Datemodule";
 
 import { useTenantsCtx } from "../../contexts";
 
-import filterIcon from "../../Assets/filter.svg";
+import filterIcon from '../../Assets/filter.svg';
+import ActivateModal from './modal/activate';
+import DeactivateModal from './modal/deactivate';
 
-function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
+function Organisationlist() {
   const { tenants } = useTenantsCtx();
+  const [viewActivate, setViewActivate] = useState(false);
+  const [viewDeactivate, setViewDeactivate] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const navigate = useNavigate();
 
   const [isDate, setIsDate] = useState(false);
 
@@ -83,9 +89,9 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
 
         {/*ORGANISATION CONTAINER*/}
         <div className='w-[100%] rounded-2xl p-10 bg-[#F9F9F9] overflow-y-auto'>
-          <div className='bg-[#FFFFFF] rounded-3xl w-[100%] py-4 px-8'>
+          <div className='bg-[#FFFFFF] rounded-3xl w-[100%] py-4 px-8 relative'>
             {/*ORGANISATION LIST HEADING*/}
-            <div className='flex justify-between p-3 border-b-2 '>
+            <div className='flex justify-between p-3 border-b-[1px] '>
               <p className='text-[18px]'>Organisation List</p>
               <div className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
                 <img src={filterIcon} alt='rficon' />
@@ -113,7 +119,7 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
               <div className='flex justify-end items-center p-5 gap-5 '>
                 <p className='text-[12px]'>Sort By</p>
 
-                <div className=' flex gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-[54px'>
+                <div className=' flex gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-[54px relative'>
                   <p>Date Registered</p>
                   <svg
                     className='fill-current h-4 w-4'
@@ -124,7 +130,6 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
                     }}>
                     <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
                   </svg>
-                  {isDate && <DateModule />}
                 </div>
 
                 <div className='relative text-[#C9C8C6]'>
@@ -146,6 +151,8 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
               </div>
             </div>
 
+            {isDate && <DateModule setIsDate={setIsDate} />}
+
             {/*TABLE CONTAINER */}
             <div className='px-5 w-full h-auto overflow-x-auto'>
               <table className='min-w-max table-auto'>
@@ -163,7 +170,6 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
                     <th className='py-3 px-4 '>Company Name</th>
                     <th className='py-3 px-4 '>Country</th>
                     <th className='py-3 px-4 '>Location</th>
-                    <th className='py-3 px-4 '>Status</th>
                     <th className='py-3 px-4 '>E-mail</th>
                     <th className='py-3 px-4 '>Phone Number</th>
                     <th className='py-3 px-4 '>CSD Access</th>
@@ -177,8 +183,9 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
                     return (
                       <tr
                         key={index}
-                        className=' text-left  border-b border-gray-200 hover:bg-[#e3f7ee]'>
-                        <td>
+                        className=' text-left  border-b-[1px] border-[#F9FAFB] hover:bg-[#e3f7ee]'
+                        onClick={() => navigate(`/tenants/${item.id}`)}>
+                        <td onClick={(e) => e.stopPropagation()}>
                           <input
                             type='checkbox'
                             id='remember'
@@ -212,14 +219,7 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
                         <td className='py-4 px-4 mr-10 w-[150px]'>
                           <span className='font-medium '>{item.location}</span>
                         </td>
-
-                        <td className='py-4 px-4 mr-10'>
-                          <span className='font-medium '>
-                            {item.is_active === "True" ? "Active" : "Inactive"}
-                          </span>
-                        </td>
-
-                        <td className='py-4 px-4 mr-10'>
+                        <td className='py-4 px-4 w-[100px]'>
                           <span className='font-medium '>{item.email}</span>
                         </td>
 
@@ -240,23 +240,24 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
                             item.created
                           )} . ${formTime(item.created)}`}</span>
                         </td>
-
-                        <td className='py-4 px-4 text-center'>
-                          {item.is_active === "True" ? (
+                        <td
+                          className='py-4 px-4 text-center'
+                          onClick={(e) => e.stopPropagation()}>
+                          {item.is_active === 'True' ? (
                             <div
-                              className=' bg-[#e55851] cursor-pointer rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'
+                              className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                               onClick={() => {
+                                setModalData(item);
                                 setViewDeactivate(true);
-                                openModal(item);
                               }}>
-                              <p>Deactivate</p>
+                              <p>De-activate</p>
                             </div>
                           ) : (
                             <div
-                              className=' bg-[#38CB89]  cursor-pointer  rounded-lg text-[14px] text-white w-[86px] py-2 h-[35px]'
+                              className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
                               onClick={() => {
+                                setModalData(item);
                                 setViewActivate(true);
-                                openModal(item);
                               }}>
                               <p>Activate</p>
                             </div>
@@ -290,6 +291,19 @@ function Organisationlist({ setViewActivate, openModal, setViewDeactivate }) {
           </div>
         </div>
       </div>
+      {/* Modals */}
+      {viewActivate && (
+        <ActivateModal
+          setViewActivate={setViewActivate}
+          modalData={modalData}
+        />
+      )}
+      {viewDeactivate && (
+        <DeactivateModal
+          setViewDeactivate={setViewDeactivate}
+          modalData={modalData}
+        />
+      )}
     </div>
   );
 }

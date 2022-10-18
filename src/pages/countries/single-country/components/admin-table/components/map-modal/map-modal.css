@@ -1,0 +1,27 @@
+.td-popover .mantine-Popover-dropdown {
+  bottom: 100%;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.td-popover .mantine-Popover-dropdown .popover-box {
+  border: 1px solid #38cb89;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+}
+.mantine-vqs8oh {
+  top: 10px;
+  bottom: unset;
+}
+.mantine-Notification-root {
+  @apply rounded-2xl bg-white border border-afexgreen p-0 pr-6;
+}
+.mantine-Notification-root::before {
+  /* content: none; */
+  @apply w-full h-full top-0 left-0 bg-afexgreen-lighter rounded-2xl;
+}
+.mantine-Notification-root .mantine-Notification-body {
+  @apply p-6;
+}

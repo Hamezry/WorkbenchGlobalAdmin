@@ -1,17 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 import {
   AuthContextProvider,
   CountriesContextProvider,
   ProductsContextProvider,
   TenantsContextProvider,
-} from './contexts';
+} from "./contexts";
+import { MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -19,7 +20,11 @@ root.render(
         <CountriesContextProvider>
           <ProductsContextProvider>
             <TenantsContextProvider>
-              <App />
+              <MantineProvider withNormalizeCSS withGlobalStyles>
+                <NotificationsProvider>
+                  <App />
+                </NotificationsProvider>
+              </MantineProvider>
             </TenantsContextProvider>
           </ProductsContextProvider>
         </CountriesContextProvider>

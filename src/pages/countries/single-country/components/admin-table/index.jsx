@@ -19,7 +19,7 @@ const AdminTable = ({ list, id }) => {
     name: "",
     state: 0,
     lgas: [],
-    code: "917",
+    code: "918",
   };
   const [lgas, setLgas] = useState({});
   const [lgaOptions, setLgaOptions] = useState([]);
@@ -61,7 +61,6 @@ const AdminTable = ({ list, id }) => {
         setAddlocation({ ...addLocation, state: pk });
         setLgaOptions(lgas[pk]);
         if (refresh) {
-          console.log("refresh");
           setModalData({
             ...modalData,
             data: temp,
@@ -69,7 +68,6 @@ const AdminTable = ({ list, id }) => {
           setisrefreshing(false);
           console.log(temp);
         } else {
-          console.log("!refresh");
           setModalData({
             title: res.data.message,
             position: {
@@ -180,7 +178,6 @@ const AdminTable = ({ list, id }) => {
                     <button
                       className='font-medium text-cyan-400 '
                       onClick={() => {
-                        console.log(item);
                         setOpened(true);
                         setStateId(item.pk);
                         settingModal({

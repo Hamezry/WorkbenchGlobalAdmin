@@ -64,13 +64,20 @@ const MapModal = ({
       url: `add/location/${id}`,
       data: addLocationFormData,
     });
-    console.log(response.data.message);
+    console.log(response.data);
     if (response.data.responseCode === "100") {
       settingModal({ refresh: true });
       customNotification({
         heading: "Success!",
         text: "Location added successfully.",
         id: "success",
+      });
+    } else {
+      console.log("here");
+      customNotification({
+        heading: "Error!",
+        text: "Add Location unsuccessful.",
+        id: "error",
       });
     }
   };

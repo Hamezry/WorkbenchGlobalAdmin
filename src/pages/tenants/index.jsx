@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { format } from 'date-fns';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
+import { format } from "date-fns";
 
 import OrganisationlistTile from "./components/tile";
 import TenantDropdown from "./dropdown";
@@ -11,9 +11,9 @@ import DateModule from "../../components/Datemodule";
 
 import { useTenantsCtx } from "../../contexts";
 
-import filterIcon from '../../Assets/filter.svg';
-import ActivateModal from './modal/activate';
-import DeactivateModal from './modal/deactivate';
+import filterIcon from "../../Assets/filter.svg";
+import ActivateModal from "./modal/activate";
+import DeactivateModal from "./modal/deactivate";
 
 function Organisationlist() {
   const { tenants } = useTenantsCtx();
@@ -243,7 +243,7 @@ function Organisationlist() {
                         <td
                           className='py-4 px-4 text-center'
                           onClick={(e) => e.stopPropagation()}>
-                          {item.is_active === 'True' ? (
+                          {item.is_active === "True" ? (
                             <div
                               className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                               onClick={() => {
@@ -273,8 +273,6 @@ function Organisationlist() {
             {/*SLIDER*/}
             <div className='flex justify-between p-2 px-4 mt-4 bg-[#F9F9F9] items-center rounded-2xl'>
               <p>
-                {/* {itemsOffset + 1} - {postsPerPage + itemsOffset} of{" "}
-                {posts.length} Entries */}
                 {currentPosts?.length > 0 ? itemsOffset + 1 : itemsOffset + 0}-
                 {itemsOffset + postsPerPage > posts?.length
                   ? posts?.length

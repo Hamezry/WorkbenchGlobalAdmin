@@ -26,6 +26,10 @@ const ServiceList = ({
   service,
   showModal,
 }) => {
+  const formatNumber = (value) => {
+    return Intl.NumberFormat('en-US').format(Number(value));
+  };
+
   return (
     <div className='flex gap-4 mt-3 p-6 '>
       <div className='w-[50%] h-[350px] flex flex-col gap-3 overflow-y-auto rounded-3xl p-6 bg-[#FFFF]'>
@@ -254,9 +258,9 @@ const ServiceList = ({
               <p>
                 {' '}
                 <span className='text-[#9FA19C]'>
-                  {service.users ? service.users.active : '0'}{' '}
+                  {service.users ? formatNumber(service.users.active) : '0'}{' '}
                 </span>
-                /{service.users ? service.users.total : '0'}
+                /{service.users ? formatNumber(service.users.total) : '0'}
               </p>
             </div>
 
@@ -287,12 +291,12 @@ const ServiceList = ({
                 {' '}
                 <span className='text-[#9FA19C]'>
                   {service.storage_capacity
-                    ? service.storage_capacity.total_capacity
+                    ? formatNumber(service.storage_capacity.total_capacity)
                     : '0'}{' '}
                 </span>
                 /
                 {service.storage_capacity
-                  ? service.storage_capacity.total_utilization
+                  ? formatNumber(service.storage_capacity.total_utilization)
                   : '0'}
               </p>
             </div>
@@ -316,7 +320,9 @@ const ServiceList = ({
           <p className='text-[25px]'>
             {' '}
             <span className='text-[14px]'>Warehouse Count</span> <br />{' '}
-            {service.warehouse_count ? service.warehouse_count : '0'}
+            {service.warehouse_count
+              ? formatNumber(service.warehouse_count)
+              : '0'}
           </p>
         </div>
       </div>

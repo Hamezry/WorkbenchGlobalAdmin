@@ -29,8 +29,8 @@ function Deactivate({ setDeactivateProduct, deactivate }) {
 
             <button
               onClick={() => {
-                setDeactivateProduct(false);
                 deactivate();
+                setDeactivateProduct(false);
               }}
               className='block w-full rounded cursor-pointer bg-[#38CB89] p-4 text-center text-white hover:text-afexgreen hover:bg-white hover:ring-1 hover:ring-afexgreen'>
               Deactivate

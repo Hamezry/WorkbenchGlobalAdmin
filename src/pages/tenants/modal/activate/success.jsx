@@ -1,5 +1,5 @@
-import React from "react";
-import ladyIcon from "../../../../Assets/ladyicon.svg";
+import React from 'react';
+import ladyIcon from '../../../../Assets/ladyicon.svg';
 
 function Activatesuccess({ setViewActivate, setViewDeactivate }) {
   return (
@@ -13,13 +13,12 @@ function Activatesuccess({ setViewActivate, setViewDeactivate }) {
           fermentum purus feugiat sit auctor sit sit faucibus.
         </span>
 
-        <div className='flex justify-center gap-2 rounded items-center text-[12px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'>
-          <button
-            onClick={() => {
-              setViewActivate(false);
-            }}>
-            Close
-          </button>
+        <div
+          className='flex justify-center gap-2 rounded items-center text-[12px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'
+          onClick={() => {
+            setViewActivate(false);
+          }}>
+          <button>Close</button>
         </div>
       </div>
     </div>

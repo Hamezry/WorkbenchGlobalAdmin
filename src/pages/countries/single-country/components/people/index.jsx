@@ -5,7 +5,7 @@ const People = ({ tenantValue, farmerValue }) => {
   return (
     <div className='bg-[#FFFF] p-3 rounded-3xl w-full'>
       <div className='mb-3 border-b border-gray-200 p-5'>
-        <h1>People</h1>
+        <h1 className='text-lg'>People</h1>
       </div>
 
       <div className='flex  flex-col gap-3 py-3 px-6'>

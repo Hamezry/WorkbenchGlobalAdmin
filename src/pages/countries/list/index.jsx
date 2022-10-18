@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
 
-import { Link } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
-import Navigation from "../components/navigation";
+import Navigation from '../components/navigation';
 
-import CountryTile from "../components/tile";
+import CountryTile from '../components/tile';
 
-import filterIcon from "../../../Assets/filter.svg";
-import calenderIcon from "../../../Assets/calendar.svg";
-import Pagination from "../../../components/Pagination";
+import filterIcon from '../../../Assets/filter.svg';
+import calenderIcon from '../../../Assets/calendar.svg';
+import Pagination from '../../../components/Pagination';
 
-import { useCountriesCtx } from "../../../contexts";
+import { useCountriesCtx } from '../../../contexts';
 
 function Countrylist() {
   const { countries } = useCountriesCtx();
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(7);
@@ -74,8 +75,8 @@ function Countrylist() {
             <div className='flex justify-between items-center pl-5 gap-5'>
               <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
                 <p>
-                  {" "}
-                  <span>Show </span> 100 Entries{" "}
+                  {' '}
+                  <span>Show </span> 100 Entries{' '}
                 </p>
                 <img src={calenderIcon} alt='calendar icon' />
               </div>
@@ -128,7 +129,8 @@ function Countrylist() {
                     return (
                       <tr
                         key={index}
-                        className=' text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]'>
+                        className=' text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]'
+                        onClick={() => navigate(`/countries/${item.pk}`)}>
                         <td className='py-4 px-8'>
                           <span className='font-medium'>{index + 1}</span>
                         </td>
@@ -172,7 +174,9 @@ function Countrylist() {
                           </div>
                         </td>
 
-                        <td className='py-4 px-8  '>
+                        <td
+                          className='py-4 px-8 '
+                          onClick={(e) => e.stopPropagation()}>
                           <Link to={`/countries/${item.pk}`}>
                             <span className='font-medium text-cyan-400 '>
                               View Dashboard

@@ -2,15 +2,17 @@ import React from 'react';
 
 import { Calendar } from '@mantine/dates';
 
-const DateModule = () => {
-  let setStartDate;
-  let setEndDate;
-  let startDate;
-  let endDate;
-
+const DateModule = ({
+  startDate,
+  endDate,
+  setStartDate,
+  setEndDate,
+  filterFunc,
+  close,
+}) => {
   return (
     <div
-      className='absolute top-[38%] right-[20%] z-50 drop-shadow-lg '
+      className='absolute top-[24%] right-[20%] z-50 drop-shadow-lg '
       onClick={(e) => e.stopPropagation()}>
       <div className='flex justify-between bg-[#F7F8F9] p-4 rounded-2xl z-20'>
         <ul className='space-y-2 text-gray-500 mr-10 '>
@@ -54,12 +56,19 @@ const DateModule = () => {
             <div className='bg-white rounded-2xl p-4 py-6 '>
               <Calendar value={startDate} onChange={setStartDate} />
               <div className='flex justify-between mt-3'>
-                <button type='button' className='px-8 py-3 text-gray-900'>
+                <button
+                  type='button'
+                  className='px-8 py-3 text-gray-900'
+                  onClick={close}>
                   Cancel
                 </button>
                 <button
                   type='button'
-                  className='px-8 py-3 bg-[#38CB89] text-white rounded'>
+                  className='px-8 py-3 bg-[#38CB89] text-white rounded'
+                  onClick={() => {
+                    close();
+                    filterFunc();
+                  }}>
                   Done
                 </button>
               </div>
@@ -70,12 +79,19 @@ const DateModule = () => {
             <div className='bg-white rounded-2xl p-4 py-6 '>
               <Calendar value={endDate} onChange={setEndDate} />
               <div className='flex justify-between mt-3'>
-                <button type='button' className='px-8 py-3 text-gray-900'>
+                <button
+                  type='button'
+                  className='px-8 py-3 text-gray-900'
+                  onClick={close}>
                   Cancel
                 </button>
                 <button
                   type='button'
-                  className='px-8 bg-[#38CB89] text-white py-3 rounded'>
+                  className='px-8 bg-[#38CB89] text-white py-3 rounded'
+                  onClick={() => {
+                    close();
+                    filterFunc();
+                  }}>
                   Done
                 </button>
               </div>

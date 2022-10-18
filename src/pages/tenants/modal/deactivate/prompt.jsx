@@ -1,16 +1,31 @@
-import React from "react";
-import axios from "../../../../utils/axios";
-import ladyIcon from "../../../../Assets/ladyicon.svg";
+import React from 'react';
+import axios from '../../../../utils/axios';
+import ladyIcon from '../../../../Assets/ladyicon.svg';
 
-function Deactivate({ setViewDeactivate, modalData, setSuccess }) {
+import { useTenantsCtx } from '../../../../contexts';
+
+import customNotification from '../../../../utils/notification';
+
+function Deactivate({ setViewDeactivate, modalData }) {
+  const { refreshContext } = useTenantsCtx();
+
   const changeStatus = () => {
     axios
       .get(`tenant/change/status/${modalData.id}`)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        customNotification({
+          heading: 'Tenant Deactivated successfully',
+          id: 'success',
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        });
+        refreshContext();
       })
       .catch((err) => {
-        console.log(err);
+        customNotification({
+          heading: 'Oops! Something went wrong',
+          id: 'error',
+          text: err.message,
+        });
       });
   };
 
@@ -38,9 +53,8 @@ function Deactivate({ setViewDeactivate, modalData, setSuccess }) {
           <div className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'>
             <button
               onClick={() => {
-                setSuccess(true);
+                setViewDeactivate(false);
                 changeStatus();
-                console.log(modalData.id);
               }}>
               Deactivate
             </button>

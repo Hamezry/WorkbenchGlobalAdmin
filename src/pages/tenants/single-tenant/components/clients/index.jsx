@@ -11,7 +11,7 @@ const Clients = ({ clients, overallCount }) => {
   return (
     <div className='bg-[#FFFF] p-3 rounded-3xl w-full'>
       <div className='mb-3 border-b text-[20px] border-gray-200 p-5'>
-        <h1>Clients</h1>
+        <h1 className='text-lg'>Clients</h1>
       </div>
 
       <div className='flex p-5 w-full items-center justify-around'>

@@ -2,15 +2,30 @@ import React from 'react';
 import ladyIcon from '../../../../Assets/ladyicon.svg';
 import axios from '../../../../utils/axios';
 
-function Activate({ setViewActivate, setSuccess, modalData }) {
+import { useTenantsCtx } from '../../../../contexts';
+
+import customNotification from '../../../../utils/notification';
+
+function Activate({ setViewActivate, modalData }) {
+  const { refreshContext } = useTenantsCtx();
   const changeStatus = () => {
     axios
       .get(`tenant/change/status/${modalData.id}`)
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        customNotification({
+          heading: 'Tenant activated successfully',
+          id: 'success',
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        });
+        refreshContext();
       })
       .catch((err) => {
         console.log(err);
+        customNotification({
+          heading: 'Oops! Something went wrong',
+          id: 'error',
+          text: err.message,
+        });
       });
   };
 
@@ -36,7 +51,7 @@ function Activate({ setViewActivate, setSuccess, modalData }) {
           <div
             className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'
             onClick={() => {
-              setSuccess(true);
+              setViewActivate(false);
               changeStatus();
             }}>
             <button>Activate</button>

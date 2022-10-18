@@ -30,13 +30,7 @@ function Country() {
   //Tenants calculation
   const tenantProgress = singleTenant / totalTenants;
   const tenantValue = tenantProgress * 100;
-  ///till temp server is back up
-  const token = localStorage.getItem("global-admin-workbench-app-token");
 
-  const options = {
-    Authorization: `WB3 ${token}`,
-    "Content-Type": "application/json",
-  };
   useEffect(() => {
     const countryStockPosition = async () => {
       const resp = await axios.get(`country/stock/position/${id}`);
@@ -47,10 +41,7 @@ function Country() {
     };
 
     const countryAdminLevels = async () => {
-      const resp = await axios.get(
-        `https://wb3test.afexnigeria.com/WB3/api/v1/admin/levels/${id}`,
-        options
-      );
+      const resp = await axios.get(`admin/levels/${id}`);
 
       if (!resp.data || resp.data.responseCode !== "100") return;
 

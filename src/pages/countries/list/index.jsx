@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Link } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
-import Navigation from '../components/navigation';
+import { Link } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
+import Navigation from "../components/navigation";
 
-import CountryTile from '../components/tile';
+import CountryTile from "../components/tile";
 
-import filterIcon from '../../../Assets/filter.svg';
-import calenderIcon from '../../../Assets/calendar.svg';
-import Pagination from '../../../components/Pagination';
+import filterIcon from "../../../Assets/filter.svg";
+import calenderIcon from "../../../Assets/calendar.svg";
+import Pagination from "../../../components/Pagination";
 
-import { useCountriesCtx } from '../../../contexts';
+import { useCountriesCtx } from "../../../contexts";
 
 function Countrylist() {
   const { countries } = useCountriesCtx();
@@ -74,8 +74,8 @@ function Countrylist() {
             <div className='flex justify-between items-center pl-5 gap-5'>
               <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
                 <p>
-                  {' '}
-                  <span>Show </span> 100 Entries{' '}
+                  {" "}
+                  <span>Show </span> 100 Entries{" "}
                 </p>
                 <img src={calenderIcon} alt='calendar icon' />
               </div>
@@ -187,8 +187,13 @@ function Countrylist() {
             </div>
 
             <div className='flex justify-between p-2 px-4 rounded-2xl bg-[#F9F9F9] items-center'>
-              {itemsOffset + 1} - {postsPerPage + itemsOffset} of {posts.length}{' '}
-              Entries
+              {/* {itemsOffset + 1} - {postsPerPage + itemsOffset} of {posts.length}{" "}
+              Entries */}
+              {currentPosts?.length > 0 ? itemsOffset + 1 : itemsOffset + 0}-
+              {itemsOffset + postsPerPage > posts?.length
+                ? posts?.length
+                : itemsOffset + postsPerPage}
+              &nbsp;of {posts?.length} entries
               <Pagination
                 totalPosts={posts.length}
                 handlePageChange={handlePageChange}

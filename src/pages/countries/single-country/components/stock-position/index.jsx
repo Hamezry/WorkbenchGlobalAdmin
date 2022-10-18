@@ -1,15 +1,16 @@
-import React from 'react';
+import React from "react";
+import Table from "./components/table";
 
 const StockPosition = ({ stock }) => {
   return (
     <div className='flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[35%] overflow-y-auto'>
-      <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl'>
+      <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative'>
         <div className='mb-2 border-b border-gray-200 p-4'>
           <h1>Overall Stock Position</h1>
         </div>
 
         <div className='w-full overflow-x-auto p-3'>
-          <table className='w-full over p-6'>
+          {/* <table className='w-full over p-6'>
             <thead>
               <tr className='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
                 <th className='py-4 px-4'>Commodity</th>
@@ -46,7 +47,8 @@ const StockPosition = ({ stock }) => {
                 );
               })}
             </tbody>
-          </table>
+          </table> */}
+          <Table data={stock} />
         </div>
       </div>
     </div>

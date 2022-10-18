@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 
 import { Modal, Popover, Skeleton } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
 import { ArrowDown2, Refresh, LocationTick } from "iconsax-react";
 import request from "../../../../../../../utils/axios";
+import customNotification from "../../../../../../../utils/notification";
 
 import cancel from "../../../../../../../Assets/cancel.svg";
 import check from "../../../../../../../Assets/white-check.svg";
-import successIcon from "../../../../../../../Assets/successBadge.svg";
 
 import "./map-modal.css";
+// import { showNotification } from "@mantine/notifications";
 
+// import successIcon from "../../../../../../../Assets/successBadge.svg";
 const MapModal = ({
   id,
+  defaultModalData,
   defaultLocation,
   addLocation,
   setAddlocation,
@@ -36,22 +38,7 @@ const MapModal = ({
   const [locationpopoverOpened, setLocationPopoverOpened] = useState(false);
   const [locationpopoverdropdownOpened, setLocationPopoverDropdownOpened] =
     useState(false);
-  const notificationProps = {
-    message: (
-      <div className='flex items-start  rounded-2xl '>
-        <div className=' flex justify-between pr-4 items-center'>
-          <div className='w-10 h-10 bg-afexgreen rounded-full flex items-center justify-center'>
-            <img src={successIcon} alt='success icon' />
-          </div>
-          <div className='pl-5'>
-            <p className='font-bold '>Success!</p>
-            <p className='text-sm'>Location added successfully.</p>
-          </div>
-        </div>
-      </div>
-    ),
-    // autoClose: 3000,
-  };
+
   const { title, position, data, state_id } = modalData;
 
   const { isLoaded } = useJsApiLoader({
@@ -77,10 +64,14 @@ const MapModal = ({
       url: `add/location/${id}`,
       data: addLocationFormData,
     });
-    console.log(response);
+    console.log(response.data.message);
     if (response.data.responseCode === "100") {
       settingModal({ refresh: true });
-      showNotification(notificationProps);
+      customNotification({
+        heading: "Success!",
+        text: "Location added successfully.",
+        id: "warning",
+      });
     }
   };
 
@@ -98,7 +89,7 @@ const MapModal = ({
       setLocationPopoverDropdownOpened(false);
       setPopoverOpened(false);
       setTimeout(() => {
-        setModalData({ ...modalData, title: null });
+        setModalData(defaultModalData);
         setMapLoaded(false);
       }, 300);
     }

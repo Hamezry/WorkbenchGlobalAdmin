@@ -18,10 +18,31 @@
 .mantine-Notification-root {
   @apply rounded-2xl bg-white border border-afexgreen p-0 pr-6;
 }
-.mantine-Notification-root::before {
-  /* content: none; */
-  @apply w-full h-full top-0 left-0 bg-afexgreen-lighter rounded-2xl;
+#success.mantine-Notification-root {
+  @apply border-afexgreen;
 }
+#warning.mantine-Notification-root {
+  @apply border-warninig;
+}
+#error.mantine-Notification-root {
+  @apply border-error;
+}
+.mantine-Notification-root button:hover {
+  @apply bg-transparent scale-125 transition-all duration-150;
+}
+.mantine-Notification-root::before {
+  @apply w-full h-full top-0 left-0 rounded-2xl;
+}
+#success.mantine-Notification-root::before {
+  @apply bg-afexgreen-lighter;
+}
+#warning.mantine-Notification-root::before {
+  @apply bg-warninig-lighter;
+}
+#error.mantine-Notification-root::before {
+  @apply bg-error-lighter;
+}
+
 .mantine-Notification-root .mantine-Notification-body {
   @apply p-6;
 }

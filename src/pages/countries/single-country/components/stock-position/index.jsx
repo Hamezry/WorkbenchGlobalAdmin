@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import Table from "./components/table";
 
 const StockPosition = ({ stock }) => {
   return (
@@ -9,7 +10,7 @@ const StockPosition = ({ stock }) => {
         </div>
 
         <div className='w-full overflow-x-auto p-3'>
-          <table className='w-full over p-6'>
+          {/* <table className='w-full over p-6'>
             <thead>
               <tr className='bg-[#F9F9F9] text-left text-[#54565B] text-[14px]'>
                 <th className='py-4 px-4'>Commodity</th>
@@ -46,7 +47,8 @@ const StockPosition = ({ stock }) => {
                 );
               })}
             </tbody>
-          </table>
+          </table> */}
+          <Table data={stock} />
         </div>
       </div>
     </div>

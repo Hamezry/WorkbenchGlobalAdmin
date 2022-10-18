@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from '../utils/axios';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "../utils/axios";
 
 const CountriesCtx = createContext();
 
@@ -21,9 +21,9 @@ const CountriesContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchCountryCardData = async () => {
-      const response = await axios.get('countries');
+      const response = await axios.get("countries");
 
-      if (response.data.responseCode !== '100') return;
+      if (response.data.responseCode !== "100") return;
 
       const { summary } = response.data;
 
@@ -32,9 +32,9 @@ const CountriesContextProvider = ({ children }) => {
 
     const fetchCountries = async () => {
       setDataLoaded(false);
-      const resp = await axios.get('countries');
+      const resp = await axios.get("countries");
 
-      if (!resp.data || resp.data.responseCode !== '100') return;
+      if (!resp.data || resp.data.responseCode !== "100") return;
 
       setCountries(resp.data.data);
 

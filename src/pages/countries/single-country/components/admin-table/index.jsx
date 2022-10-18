@@ -66,7 +66,6 @@ const AdminTable = ({ list, id }) => {
             data: temp,
           });
           setisrefreshing(false);
-          console.log(temp);
         } else {
           setModalData({
             title: res.data.message,
@@ -121,6 +120,7 @@ const AdminTable = ({ list, id }) => {
 
       <MapModal
         id={id}
+        defaultModalData={defaultModalData}
         defaultLocation={defaultLocation}
         addLocation={addLocation}
         setAddlocation={setAddlocation}

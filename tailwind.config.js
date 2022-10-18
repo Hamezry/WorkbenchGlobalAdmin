@@ -19,6 +19,14 @@ module.exports = {
           light: "#C9C8C6",
           lighter: "rgba(201, 200, 198, .1)",
         },
+        warninig: {
+          DEFAULT: "rgb(250, 232, 76)",
+          lighter: "rgba(250, 232, 76,0.1)",
+        },
+        error: {
+          DEFAULT: "rgb(254, 31, 17)",
+          lighter: "rgba(254, 31, 17,0.1)",
+        },
       },
     },
   },

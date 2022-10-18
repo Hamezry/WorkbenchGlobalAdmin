@@ -1,29 +1,16 @@
 import React from 'react';
-import { ArrowUp, ArrowDown } from 'iconsax-react';
+import { CgEditBlackPoint } from 'react-icons/cg';
 import { Skeleton } from '@mantine/core';
+import { HiChartBar, HiOutlineArrowUpRight } from 'react-icons/hi2';
 
 import { useTenantsCtx } from '../../../../contexts';
 
-const Increase = () => {
-  return (
-    <ArrowUp
-      size={38}
-      className='bg-[#E5F6EF] text-[#38CB89] p-2 rounded-full font-bold '
-    />
-  );
-};
-
-const Decrease = () => {
-  return (
-    <ArrowDown
-      size={38}
-      className='bg-red-100 text-red-500 p-2 rounded-full font-bold '
-    />
-  );
-};
-
 const getPercentageDifference = (current, previous) => {
   return (((current - previous) / (previous || 1)) * 100).toFixed(2);
+};
+
+const formatter = (value) => {
+  return Intl.NumberFormat('en-US').format(Number(value));
 };
 
 const TenantsTile = () => {
@@ -39,143 +26,140 @@ const TenantsTile = () => {
   );
 
   return (
-    <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-3 mt-10'>
-      <p className='px-8 py-2'>Overview</p>
-      <div className='flex p-6 justify-between gap-6 '>
-        {/* Total Active Tenants */}
+    <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-8 mt-10 space-y-4 '>
+      <p>Overview</p>
+      <div className=' flex  justify-between space-x-6 child:px-2'>
+        {/* Active Tenants */}
         {!dataLoaded ? (
-          <Skeleton className='flex flex-col p-6 gap-4 rounded-3xl flex-1 h-40' />
+          <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
         ) : (
-          <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1'>
-            <p className=' text-[#47494E] text-[16px] mb-4'>
-              Total Active Tenants
-            </p>
-
-            <div className='text-[14px] flex justify-between items-end'>
-              <p className='flex flex-col space-y-4'>
+          <div className='flex flex-col py-6 bg-[#FFFFFF] rounded-3xl flex-1 space-y-6 items-center relative'>
+            <div className='flex px-6 w-full justify-between items-center'>
+              <span className='w-1 h-20 absolute left-0 top-6 bg-[#FA5A7D] rounded-r-3xl'></span>
+              <div className='flex flex-col space-y-8'>
+                <p className=' text-[#47494E] text-[16px] pt-3'>
+                  Total Active Tenants
+                </p>
                 <span className='text-[25px] font-bold '>
-                  {Intl.NumberFormat('en-US').format(
-                    cardData.active_tenants.total_active
-                  )}
+                  {formatter(cardData.active_tenants.total_active)}
                 </span>
-                <span>
-                  In-active Tenants:{' '}
-                  {Intl.NumberFormat('en-US').format(
-                    cardData.active_tenants.inactive_tenants
-                  )}
-                </span>
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Total CSD Tenants */}
-        {!dataLoaded ? (
-          <Skeleton className='flex flex-col p-6 gap-4 rounded-3xl flex-1 h-40' />
-        ) : (
-          <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1'>
-            <p className=' text-[#47494E] text-[16px] mb-4'>
-              Total Tenants (CSD)
-            </p>
-
-            <div className='text-[14px] flex justify-between items-end'>
-              <p className='flex flex-col space-y-4'>
-                <span className='text-[25px] font-bold '>
-                  {Intl.NumberFormat('en-US').format(cardData.csd_access.total)}{' '}
-                </span>
-                <span>
-                  Last Month:{' '}
-                  {Intl.NumberFormat('en-US').format(
-                    cardData.csd_access.last_month
-                  )}
-                </span>
-              </p>
-              <div className='flex flex-col space-y-1 items-center pb-2'>
-                {csdtenants_diff > 0 ? (
-                  <>
-                    <Increase />
-                    <span className='text-[#38CB89]'>+{csdtenants_diff}% </span>
-                  </>
-                ) : (
-                  <>
-                    <Decrease />
-                    <span className='text-red-500'>{csdtenants_diff}% </span>
-                  </>
-                )}
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* Total Available Tenants */}
-        {!dataLoaded ? (
-          <Skeleton className='flex flex-col p-6 gap-4 rounded-3xl flex-1 h-40' />
-        ) : (
-          <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1'>
-            <p className=' text-[#47494E] text-[16px] mb-4'>
-              Total Tenants Available
-            </p>
-
-            <div className='text-[14px] flex justify-between items-end'>
-              <p className='flex flex-col space-y-4'>
-                <span className='text-[25px] font-bold '>
-                  {Intl.NumberFormat('en-US').format(
-                    cardData.available_tenants.total
-                  )}{' '}
+              <span className='bg-[#FA5A7D] rounded-full p-3 flex items-center justify-center'>
+                <span className='bg-white rounded-sm p-1'>
+                  <HiChartBar className='text-[#FA5A7D] text-lg' />
                 </span>
-                <span>
-                  Last Month:{' '}
-                  {Intl.NumberFormat('en-US').format(
-                    cardData.available_tenants.last_month
-                  )}
+              </span>
+            </div>
+
+            <div className='flex items-center w-full'>
+              <p className='flex items-center justify-between px-6 space-x-3'>
+                <span className=' bg-[#fae3e7] p-1 rounded-full'>
+                  <CgEditBlackPoint className=' text-[#FA5A7D] text-base font-bold ' />
+                </span>
+                <span className='text-sm'>
+                  Inactive Tenants:{' '}
+                  {formatter(cardData.active_tenants.inactive_tenants)}
                 </span>
               </p>
-              <div className='flex flex-col space-y-1 items-center pb-2'>
-                {availabletenants_diff > 0 ? (
-                  <>
-                    <Increase />
-                    <span className='text-[#38CB89]'>
-                      +{availabletenants_diff}%
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <Decrease />
-                    <span className='text-red-500'>
-                      {availabletenants_diff}%{' '}
-                    </span>
-                  </>
-                )}
-              </div>
             </div>
           </div>
         )}
 
-        {/* Highest Available Tenants */}
+        {/* Total CSD */}
         {!dataLoaded ? (
-          <Skeleton className='flex flex-col p-6 gap-4 rounded-3xl flex-1 h-40' />
+          <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
         ) : (
-          <div className=' flex flex-col p-6 gap-4 bg-[#FFFFFF] rounded-3xl flex-1'>
-            <p className=' text-[#47494E] text-[16px] mb-4'>
-              Highest Number of Tenants
-            </p>
+          <div className='flex flex-col py-6 bg-[#FFFFFF] rounded-3xl flex-1 space-y-6 items-center relative'>
+            <div className='flex px-6 w-full justify-between items-center'>
+              <span className='w-1 h-20 absolute left-0 top-6 bg-[#FA5A7D] rounded-r-3xl'></span>
+              <div className='flex flex-col space-y-8'>
+                <p className=' text-[#47494E] text-[16px] pt-3'>
+                  Total Tenants (CSD)
+                </p>
+                <span className='text-[25px] font-bold '>
+                  {formatter(cardData.csd_access.total)}
+                </span>
+              </div>
+              <span className='bg-[#FA5A7D] rounded-full p-3 flex items-center justify-center'>
+                <span className='bg-white rounded-sm p-1'>
+                  <HiChartBar className='text-[#FA5A7D] text-lg' />
+                </span>
+              </span>
+            </div>
 
-            <div className='text-[14px] flex justify-between items-end'>
-              <div className='flex flex-col space-y-4'>
-                <div className='flex gap-3 items-center'>
-                  <span className='text-[25px] font-bold'>
-                    {cardData.highest_tenant_num.name}{' '}
+            <div className='flex items-center w-full'>
+              <p className='flex items-center justify-between px-6 space-x-3'>
+                <span className=' bg-[#fae3e7] p-1 rounded-full'>
+                  <HiOutlineArrowUpRight className=' text-[#FA5A7D] text-base font-bold ' />
+                </span>
+                <span className='text-sm'>
+                  {csdtenants_diff}%{' '}
+                  {csdtenants_diff > 0 ? 'increase' : 'decrease'} from last
+                  month{' '}
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Total CSD */}
+        {!dataLoaded ? (
+          <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
+        ) : (
+          <div className='flex flex-col py-6 bg-[#FFFFFF] rounded-3xl flex-1 space-y-6 items-center relative '>
+            <div className='flex px-6 w-full justify-between items-center'>
+              <span className='w-1 h-20 absolute left-0 top-6 bg-[#FF5630] rounded-r-3xl'></span>
+              <div className='flex flex-col space-y-8'>
+                <p className=' text-[#47494E] text-[16px] pt-3'>
+                  Total Tenants Available
+                </p>
+                <span className='text-[25px] font-bold '>
+                  {formatter(cardData.available_tenants.total)}
+                </span>
+              </div>
+              <span className='bg-[#FF5630] rounded-full p-3 flex items-center justify-center'>
+                <span className='bg-white rounded-sm p-1'>
+                  <HiChartBar className='text-[#FF5630] text-lg' />
+                </span>
+              </span>
+            </div>
+
+            <div className='flex items-center w-full'>
+              <p className='flex items-center justify-between px-6 space-x-3'>
+                <span className=' bg-[#fae3e7] p-1 rounded-full'>
+                  <HiOutlineArrowUpRight className=' text-[#FA5A7D] text-base font-bold ' />
+                </span>
+                <span className='text-sm'>
+                  {availabletenants_diff}%{' '}
+                  {availabletenants_diff > 0 ? 'increase' : 'decrease'} from
+                  last month{' '}
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Total Warehouses */}
+        {!dataLoaded ? (
+          <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
+        ) : (
+          <div className='flex flex-col py-6 bg-[#FFFFFF] rounded-3xl flex-1 space-y-6 items-center relative'>
+            <div className='flex items-center px-6 w-full justify-between'>
+              <span className='w-1 h-20 absolute left-0 top-6 bg-[#559BB1] rounded-r-3xl'></span>
+              <div className='flex flex-col space-y-8'>
+                <p className=' text-[#47494E] text-[16px] pt-3'>
+                  Highest Number of Tenants
+                </p>
+                <p className='flex items-center space-x-8'>
+                  <span className='text-[25px] font-bold '>
+                    {cardData.highest_tenant_num.name}
                   </span>
                   <img
                     src={cardData.highest_tenant_num.country_flag}
-                    className='w-7 h-5'
                     alt={cardData.highest_tenant_num.name}
+                    className='w-10 mt-1'
                   />
-                </div>
-                <span>
-                  Registered tenants:{' '}
-                  {cardData.highest_tenant_num.no_of_tenants}
-                </span>
+                </p>
               </div>
             </div>
           </div>

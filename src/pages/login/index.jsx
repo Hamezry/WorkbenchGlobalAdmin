@@ -5,13 +5,16 @@ import { useAuth } from '../../contexts';
 
 import logo from '../../Assets/afex-logo.png';
 import background from '../../Assets/backround.png';
+import Button from '../../components/Button';
 
 function Login() {
   const { signin } = useAuth();
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     const resp = await axios.post('api-token-auth/', {
@@ -19,9 +22,9 @@ function Login() {
       password: password,
     });
 
-    console.log(resp);
     if (!resp.data || resp.data.responseCode !== '100') return;
 
+    setLoading(false);
     signin(resp.data.token);
   };
 
@@ -38,7 +41,7 @@ function Login() {
         <div className='w-[500px] ml-[150px] mt-[100px] p-8 rounded-xl '>
           <h1 className='text-[#54565B] text-[28px] font-medium'>Login</h1>
 
-          <form className='my-10'>
+          <form className='my-10' onSubmit={handleSubmit}>
             <div className='flex flex-col space-y-5'>
               <label>
                 <p className='text-[14px] text-[#54565B] pb-2'>Username</p>
@@ -81,12 +84,9 @@ function Login() {
                   <p className='font-medium text-[#38CB89]'>Forgot Password?</p>
                 </div>
               </div>
-              <button
-                onClick={handleSubmit}
-                type='submit'
-                className='w-full py-3 font-medium text-white bg-[#38CB89] rounded-lg hover:shadow inline-flex space-x-2 items-center justify-center'>
-                Sign In
-              </button>
+
+              <Button text='Submit' loading={loading} type='submit' />
+
               <p className='text-center'>
                 Create an account for your organization <br />{' '}
                 <span>Data Privacy Policy</span>

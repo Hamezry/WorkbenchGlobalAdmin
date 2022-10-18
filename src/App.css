@@ -22,7 +22,9 @@
   background-color: transparent;
   color: #38cb89;
 }
-
+.mantine-Calendar-day[data-selected='true'] {
+  background-color: #38cb89;
+}
 .mantine-Pagination-item:first-child,
 .mantine-Pagination-item:last-child {
   background-color: #38cb89;
@@ -38,7 +40,8 @@
   padding: 15px;
   border-radius: 10px;
 }
-.mantine-UnstyledButton-root {
+/* this style is affecting my modal, give your wrapper a name and style only your button -Faith */
+/* .mantine-UnstyledButton-root {
   background-color: #ffff;
   border-color: #38cb89;
   color: #38cb89;
@@ -48,13 +51,18 @@
 .mantine-UnstyledButton-root:hover {
   background-color: #38cb89;
   color: #ffff;
-}
+} */
 .mantine-Progress-root {
   background-color: #eeefee;
 }
 
 .mantine-Progress-bar {
   background-color: #38cb89;
+}
+
+.mantine-Tooltip-tooltip {
+  background: rgba(84, 86, 91, 0.84);
+  padding: 1rem;
 }
 
 li.selected {

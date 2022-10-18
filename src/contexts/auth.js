@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('global-admin-workbench-app-token', token);
     setAuthenticated(true);
     localStorage.setItem('global-admin-workbench-auth-status', 'authenticated');
-    navigate('/');
+    return window.location.assign('/'); // Force Refresh
   }
 
   function signout() {

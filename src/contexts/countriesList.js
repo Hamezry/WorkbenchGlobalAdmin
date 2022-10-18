@@ -5,6 +5,7 @@ const CountriesCtx = createContext();
 
 const CountriesContextProvider = ({ children }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [countries, setCountries] = useState([]);
   const [cardData, setCardData] = useState({
     grn_change: 0,
@@ -15,6 +16,8 @@ const CountriesContextProvider = ({ children }) => {
     total_farmers: 0,
     total_warehouses: 0,
   });
+
+  const refreshContext = () => setRefresh((s) => !s);
 
   useEffect(() => {
     const fetchCountryCardData = async () => {
@@ -40,9 +43,10 @@ const CountriesContextProvider = ({ children }) => {
 
     fetchCountryCardData();
     fetchCountries();
-  }, []);
+  }, [refresh]);
   return (
-    <CountriesCtx.Provider value={{ countries, dataLoaded, cardData }}>
+    <CountriesCtx.Provider
+      value={{ countries, dataLoaded, cardData, refreshContext }}>
       {children}
     </CountriesCtx.Provider>
   );

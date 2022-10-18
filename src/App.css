@@ -22,7 +22,9 @@
   background-color: transparent;
   color: #38cb89;
 }
-
+.mantine-Calendar-day[data-selected='true'] {
+  background-color: #38cb89;
+}
 .mantine-Pagination-item:first-child,
 .mantine-Pagination-item:last-child {
   background-color: #38cb89;
@@ -57,13 +59,18 @@
   background-color: #38cb89;
 }
 
+.mantine-Tooltip-tooltip {
+  background: rgba(84, 86, 91, 0.84);
+  padding: 1rem;
+}
+
 li.selected {
   color: #38cb89;
 }
-input[type="checkbox"] {
+input[type='checkbox'] {
   accent-color: #38cb89;
   color: #fff;
 }
-input[type="checkbox"]:checked {
+input[type='checkbox']:checked {
   color: #fff;
 }

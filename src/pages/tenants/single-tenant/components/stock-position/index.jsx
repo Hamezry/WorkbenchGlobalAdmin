@@ -7,7 +7,7 @@ const StockPosition = ({ stock }) => {
     <div className='flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[35%] overflow-y-auto'>
       <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl'>
         <div className='mb-2 border-b border-gray-200 p-4'>
-          <h1>Overall Stock Position</h1>
+          <h1 className='text-lg'>Overall Stock Position</h1>
         </div>
 
         <div className='w-full overflow-x-auto p-5'>

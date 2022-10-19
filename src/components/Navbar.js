@@ -34,7 +34,7 @@ function Navbar() {
         <input
           type='text'
           placeholder='Search'
-          className='p-3 rounded-2xl text-sm text-gray-500 border-none  focus:ring-1 focus:ring-afexgreen outline-none  bg-[#F9F9F9] h-[56px]  w-[370px]'
+          className='p-3 rounded-2xl text-sm text-gray-500 border-none  focus:ring-1 focus:ring-afexgreen outline-none  bg-[#F9F9F9] h-[56px] w-[370px] font-Muli'
         />
         <span className='absolute left-[300px] top-3'>
           <AiOutlineSearch className='text-[#C9C8C6] text-[30px]' />

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 import Dropdown from './dropdown';
@@ -9,8 +8,9 @@ import CreateProductModal from './modal/create-product';
 import Filtermodal from './modal/filter';
 
 import { useProductsCtx } from '../../contexts';
+
 import Pagination from '../../components/Pagination';
-import Select from '../../components/Select';
+import TableSelect from '../../components/TableSelect';
 import DateModule from '../../components/Datemodule';
 
 import recieptIcon from '../../Assets/receipt-text.png';
@@ -32,8 +32,11 @@ function Productlist({ openModal }) {
 
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
-    const date = new Date(datex);
-    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
+    return new Date(datex).toLocaleDateString('en-UK', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   };
 
   const [posts, setPosts] = useState([]);
@@ -95,21 +98,19 @@ function Productlist({ openModal }) {
 
           <div className='flex justify-between items-center p-4 gap-5'>
             <div className='flex items-start gap-4 align-middle py-4'>
-              <span className='text-gray-400 mt-1'>Show Entries: </span>
-              <div className='w-12 text-center self-start'>
-                <Select
-                  defaultValue={postsPerPage}
+              <div className=' flex flex-1 h-full text-left self-start'>
+                <TableSelect
+                  defaultValue={'7 entries'}
                   updateValue={setPostsPerPage}
                   data={[
-                    { value: 7, label: '7' },
-                    { value: 20, label: '20' },
-                    { value: 100, label: '100' },
-                    { value: 500, label: '500' },
+                    { value: 7, label: '7 entries' },
+                    { value: 20, label: '20 entries' },
+                    { value: 100, label: '100 entries' },
+                    { value: 500, label: '500 entries' },
                   ]}
                   className='text-sm'
                 />
               </div>
-              <div className='w-8 h-4'></div>
             </div>
             <div className='flex items-center p-4 gap-5'>
               <button
@@ -164,8 +165,8 @@ function Productlist({ openModal }) {
 
           {/*TABLE */}
 
-          <div className='px-5 h-[500px] overflow-y-auto overflow-x-auto'>
-            <table className='min-w-max w-full table-auto'>
+          <div className='px-5 h-[600px] w-full overflow-y-auto overflow-x-auto relative'>
+            <table className='min-w-max w-full table-auto mb-10'>
               <thead>
                 <tr className='bg-[#F9F9F9] text-[#54565B] text-left text-[14px]'>
                   <th className='py-3 px-6 '>S/N</th>
@@ -241,32 +242,34 @@ function Productlist({ openModal }) {
                 })}
               </tbody>
             </table>
-          </div>
+            <div className='flex items-center justify-between bg-[#F9F9F9] p-3 rounded-2xl sticky bottom-0 left-0 right-0 w-full'>
+              <p>
+                {itemsOffset + 1} -{' '}
+                {postsPerPage + itemsOffset < posts.length
+                  ? postsPerPage + itemsOffset
+                  : posts.length}{' '}
+                of {posts.length} Entries
+              </p>
 
-          <div className='flex items-center justify-between mb-3 bg-[#F9F9F9] p-3 rounded-2xl'>
-            <p>
-              {itemsOffset + 1} - {postsPerPage + itemsOffset} of {posts.length}{' '}
-              Entries
-            </p>
-
-            <Pagination
-              totalPosts={posts.length}
-              handlePageChange={handlePageChange}
-              currentPage={currentPage}
-              perPage={postsPerPage}
-            />
+              <Pagination
+                totalPosts={posts.length}
+                handlePageChange={handlePageChange}
+                currentPage={currentPage}
+                perPage={postsPerPage}
+              />
+            </div>
           </div>
         </div>
       </div>
 
       {modal && <CreateProductModal setModal={setModal} />}
-      {viewFilter && (
-        <Filtermodal
-          setViewFilter={setViewFilter}
-          filterObj={filterObj}
-          setFilterObj={setFilterObj}
-        />
-      )}
+
+      <Filtermodal
+        filterObj={filterObj}
+        setFilterObj={setFilterObj}
+        show={viewFilter}
+        close={() => setViewFilter(false)}
+      />
     </div>
   );
 }

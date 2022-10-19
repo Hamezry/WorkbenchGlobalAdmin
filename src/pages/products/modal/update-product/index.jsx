@@ -4,25 +4,38 @@ import { InfoCircle } from 'iconsax-react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 import Button from '../../../../components/Button';
-
 import axios from '../../../../utils/axios';
+import notification from '../../../../utils/notification';
+import { useProductsCtx } from '../../../../contexts';
 
 function UpdateProductmodal({ setModal, modalData }) {
+  const { refreshContext } = useProductsCtx();
   const [product, setProduct] = useState(modalData);
   const [loading, setLoading] = useState(false);
-  console.log({ modalData });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const resp = await axios.post(`product/update/${product.pk}`, product);
+
     if (!resp.data || resp.data.responseCode !== '100') {
       setLoading(false);
-      // Toast Notification here
+      notification({
+        heading: 'Oops! Something went wrong',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        id: 'error',
+      });
       return;
     }
+
     setLoading(false);
     setModal(false);
+    notification({
+      heading: 'Product updated successfully',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      id: 'success',
+    });
+    refreshContext();
   };
 
   const handleInputChange = (e) => {

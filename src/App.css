@@ -12,6 +12,10 @@
   background-color: rgb(233, 230, 230);
 }
 
+.sidebar a[aria-current='page'] svg path {
+  fill: #38cb89;
+}
+
 .mantine-Modal-modal {
   border-radius: 1.75rem;
 }
@@ -68,10 +72,27 @@
 li.selected {
   color: #38cb89;
 }
-input[type='checkbox'] {
-  accent-color: #38cb89;
-  color: #fff;
+
+.checkbox {
+  appearance: none;
+  position: relative;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
-input[type='checkbox']:checked {
-  color: #fff;
+.checkbox::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(10%);
+  height: 20px;
+  width: 20px;
+  background-color: #f1f2f3;
+  border-radius: 5px;
+}
+.checkbox:checked::before {
+  background-color: #38cb89;
+  content: url('./Assets/check.svg');
+  padding-left: 3px;
 }

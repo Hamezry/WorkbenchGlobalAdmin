@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Popover, Text, Button } from '@mantine/core';
-import filterIcon from '../../../../../../Assets/filter.svg';
+import { useState } from "react";
+import { Popover, Text, Button } from "@mantine/core";
+import filterIcon from "../../../../../../Assets/green-filter.svg";
 
 function TransactionDropdown() {
   const [opened, setOpened] = useState(false);
@@ -10,14 +10,14 @@ function TransactionDropdown() {
     <Popover
       opened={opened}
       onChange={setOpened}
-      width={'350px'}
+      width={"350px"}
       position='bottom-end'>
       <Popover.Target>
         <Button
           className='flex justify-between '
           onClick={() => setOpened((o) => !o)}>
-          {' '}
-          <img src={filterIcon} alt='funnel' /> Filter{' '}
+          {" "}
+          <img src={filterIcon} alt='funnel' /> Filter{" "}
         </Button>
       </Popover.Target>
 

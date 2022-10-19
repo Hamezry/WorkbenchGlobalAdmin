@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import { AiOutlineSearch } from 'react-icons/ai';
+import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { AiOutlineSearch } from "react-icons/ai";
 
-import Dropdown from './dropdown';
-import Query from './query';
-import GlobalProductTile from './components/tile';
-import CreateProductModal from './modal/create-product';
-import Filtermodal from './modal/filter';
+import Dropdown from "./dropdown";
+import Query from "./query";
+import GlobalProductTile from "./components/tile";
+import CreateProductModal from "./modal/create-product";
+import Filtermodal from "./modal/filter";
 
-import { useProductsCtx } from '../../contexts';
-import Pagination from '../../components/Pagination';
-import Select from '../../components/Select';
-import DateModule from '../../components/Datemodule';
+import { useProductsCtx } from "../../contexts";
+import Pagination from "../../components/Pagination";
+import Select from "../../components/Select";
+import DateModule from "../../components/Datemodule";
 
-import recieptIcon from '../../Assets/receipt-text.png';
-import filterIcon from '../../Assets/filter.svg';
-import calenderIcon from '../../Assets/calendar.svg';
+import recieptIcon from "../../Assets/receipt-text.png";
+import filterIcon from "../../Assets/green-filter.svg";
+import calenderIcon from "../../Assets/calendar.svg";
 
 function Productlist({ openModal }) {
   const { products } = useProductsCtx();
@@ -33,7 +33,7 @@ function Productlist({ openModal }) {
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
+    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
   };
 
   const [posts, setPosts] = useState([]);
@@ -89,28 +89,22 @@ function Productlist({ openModal }) {
       <div className=' flex justify-between items-center w-full h-[calc(100vh-3%)] rounded py-8 px-8 bg-[#F9F9F9] text-[#54565B] text-[14px] relative'>
         <div className='bg-[#FFFFFF] rounded-3xl w-full py-5 px-8 h-[100%]'>
           <div className='p-4 text-[18px] border-b-[1px]'>
-            {' '}
+            {" "}
             <p>Overview</p>
           </div>
 
           <div className='flex justify-between items-center p-4 gap-5'>
-            <div className='flex items-start gap-4 align-middle py-4'>
-              <span className='text-gray-400 mt-1'>Show Entries: </span>
-              <div className='w-12 text-center self-start'>
-                <Select
-                  defaultValue={postsPerPage}
-                  updateValue={setPostsPerPage}
-                  data={[
-                    { value: 7, label: '7' },
-                    { value: 20, label: '20' },
-                    { value: 100, label: '100' },
-                    { value: 500, label: '500' },
-                  ]}
-                  className='text-sm'
-                />
-              </div>
-              <div className='w-8 h-4'></div>
-            </div>
+            <Select
+              defaultValue={postsPerPage}
+              updateValue={setPostsPerPage}
+              data={[
+                { value: 7, label: "7" },
+                { value: 20, label: "20" },
+                { value: 100, label: "100" },
+                { value: 500, label: "500" },
+              ]}
+              className='text-sm'
+            />
             <div className='flex items-center p-4 gap-5'>
               <button
                 className=' flex gap-12 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] h-[54px'
@@ -206,7 +200,7 @@ function Productlist({ openModal }) {
 
                       <td className='py-5 px-6'>
                         <span className='font-medium '>
-                          {item.certified ? 'Yes' : 'No'}
+                          {item.certified ? "Yes" : "No"}
                         </span>
                       </td>
 
@@ -245,8 +239,11 @@ function Productlist({ openModal }) {
 
           <div className='flex items-center justify-between mb-3 bg-[#F9F9F9] p-3 rounded-2xl'>
             <p>
-              {itemsOffset + 1} - {postsPerPage + itemsOffset} of {posts.length}{' '}
-              Entries
+              {currentPosts?.length > 0 ? itemsOffset + 1 : itemsOffset + 0}-
+              {itemsOffset + postsPerPage > posts?.length
+                ? posts?.length
+                : itemsOffset + postsPerPage}
+              &nbsp;of {posts?.length} entries
             </p>
 
             <Pagination

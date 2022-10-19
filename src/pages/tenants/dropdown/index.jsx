@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Popover, Text } from '@mantine/core';
-import { MdExpandMore } from 'react-icons/md';
+import { useState } from "react";
+import { Popover, Text } from "@mantine/core";
+import { MdExpandMore } from "react-icons/md";
 
 function TenantDropdown() {
   const [opened, setOpened] = useState(false);
@@ -9,14 +9,14 @@ function TenantDropdown() {
     <Popover
       opened={opened}
       onChange={setOpened}
-      width={'180px'}
+      width={"max-content"}
       position='bottom-end'>
       <Popover.Target>
         <button
           className='flex gap-4 border rounded-lg border-afexgreen text-afexgreen  items-center text-[14px] hover:bg-afexgreen hover:text-[#ffff]  bg-[#ffff] h-[40px] w-full p-3'
           onClick={() => setOpened((o) => !o)}>
-          {' '}
-          Select Action <MdExpandMore />{' '}
+          {" "}
+          Select Action <MdExpandMore />{" "}
         </button>
       </Popover.Target>
 
@@ -24,13 +24,13 @@ function TenantDropdown() {
         <Text
           size='sm'
           className='cursor-pointer hover:bg-afexgreen-lighter rounded-xl p-1'>
-          Activate Selected
+          Activate all
         </Text>
         <Text
           size='sm'
           className='cursor-pointer hover:bg-afexgreen-lighter rounded-xl p-1'
           onClick={() => {}}>
-          Deactivate Selected
+          Deactivate all
         </Text>
       </Popover.Dropdown>
     </Popover>

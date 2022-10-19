@@ -2,18 +2,25 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { format } from "date-fns";
+import { Drawer, Group } from "@mantine/core";
 
 import OrganisationlistTile from "./components/tile";
 import TenantDropdown from "./dropdown";
 
 import Pagination from "../../components/Pagination";
 import DateModule from "../../components/Datemodule";
+import Select from "../../components/Select";
 
 import { useTenantsCtx } from "../../contexts";
 
+import greenFilterIcon from "../../Assets/green-filter.svg";
+import check from "../../Assets/white-check.svg";
 import filterIcon from "../../Assets/filter.svg";
 import ActivateModal from "./modal/activate";
 import DeactivateModal from "./modal/deactivate";
+
+import "./tenant.css";
+import { ArrowDown2 } from "iconsax-react";
 
 function Organisationlist() {
   const { tenants } = useTenantsCtx();
@@ -36,14 +43,21 @@ function Organisationlist() {
 
   //PAGINATION FUNCTION
   const [posts, setPosts] = useState([]);
+  const [opened, setOpened] = useState(false);
 
   const populate = () => {
     setPosts(tenants);
   };
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
+  const [postsPerPage, setPostsPerPage] = useState(7);
   const [currentPosts, setCurrentPosts] = useState([]);
+  const [selected, setSelected] = useState([]);
   const [itemsOffset, setItemsOffset] = useState(0);
+  const [activeFilter, setActiveFilter] = useState(0);
+  const [filter, setFilter] = useState({
+    country: [],
+    CSD: "",
+  });
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -54,7 +68,6 @@ function Organisationlist() {
         el.company_name.toLowerCase().includes(value.toLowerCase())
       );
     setPosts(res);
-
     setItemsOffset(0);
   };
 
@@ -68,12 +81,17 @@ function Organisationlist() {
     //eslint-disable-next-line
     [tenants]
   );
-
+  useEffect(() => {
+    // console.log(selected);
+  }, [selected]);
   useEffect(() => {
     const endOffset = itemsOffset + postsPerPage;
     setCurrentPosts(posts.slice(itemsOffset, endOffset));
     setCurrentPage(Math.ceil(posts.length / postsPerPage));
   }, [itemsOffset, currentPage, posts, postsPerPage]);
+  useEffect(() => {
+    console.log(filter, activeFilter);
+  }, [filter, activeFilter]);
 
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
@@ -93,65 +111,238 @@ function Organisationlist() {
             {/*ORGANISATION LIST HEADING*/}
             <div className='flex justify-between p-3 border-b-[1px] '>
               <p className='text-[18px]'>Organisation List</p>
-              <div className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
-                <img src={filterIcon} alt='rficon' />
-                <button>Filter</button>
-              </div>
+
+              <Drawer
+                opened={opened}
+                onClose={() => {
+                  setOpened(false);
+                  setActiveFilter(0);
+                }}
+                title={
+                  <div className='flex'>
+                    <img src={filterIcon} alt='filter icon' />
+                    <span className='text-2xl pl-2'>Filter</span>
+                  </div>
+                }
+                padding='xl'
+                size='lg'
+                position='right'>
+                <form
+                  className='pt-6'
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}>
+                  <div className=' py-6 border-y border-y-gray-300'>
+                    <button
+                      className={`flex justify-between w-full px-4`}
+                      onClick={() => {
+                        console.log("clicked");
+                        activeFilter === 1
+                          ? setActiveFilter(-1)
+                          : setActiveFilter(1);
+                      }}>
+                      <span
+                        className={` transition-all duration-300 ${
+                          activeFilter === 1
+                            ? "text-afexgreen"
+                            : "text-textgrey"
+                        }`}>
+                        Country
+                      </span>
+                      <ArrowDown2
+                        size='24'
+                        color={activeFilter === 1 ? "#38CB89" : "#54565B"}
+                        className={` transition-all duration-300 ${
+                          activeFilter === 1 ? "rotate-180" : "rotate-0"
+                        }`}
+                      />
+                    </button>
+
+                    <ul>
+                      <li className='py-1 px-4 relative'>
+                        <span
+                          className={` inline-flex items-center justify-center w-5 h-5  border rounded-md
+                            ${
+                              filter.country.includes("nigeria")
+                                ? "bg-afexgreen border-afexgreen"
+                                : "bg-bggrey border-textgrey-light"
+                            }`}>
+                          <img className={``} alt='check mark' src={check} />
+                        </span>
+                        <input
+                          type='checkbox'
+                          name='country'
+                          id='yes'
+                          value='nigeria'
+                          className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
+                          onChange={(e) => {
+                            console.log(e.target.checked);
+                            const value = e.target.value;
+                            let newCountries = filter.country;
+
+                            console.log(newCountries, value);
+
+                            if (filter.country.includes(value)) {
+                              newCountries = filter.country.filter(
+                                (item) => item !== value
+                              );
+                            } else {
+                              newCountries = [...newCountries, value];
+                              console.log(newCountries);
+                            }
+                            setFilter({
+                              ...filter,
+                              country: newCountries,
+                            });
+                          }}
+                        />
+                        <label htmlFor='yes' className='inline-block pl-2'>
+                          Nigeria
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className=' py-6 border-y border-y-gray-300'>
+                    <button
+                      className={`flex justify-between w-full px-4`}
+                      onClick={() => {
+                        console.log("clicked");
+                        activeFilter === 1
+                          ? setActiveFilter(-1)
+                          : setActiveFilter(1);
+                      }}>
+                      <span
+                        className={` transition-all duration-300 ${
+                          activeFilter === 1
+                            ? "text-afexgreen"
+                            : "text-textgrey"
+                        }`}>
+                        CSD Access
+                      </span>
+                      <ArrowDown2
+                        size='24'
+                        color={activeFilter === 1 ? "#38CB89" : "#54565B"}
+                        className={` transition-all duration-300 ${
+                          activeFilter === 1 ? "rotate-180" : "rotate-0"
+                        }`}
+                      />
+                    </button>
+
+                    <ul>
+                      <li className='py-1 px-4 relative'>
+                        <span
+                          className={` inline-flex items-center justify-center w-5 h-5  border rounded-md
+                            ${
+                              filter.country.includes("nigeria")
+                                ? "bg-afexgreen border-afexgreen"
+                                : "bg-bggrey border-textgrey-light"
+                            }`}>
+                          <img className={``} alt='check mark' src={check} />
+                        </span>
+                        <input
+                          type='checkbox'
+                          name='country'
+                          id='yes'
+                          value='nigeria'
+                          className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
+                          onChange={(e) => {
+                            console.log(e.target.checked);
+                            const value = e.target.value;
+                            let newCountries = filter.country;
+
+                            console.log(newCountries, value);
+
+                            if (filter.country.includes(value)) {
+                              newCountries = filter.country.filter(
+                                (item) => item !== value
+                              );
+                            } else {
+                              newCountries = [...newCountries, value];
+                              console.log(newCountries);
+                            }
+                            setFilter({
+                              ...filter,
+                              country: newCountries,
+                            });
+                          }}
+                        />
+                        <label htmlFor='yes' className='inline-block pl-2'>
+                          Nigeria
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className='text-center'>
+                    <button
+                      type='submit'
+                      className='bg-afexgreen px-5 py-5 text-center rounded-2xl text-white mb-3 mt-6'>
+                      Search
+                    </button>
+                  </div>
+                </form>
+              </Drawer>
+
+              <Group position='center'>
+                <button
+                  className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'
+                  onClick={() => setOpened(true)}>
+                  <img src={greenFilterIcon} alt='rficon' />
+                  <span>Filter</span>
+                </button>
+              </Group>
             </div>
 
             {/*ORGANISATION LIST*/}
             <div className='flex justify-between items-center pl-5 gap-5'>
-              <div className='dropdown inline-block relative'>
-                <button className='bg-[#F9F9F9] text-gray-700 text-[12px] py-1 px-4 rounded-2xl inline-flex gap-8 items-center h-[50px] w-[186px]'>
-                  <p className='mr-1'>
-                    <span className='text-[#C9C8C6]'>Show</span> 100 Entries
-                  </p>
-                  <svg
-                    className='fill-current h-4 w-4'
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 20 20'>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
-                  </svg>
-                </button>
-              </div>
-
+              <Select
+                defaultValue={postsPerPage}
+                updateValue={setPostsPerPage}
+                data={[
+                  { value: 7, label: "7" },
+                  { value: 20, label: "20" },
+                  { value: 100, label: "100" },
+                  { value: 500, label: "500" },
+                ]}
+                className='text-sm'
+              />
               {/*TASK BAR*/}
               <div className='flex justify-end items-center p-5 gap-5 '>
                 <p className='text-[12px]'>Sort By</p>
-
-                <div className=' flex gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-[54px relative'>
-                  <p>Date Registered</p>
+                <button
+                  className='flex items-center gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-full'
+                  onClick={() => {
+                    setIsDate(!isDate);
+                  }}>
+                  <p className='whitespace-nowrap'>Date Registered</p>
                   <svg
-                    className='fill-current h-4 w-4'
+                    className={`transition-all duration-200 fill-current h-4 w-4 ${
+                      isDate ? "rotate-180" : "rotate-0"
+                    }`}
                     xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 20 20'
-                    onClick={() => {
-                      setIsDate(!isDate);
-                    }}>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
+                    viewBox='0 0 20 20'>
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
                   </svg>
-                </div>
-
+                </button>
+                {isDate && <DateModule setIsDate={setIsDate} />}
                 <div className='relative text-[#C9C8C6]'>
                   <input
                     type='text'
                     name=''
                     id=''
                     placeholder='Search by Company Name'
-                    className='p-3 rounded-2xl text-sm text-gray-400 border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                    className='p-3 rounded-xl text-sm text-gray-400 border-none outline-none focus:outline-none bg-[#F9F9F9] h-full w-64'
                     onChange={handleSearch}
                   />
                   <span className='absolute left-[300px] top-3'>
                     <AiOutlineSearch />
                   </span>
                 </div>
-                <div className='relative'>
+                <div className='relative tenant-popover'>
                   <TenantDropdown />
                 </div>
               </div>
             </div>
-
-            {isDate && <DateModule setIsDate={setIsDate} />}
 
             {/*TABLE CONTAINER */}
             <div className='px-5 w-full h-auto overflow-x-auto'>
@@ -162,7 +353,18 @@ function Organisationlist() {
                       <input
                         type='checkbox'
                         id='remember'
+                        checked={selected.length === currentPosts.length}
                         className='w-4 h-4 border-slate-200 checked:bg-green-400'
+                        onChange={(e) => {
+                          const currentlySelected = currentPosts.map(
+                            (item) => item.id
+                          );
+                          if (selected.length !== currentPosts.length) {
+                            setSelected(currentlySelected);
+                          } else {
+                            setSelected([]);
+                          }
+                        }}
                       />
                     </th>
 
@@ -189,12 +391,27 @@ function Organisationlist() {
                           <input
                             type='checkbox'
                             id='remember'
+                            value={item.id}
+                            checked={selected.includes(item.id)}
                             className='w-4 h-4 border-slate-200 focus:bg-green-400'
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              if (selected.includes(value)) {
+                                const newSelected = selected.filter(
+                                  (item) => item !== value
+                                );
+                                setSelected(newSelected);
+                              } else {
+                                setSelected((prev) => [...prev, value]);
+                              }
+                            }}
                           />
                         </td>
 
                         <td className='py-4 px-4 mr-10'>
-                          <span className='font-medium'>{index + 1}</span>
+                          <span className='font-medium'>
+                            {index + 1 + itemsOffset}
+                          </span>
                         </td>
 
                         <td className='py-4 px-4 mr-10 text-start '>

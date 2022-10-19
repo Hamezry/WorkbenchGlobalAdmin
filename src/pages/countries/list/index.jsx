@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
 
-import Navigation from '../components/navigation';
+import Navigation from "../components/navigation";
 
-import CountryTile from '../components/tile';
+import CountryTile from "../components/tile";
 
-import filterIcon from '../../../Assets/filter.svg';
-import calenderIcon from '../../../Assets/calendar.svg';
-import Pagination from '../../../components/Pagination';
+import filterIcon from "../../../Assets/green-filter.svg";
+import calenderIcon from "../../../Assets/calendar.svg";
+import Pagination from "../../../components/Pagination";
 
-import { useCountriesCtx } from '../../../contexts';
+import { useCountriesCtx } from "../../../contexts";
 
 function Countrylist() {
   const { countries } = useCountriesCtx();
@@ -75,8 +75,8 @@ function Countrylist() {
             <div className='flex justify-between items-center pl-5 gap-5'>
               <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
                 <p>
-                  {' '}
-                  <span>Show </span> 100 Entries{' '}
+                  {" "}
+                  <span>Show </span> 100 Entries{" "}
                 </p>
                 <img src={calenderIcon} alt='calendar icon' />
               </div>

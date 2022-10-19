@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactPaginate from 'react-paginate';
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
+import React from "react";
+import ReactPaginate from "react-paginate";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
 const MyPagination = ({ totalPosts, handlePageChange, perPage }) => {
   const stop = Math.ceil(totalPosts / perPage);

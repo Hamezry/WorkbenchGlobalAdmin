@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
-import { format } from "date-fns";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { format } from 'date-fns';
 
-import OrganisationlistTile from "./components/tile";
-import TenantDropdown from "./dropdown";
+import OrganisationlistTile from './components/tile';
+import TenantDropdown from './dropdown';
 
-import Pagination from "../../components/Pagination";
-import DateModule from "../../components/Datemodule";
+import Pagination from '../../components/Pagination';
+import DateModule from '../../components/Datemodule';
 
-import { useTenantsCtx } from "../../contexts";
+import { useTenantsCtx } from '../../contexts';
 
-import filterIcon from "../../Assets/filter.svg";
-import ActivateModal from "./modal/activate";
-import DeactivateModal from "./modal/deactivate";
+import filterIcon from '../../Assets/filter.svg';
+import ActivateModal from './modal/activate';
+import DeactivateModal from './modal/deactivate';
 
 function Organisationlist() {
   const { tenants } = useTenantsCtx();
@@ -27,11 +27,11 @@ function Organisationlist() {
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
+    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
   };
   const formTime = (datex) => {
     const date = new Date(datex);
-    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
+    return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
   };
 
   //PAGINATION FUNCTION
@@ -110,7 +110,7 @@ function Organisationlist() {
                     className='fill-current h-4 w-4'
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 20 20'>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
                   </svg>
                 </button>
               </div>
@@ -128,7 +128,7 @@ function Organisationlist() {
                     onClick={() => {
                       setIsDate(!isDate);
                     }}>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{" "}
+                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
                   </svg>
                 </div>
 
@@ -159,11 +159,7 @@ function Organisationlist() {
                 <thead className='sticky'>
                   <tr className='bg-[#F9F9F9] text-[#54565B] text-left  text-[14px]'>
                     <th>
-                      <input
-                        type='checkbox'
-                        id='remember'
-                        className='w-4 h-4 border-slate-200 checked:bg-green-400'
-                      />
+                      <input type='checkbox' className='checkbox' />
                     </th>
 
                     <th className='py-3 px-4 '>S/N</th>
@@ -186,11 +182,7 @@ function Organisationlist() {
                         className=' text-left  border-b-[1px] border-[#F9FAFB] hover:bg-[#e3f7ee]'
                         onClick={() => navigate(`/tenants/${item.id}`)}>
                         <td onClick={(e) => e.stopPropagation()}>
-                          <input
-                            type='checkbox'
-                            id='remember'
-                            className='w-4 h-4 border-slate-200 focus:bg-green-400'
-                          />
+                          <input type='checkbox' className='checkbox' />
                         </td>
 
                         <td className='py-4 px-4 mr-10'>
@@ -231,7 +223,7 @@ function Organisationlist() {
 
                         <td className='py-4 px-4'>
                           <span className='font-medium '>
-                            {item.csd_access === "True" ? "Yes" : "No"}
+                            {item.csd_access === 'True' ? 'Yes' : 'No'}
                           </span>
                         </td>
 
@@ -243,7 +235,7 @@ function Organisationlist() {
                         <td
                           className='py-4 px-4 text-center'
                           onClick={(e) => e.stopPropagation()}>
-                          {item.is_active === "True" ? (
+                          {item.is_active === 'True' ? (
                             <div
                               className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                               onClick={() => {

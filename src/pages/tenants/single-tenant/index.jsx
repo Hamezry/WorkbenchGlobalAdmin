@@ -6,6 +6,7 @@ import DeactivateModal from '../modal/deactivate';
 import axios from '../../../utils/axios';
 
 import { useTenantsCtx } from '../../../contexts';
+import notification from '../../../utils/notification';
 
 import TransactionSummary from './components/transaction-summary';
 import ServiceList from './components/service-list';
@@ -77,9 +78,20 @@ function SingleTenant() {
       value: value,
     });
 
-    if (!response.data || response.data.responseCode !== '100') return;
+    if (!response.data || response.data.responseCode !== '100') {
+      return notification({
+        id: 'error',
+        heading: 'Oops! Something went wrong',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      });
+    }
 
     await fetchServiceListInfo();
+    notification({
+      id: 'success',
+      heading: 'Service List updated successfully',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    });
     closeModal();
   };
 

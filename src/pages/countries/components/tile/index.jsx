@@ -26,7 +26,7 @@ const CountryTile = () => {
       <p>Overview</p>
       <div className=' flex justify-between space-x-6 child:px-2'>
         {/* Total Farmers & Tenants */}
-        <div className=' flex flex-col flex-1 space-y-4 justify-between child:px-4'>
+        <div className=' flex flex-col flex-1 space-y-4 justify-between'>
           {/* Total Farmers */}
           {!dataLoaded ? (
             <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />

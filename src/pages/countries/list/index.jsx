@@ -38,6 +38,15 @@ function Countrylist() {
     setItemsOffset(newOffset);
   };
 
+  /**
+   *
+   * @param {string} commodites
+   * @returns
+   */
+  const formatAvailableCommodities = (commodites) => {
+    return commodites.split(' ').slice(0, 6).join(' ');
+  };
+
   const populate = () => {
     setPosts(countries);
   };
@@ -167,9 +176,11 @@ function Countrylist() {
                         </td>
 
                         <td className='px-8 '>
-                          <div className=' overflow-x-auto overflow-y-auto w-[100px] h-[50px]'>
+                          <div className='overflow-hidden w-56'>
                             <span className='font-medium '>
-                              {item.available_commodities}
+                              {formatAvailableCommodities(
+                                item.available_commodities
+                              )}
                             </span>
                           </div>
                         </td>
@@ -178,7 +189,7 @@ function Countrylist() {
                           className='py-4 px-8 '
                           onClick={(e) => e.stopPropagation()}>
                           <Link to={`/countries/${item.pk}`}>
-                            <span className='font-medium text-cyan-400 '>
+                            <span className='font-medium text-cyan-400 underline text-sm '>
                               View Dashboard
                             </span>
                           </Link>

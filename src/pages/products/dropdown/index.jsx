@@ -6,10 +6,23 @@ import UpdateProductModal from '../modal/update-product';
 import DeactivateProductmodal from '../modal/deactivate';
 
 import axios from '../../../utils/axios';
+import notifcation from '../../../utils/notification';
 
 const changeStatus = async (pk) => {
   const resp = await axios.get(`product/change/status/${pk}`);
-  if (!resp.data || !resp.data.responseCode) return;
+  if (!resp.data || !resp.data.responseCode) {
+    notifcation({
+      heading: 'Oops! Something went wrong',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      id: 'error',
+    });
+  }
+
+  notifcation({
+    heading: 'Product deactivated successfully',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    id: 'success',
+  });
 };
 
 function ProductDropdown({ singleProduct }) {

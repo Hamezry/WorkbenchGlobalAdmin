@@ -6,6 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import axios from '../../../../utils/axios';
 import { useProductsCtx } from '../../../../contexts';
 import Button from '../../../../components/Button';
+import notification from '../../../../utils/notification';
 
 function CreateProductModal({ setModal }) {
   const { refreshContext } = useProductsCtx();
@@ -23,10 +24,23 @@ function CreateProductModal({ setModal }) {
     setLoading(true);
     const resp = await axios.post('create-product', product);
 
-    if (!resp.data || resp.data.responseCode !== '100') return;
+    if (!resp.data || resp.data.responseCode !== '100') {
+      setLoading(false);
+      notification({
+        heading: 'Oops! Something went wrong',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        id: 'error',
+      });
+      return;
+    }
 
     setModal(false);
     setLoading(false);
+    notification({
+      heading: 'Product created successfully',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      id: 'success',
+    });
     refreshContext();
   };
 

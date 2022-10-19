@@ -42,8 +42,15 @@ const DateModule = ({
           </li>
           <li
             onClick={() => {
-              setStartDate(new Date());
-              setEndDate(new Date());
+              const today = new Date(Date.now());
+              const last_month = new Date(
+                today.getFullYear(),
+                today.getMonth() - 1,
+                1
+              );
+
+              setStartDate(last_month);
+              setEndDate(today);
             }}
             className='p-2 hover:bg-afexgreen-light hover:text-afexgreen rounded-2xl transition hover:font-semibold cursor-pointer'>
             Last Month

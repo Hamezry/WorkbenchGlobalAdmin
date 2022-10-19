@@ -15,3 +15,14 @@
 body {
   font-family: 'Muli' !important;
 }
+
+@media (max-width: 1200px) {
+  html,
+  body {
+    font-size: 12px !important;
+  }
+}
+::placeholder,
+input {
+  font-family: 'Muli' !important;
+}

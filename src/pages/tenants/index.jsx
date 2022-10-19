@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { format } from "date-fns";
+import { ArrowDown2 } from "iconsax-react";
 import { Drawer, Group } from "@mantine/core";
 
 import OrganisationlistTile from "./components/tile";
@@ -10,17 +11,16 @@ import TenantDropdown from "./dropdown";
 import Pagination from "../../components/Pagination";
 import DateModule from "../../components/Datemodule";
 import Select from "../../components/Select";
+import ActivateModal from "./modal/activate";
+import DeactivateModal from "./modal/deactivate";
 
 import { useTenantsCtx } from "../../contexts";
 
 import greenFilterIcon from "../../Assets/green-filter.svg";
 import check from "../../Assets/white-check.svg";
 import filterIcon from "../../Assets/filter.svg";
-import ActivateModal from "./modal/activate";
-import DeactivateModal from "./modal/deactivate";
 
 import "./tenant.css";
-import { ArrowDown2 } from "iconsax-react";
 
 function Organisationlist() {
   const { tenants } = useTenantsCtx();
@@ -352,9 +352,10 @@ function Organisationlist() {
                     <th>
                       <input
                         type='checkbox'
+                        className='checkbox'
                         id='remember'
                         checked={selected.length === currentPosts.length}
-                        className='w-4 h-4 border-slate-200 checked:bg-green-400'
+                        // className='w-4 h-4 border-slate-200 checked:bg-green-400'
                         onChange={(e) => {
                           const currentlySelected = currentPosts.map(
                             (item) => item.id
@@ -391,9 +392,10 @@ function Organisationlist() {
                           <input
                             type='checkbox'
                             id='remember'
+                            className='checkbox'
                             value={item.id}
                             checked={selected.includes(item.id)}
-                            className='w-4 h-4 border-slate-200 focus:bg-green-400'
+                            // className='w-4 h-4 border-slate-200 focus:bg-green-400'
                             onChange={(e) => {
                               const value = e.target.value;
                               if (selected.includes(value)) {

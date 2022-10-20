@@ -46,6 +46,7 @@ const Select = ({ data, defaultValue, className, updateValue }) => {
               className='rounded-lg w-full h-full text-start p-2'>
               {`${String(option.label)} Entries`}
             </button>
+
           </li>
         ))}
       </ul>

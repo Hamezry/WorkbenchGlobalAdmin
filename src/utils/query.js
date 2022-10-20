@@ -37,9 +37,21 @@ class Query {
     return this;
   }
 
-  sort_ascending() {}
+  sort_ascending() {
+    this.data = this.data
+      .slice()
+      .sort(
+        (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
+      );
+  }
 
-  sort_descending() {}
+  sort_descending() {
+    this.data = this.data
+      .slice()
+      .sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      );
+  }
 }
 
 export default Query;

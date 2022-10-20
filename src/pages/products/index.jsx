@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { Calendar, ReceiptText, Filter } from 'iconsax-react';
 
-import Dropdown from "./dropdown";
-import Query from "../../utils/query";
-import GlobalProductTile from "./components/tile";
-import CreateProductModal from "./modal/create-product";
-import Filtermodal from "./modal/filter";
+import Dropdown from './dropdown';
+import Query from '../../utils/query';
+import GlobalProductTile from './components/tile';
+import CreateProductModal from './modal/create-product';
+import Filtermodal from './modal/filter';
 
 import { useProductsCtx } from "../../contexts";
 
-import Pagination from "../../components/Pagination";
-import TableSelect from "../../components/TableSelect";
-import DateModule from "../../components/Datemodule";
-import notification from "../../utils/notification";
-
-import recieptIcon from "../../Assets/receipt-text.png";
-import filterIcon from "../../Assets/green-filter.svg";
-import calenderIcon from "../../Assets/calendar.svg";
+import Pagination from '../../components/Pagination';
+import TableSelect from '../../components/TableSelect';
+import DateModule from '../../components/Datemodule';
+import notification from '../../utils/notification';
 
 function Productlist({ openModal }) {
   const { products } = useProductsCtx();
 
+
+  const [posts, setPosts] = useState([]);
   const [modal, setModal] = useState(false);
   const [viewFilter, setViewFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,15 +56,15 @@ function Productlist({ openModal }) {
   const dateRangeFilter = () => {
     if (!startDate)
       return notification({
-        heading: "Please specify a start date",
-        id: "error",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        heading: 'Please specify a start date',
+        id: 'error',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       });
     if (!endDate)
       return notification({
-        heading: "Please specify an end date",
-        id: "error",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        heading: 'Please specify an end date',
+        id: 'error',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       });
 
     const res = QueryBuilder.data
@@ -80,8 +79,6 @@ function Productlist({ openModal }) {
       );
     return setPosts(res);
   };
-
-  const [posts, setPosts] = useState([]);
 
   const populate = () => {
     setPosts(QueryBuilder.data);
@@ -120,7 +117,9 @@ function Productlist({ openModal }) {
 
       <section className='bg-[#F9FAFB] p-10 w-full h-full relative rounded-3xl'>
         <div className='rounded-3xl p-6 pr-4 py-10 bg-white h-full relative child:px-4 space-y-3'>
-          <h2 className='text-xl font-bold border-b-[1px] border-[#F3F3F3] pb-2'>
+          <h2
+            className='text-xl font-bold border-b-[1px] border-[#F3F3F3] pb-2 w-full block'
+            onClick={() => setShowDate(false)}>
             Overview
           </h2>
           {/* Table Controls */}
@@ -140,12 +139,12 @@ function Productlist({ openModal }) {
                 />
               </div>
             </div>
-            <div className='flex items-center gap-5 relative'>
+            <div className='flex flex-1 justify-end items-center gap-5 relative'>
               <button
-                className=' flex gap-12 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] h-[54px'
+                className=' flex items-center gap-4 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] self-end'
                 onClick={() => setShowDate((s) => !s)}>
                 <span>Date Registered</span>
-                <img src={calenderIcon} alt='calendar icon' />
+                <Calendar size={18} variant='Bold' />
               </button>
               {showDate && (
                 <DateModule
@@ -158,17 +157,17 @@ function Productlist({ openModal }) {
                 />
               )}
 
-              <div className='relative'>
+              <div className='relative flex justify-end'>
                 <input
                   type='text'
                   name=''
                   id=''
                   placeholder='Search'
-                  className='p-3 rounded-2xl text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                  className='p-3 rounded-2xl text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9]'
                   onChange={handleSearch}
                 />
-                <span className='absolute left-[300px] top-3'>
-                  <AiOutlineSearch className='text-[25px] text-gray-400' />
+                <span className='absolute right-2 top-3'>
+                  <AiOutlineSearch className='text-[25px] text-gray-300' />
                 </span>
               </div>
 
@@ -176,17 +175,17 @@ function Productlist({ openModal }) {
                 onClick={() => {
                   setModal(true);
                 }}
-                className='flex justify-between rounded-lg items-center text-[12px] text-white bg-[#38CB89] h-[40px] w-[142px] p-4'>
+                className='flex justify-between rounded-lg items-center text-[12px] font-semibold text-white bg-[#38CB89] p-3 gap-3'>
                 Create product
-                <img src={recieptIcon} alt='receipt icon' />
+                <ReceiptText size={18} />
               </button>
 
               <button
-                className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] w-[86px] p-4'
+                className='border border-[#38CB89] flex gap-1 rounded-lg items-center  font-semibold text-[14px] text-[#38CB89]  bg-white p-3'
                 onClick={() => {
                   setViewFilter(true);
                 }}>
-                <img src={filterIcon} alt='funnel' />
+                <Filter size={18} variant='Bold' />
                 <span>Filter</span>
               </button>
             </div>
@@ -208,14 +207,16 @@ function Productlist({ openModal }) {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className='text-[12px]'>
                   {currentPosts.map((item, index) => {
                     return (
                       <tr
                         key={index}
                         className='text-left border-b border-gray-200 hover:bg-[#e3f7ee] child:py-5 child:px-6'>
                         <td>
-                          <span className='font-medium'>{index + 1}</span>
+                          <span className='font-medium'>
+                            {posts.indexOf(item) + 1}
+                          </span>
                         </td>
 
                         <td>
@@ -234,7 +235,7 @@ function Productlist({ openModal }) {
 
                         <td>
                           <span className='font-medium '>
-                            {item.certified === "True" ? "Yes" : "No"}
+                            {item.certified === 'True' ? 'Yes' : 'No'}
                           </span>
                         </td>
 
@@ -253,8 +254,7 @@ function Productlist({ openModal }) {
                             item.updated
                           )} `}</span>
                         </td>
-
-                        <td className=' relative'>
+                        <td className='relative'>
                           <Dropdown
                             item={item}
                             setModal={() => {
@@ -275,11 +275,11 @@ function Productlist({ openModal }) {
           <div className='absolute bottom-0 left-0 right-0 w-full'>
             <div className='flex justify-between items-center text-gray-400 p-1 pr-6 pl-8 bg-gray-50 m-4 rounded-xl '>
               <span>
-                {itemsOffset + 1 > posts.length ? currentPage : itemsOffset + 1}{" "}
-                -{" "}
+                {itemsOffset + 1 > posts.length ? currentPage : itemsOffset + 1}{' '}
+                -{' '}
                 {postsPerPage + itemsOffset < posts.length
                   ? postsPerPage + itemsOffset
-                  : posts?.length}{" "}
+                  : posts?.length}{' '}
                 of {posts.length} Entries
               </span>
 

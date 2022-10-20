@@ -12,7 +12,7 @@
   background-color: rgb(233, 230, 230);
 }
 
-.sidebar a[aria-current='page'] svg path {
+.sidebar a[aria-current="page"] svg path {
   fill: #38cb89;
 }
 
@@ -33,7 +33,7 @@
   background-color: transparent;
   color: #38cb89;
 }
-.mantine-Calendar-day[data-selected='true'] {
+.mantine-Calendar-day[data-selected="true"] {
   background-color: #38cb89;
 }
 .mantine-Pagination-item:first-child,
@@ -84,7 +84,7 @@ li.selected {
   cursor: pointer;
 }
 .checkbox::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 0;
@@ -96,6 +96,41 @@ li.selected {
 }
 .checkbox:checked::before {
   background-color: #38cb89;
-  content: url('./Assets/check.svg');
+  content: url("./Assets/check.svg");
   padding-left: 3px;
+}
+.mantine-vqs8oh {
+  top: 10px;
+  bottom: unset;
+}
+.mantine-Notification-root {
+  @apply rounded-2xl bg-white border border-afexgreen p-0 pr-6;
+}
+#success.mantine-Notification-root {
+  @apply border-afexgreen;
+}
+#warning.mantine-Notification-root {
+  @apply border-warninig;
+}
+#error.mantine-Notification-root {
+  @apply border-error;
+}
+.mantine-Notification-root button:hover {
+  @apply bg-transparent scale-125 transition-all duration-150;
+}
+.mantine-Notification-root::before {
+  @apply w-full h-full top-0 left-0 rounded-2xl;
+}
+#success.mantine-Notification-root::before {
+  @apply bg-afexgreen-lighter;
+}
+#warning.mantine-Notification-root::before {
+  @apply bg-warninig-lighter;
+}
+#error.mantine-Notification-root::before {
+  @apply bg-error-lighter;
+}
+
+.mantine-Notification-root .mantine-Notification-body {
+  @apply p-6;
 }

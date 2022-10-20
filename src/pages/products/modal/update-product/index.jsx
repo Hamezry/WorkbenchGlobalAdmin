@@ -23,7 +23,7 @@ function UpdateProductmodal({ close, modalData, show }) {
       setLoading(false);
       notification({
         heading: 'Oops! Something went wrong',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: resp.data.errors.code[0],
         id: 'error',
       });
       return;
@@ -31,6 +31,7 @@ function UpdateProductmodal({ close, modalData, show }) {
 
     close();
     setLoading(false);
+
     notification({
       heading: 'Product updated successfully',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',

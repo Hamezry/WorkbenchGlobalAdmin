@@ -25,7 +25,7 @@ const customNotification = ({ heading, text, id }) => {
         </div>
       </div>
     ),
-    autoClose: 3000,
+    autoClose: 4000,
     id: id,
   });
 };

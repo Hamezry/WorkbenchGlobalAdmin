@@ -30,7 +30,7 @@ function CreateProductModal({ show, close }) {
       setLoading(false);
       notification({
         heading: 'Oops! Something went wrong',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: resp.data.errors.code[0],
         id: 'error',
       });
       return;

@@ -9,19 +9,53 @@ import filterIcon from '../Assets/filter2.svg';
 
 /**
  *
+ * filterObj is a state of type object
+ * setFilterObj is a React.Dispatch<React.SetStateAction>
+ *
+ * For example
+ * const [filterObj, setFilterObj] = useState({
+ *  category1: [],
+ *  category2: [],
+ *  category3: [],
+ * })
+ *
+ * data is an array of object with a key and an array of string values
+ * For example
  * data = [
- *  {
- *  name: ['val1', 'val2'],
+ *   {
+ *   name1: ['val1', 'val2'],
+ *   },
+ *   {
+ *   name2: ['val1', 'val'],
  *   }
  * ]
  *
- * filterObj = {
- *  name: []
- * }
+ * close: () => void To close the modal
+ * show: boolean => true of false to show the modal
  */
 
-function FilterModal({ filterObj, setFilterObj, show, close, data }) {
+export function SideFilter({ filterObj, setFilterObj, show, close, data }) {
+  const intial_dropdown_state = {};
+
+  const clone = [...data];
+
+  clone.reduce((o, key) => {
+    for (const el in key) {
+      intial_dropdown_state[el] = false;
+    }
+    return o;
+  }, {});
+
+  const [dropdown, setDropdown] = useState(intial_dropdown_state);
+
+  const toggle_links = (key) =>
+    setDropdown((prev) => ({ ...intial_dropdown_state, [key]: !prev[key] }));
+
+  const is_checked = (key, value) => {
+    return filterObj[key].includes(value) ? true : false;
+  };
   /**
+   * Function to control the filter Object
    *
    * @param {string} key
    * @param {string} value
@@ -78,9 +112,65 @@ function FilterModal({ filterObj, setFilterObj, show, close, data }) {
           ));
         })}
       </div>
+
+      {/* Check rowa */}
       <div className='my-6 cursor-default'>
-        <div className='flex flex-col space-y-8'></div>
+        <div className='flex flex-col space-y-8'>
+          {data.map((category, index) => (
+            <div
+              className=' w-full border-b-[1px] border-color py-3 text-[#151615] text-[16px] px-12'
+              key={index}>
+              <div
+                className='flex justify-between items-center'
+                onClick={() =>
+                  toggle_links(Object.keys(category)[0].toLowerCase())
+                }>
+                <span className='capitalize'>{Object.keys(category)[0]} </span>
+                <ArrowDown2
+                  size={16}
+                  className={`transiton duration-300 ${
+                    dropdown[Object.keys(category)[0]] && 'rotate-180'
+                  }`}
+                />
+              </div>
+              <ul
+                className={`max-h-0 overflow-hidden transition[max-height] duration-300 space-y-5 ${
+                  dropdown[Object.keys(category)[0]]
+                    ? 'max-h-60  py-3'
+                    : undefined
+                }  `}>
+                {Object.values(data[index])[0].map((row, rIndex) => (
+                  <li className='flex items-center' key={rIndex}>
+                    <input
+                      type='checkbox'
+                      className='checkbox'
+                      name={row}
+                      value={row}
+                      checked={is_checked(Object.keys(category)[0], row)}
+                      onChange={(e) =>
+                        populateFilter(
+                          Object.keys(category)[0],
+                          row,
+                          e.target.checked
+                        )
+                      }
+                    />
+                    <label htmlFor={row} className='ml-2'>
+                      {row}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </Drawer>
   );
 }
+
+/**
+ *
+ *
+ *
+ */

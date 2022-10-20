@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
 
-import Navigation from '../components/navigation';
+import Navigation from "../components/navigation";
 
 import CountryTile from '../components/tile';
 import TableSelect from '../../../components/TableSelect';
@@ -10,7 +10,7 @@ import filterIcon from '../../../Assets/filter.svg';
 import calenderIcon from '../../../Assets/calendar.svg';
 import Pagination from '../../../components/Pagination';
 
-import { useCountriesCtx } from '../../../contexts';
+import { useCountriesCtx } from "../../../contexts";
 
 function Countrylist() {
   const { countries } = useCountriesCtx();

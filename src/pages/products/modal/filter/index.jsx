@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Drawer } from '@mantine/core';
 import { GrClose } from 'react-icons/gr';
+import { FaTimes } from 'react-icons/fa';
 import { ArrowDown2 } from 'iconsax-react';
 
 import filterIcon from '../../../../Assets/filter2.svg';
 
-function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
+function Filtermodal({ filterObj, setFilterObj, show, close, product_codes }) {
   const initalState = {
     certified: false,
     unit_type: false,
@@ -17,13 +18,29 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
   const toggle_links = (key) =>
     setDropdown((prev) => ({ ...initalState, [key]: !prev[key] }));
 
-  const filter_unit_types = (e) => {
-    const { name, checked } = e.target;
-    if (checked)
+  const is_checked = (key, value) => {
+    return filterObj[key].includes(value) ? true : false;
+
+    // return true;
+  };
+  /**
+   *
+   * @param {string} key
+   * @param {string} value
+   * @param {boolean} checked
+   * @returns
+   */
+  const populateFilter = (key, value, checked) => {
+    if (!checked) {
       return setFilterObj((prev) => ({
         ...prev,
-        unit_types: [...prev.unit_types, name],
+        [key]: prev[key].filter((el) => el !== value),
       }));
+    }
+    return setFilterObj((prev) => ({
+      ...prev,
+      [key]: [...prev[key], value],
+    }));
   };
 
   return (
@@ -41,14 +58,30 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
           <p>Filter</p>
         </div>
         <button onClick={close}>
-          <GrClose
-            onClick={() => close()}
-            className='text-2xl text-gray-200 '
-          />
+          <GrClose className='text-2xl text-gray-200 ' />
         </button>
       </div>
 
-      <form action='' className='my-6'>
+      {/* Voodooo */}
+      <div className='px-10 pt-3 grid grid-cols-2 md:grid-cols-3 gap-3'>
+        {Object.entries(filterObj).map((el) => {
+          return el[1].map((a, index) => (
+            <span
+              className='bg-gray-50 rounded-xl flex items-center justify-between p-2 text-gray-500 lowercase '
+              key={index}>
+              <small className='max-w-[70%] overflow-hidden text-ellipsis'>
+                {a}
+              </small>
+              <FaTimes
+                className='cursor-pointer font-light p-1 text-xl'
+                onClick={() => populateFilter(el[0], a, false)}
+              />
+            </span>
+          ));
+        })}
+      </div>
+
+      <div className='my-6 cursor-default'>
         <div className='flex flex-col space-y-8'>
           {/* Certified */}
           <div className="className='bg-[#38CB89] w-full border-b-[1px] border-color py-3 text-[#151615] text-[16px] px-12">
@@ -64,26 +97,34 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
               />
             </div>
             <ul
-              className={`max-h-0 overflow-hidden transition[max-height] duration-300 ${
+              className={`max-h-0 overflow-hidden transition[max-height] duration-300 space-y-5 ${
                 dropdown.certified ? 'max-h-36  py-3' : undefined
               }  `}>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='yes'
-                  id='yes'
-                />
-                <label htmlFor='yes' className='ml-2'>
-                  Yes
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input type='checkbox' className='checkbox' name='no' id='no' />
-                <label htmlFor='no' className='ml-2'>
-                  No
-                </label>
-              </li>
+              {['Yes', 'No'].map((el, index) => (
+                <li className='flex items-center' key={index}>
+                  <input
+                    type='checkbox'
+                    className='checkbox'
+                    name={el}
+                    id={el}
+                    value={el}
+                    onChange={(e) =>
+                      populateFilter(
+                        'certified',
+                        el === 'Yes' ? 'True' : 'False',
+                        e.target.checked
+                      )
+                    }
+                    checked={is_checked(
+                      'certified',
+                      el === 'Yes' ? 'True' : 'False'
+                    )}
+                  />
+                  <label htmlFor={el} className='ml-2'>
+                    {el}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -101,61 +142,27 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
               />
             </div>
             <ul
-              className={`max-h-0 overflow-hidden transition[max-height] duration-300 ${
+              className={`max-h-0 overflow-hidden transition[max-height] duration-300 space-y-5 ${
                 dropdown.unit_type ? 'max-h-36  py-3' : undefined
               }  `}>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='bags'
-                  id='bags'
-                  onChange={filter_unit_types}
-                />
-                <label htmlFor='bags' className='ml-2'>
-                  Bags
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='carton'
-                  id='carton'
-                />
-                <label htmlFor='carton' className='ml-2'>
-                  Carton
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='bottle'
-                  id='bottle'
-                />
-                <label htmlFor='bottle' className='ml-2'>
-                  Bottle
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='Kilogram'
-                  id='Kilogram'
-                  onChange={filter_unit_types}
-                />
-                <label htmlFor='Kilogram' className='ml-2'>
-                  Kilogram (KG)
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input type='checkbox' className='checkbox' name='mt' id='mt' />
-                <label htmlFor='mt' className='ml-2'>
-                  Metric Tonne (MT)
-                </label>
-              </li>
+              {['Bags', 'Carton', 'Bottle'].map((el, index) => (
+                <li className='flex items-center' key={index}>
+                  <input
+                    type='checkbox'
+                    className='checkbox'
+                    name={el}
+                    id={el}
+                    value={el}
+                    checked={is_checked('unit_types', el)}
+                    onChange={(e) =>
+                      populateFilter('unit_types', el, e.target.checked)
+                    }
+                  />
+                  <label htmlFor={el} className='ml-2 capitalize'>
+                    {el}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -173,31 +180,26 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
               />
             </div>
             <ul
-              className={`max-h-0 overflow-hidden transition[max-height] duration-300 ${
-                dropdown.code ? 'max-h-36  py-3' : undefined
+              className={`max-h-0 overflow-hidden transition[max-height] duration-300 space-y-5 ${
+                dropdown.code ? 'max-h-56 overflow-y-auto py-3' : undefined
               }  `}>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='afin'
-                  id='afin'
-                />
-                <label htmlFor='afin' className='ml-2'>
-                  AFIN
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='dmaz'
-                  id='dmaz'
-                />
-                <label htmlFor='dmaz' className='ml-2'>
-                  DMAZ
-                </label>
-              </li>
+              {product_codes.map((el, index) => (
+                <li className='flex items-center' key={index}>
+                  <input
+                    type='checkbox'
+                    className='checkbox'
+                    name={el}
+                    id={el}
+                    onChange={(e) =>
+                      populateFilter('codes', el, e.target.checked)
+                    }
+                    checked={is_checked('codes', el)}
+                  />
+                  <label htmlFor={el} className='ml-2'>
+                    {el}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -215,42 +217,26 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
               />
             </div>
             <ul
-              className={`max-h-0 overflow-hidden transition[max-height] duration-300 ${
+              className={`max-h-0 overflow-hidden transition[max-height] duration-300 space-y-5 ${
                 dropdown.type ? 'max-h-36  py-3' : undefined
               }  `}>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='input'
-                  id='input'
-                />
-                <label htmlFor='input' className='ml-2'>
-                  Input
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='commodity'
-                  id='commodity'
-                />
-                <label htmlFor='commodity' className='ml-2'>
-                  Commodity
-                </label>
-              </li>
-              <li className='flex items-center'>
-                <input
-                  type='checkbox'
-                  className='checkbox'
-                  name='fees'
-                  id='fees'
-                />
-                <label htmlFor='fees' className='ml-2'>
-                  Fees
-                </label>
-              </li>
+              {['Input', 'Commodity', 'Fees'].map((el, index) => (
+                <li className='flex items-center' key={index}>
+                  <input
+                    type='checkbox'
+                    className='checkbox'
+                    name={el}
+                    id={el}
+                    value={el}
+                    onChange={(e) =>
+                      populateFilter('types', el, e.target.checked)
+                    }
+                  />
+                  <label htmlFor={el} className='ml-2 capitalize'>
+                    {el}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -258,7 +244,7 @@ function Filtermodal({ setViewFilter, filterObj, setFilterObj, show, close }) {
             <span>Search</span>
           </button>
         </div>
-      </form>
+      </div>
     </Drawer>
   );
 }

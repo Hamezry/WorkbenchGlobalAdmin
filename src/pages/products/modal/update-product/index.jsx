@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import { Tooltip } from '@mantine/core';
+import { Tooltip, Modal } from '@mantine/core';
 import { InfoCircle } from 'iconsax-react';
-import { AiOutlineClose } from 'react-icons/ai';
+import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
-import Button from '../../../../components/Button';
 import axios from '../../../../utils/axios';
-import notification from '../../../../utils/notification';
 import { useProductsCtx } from '../../../../contexts';
+import Button from '../../../../components/Button';
+import notification from '../../../../utils/notification';
+import DropdownSelect from '../../../../components/DropDownSelect';
+import TextInput from '../../../../components/TextInput';
 
-function UpdateProductmodal({ setModal, modalData }) {
+function UpdateProductmodal({ close, modalData, show }) {
   const { refreshContext } = useProductsCtx();
   const [product, setProduct] = useState(modalData);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values) => {
     setLoading(true);
-    const resp = await axios.post(`product/update/${product.pk}`, product);
-
+    const resp = await axios.post(`product/update/${product.pk}`, values);
     if (!resp.data || resp.data.responseCode !== '100') {
       setLoading(false);
       notification({
@@ -28,8 +29,8 @@ function UpdateProductmodal({ setModal, modalData }) {
       return;
     }
 
+    close();
     setLoading(false);
-    setModal(false);
     notification({
       heading: 'Product updated successfully',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
@@ -38,97 +39,80 @@ function UpdateProductmodal({ setModal, modalData }) {
     refreshContext();
   };
 
-  const handleInputChange = (e) => {
-    const { value, name } = e.target;
-
-    setProduct((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const hanldeChecked = (e) => {
+  const handleChecked = (e) => {
     setProduct((prev) => ({ ...prev, certified: e.target.checked }));
   };
 
   return (
-    <div
-      className='w-[100vw] font-muli h-[100vh] bg-[rgba(50,59,75,0.7)] fixed z-50 top-0 left-0 flex justify-center items-center'
-      onClick={() => setModal(false)}>
-      <div
-        className='bg-[#FFFFFF] w-[450px] rounded-3xl overflow-y-scroll'
-        onClick={(e) => e.stopPropagation()}>
-        <div className='flex justify-between  items-center border-b-[1px] py-6 w-full px-8'>
-          <p className='text-[18px]'>Update Product</p>
+    <Modal title='Update Product' onClose={close} opened={show} centered>
+      <div className='px-8 pt-6 pb-10 border-t-[1px] border-color'>
+        <Formik
+          initialValues={product}
+          validationSchema={Yup.object({
+            name: Yup.string().required('Product name is required'),
+            code: Yup.string().required('Product code is required'),
+            product_type: Yup.string().required('Product type is required'),
+            unit_type: Yup.string().required('Product type is required'),
+          })}
+          onSubmit={handleSubmit}>
+          <Form className='flex flex-col space-y-7'>
+            <TextInput
+              label='Product name'
+              id='name'
+              name='name'
+              type='text'
+              placeholder='Insert Name'
+            />
 
-          <div className='titleCloseBtn'>
-            <button
-              onClick={() => {
-                setModal(false);
-              }}>
-              <AiOutlineClose className='text-gray-500 text-xl' />
-            </button>
-          </div>
-        </div>
+            <TextInput
+              label='Code'
+              id='code'
+              name='code'
+              type='text'
+              placeholder='Insert Code'
+            />
+            <DropdownSelect
+              label='Type'
+              data={[
+                {
+                  value: 'Input',
+                  label: 'Input',
+                },
+                {
+                  value: 'Commodity',
+                  label: 'Commodity',
+                },
+                {
+                  value: 'Fees',
+                  label: 'Fees',
+                },
+              ]}
+              id='product_type'
+              name='product_type'
+              type='text'
+              placeholder='Select Type'
+            />
 
-        <form
-          onSubmit={handleSubmit}
-          className='space-y-7 text-[14px] text-[#54565B]'>
-          <div className='flex flex-col space-y-7  p-8'>
-            <div className='space-y-5'>
-              <label>Product Name</label>
-              <input
-                id='name'
-                name='name'
-                type='text'
-                className='w-full border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow py-4'
-                placeholder='Insert Name'
-                value={product.name}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className='space-y-5'>
-              <label>Code</label>
-              <input
-                id='code'
-                name='code'
-                type='text'
-                className='w-full border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow py-4'
-                placeholder='Insert Volume'
-                value={product.code}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className='space-y-5'>
-              <label>Type</label>
-              <select
-                id='product_type'
-                name='product_type'
-                className='w-full border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow py-4'
-                value={product.product_type}
-                onChange={handleInputChange}>
-                <option value=''>Select Type</option>
-                <option value='Input'>Input</option>
-                <option value='Commodity'>Commodity</option>
-                <option value='Fees'>Fees</option>
-              </select>
-            </div>
-
-            <div className='space-y-5'>
-              <label>Unit Type</label>
-              <select
-                id='unit_type'
-                className='w-full border-none bg-[#F1F2F3] text-[#9FA19C] text-[14px] rounded-lg px-5 focus:outline-none focus:border-slate-500 hover:shadow py-4'
-                value={product.unit_type}
-                name='unit_type'
-                onChange={handleInputChange}>
-                <option value='Type' className='bg-[#F1F2F3]'>
-                  Select Unit Type
-                </option>
-                <option value='Bags'>Bags</option>
-                <option value='Carton'>Carton</option>
-                <option value='Bottle'>Bottle</option>
-              </select>
-            </div>
+            <DropdownSelect
+              label='Unit Type'
+              data={[
+                {
+                  value: 'Bags',
+                  label: 'Bags',
+                },
+                {
+                  value: 'Carton',
+                  label: 'Carton',
+                },
+                {
+                  value: 'Bottle',
+                  label: 'Bottle',
+                },
+              ]}
+              name='unit_type'
+              id='unit_type'
+              placeholder='Select Unit Type'
+            />
 
             <div className='flex items-center space-x-3'>
               <input
@@ -136,8 +120,8 @@ function UpdateProductmodal({ setModal, modalData }) {
                 name='certified_product'
                 id='certified_product'
                 checked={product.certified}
-                onChange={hanldeChecked}
-                className='mt-1'
+                onChange={handleChecked}
+                className='checkbox'
               />
               <label htmlFor='certified_product' className='text-sm mt-1'>
                 Certified Product?
@@ -155,10 +139,10 @@ function UpdateProductmodal({ setModal, modalData }) {
             </div>
 
             <Button type='submit' text='Submit' loading={loading} />
-          </div>
-        </form>
+          </Form>
+        </Formik>
       </div>
-    </div>
+    </Modal>
   );
 }
 

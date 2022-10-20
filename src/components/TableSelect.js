@@ -34,16 +34,17 @@ const TableSelect = ({
             showOpts && 'ring-1 ring-afexgreen'
           }`}
           disabled
-          value={value}
           placeholder={placeholder}
+          value={value}
         />
 
         <MdKeyboardArrowDown className='absolute top-4 right-2 text-gray-400 text-lg' />
       </div>
       <ul
-        className={`overflow-auto absolute top-14 rounded-lg z-10 px-2 transition-[max-height] child:p-1 hover:child:bg-afexgreen-lighter child:cursor-pointer child:m-1 bg-gray-50 w-full ring-1 ring-afexgreen rounded-lg${
+        className={`overflow-auto absolute top-[120%] left-0 rounded-lg z-[12] px-2 transition-[max-height] child:p-1 hover:child:bg-afexgreen-lighter child:cursor-pointer  bg-[#F9FAFB] w-full ring-1 ring-afexgreen ${
           showOpts ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
+        }`}
+        onClick={(e) => e.stopPropagation()}>
         {data.map((option, index) => (
           <li
             key={index}

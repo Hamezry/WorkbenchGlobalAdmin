@@ -15,11 +15,11 @@ const DateModule = ({
       className='absolute top-[24%] right-[20%] z-50 drop-shadow-lg '
       onClick={(e) => e.stopPropagation()}>
       <div className='flex justify-between bg-[#F7F8F9] p-4 rounded-2xl z-20'>
-        <ul className='space-y-2 text-gray-500 mr-10 '>
+        <ul className='space-y-2 text-gray-500 mr-10 child:text-[14px] child:whitespace-nowrap'>
           <li
             onClick={() => {
-              setStartDate(new Date(Date.now()));
-              setEndDate(new Date(Date.now()));
+              setStartDate(new Date());
+              setEndDate(new Date());
             }}
             className='p-2 hover:bg-afexgreen-light hover:text-afexgreen rounded-2xl transition hover:font-semibold cursor-pointer'>
             Today
@@ -50,7 +50,7 @@ const DateModule = ({
               );
 
               setStartDate(last_month);
-              setEndDate(today);
+              setEndDate(new Date());
             }}
             className='p-2 hover:bg-afexgreen-light hover:text-afexgreen rounded-2xl transition hover:font-semibold cursor-pointer'>
             Last Month

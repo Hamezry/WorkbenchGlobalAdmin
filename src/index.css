@@ -12,7 +12,9 @@
   src: url('./Assets/fonts/Muli-Regular.ttf') format('truetype');
 }
 
-body {
+*,
+*::before,
+*::after {
   font-family: 'Muli' !important;
 }
 
@@ -21,8 +23,4 @@ body {
   body {
     font-size: 12px !important;
   }
-}
-::placeholder,
-input {
-  font-family: 'Muli' !important;
 }

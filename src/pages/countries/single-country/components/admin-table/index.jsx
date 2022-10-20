@@ -89,7 +89,10 @@ const AdminTable = ({ list, id }) => {
           });
         }
       })
-      .catch((e) => console.log("error getting modal", pk, e));
+      .catch((e) => {
+        console.log("error getting modal", pk, e);
+        setOpened(false);
+      });
   };
   useEffect(() => {
     const fetchLgas = async () => {
@@ -120,7 +123,7 @@ const AdminTable = ({ list, id }) => {
   }, []);
 
   return (
-    <div className='p-3 rounded-3xl w-full bg-[#FFFF] h-[400px] overflow-y-auto'>
+    <div className='p-3 rounded-3xl w-full bg-[#FFFF] '>
       <div className='flex justify-between p-3 border-b '>
         <p>Administrative Level</p>
       </div>
@@ -145,73 +148,73 @@ const AdminTable = ({ list, id }) => {
         setMapLoaded={setMapLoaded}
         // showSuccessBanner={showSuccessBanner}
       />
+      <div className='overflow-y-auto  h-[330px]'>
+        <div className='px-5 overflow-y-auto mt-4 '>
+          <table className='w-full  '>
+            <thead className='sticky top-00'>
+              <tr className='bg-[#F9F9F9] text-[#54565B] text-[14px] text-left'>
+                <th className='py-3 px-6 '>S/N</th>
+                <th className='py-3 px-6 '>States</th>
+                <th className='py-3 px-6 '>LGAs</th>
+                <th className='py-3 px-6 '>Wards</th>
+                <th className='py-3 px-6 '>Action</th>
+              </tr>
+            </thead>
 
-      {/*ADMIN TABLE LIST */}
-      <div className='px-5 overflow-y-auto mt-4  overflow-x-auto'>
-        <table className='min-w-max w-full table-auto'>
-          <thead>
-            <tr className='bg-[#F9F9F9] text-[#54565B] text-[14px] text-left'>
-              <th className='py-3 px-6 '>S/N</th>
-              <th className='py-3 px-6 '>States</th>
-              <th className='py-3 px-6 '>LGAs</th>
-              <th className='py-3 px-6 '>Wards</th>
-              <th className='py-3 px-6 '>Action</th>
-            </tr>
-          </thead>
+            <tbody className='text-[#54565B] text-[12px] font-light'>
+              {list.map((item, index) => {
+                return (
+                  <tr
+                    className=' text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee]'
+                    key={index}>
+                    <td className='py-6 px-6'>
+                      <span className='font-medium'>{index + 1}</span>
+                    </td>
 
-          <tbody className='text-[#54565B] text-[12px] font-light'>
-            {list.map((item, index) => {
-              return (
-                <tr
-                  className=' text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee]'
-                  key={index}>
-                  <td className='py-6 px-6'>
-                    <span className='font-medium'>{index + 1}</span>
-                  </td>
+                    <td className=' flex mt-2 gap-2 py-6 px-6 w-[190px]'>
+                      <span className='font-medium '>{item.name}</span>
+                    </td>
 
-                  <td className=' flex mt-2 gap-2 py-6 px-6 w-[190px]'>
-                    <span className='font-medium '>{item.name}</span>
-                  </td>
+                    <td className='py-6 px-6'>
+                      <span className='font-medium '>{item.no_of_lgas}</span>
+                    </td>
 
-                  <td className='py-6 px-6'>
-                    <span className='font-medium '>{item.no_of_lgas}</span>
-                  </td>
+                    <td className='py-6 px-6'>
+                      <span className='font-medium '>{item.no_of_wards}</span>
+                    </td>
 
-                  <td className='py-6 px-6'>
-                    <span className='font-medium '>{item.no_of_wards}</span>
-                  </td>
-
-                  <td className='py-6 px-6  '>
-                    <button
-                      className='font-medium text-cyan-400 '
-                      onClick={() => {
-                        setOpened(true);
-                        setStateId(item.pk);
-                        settingModal({
-                          pk: item.pk,
-                          center: item.coordinates
-                            ? item.coordinates[0]
-                            : {
-                                lat: "",
-                                lng: "",
-                              },
-                        });
-                        const newCordinates = item.coordinates
-                          ? item.coordinates.map((item) => ({
-                              lat: parseFloat(item.lat),
-                              lng: parseFloat(item.long),
-                            }))
-                          : item.coordinates;
-                        setCoordinates(newCordinates);
-                      }}>
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    <td className='py-6 px-6  '>
+                      <button
+                        className='font-medium text-cyan-400 '
+                        onClick={() => {
+                          setOpened(true);
+                          setStateId(item.pk);
+                          settingModal({
+                            pk: item.pk,
+                            center: item.coordinates
+                              ? item.coordinates[0]
+                              : {
+                                  lat: "",
+                                  lng: "",
+                                },
+                          });
+                          const newCordinates = item.coordinates
+                            ? item.coordinates.map((item) => ({
+                                lat: parseFloat(item.lat),
+                                lng: parseFloat(item.long),
+                              }))
+                            : item.coordinates;
+                          setCoordinates(newCordinates);
+                        }}>
+                        View Details
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

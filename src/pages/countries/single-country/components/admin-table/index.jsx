@@ -9,8 +9,8 @@ const AdminTable = ({ list, id }) => {
   const defaultModalData = {
     title: null,
     position: {
-      lat: 8.6753,
-      lng: 9.082,
+      lat: "",
+      lng: "",
     },
     state_id: 0,
     data: [],
@@ -19,7 +19,6 @@ const AdminTable = ({ list, id }) => {
     name: "",
     state: 0,
     lgas: [],
-    code: "918",
   };
   const [lgas, setLgas] = useState({});
   const [lgaOptions, setLgaOptions] = useState([]);
@@ -33,7 +32,7 @@ const AdminTable = ({ list, id }) => {
 
   const settingModal = async ({
     pk = state_id,
-    center = coordinates[0],
+    center = coordinates ? coordinates[0] : null,
     refresh = false,
   }) => {
     await request
@@ -41,9 +40,15 @@ const AdminTable = ({ list, id }) => {
       .then((res) => {
         const temp = [];
         res.data.data.forEach((item) => {
-          const tempExtras = [];
+          const latestDate = new Date(
+            Math.max(...item.lgas.map((newItem) => Date.parse(newItem.created)))
+          );
+          const tempExtras = {
+            data: [],
+            latestDate: latestDate.toDateString(),
+          };
           item.lgas.forEach((innerItem) => {
-            tempExtras.push({
+            tempExtras.data.push({
               date: "Sept 1, 2022",
               lga: innerItem.name,
               wards: innerItem.no_of_wards,
@@ -56,6 +61,8 @@ const AdminTable = ({ list, id }) => {
             wards: item.no_of_wards,
             action: "update",
             extras: tempExtras,
+            code: item.code,
+            pk: item.pk,
           });
         });
         setAddlocation({ ...addLocation, state: pk });
@@ -73,10 +80,10 @@ const AdminTable = ({ list, id }) => {
               lat: (+center.lat).toFixed(2),
               lng: (+center.long).toFixed(2),
             },
+
             state_id: pk,
             data: temp,
           });
-
           setTimeout(() => {
             setMapLoaded(true);
           });
@@ -182,12 +189,19 @@ const AdminTable = ({ list, id }) => {
                         setStateId(item.pk);
                         settingModal({
                           pk: item.pk,
-                          center: item.coordinates[0],
+                          center: item.coordinates
+                            ? item.coordinates[0]
+                            : {
+                                lat: "",
+                                lng: "",
+                              },
                         });
-                        const newCordinates = item.coordinates.map((item) => ({
-                          lat: parseFloat(item.lat),
-                          lng: parseFloat(item.long),
-                        }));
+                        const newCordinates = item.coordinates
+                          ? item.coordinates.map((item) => ({
+                              lat: parseFloat(item.lat),
+                              lng: parseFloat(item.long),
+                            }))
+                          : item.coordinates;
                         setCoordinates(newCordinates);
                       }}>
                       View Details

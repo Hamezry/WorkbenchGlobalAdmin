@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { format } from "date-fns";
@@ -23,14 +23,28 @@ import filterIcon from "../../Assets/filter.svg";
 import "./tenant.css";
 
 function Organisationlist() {
+  const navigate = useNavigate();
   const { tenants } = useTenantsCtx();
   const [viewActivate, setViewActivate] = useState(false);
   const [viewDeactivate, setViewDeactivate] = useState(false);
   const [modalData, setModalData] = useState({});
-  const navigate = useNavigate();
-
+  const [countriesOptions, setCountriesOptions] = useState([]);
   const [isDate, setIsDate] = useState(false);
-
+  const csdBtn = useRef(null);
+  const searchBtn = useRef(null);
+  //PAGINATION FUNCTION
+  const [posts, setPosts] = useState([]);
+  const [opened, setOpened] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(7);
+  const [currentPosts, setCurrentPosts] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [itemsOffset, setItemsOffset] = useState(0);
+  const [activeFilter, setActiveFilter] = useState([]);
+  const [filter, setFilter] = useState({
+    country: [],
+    CSD: "",
+  });
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
@@ -40,24 +54,6 @@ function Organisationlist() {
     const date = new Date(datex);
     return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
-
-  //PAGINATION FUNCTION
-  const [posts, setPosts] = useState([]);
-  const [opened, setOpened] = useState(false);
-
-  const populate = () => {
-    setPosts(tenants);
-  };
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(7);
-  const [currentPosts, setCurrentPosts] = useState([]);
-  const [selected, setSelected] = useState([]);
-  const [itemsOffset, setItemsOffset] = useState(0);
-  const [activeFilter, setActiveFilter] = useState(0);
-  const [filter, setFilter] = useState({
-    country: [],
-    CSD: "",
-  });
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -75,24 +71,69 @@ function Organisationlist() {
     const newOffset = (e.selected * postsPerPage) % posts.length;
     setItemsOffset(newOffset);
   };
+  useEffect(() => {
+    const options = tenants.map((item) => item.country.name);
+    let uniqueOptions = [...new Set(options)];
+    setCountriesOptions(uniqueOptions);
+  }, [tenants]);
 
-  useEffect(
-    () => populate(),
+  useEffect(() => {
+    filter.CSD.length === 0 && filter.country.length === 0 && setPosts(tenants);
     //eslint-disable-next-line
-    [tenants]
-  );
+  }, []);
+
   useEffect(() => {
     // console.log(selected);
   }, [selected]);
+
+  const filterPosts = () => {
+    let filtered = tenants;
+    let byCountry = [];
+    let byCSD = [];
+
+    if (filter.country.length > 0) {
+      byCountry = tenants.filter((item) =>
+        filter.country.includes(item.country.name)
+      );
+      filtered = byCountry;
+    }
+    if (filter.CSD.length !== 0) {
+      if (filter.CSD === "yes") {
+        byCSD = tenants.filter((item) => item.csd_access === "True");
+      } else if (filter.CSD === "no") {
+        byCSD = tenants.filter((item) => item.csd_access === "False");
+      }
+      filtered = byCSD;
+    }
+    if (byCSD.length > 0 && byCountry.length > 0) {
+      filtered = byCSD.filter((item) => byCountry.includes(item));
+    }
+    setPosts(filtered);
+  };
+
   useEffect(() => {
     const endOffset = itemsOffset + postsPerPage;
     setCurrentPosts(posts.slice(itemsOffset, endOffset));
     setCurrentPage(Math.ceil(posts.length / postsPerPage));
   }, [itemsOffset, currentPage, posts, postsPerPage]);
-  useEffect(() => {
-    console.log(filter, activeFilter);
-  }, [filter, activeFilter]);
 
+  const CSDFilter = (value) => {
+    if (filter.CSD === value) {
+      setFilter({
+        ...filter,
+        CSD: "",
+      });
+    } else {
+      setFilter({
+        ...filter,
+        CSD: value,
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log(activeFilter, document.activeElement);
+  }, [activeFilter]);
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
       {/*TENANT STATISTICS*/}
@@ -114,10 +155,7 @@ function Organisationlist() {
 
               <Drawer
                 opened={opened}
-                onClose={() => {
-                  setOpened(false);
-                  setActiveFilter(0);
-                }}
+                onClose={() => setOpened(false)}
                 title={
                   <div className='flex'>
                     <img src={filterIcon} alt='filter icon' />
@@ -128,22 +166,28 @@ function Organisationlist() {
                 size='lg'
                 position='right'>
                 <form
-                  className='pt-6'
+                  className='pt-6 drawer-form'
                   onSubmit={(e) => {
                     e.preventDefault();
+                    filterPosts();
+                    setOpened(false);
                   }}>
                   <div className=' py-6 border-y border-y-gray-300'>
                     <button
-                      className={`flex justify-between w-full px-4`}
-                      onClick={() => {
-                        console.log("clicked");
-                        activeFilter === 1
-                          ? setActiveFilter(-1)
-                          : setActiveFilter(1);
+                      className={`flex justify-between w-full px-6`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        activeFilter.includes("country")
+                          ? setActiveFilter([
+                              ...activeFilter.filter(
+                                (item) => item !== "country"
+                              ),
+                            ])
+                          : setActiveFilter([...activeFilter, "country"]);
                       }}>
                       <span
                         className={` transition-all duration-300 ${
-                          activeFilter === 1
+                          activeFilter.includes("country")
                             ? "text-afexgreen"
                             : "text-textgrey"
                         }`}>
@@ -151,69 +195,94 @@ function Organisationlist() {
                       </span>
                       <ArrowDown2
                         size='24'
-                        color={activeFilter === 1 ? "#38CB89" : "#54565B"}
+                        color={
+                          activeFilter.includes("country")
+                            ? "#38CB89"
+                            : "#54565B"
+                        }
                         className={` transition-all duration-300 ${
-                          activeFilter === 1 ? "rotate-180" : "rotate-0"
+                          activeFilter.includes("country")
+                            ? "rotate-180"
+                            : "rotate-0"
                         }`}
                       />
                     </button>
+                    {/* expand */}
+                    <ul
+                      className={`transition-all duration-200 child:py-1 child:px-6 child:relative overflow-hidden ${
+                        activeFilter.includes("country")
+                          ? "max-h-36 opacity-100 z-10 py-3 "
+                          : "max-h-0 opacity-0 -z-100 p-0"
+                      }`}>
+                      {countriesOptions.map((item, key) => {
+                        return (
+                          <li key={key}>
+                            <input
+                              onFocus={() =>
+                                !activeFilter.includes("country") &&
+                                csdBtn.current.focus()
+                              }
+                              type='checkbox'
+                              name='country'
+                              id={item}
+                              value={item}
+                              className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                let newCountries = filter.country;
+                                if (filter.country.includes(value)) {
+                                  newCountries = filter.country.filter(
+                                    (item) => item !== value
+                                  );
+                                } else {
+                                  newCountries = [...newCountries, value];
+                                }
+                                setFilter({
+                                  ...filter,
+                                  country: newCountries,
+                                });
+                              }}
+                              onClick={(e) => e.preventDefault()}
+                            />
 
-                    <ul>
-                      <li className='py-1 px-4 relative'>
-                        <span
-                          className={` inline-flex items-center justify-center w-5 h-5  border rounded-md
+                            <span
+                              className={` inline-flex items-center justify-center w-5 h-5  border rounded-md  
                             ${
-                              filter.country.includes("nigeria")
+                              filter.country.includes(item)
                                 ? "bg-afexgreen border-afexgreen"
-                                : "bg-bggrey border-textgrey-light"
+                                : "bg-bggrey"
                             }`}>
-                          <img className={``} alt='check mark' src={check} />
-                        </span>
-                        <input
-                          type='checkbox'
-                          name='country'
-                          id='yes'
-                          value='nigeria'
-                          className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
-                          onChange={(e) => {
-                            console.log(e.target.checked);
-                            const value = e.target.value;
-                            let newCountries = filter.country;
-
-                            console.log(newCountries, value);
-
-                            if (filter.country.includes(value)) {
-                              newCountries = filter.country.filter(
-                                (item) => item !== value
-                              );
-                            } else {
-                              newCountries = [...newCountries, value];
-                              console.log(newCountries);
-                            }
-                            setFilter({
-                              ...filter,
-                              country: newCountries,
-                            });
-                          }}
-                        />
-                        <label htmlFor='yes' className='inline-block pl-2'>
-                          Nigeria
-                        </label>
-                      </li>
+                              <img
+                                className={``}
+                                alt='check mark'
+                                src={check}
+                              />
+                            </span>
+                            <label
+                              htmlFor='yes'
+                              className='inline-block pl-2 capitalize'>
+                              {item}
+                            </label>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
-                  <div className=' py-6 border-y border-y-gray-300'>
+                  <div className=' py-6 border-b border-b-gray-300'>
                     <button
-                      className={`flex justify-between w-full px-4`}
-                      onClick={() => {
-                        console.log("clicked");
-                        activeFilter === 1
-                          ? setActiveFilter(-1)
-                          : setActiveFilter(1);
+                      ref={csdBtn}
+                      className={`flex justify-between w-full px-6`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        activeFilter.includes("CSD")
+                          ? setActiveFilter([
+                              ...activeFilter.filter((item) => item !== "CSD"),
+                            ])
+                          : setActiveFilter([...activeFilter, "CSD"]);
                       }}>
                       <span
                         className={` transition-all duration-300 ${
-                          activeFilter === 1
+                          activeFilter.includes("CSD")
                             ? "text-afexgreen"
                             : "text-textgrey"
                         }`}>
@@ -221,62 +290,89 @@ function Organisationlist() {
                       </span>
                       <ArrowDown2
                         size='24'
-                        color={activeFilter === 1 ? "#38CB89" : "#54565B"}
+                        color={
+                          activeFilter.includes("CSD") ? "#38CB89" : "#54565B"
+                        }
                         className={` transition-all duration-300 ${
-                          activeFilter === 1 ? "rotate-180" : "rotate-0"
+                          activeFilter.includes("CSD")
+                            ? "rotate-180"
+                            : "rotate-0"
                         }`}
                       />
                     </button>
-
-                    <ul>
-                      <li className='py-1 px-4 relative'>
+                    {/* expand csd */}
+                    <ul
+                      className={`transition-all duration-200 child:py-1 child:px-6 child:relative  overflow-hidden ${
+                        activeFilter.includes("CSD")
+                          ? "max-h-36 opacity-100 z-10 py-3 "
+                          : "max-h-0 opacity-0 -z-100 p-0"
+                      }`}>
+                      <li>
+                        <input
+                          onFocus={() =>
+                            !activeFilter.includes("CSD") &&
+                            searchBtn.current.focus()
+                          }
+                          type='checkbox'
+                          name='CSD'
+                          id='yes'
+                          value='yes'
+                          className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
+                          onChange={(e) => {
+                            CSDFilter(e.target.value);
+                          }}
+                          onClick={(e) => e.stopPropagation()}
+                        />
                         <span
-                          className={` inline-flex items-center justify-center w-5 h-5  border rounded-md
+                          className={` inline-flex items-center justify-center w-5 h-5  border rounded-md 
                             ${
-                              filter.country.includes("nigeria")
+                              filter.CSD === "yes"
                                 ? "bg-afexgreen border-afexgreen"
-                                : "bg-bggrey border-textgrey-light"
+                                : "bg-bggrey"
                             }`}>
                           <img className={``} alt='check mark' src={check} />
                         </span>
+                        <label htmlFor='yes' className='inline-block pl-2'>
+                          Yes
+                        </label>
+                      </li>
+                      <li>
                         <input
+                          onFocus={() =>
+                            !activeFilter.includes("CSD") &&
+                            searchBtn.current.focus()
+                          }
                           type='checkbox'
-                          name='country'
-                          id='yes'
-                          value='nigeria'
+                          name='CSD'
+                          id='no'
+                          value='no'
                           className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
                           onChange={(e) => {
-                            console.log(e.target.checked);
-                            const value = e.target.value;
-                            let newCountries = filter.country;
-
-                            console.log(newCountries, value);
-
-                            if (filter.country.includes(value)) {
-                              newCountries = filter.country.filter(
-                                (item) => item !== value
-                              );
-                            } else {
-                              newCountries = [...newCountries, value];
-                              console.log(newCountries);
-                            }
-                            setFilter({
-                              ...filter,
-                              country: newCountries,
-                            });
+                            CSDFilter(e.target.value);
                           }}
-                        />
-                        <label htmlFor='yes' className='inline-block pl-2'>
-                          Nigeria
+                          onClick={(e) => e.stopPropagation()}
+                        />{" "}
+                        <span
+                          className={` inline-flex items-center justify-center w-5 h-5  border rounded-md  
+                            ${
+                              filter.CSD === "no"
+                                ? "bg-afexgreen border-afexgreen"
+                                : "bg-bggrey"
+                            }`}>
+                          <img className={``} alt='check mark' src={check} />
+                        </span>
+                        <label htmlFor='no' className='inline-block pl-2'>
+                          No
                         </label>
                       </li>
                     </ul>
                   </div>
 
-                  <div className='text-center'>
+                  <div className='text-center pt-8'>
                     <button
+                      ref={searchBtn}
                       type='submit'
-                      className='bg-afexgreen px-5 py-5 text-center rounded-2xl text-white mb-3 mt-6'>
+                      className='bg-afexgreen px-5 py-4 text-center rounded-2xl text-white mb-3 mt-6'>
                       Search
                     </button>
                   </div>
@@ -354,7 +450,10 @@ function Organisationlist() {
                         type='checkbox'
                         className='checkbox'
                         id='remember'
-                        checked={selected.length === currentPosts.length}
+                        checked={
+                          selected.length === currentPosts.length &&
+                          currentPosts.length > 0
+                        }
                         // className='w-4 h-4 border-slate-200 checked:bg-green-400'
                         onChange={(e) => {
                           const currentlySelected = currentPosts.map(

@@ -15,8 +15,12 @@ function TenantDropdown() {
         <button
           className='flex gap-4 border rounded-lg border-afexgreen text-afexgreen  items-center text-[14px] hover:bg-afexgreen hover:text-[#ffff]  bg-[#ffff] h-[40px] w-full p-3'
           onClick={() => setOpened((o) => !o)}>
-          {" "}
-          Select Action <MdExpandMore />{" "}
+          Select Action{" "}
+          <MdExpandMore
+            className={`transition-all duration-200 ${
+              opened ? "rotate-180" : "rotate-0"
+            }`}
+          />
         </button>
       </Popover.Target>
 

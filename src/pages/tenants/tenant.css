@@ -1,5 +1,5 @@
 .tenant-popover .mantine-Popover-dropdown {
-  transform: translateX(10%);
+  /* transform: translateX(10%); */
 }
 .mantine-Drawer-drawer {
   border-top-left-radius: 70px;
@@ -7,4 +7,7 @@
 }
 .mantine-Drawer-header {
   padding: 0 24px;
+}
+.drawer-form li input:focus-visible + span {
+  @apply border-blue-500;
 }

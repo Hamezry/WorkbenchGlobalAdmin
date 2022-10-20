@@ -84,7 +84,7 @@ export function SideFilter({ filterObj, setFilterObj, show, close, data }) {
       size='lg'
       className='rounded-tl-[84px] p-0'
       withCloseButton={false}>
-      <div className='flex justify-between items-center border-b-[1px] border-color p-10 w-full'>
+      <div className='flex justify-between items-center border-b-[1px] border-color px-10 pb-10 w-full'>
         <div className='flex gap-4 text-[20px]'>
           <img src={filterIcon} alt='funnel' />
           <p>Filter</p>

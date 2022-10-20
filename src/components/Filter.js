@@ -144,6 +144,7 @@ export function SideFilter({ filterObj, setFilterObj, show, close, data }) {
                     <input
                       type='checkbox'
                       className='checkbox'
+                      id={row}
                       name={row}
                       value={row}
                       checked={is_checked(Object.keys(category)[0], row)}

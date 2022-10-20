@@ -40,7 +40,7 @@ const TenantsTile = () => {
                   {formatter(cardData.available_tenants.total)}
                 </span>
               </div>
-              <span className='bg-[#FF5630] rounded-full p-3 flex items-center justify-center'>
+              <span className='bg-[#FF5630] rounded-full p-4 flex items-center justify-center'>
                 <span className='bg-white rounded-sm p-1'>
                   <HiChartBar className='text-[#FF5630] text-lg' />
                 </span>
@@ -75,7 +75,7 @@ const TenantsTile = () => {
                   {formatter(cardData.active_tenants.total_active)}
                 </span>
               </div>
-              <span className='bg-[#FA5A7D] rounded-full p-3 flex items-center justify-center'>
+              <span className='bg-[#FA5A7D] rounded-full p-4 flex items-center justify-center'>
                 <span className='bg-white rounded-sm p-1'>
                   <HiChartBar className='text-[#FA5A7D] text-lg' />
                 </span>
@@ -109,7 +109,7 @@ const TenantsTile = () => {
                   {formatter(cardData.csd_access.total)}
                 </span>
               </div>
-              <span className='bg-[#FA5A7D] rounded-full p-3 flex items-center justify-center'>
+              <span className='bg-[#FA5A7D] rounded-full p-4 flex items-center justify-center'>
                 <span className='bg-white rounded-sm p-1'>
                   <HiChartBar className='text-[#FA5A7D] text-lg' />
                 </span>

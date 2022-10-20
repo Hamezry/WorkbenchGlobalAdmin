@@ -8,7 +8,7 @@ import GlobalProductTile from './components/tile';
 import CreateProductModal from './modal/create-product';
 import Filtermodal from './modal/filter';
 
-import { useProductsCtx } from '../../contexts';
+import { useProductsCtx } from "../../contexts";
 
 import Pagination from '../../components/Pagination';
 import TableSelect from '../../components/TableSelect';
@@ -17,6 +17,7 @@ import notification from '../../utils/notification';
 
 function Productlist({ openModal }) {
   const { products } = useProductsCtx();
+
 
   const [posts, setPosts] = useState([]);
   const [modal, setModal] = useState(false);
@@ -44,10 +45,10 @@ function Productlist({ openModal }) {
 
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
-    return new Date(datex).toLocaleDateString('en-UK', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
+    return new Date(datex).toLocaleDateString("en-UK", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
     });
   };
 
@@ -126,13 +127,13 @@ function Productlist({ openModal }) {
             <div className='flex items-start gap-4 align-middle'>
               <div className=' flex flex-1 h-full text-left self-start'>
                 <TableSelect
-                  defaultValue={'7 entries'}
+                  defaultValue={"7 entries"}
                   updateValue={setPostsPerPage}
                   data={[
-                    { value: 7, label: '7 entries' },
-                    { value: 20, label: '20 entries' },
-                    { value: 100, label: '100 entries' },
-                    { value: 500, label: '500 entries' },
+                    { value: 7, label: "7 entries" },
+                    { value: 20, label: "20 entries" },
+                    { value: 100, label: "100 entries" },
+                    { value: 500, label: "500 entries" },
                   ]}
                   className='text-sm'
                 />
@@ -253,7 +254,6 @@ function Productlist({ openModal }) {
                             item.updated
                           )} `}</span>
                         </td>
-
                         <td className='relative'>
                           <Dropdown
                             item={item}

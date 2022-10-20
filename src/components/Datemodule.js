@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { Calendar } from '@mantine/dates';
+import { Calendar } from "@mantine/dates";
 
 const DateModule = ({
   startDate,
@@ -12,7 +12,7 @@ const DateModule = ({
 }) => {
   return (
     <div
-      className='absolute top-[24%] right-[20%] z-50 drop-shadow-lg '
+      className='absolute top-[100%] right-[20%] z-50 drop-shadow-lg '
       onClick={(e) => e.stopPropagation()}>
       <div className='flex justify-between bg-[#F7F8F9] p-4 rounded-2xl z-20'>
         <ul className='space-y-2 text-gray-500 mr-10 child:text-[14px] child:whitespace-nowrap'>
@@ -46,7 +46,7 @@ const DateModule = ({
               const last_month = new Date(
                 today.getFullYear(),
                 today.getMonth() - 1,
-                1
+                today.getDate()
               );
 
               setStartDate(last_month);
@@ -60,7 +60,7 @@ const DateModule = ({
         <div className='flex gap-5'>
           <div>
             <p className='text-center mb-4 text-gray-400'>Start</p>
-            <div className='bg-white rounded-2xl p-4 py-6 '>
+            <div className='bg-white rounded-2xl p-4 py-6'>
               <Calendar value={startDate} onChange={setStartDate} />
               <div className='flex justify-between mt-3'>
                 <button
@@ -83,7 +83,7 @@ const DateModule = ({
           </div>
           <div>
             <p className='text-center mb-4 text-gray-400'>End</p>
-            <div className='bg-white rounded-2xl p-4 py-6 '>
+            <div className='bg-white rounded-2xl p-4 py-6'>
               <Calendar value={endDate} onChange={setEndDate} />
               <div className='flex justify-between mt-3'>
                 <button

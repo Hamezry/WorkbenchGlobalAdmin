@@ -10,9 +10,7 @@ import cancel from "../../../../../../../Assets/cancel.svg";
 import check from "../../../../../../../Assets/white-check.svg";
 
 import "./map-modal.css";
-// import { showNotification } from "@mantine/notifications";
 
-// import successIcon from "../../../../../../../Assets/successBadge.svg";
 const MapModal = ({
   id,
   defaultModalData,
@@ -32,13 +30,20 @@ const MapModal = ({
   mapLoaded,
   setMapLoaded,
 }) => {
+  const defaultUpdateLocation = {
+    name: "",
+    state: 0,
+    lgas: [],
+    code: 0,
+  };
+  const [updateLocation, setUpdatelocation] = useState(defaultUpdateLocation);
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
   const [popover, setPopover] = useState();
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [locationpopoverOpened, setLocationPopoverOpened] = useState(false);
   const [locationpopoverdropdownOpened, setLocationPopoverDropdownOpened] =
     useState(false);
-
+  const [submitted, setSubmitted] = useState(false);
   const { title, position, data, state_id } = modalData;
 
   const { isLoaded } = useJsApiLoader({
@@ -51,20 +56,11 @@ const MapModal = ({
     else return false;
   };
   const addingLocation = async () => {
-    const { code, lgas, state, name } = addLocation;
-    const addLocationFormData = new FormData();
-    addLocationFormData.append("name", name);
-    addLocationFormData.append("state", state);
-    addLocationFormData.append("lgas", lgas);
-    addLocationFormData.append("code", code);
-    console.log(...addLocationFormData);
-
     const response = await request({
       method: "post",
       url: `add/location/${id}`,
-      data: addLocationFormData,
+      data: addLocation,
     });
-    console.log(response.data);
     if (response.data.responseCode === "100") {
       settingModal({ refresh: true });
       customNotification({
@@ -73,7 +69,27 @@ const MapModal = ({
         id: "success",
       });
     } else {
-      console.log("here");
+      customNotification({
+        heading: "Error!",
+        text: "Add Location unsuccessful.",
+        id: "error",
+      });
+    }
+  };
+  const updatingLocation = async (pk) => {
+    const response = await request({
+      method: "put",
+      url: `update/location/${id}/${pk}`,
+      data: updateLocation,
+    });
+    if (response.data.responseCode === "100") {
+      settingModal({ refresh: true });
+      customNotification({
+        heading: "Success!",
+        text: "Location added successfully.",
+        id: "success",
+      });
+    } else {
       customNotification({
         heading: "Error!",
         text: "Add Location unsuccessful.",
@@ -85,12 +101,15 @@ const MapModal = ({
   useEffect(() => {
     popoverOpened || (locationpopoverOpened && setCurrentlyDisplayed(null));
     !locationpopoverOpened && setLocationPopoverDropdownOpened(false);
-    !popoverOpened && setAddlocation(defaultLocation);
+    !popoverOpened &&
+      setAddlocation(defaultLocation) &&
+      setUpdatelocation(defaultUpdateLocation);
     // eslint-disable-next-line
   }, [popoverOpened, locationpopoverOpened]);
   useEffect(() => {
     if (!opened) {
       setAddlocation(defaultLocation);
+      setUpdatelocation(defaultUpdateLocation);
       setCurrentlyDisplayed(null);
       setLocationPopoverOpened(false);
       setLocationPopoverDropdownOpened(false);
@@ -102,7 +121,9 @@ const MapModal = ({
     }
     // eslint-disable-next-line
   }, [opened]);
-
+  useEffect(() => {
+    setSubmitted(false);
+  }, [locationpopoverOpened, popoverOpened]);
   return (
     <>
       <Modal
@@ -113,86 +134,95 @@ const MapModal = ({
         <div className=' border-t border-t-gray-200 mt-6 pt-6 flex w-full h-[75vh] px-6 text-textgrey'>
           {title ? (
             <>
-              <div className='w-[45%] maps relative rounded-md overflow-hidden'>
-                {isLoaded ? (
-                  <>
-                    <GoogleMap
-                      mapContainerStyle={{
-                        width: "100%",
-                        height: "100%",
-                        // fillColor: "#000",
-                        fillOpacity: 0.8,
-                      }}
-                      center={{
-                        lat: parseFloat(
-                          coordinates[coordinates.length - 1].lat
-                        ),
-                        lng: parseFloat(
-                          coordinates[coordinates.length - 1].lng
-                        ),
-                      }}
-                      zoom={10}
-                      onLoad={(map) => {
-                        map.setZoom(11);
-                      }}
-                      onUnmount={(map) => {}}
-                      options={{
-                        streetViewControl: false,
-                        mapTypeControl: false,
-                        fullscreenControl: false,
-                      }}>
-                      {mapLoaded && (
-                        <Polygon
-                          path={coordinates}
-                          key={1}
-                          options={{
-                            strokeColor: "#d24e01",
-                            strokeOpacity: 0.8,
-                            strokeWeight: 1,
-                            fillColor: "00ffffff",
-                            fillOpacity: 0,
-                            clickable: false,
-                            draggable: false,
-                            editable: false,
-                            geodesic: false,
-                            zIndex: 1,
-                            // filter: "grayscale(0%)",
-                          }}
+              <div className='w-[45%] maps relative rounded-[1.75rem] overflow-hidden'>
+                {coordinates ? (
+                  isLoaded ? (
+                    <>
+                      <GoogleMap
+                        mapContainerStyle={{
+                          width: "100%",
+                          height: "100%",
+                          // fillColor: "#000",
+                          fillOpacity: 0.8,
+                        }}
+                        center={{
+                          lat: parseFloat(
+                            coordinates[coordinates.length - 1].lat
+                          ),
+                          lng: parseFloat(
+                            coordinates[coordinates.length - 1].lng
+                          ),
+                        }}
+                        onLoad={(map) => {
+                          map.setZoom(10.5);
+                        }}
+                        onUnmount={(map) => {}}
+                        options={{
+                          streetViewControl: false,
+                          mapTypeControl: false,
+                          fullscreenControl: false,
+                        }}>
+                        {mapLoaded && (
+                          <Polygon
+                            path={coordinates}
+                            key={1}
+                            options={{
+                              strokeColor: "#d24e01",
+                              strokeOpacity: 0.8,
+                              strokeWeight: 1,
+                              fillColor: "00ffffff",
+                              fillOpacity: 0,
+                              clickable: false,
+                              draggable: false,
+                              editable: false,
+                              geodesic: false,
+                              zIndex: 1,
+                              // filter: "grayscale(0%)",
+                            }}
+                          />
+                        )}
+                        <></>
+                      </GoogleMap>
+                      <div className='z-20 bg-white absolute top-4 left-4 rounded-3xl py-6 px-10 flex'>
+                        <LocationTick
+                          size='24'
+                          color='#38cb89'
+                          variant='Bulk'
                         />
-                      )}
-                      <></>
-                    </GoogleMap>
-                    <div className='z-20 bg-white absolute top-4 left-4 rounded-3xl py-6 px-10 flex'>
-                      <LocationTick size='24' color='#38cb89' variant='Bulk' />
-                      <div className='pl-2'>
-                        <p className=''> Boundary Coordinates </p>
+                        <div className='pl-2'>
+                          <p className=''> Boundary Coordinates </p>
 
-                        <div className='flex pt-6'>
-                          <div className=' pr-14 border-r border-r-gray-200'>
-                            <p>
-                              {position.lng}&nbsp;&#xb0;
-                              {position.lng < 0 ? "S" : "N"}
-                            </p>
-                            <p className='text-xs text-afexgreen pt-2'>
-                              Longitude
-                            </p>
-                          </div>
+                          <div className='flex pt-6'>
+                            <div className=' pr-14 border-r border-r-gray-200'>
+                              <p>
+                                {position.lng}&nbsp;&#xb0;
+                                {position.lng < 0 ? "S" : "N"}
+                              </p>
+                              <p className='text-xs text-afexgreen pt-2'>
+                                Longitude
+                              </p>
+                            </div>
 
-                          <div className=' pl-14'>
-                            <p>
-                              {position.lat}&nbsp;&#xb0;
-                              {position.lat < 0 ? "W" : "E"}
-                            </p>
-                            <p className='text-xs text-afexgreen pt-2'>
-                              Latitude
-                            </p>
+                            <div className=' pl-14'>
+                              <p>
+                                {position.lat}&nbsp;&#xb0;
+                                {position.lat < 0 ? "W" : "E"}
+                              </p>
+                              <p className='text-xs text-afexgreen pt-2'>
+                                Latitude
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>
+                    </>
+                  ) : (
+                    <></>
+                  )
                 ) : (
-                  <></>
+                  <div className='h-full bg-gray-400 text-white flex justify-center items-center text-lg'>
+                    Map Date Unavailable for this region
+                  </div>
                 )}
               </div>
               <div className='w-[55%] h-full pl-8 relative '>
@@ -209,7 +239,6 @@ const MapModal = ({
                       <button
                         onClick={() => {
                           setLocationPopoverOpened((s) => !s);
-                          // setLgaOptions(lgas[addLocation.state]);
                         }}
                         className='px-6 py-2 bg-afexgreen text-white rounded-md text-base'>
                         Add Location
@@ -223,6 +252,7 @@ const MapModal = ({
                             className='w-5'
                             onClick={() => {
                               setLocationPopoverOpened(false);
+                              setSubmitted(false);
                               // setLocationPopoverDropdownOpened(false);
                             }}>
                             <img src={cancel} alt='cancel icon' />
@@ -232,16 +262,30 @@ const MapModal = ({
                           className='py-4'
                           onSubmit={(e) => {
                             e.preventDefault();
-                            setLocationPopoverOpened(false);
-                            addingLocation();
+                            setSubmitted(true);
+                            if (
+                              addLocation.name.length > 0 &&
+                              addLocation.lgas.length > 0
+                            ) {
+                              setSubmitted(false);
+                              setLocationPopoverOpened(false);
+                              addingLocation();
+                            }
                           }}>
                           <div className='pb-7 child:capitalize'>
                             <label className='px-2 pb-3 block'>
                               Location name
                             </label>
                             <input
+                              onFocus={() =>
+                                setLocationPopoverDropdownOpened(false)
+                              }
                               type='text'
-                              className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light'
+                              className={`w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light ${
+                                addLocation.name.length === 0 && submitted
+                                  ? "border-red-500"
+                                  : ""
+                              }`}
                               value={addLocation.name}
                               onChange={(e) =>
                                 setAddlocation({
@@ -258,8 +302,17 @@ const MapModal = ({
                                 e.preventDefault();
                                 setLocationPopoverDropdownOpened((s) => !s);
                               }}
-                              className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light flex justify-between items-center'>
-                              <span className='text-[#c9c8c6]'>
+                              className={`w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light flex justify-between items-center ${
+                                addLocation.lgas.length === 0 && submitted
+                                  ? "border-red-500"
+                                  : ""
+                              }`}>
+                              <span
+                                className={` ${
+                                  addLocation.lgas.length === 0
+                                    ? "text-gray-400"
+                                    : "text-textgrey"
+                                }`}>
                                 {addLocation.lgas.length === 0
                                   ? "select"
                                   : `${addLocation.lgas.length} selected`}
@@ -280,7 +333,7 @@ const MapModal = ({
                                   ? "opacity-100 z-10"
                                   : "opacity-0 -z-10"
                               }`}>
-                              <ul className='child-hover:bg-afexgreen-lighter child:pl-6 child-hover:cursor-pointer child-hover:text-textgrey'>
+                              <ul className='child-hover:bg-afexgreen-lighter child:pl-6 child-hover:cursor-pointer child:text-textgrey'>
                                 {lgaOptions?.map((item, index) => {
                                   return (
                                     <li
@@ -396,7 +449,11 @@ const MapModal = ({
                                 </td>
                                 <td>{oldIndex + 1} </td>
                                 {Object.values(item).map((entry, index) => {
-                                  if (index !== 4) {
+                                  if (
+                                    index !== 4 &&
+                                    index !== 5 &&
+                                    index !== 6
+                                  ) {
                                     if (index === 3) {
                                       return (
                                         <td
@@ -415,7 +472,7 @@ const MapModal = ({
                                               <button
                                                 onClick={() => {
                                                   const itemlgas =
-                                                    item.extras.map(
+                                                    item.extras.data.map(
                                                       (item) => item.lga
                                                     );
                                                   const itemlgasPks = lgas[
@@ -427,11 +484,12 @@ const MapModal = ({
                                                       )
                                                     )
                                                     .map((item) => item.pk);
-                                                  setAddlocation({
-                                                    ...addLocation,
+                                                  setUpdatelocation({
+                                                    ...updateLocation,
                                                     name: item.exchange_location,
                                                     lgas: itemlgasPks,
                                                     state: state_id,
+                                                    code: item.code,
                                                   });
                                                   setPopover(oldIndex);
                                                   setPopoverOpened((s) => !s);
@@ -448,6 +506,7 @@ const MapModal = ({
                                                     className='w-5'
                                                     onClick={() => {
                                                       setPopoverOpened(false);
+                                                      setSubmitted(false);
                                                       setPopover(undefined);
                                                     }}>
                                                     <img
@@ -460,20 +519,42 @@ const MapModal = ({
                                                   className='py-4'
                                                   onSubmit={(e) => {
                                                     e.preventDefault();
-                                                    setPopoverOpened(false);
-                                                    addingLocation();
+                                                    setSubmitted(true);
+                                                    if (
+                                                      updateLocation.name
+                                                        .length > 0 &&
+                                                      updateLocation.lgas
+                                                        .length > 0
+                                                    ) {
+                                                      setSubmitted(false);
+                                                      setPopoverOpened(false);
+                                                      updatingLocation(item.pk);
+                                                    }
                                                   }}>
                                                   <div className='pb-7 child:capitalize'>
                                                     <label className='px-2 pb-3 block'>
                                                       Location name
                                                     </label>
                                                     <input
+                                                      onFocus={() =>
+                                                        setLocationPopoverDropdownOpened(
+                                                          false
+                                                        )
+                                                      }
                                                       type='text'
-                                                      className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light'
-                                                      value={addLocation.name}
+                                                      className={`w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light ${
+                                                        updateLocation.name
+                                                          .length === 0 &&
+                                                        submitted
+                                                          ? "border-red-500"
+                                                          : ""
+                                                      }`}
+                                                      value={
+                                                        updateLocation.name
+                                                      }
                                                       onChange={(e) =>
-                                                        setAddlocation({
-                                                          ...addLocation,
+                                                        setUpdatelocation({
+                                                          ...updateLocation,
                                                           name: e.target.value,
                                                         })
                                                       }
@@ -490,12 +571,24 @@ const MapModal = ({
                                                           (s) => !s
                                                         );
                                                       }}
-                                                      className='w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light flex justify-between items-center'>
-                                                      <span className='text-[#c9c8c6]'>
-                                                        {addLocation.lgas
+                                                      className={`w-full bg-gray-100 py-3 px-2 rounded-xl  outline-none border border-textgrey-lighter focus:border-afexgreen-light flex justify-between items-center ${
+                                                        updateLocation.lgas
+                                                          .length === 0 &&
+                                                        submitted
+                                                          ? "border-red-500"
+                                                          : ""
+                                                      }`}>
+                                                      <span
+                                                        className={
+                                                          updateLocation.lgas
+                                                            .length === 0
+                                                            ? "text-gray-400"
+                                                            : "text-textgrey"
+                                                        }>
+                                                        {updateLocation.lgas
                                                           .length === 0
                                                           ? "select"
-                                                          : `${addLocation.lgas.length} selected`}
+                                                          : `${updateLocation.lgas.length} selected`}
                                                       </span>
                                                       <ArrowDown2
                                                         size='18'
@@ -513,7 +606,7 @@ const MapModal = ({
                                                           ? "opacity-100 z-10"
                                                           : "opacity-0 -z-10"
                                                       }`}>
-                                                      <ul className='child-hover:bg-afexgreen-lighter child:pl-6 child-hover:cursor-pointer child-hover:text-textgrey'>
+                                                      <ul className='child-hover:bg-afexgreen-lighter child:pl-6 child-hover:cursor-pointer child:text-textgrey'>
                                                         {lgaOptions?.map(
                                                           (item, index) => {
                                                             return (
@@ -522,7 +615,7 @@ const MapModal = ({
                                                                 className='py-2 child-hover:border-afexgreen relative'>
                                                                 <span
                                                                   className={` inline-flex items-center justify-center w-5 h-5  border border-white rounded-md ${
-                                                                    addLocation.lgas.includes(
+                                                                    updateLocation.lgas.includes(
                                                                       item.pk
                                                                     )
                                                                       ? "bg-afexgreen border-afexgreen"
@@ -557,7 +650,7 @@ const MapModal = ({
                                                                           .target
                                                                           .value;
                                                                       const temp =
-                                                                        addLocation.lgas;
+                                                                        updateLocation.lgas;
 
                                                                       if (
                                                                         checked
@@ -568,9 +661,9 @@ const MapModal = ({
                                                                           temp.push(
                                                                             value
                                                                           );
-                                                                        setAddlocation(
+                                                                        setUpdatelocation(
                                                                           {
-                                                                            ...addLocation,
+                                                                            ...updateLocation,
                                                                             lgas: temp,
                                                                           }
                                                                         );
@@ -583,9 +676,9 @@ const MapModal = ({
                                                                               item !==
                                                                               value
                                                                           );
-                                                                        setAddlocation(
+                                                                        setUpdatelocation(
                                                                           {
-                                                                            ...addLocation,
+                                                                            ...updateLocation,
                                                                             lgas: newTemp,
                                                                           }
                                                                         );
@@ -662,23 +755,25 @@ const MapModal = ({
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          {item.extras.map((data, newIndex) => {
-                                            return (
-                                              <tr key={newIndex}>
-                                                {Object.values(data).map(
-                                                  (newEntry, index) => {
-                                                    return (
-                                                      <td
-                                                        key={index}
-                                                        className={`capitalize text-ellipsis overflow-hidden max-w-[100px]`}>
-                                                        {newEntry.toString()}
-                                                      </td>
-                                                    );
-                                                  }
-                                                )}
-                                              </tr>
-                                            );
-                                          })}
+                                          {item.extras.data.map(
+                                            (data, newIndex) => {
+                                              return (
+                                                <tr key={newIndex}>
+                                                  {Object.values(data).map(
+                                                    (newEntry, index) => {
+                                                      return (
+                                                        <td
+                                                          key={index}
+                                                          className={`capitalize text-ellipsis overflow-hidden max-w-[100px]`}>
+                                                          {newEntry.toString()}
+                                                        </td>
+                                                      );
+                                                    }
+                                                  )}
+                                                </tr>
+                                              );
+                                            }
+                                          )}
                                         </tbody>
                                       </table>
                                       <div className='text-xs border-t border-t-textgrey-lighter pt-3 flex justify-between '>
@@ -698,7 +793,7 @@ const MapModal = ({
                                           <span className='pl-2'>Refresh</span>
                                         </button>
                                         <div className='text-textgrey-light '>
-                                          Last updated: Today @ 2:30pm
+                                          Last updated: {item.extras.latestDate}
                                         </div>
                                       </div>
                                     </div>

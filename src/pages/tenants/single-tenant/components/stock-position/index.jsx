@@ -1,11 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdExpandMore } from 'react-icons/md';
+import Pagination from '../../../../../components/Pagination';
 
 const StockPosition = ({ stock }) => {
+  //PAGINATION FUNCTION
+  const [posts, setPosts] = useState([]);
+
+  const populate = () => {
+    if (stock && stock.length > 0) {
+      setPosts(stock);
+    }
+  };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(7);
+  const [currentPosts, setCurrentPosts] = useState([]);
+  const [itemsOffset, setItemsOffset] = useState(0);
+
+  const handlePageChange = (e) => {
+    const newOffset = (e.selected * postsPerPage) % posts.length;
+    setItemsOffset(newOffset);
+  };
+
+  useEffect(
+    () => populate(),
+    //eslint-disable-next-line
+    [stock]
+  );
+
+  useEffect(() => {
+    const endOffset = itemsOffset + postsPerPage;
+    setCurrentPosts(posts.slice(itemsOffset, endOffset));
+    setCurrentPage(Math.ceil(posts.length / postsPerPage));
+  }, [itemsOffset, currentPage, posts, postsPerPage]);
+
   const [indexToShow, setIndexToShow] = useState(null);
+
   return (
     <div className='flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[35%] overflow-y-auto'>
-      <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl'>
+      <div className='bg-[#FFFF] w-full px-4 py-5 overflow-x-auto rounded-3xl'>
         <div className='mb-2 border-b border-gray-200 p-4'>
           <h1 className='text-lg'>Overall Stock Position</h1>
         </div>
@@ -22,9 +55,9 @@ const StockPosition = ({ stock }) => {
             </thead>
 
             <tbody className='text-[#54565B] text-[12px] font-light relative'>
-              {stock?.map((item, index) => {
+              {currentPosts?.map((item, index) => {
                 return (
-                  <>
+                  <React.Fragment key={item.id}>
                     <tr className='text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] relative'>
                       <td className='py-4 px-2 flex gap-4'>
                         <button
@@ -89,11 +122,23 @@ const StockPosition = ({ stock }) => {
                         </div>
                       </td>
                     </tr>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </tbody>
           </table>
+        </div>
+        {/*SLIDER*/}
+        <div className='flex justify-between text-[14px] p-2 px-4 mt-4 bg-[#F9F9F9] items-center rounded-2xl'>
+          <p>
+            {itemsOffset + 1} - {postsPerPage + itemsOffset} of {posts.length}
+          </p>
+          <Pagination
+            totalPosts={posts.length}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+            perPage={postsPerPage}
+          />
         </div>
       </div>
     </div>

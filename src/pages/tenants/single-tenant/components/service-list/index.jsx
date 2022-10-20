@@ -13,6 +13,8 @@ import {
 } from '../../../modal/service-list';
 
 import profIcon from '../../../../../Assets/profile.svg';
+import building from '../../../../../Assets/Storage Cap.svg';
+import book from '../../../../../Assets/Warehouse.svg';
 
 const ServiceList = ({
   modalsService,
@@ -281,7 +283,7 @@ const ServiceList = ({
 
         {storageCount && (
           <div className='relative bg-[#FFFF] w-full h-[50%] rounded-xl  flex gap-10 px-8 items-center'>
-            <img src={profIcon} alt='avatar' />
+            <img src={building} alt='avatar' />
 
             <div className='font-semibold text-[25px]'>
               <p className='text-[14px] text-[#B4B4B0] mb-5'>
@@ -316,7 +318,8 @@ const ServiceList = ({
           </div>
         )}
 
-        <div className=' bg-[#FFFF] w-full h-[50%] rounded-xl p-8 items-center flex gap-14'>
+        <div className=' bg-[#FFFF] w-full h-[50%] rounded-xl p-8 items-center flex gap-10'>
+          <img src={book} alt='avatar' />
           <p className='text-[25px]'>
             {' '}
             <span className='text-[14px]'>Warehouse Count</span> <br />{' '}

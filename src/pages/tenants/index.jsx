@@ -57,7 +57,7 @@ function Organisationlist() {
     const date = new Date(datex);
     return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
-
+  
   const handleSearch = (e) => {
     const { value } = e.target;
     // setItemsOffset(0)

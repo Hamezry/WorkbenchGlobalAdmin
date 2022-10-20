@@ -16,12 +16,16 @@ import Clients from './components/clients';
 function SingleTenant() {
   // Remember to fetch Organization list from context
   const { id } = useParams();
+  localStorage.setItem('fetchId', id);
   const { tenants } = useTenantsCtx();
 
   const [client, setClient] = useState([]);
   const [service, setService] = useState([]);
   const [transaction, setTransaction] = useState([]);
   const [summary, setSummary] = useState([]);
+  const [warehouseList, setWarehouseList] = useState([]);
+  const [locationList, setLocationList] = useState([]);
+  const [itemList, setItemList] = useState([]);
 
   const [userCount, setUserCount] = useState(true);
   const [storageCount, setStorageCount] = useState(false);
@@ -115,7 +119,7 @@ function SingleTenant() {
     const res = await axios.get(`transaction/summary/${id}`);
 
     if (!res.data || res.data.responseCode !== '100') return;
-
+    console.log(res.data);
     setTransaction(res.data.data);
   };
 
@@ -137,6 +141,61 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== '100') return;
 
     setSummary(res.data);
+    console.log(res.data);
+  };
+
+  const fetchWarehouseList = async () => {
+    const res = await axios.get(`tenant/warehouses/${id}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setWarehouseList(res.data.data);
+    console.log('here ', res.data);
+  };
+
+  const fetchLocationList = async () => {
+    const res = await axios.get(`tenant/location/list/${id}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setLocationList(res.data.data);
+    console.log('here ', res.data);
+  };
+
+  const fetchItemList = async () => {
+    const res = await axios.get(`tenant/items/${id}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setItemList(res.data.data);
+    console.log('here ', res.data);
+  };
+
+  const handleWarehouseFilter = async (myId) => {
+    const res = await axios.get(`transaction/summary/${id}?warehouse=${myId}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setTransaction(res.data.data);
+    console.log(res.data.data);
+  };
+
+  const handleLocationFilter = async (myId) => {
+    const res = await axios.get(`transaction/summary/${id}?location=${myId}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setTransaction(res.data.data);
+    console.log(myId);
+  };
+
+  const handleItemFilter = async (myId) => {
+    const res = await axios.get(`transaction/summary/${id}?item=${myId}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setTransaction(res.data.data);
+    console.log(myId);
   };
 
   useEffect(() => {
@@ -151,6 +210,15 @@ function SingleTenant() {
 
     //STOCK POSITION API CALL
     fetchStockPositon();
+
+    //LOCATION LIST API CALL
+    fetchLocationList();
+
+    //WAREHOUSE LIST API CALL
+    fetchWarehouseList();
+
+    //ITEM LIST API CALL
+    fetchItemList();
 
     // eslint-disable-next-line
   }, []);
@@ -200,9 +268,17 @@ function SingleTenant() {
 
       <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
-          <Clients clients={client?.data} overallCount={overallCount} />
+          <Clients clients={client.data} overallCount={overallCount} />
 
-          <TransactionSummary transaction={transaction} />
+          <TransactionSummary
+            transaction={transaction}
+            locationList={locationList}
+            warehouseList={warehouseList}
+            itemList={itemList}
+            handleWarehouseFilter={handleWarehouseFilter}
+            handleLocationFilter={handleLocationFilter}
+            handleItemFilter={handleItemFilter}
+          />
 
           <ServiceList
             switch_list={switch_list}

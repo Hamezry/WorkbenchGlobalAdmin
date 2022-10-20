@@ -67,13 +67,9 @@
   background-color: #eeefee;
 }
 
-.mantine-Progress-bar {
-  background-color: #38cb89;
-}
-
 .mantine-Tooltip-tooltip {
   background: rgba(84, 86, 91, 0.84);
-  padding: 1rem;
+  padding: 10px;
 }
 
 li.selected {

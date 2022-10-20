@@ -254,7 +254,6 @@ function Organisationlist() {
                               className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
                               onClick={(e) => {
                                 e.preventDefault();
-                                console.log("click", filter.country);
                                 const value = e.target.value;
                                 let newCountries = filter.country;
                                 if (filter.country.includes(value)) {

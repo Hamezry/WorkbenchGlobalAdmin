@@ -4,6 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { format } from "date-fns";
 import { ArrowDown2 } from "iconsax-react";
 import { Drawer, Group } from "@mantine/core";
+import customNotification from "../../utils/notification";
 
 import OrganisationlistTile from "./components/tile";
 import TenantDropdown from "./dropdown";
@@ -41,6 +42,8 @@ function Organisationlist() {
   const [selected, setSelected] = useState([]);
   const [itemsOffset, setItemsOffset] = useState(0);
   const [activeFilter, setActiveFilter] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [filter, setFilter] = useState({
     country: [],
     CSD: "",
@@ -134,6 +137,32 @@ function Organisationlist() {
   useEffect(() => {
     console.log(activeFilter, document.activeElement);
   }, [activeFilter]);
+
+  const dateRangeFilter = () => {
+    if (!startDate)
+      return customNotification({
+        heading: "Please specify a start date",
+        id: "error",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      });
+    if (!endDate)
+      return customNotification({
+        heading: "Please specify an end date",
+        id: "error",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      });
+    let filtered = tenants
+      .filter(
+        (item) =>
+          new Date(item.created).getTime() >= startDate.getTime() &&
+          new Date(item.created).getTime() <= endDate.getTime()
+      )
+      .sort(
+        (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
+      );
+
+    return setPosts(filtered);
+  };
   return (
     <div className='w-[82%] flex flex-col bg-[#FFFFFF] gap-14 font-muli h-[calc(100vh-90px)] overflow-y-auto'>
       {/*TENANT STATISTICS*/}
@@ -147,8 +176,8 @@ function Organisationlist() {
         </div>
 
         {/*ORGANISATION CONTAINER*/}
-        <div className='w-[100%] rounded-2xl p-10 bg-[#F9F9F9] overflow-y-auto'>
-          <div className='bg-[#FFFFFF] rounded-3xl w-[100%] py-4 px-8 relative'>
+        <div className='w-[100%] rounded-2xl p-10 bg-[#F9F9F9] '>
+          <div className='bg-[#FFFFFF] rounded-3xl w-[100%] py-4 px-8 relative overflow-y-auto'>
             {/*ORGANISATION LIST HEADING*/}
             <div className='flex justify-between p-3 border-b-[1px] '>
               <p className='text-[18px]'>Organisation List</p>
@@ -403,7 +432,7 @@ function Organisationlist() {
                 className='text-sm'
               />
               {/*TASK BAR*/}
-              <div className='flex justify-end items-center p-5 gap-5 '>
+              <div className='flex justify-end items-center p-5 gap-5 relative'>
                 <p className='text-[12px]'>Sort By</p>
                 <button
                   className='flex items-center gap-2 p-3 rounded-2xl text-sm  text-[#C9C8C6] bg-[#F9F9F9] h-full'
@@ -420,7 +449,16 @@ function Organisationlist() {
                     <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
                   </svg>
                 </button>
-                {isDate && <DateModule setIsDate={setIsDate} />}
+                {isDate && (
+                  <DateModule
+                    startDate={startDate}
+                    endDate={endDate}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    filterFunc={dateRangeFilter}
+                    close={() => setIsDate(false)}
+                  />
+                )}
                 <div className='relative text-[#C9C8C6]'>
                   <input
                     type='text'
@@ -441,155 +479,159 @@ function Organisationlist() {
             </div>
 
             {/*TABLE CONTAINER */}
-            <div className='px-5 w-full h-auto overflow-x-auto'>
-              <table className='min-w-max table-auto'>
-                <thead className='sticky'>
-                  <tr className='bg-[#F9F9F9] text-[#54565B] text-left  text-[14px]'>
-                    <th>
-                      <input
-                        type='checkbox'
-                        className='checkbox'
-                        id='remember'
-                        checked={
-                          selected.length === currentPosts.length &&
-                          currentPosts.length > 0
-                        }
-                        // className='w-4 h-4 border-slate-200 checked:bg-green-400'
-                        onChange={(e) => {
-                          const currentlySelected = currentPosts.map(
-                            (item) => item.id
-                          );
-                          if (selected.length !== currentPosts.length) {
-                            setSelected(currentlySelected);
-                          } else {
-                            setSelected([]);
+            <div className='px-1 w-full '>
+              <div className='overflow-auto w-full pb-20'>
+                <table className='min-w-max table-auto h-full '>
+                  <thead className='sticky px-5 '>
+                    <tr className='bg-[#F9F9F9] text-[#54565B] text-left  text-[14px]'>
+                      <th>
+                        <input
+                          type='checkbox'
+                          className='checkbox'
+                          id='remember'
+                          checked={
+                            selected.length === currentPosts.length &&
+                            currentPosts.length > 0
                           }
-                        }}
-                      />
-                    </th>
+                          // className='w-4 h-4 border-slate-200 checked:bg-green-400'
+                          onChange={(e) => {
+                            const currentlySelected = currentPosts.map(
+                              (item) => item.id
+                            );
+                            if (selected.length !== currentPosts.length) {
+                              setSelected(currentlySelected);
+                            } else {
+                              setSelected([]);
+                            }
+                          }}
+                        />
+                      </th>
 
-                    <th className='py-3 px-4 '>S/N</th>
-                    <th className='py-3 px-4 '>Company Name</th>
-                    <th className='py-3 px-4 '>Country</th>
-                    <th className='py-3 px-4 '>Location</th>
-                    <th className='py-3 px-4 '>E-mail</th>
-                    <th className='py-3 px-4 '>Phone Number</th>
-                    <th className='py-3 px-4 '>CSD Access</th>
-                    <th className='py-3 px-4 '>Registered On</th>
-                    <th className='py-3 px-4 '>Action</th>
-                  </tr>
-                </thead>
+                      <th className='py-3 px-4 '>S/N</th>
+                      <th className='py-3 px-4 '>Company Name</th>
+                      <th className='py-3 px-4 '>Country</th>
+                      <th className='py-3 px-4 '>Location</th>
+                      <th className='py-3 px-4 '>E-mail</th>
+                      <th className='py-3 px-4 '>Phone Number</th>
+                      <th className='py-3 px-4 '>CSD Access</th>
+                      <th className='py-3 px-4 '>Registered On</th>
+                      <th className='py-3 px-4 '>Action</th>
+                    </tr>
+                  </thead>
 
-                <tbody className='text-[#54565B] h-auto overflow-y-auto text-[12px] font-light'>
-                  {currentPosts.map((item, index) => {
-                    return (
-                      <tr
-                        key={index}
-                        className=' text-left  border-b-[1px] border-[#F9FAFB] hover:bg-[#e3f7ee]'
-                        onClick={() => navigate(`/tenants/${item.id}`)}>
-                        <td onClick={(e) => e.stopPropagation()}>
-                          <input
-                            type='checkbox'
-                            id='remember'
-                            className='checkbox'
-                            value={item.id}
-                            checked={selected.includes(item.id)}
-                            // className='w-4 h-4 border-slate-200 focus:bg-green-400'
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              if (selected.includes(value)) {
-                                const newSelected = selected.filter(
-                                  (item) => item !== value
-                                );
-                                setSelected(newSelected);
-                              } else {
-                                setSelected((prev) => [...prev, value]);
-                              }
-                            }}
-                          />
-                        </td>
+                  <tbody className='px-5 text-[#54565B] h-auto overflow-y-auto text-[12px] font-light'>
+                    {currentPosts.map((item, index) => {
+                      return (
+                        <tr
+                          key={index}
+                          className=' text-left  border-b-[1px] border-[#F9FAFB] hover:bg-[#e3f7ee]'
+                          onClick={() => navigate(`/tenants/${item.id}`)}>
+                          <td onClick={(e) => e.stopPropagation()}>
+                            <input
+                              type='checkbox'
+                              id='remember'
+                              className='checkbox'
+                              value={item.id}
+                              checked={selected.includes(item.id)}
+                              // className='w-4 h-4 border-slate-200 focus:bg-green-400'
+                              onChange={(e) => {
+                                const value = e.target.value;
+                                if (selected.includes(value)) {
+                                  const newSelected = selected.filter(
+                                    (item) => item !== value
+                                  );
+                                  setSelected(newSelected);
+                                } else {
+                                  setSelected((prev) => [...prev, value]);
+                                }
+                              }}
+                            />
+                          </td>
 
-                        <td className='py-4 px-4 mr-10'>
-                          <span className='font-medium'>
-                            {index + 1 + itemsOffset}
-                          </span>
-                        </td>
+                          <td className='py-4 px-4 mr-10'>
+                            <span className='font-medium'>
+                              {index + 1 + itemsOffset}
+                            </span>
+                          </td>
 
-                        <td className='py-4 px-4 mr-10 text-start '>
-                          <Link
-                            to={`/tenants/${item.id}`}
-                            className='font-medium '>
-                            {item.company_name}
-                          </Link>
-                        </td>
+                          <td className='py-4 px-4 mr-10 text-start '>
+                            <Link
+                              to={`/tenants/${item.id}`}
+                              className='font-medium '>
+                              {item.company_name}
+                            </Link>
+                          </td>
 
-                        <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
-                          <img
-                            src={item.country.country_flag}
-                            alt={item.company_name}
-                            className='w-[22px] rounded'
-                          />
-                          <span className='font-medium '>
-                            {item.country.name}
-                          </span>
-                        </td>
+                          <td className=' flex mt-2 gap-2 py-4 px-4 mr-10'>
+                            <img
+                              src={item.country.country_flag}
+                              alt={item.company_name}
+                              className='w-[22px] rounded'
+                            />
+                            <span className='font-medium '>
+                              {item.country.name}
+                            </span>
+                          </td>
 
-                        <td className='py-4 px-4 mr-10 w-[150px]'>
-                          <span className='font-medium '>{item.location}</span>
-                        </td>
-                        <td className='py-4 px-4 w-[100px]'>
-                          <span className='font-medium '>{item.email}</span>
-                        </td>
+                          <td className='py-4 px-4 mr-10 w-[150px]'>
+                            <span className='font-medium '>
+                              {item.location}
+                            </span>
+                          </td>
+                          <td className='py-4 px-4 w-[100px]'>
+                            <span className='font-medium '>{item.email}</span>
+                          </td>
 
-                        <td className='py-4 px-4 mr-10  '>
-                          <span className='font-medium '>
-                            {item.phone_number}
-                          </span>
-                        </td>
+                          <td className='py-4 px-4 mr-10  '>
+                            <span className='font-medium '>
+                              {item.phone_number}
+                            </span>
+                          </td>
 
-                        <td className='py-4 px-4'>
-                          <span className='font-medium '>
-                            {item.csd_access === "True" ? "Yes" : "No"}
-                          </span>
-                        </td>
+                          <td className='py-4 px-4'>
+                            <span className='font-medium '>
+                              {item.csd_access === "True" ? "Yes" : "No"}
+                            </span>
+                          </td>
 
-                        <td className='py-4 px-4'>
-                          <span className='font-medium '>{`${formDate(
-                            item.created
-                          )} . ${formTime(item.created)}`}</span>
-                        </td>
-                        <td
-                          className='py-4 px-4 text-center'
-                          onClick={(e) => e.stopPropagation()}>
-                          {item.is_active === "True" ? (
-                            <div
-                              className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
-                              onClick={() => {
-                                setModalData(item);
-                                setViewDeactivate(true);
-                              }}>
-                              <p>De-activate</p>
-                            </div>
-                          ) : (
-                            <div
-                              className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
-                              onClick={() => {
-                                setModalData(item);
-                                setViewActivate(true);
-                              }}>
-                              <p>Activate</p>
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                          <td className='py-4 px-4'>
+                            <span className='font-medium '>{`${formDate(
+                              item.created
+                            )} . ${formTime(item.created)}`}</span>
+                          </td>
+                          <td
+                            className='py-4 px-4 text-center'
+                            onClick={(e) => e.stopPropagation()}>
+                            {item.is_active === "True" ? (
+                              <div
+                                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
+                                onClick={() => {
+                                  setModalData(item);
+                                  setViewDeactivate(true);
+                                }}>
+                                <p>De-activate</p>
+                              </div>
+                            ) : (
+                              <div
+                                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
+                                onClick={() => {
+                                  setModalData(item);
+                                  setViewActivate(true);
+                                }}>
+                                <p>Activate</p>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/*SLIDER*/}
-            <div className='flex justify-between p-2 px-4 mt-4 bg-[#F9F9F9] items-center rounded-2xl'>
+            <div className=' flex justify-between p-2 px-4 mt-4 bg-[#F9F9F9] items-center rounded-2xl'>
               <p>
                 {currentPosts?.length > 0 ? itemsOffset + 1 : itemsOffset + 0}-
                 {itemsOffset + postsPerPage > posts?.length

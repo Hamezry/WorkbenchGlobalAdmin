@@ -65,7 +65,8 @@ function ProductDropdown({ singleProduct }) {
       </Popover>
       {openUpdateModal && (
         <UpdateProductModal
-          setModal={setOpenUpdateProductModal}
+          close={() => setOpenUpdateProductModal(false)}
+          show={openUpdateModal}
           modalData={singleProduct}
         />
       )}

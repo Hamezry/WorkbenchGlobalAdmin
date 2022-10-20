@@ -17,7 +17,14 @@
 }
 
 .mantine-Modal-modal {
+  padding: 0;
   border-radius: 1.75rem;
+}
+.mantine-Modal-header {
+  color: #54565b;
+  font-size: 1.25rem;
+  text-transform: capitalize;
+  padding: 2rem 2rem 1rem 2rem;
 }
 .mantine-Pagination-item {
   border: none;

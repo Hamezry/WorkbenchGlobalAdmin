@@ -4,12 +4,10 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 import Navigation from "../components/navigation";
 
-import CountryTile from '../components/tile';
-import TableSelect from '../../../components/TableSelect';
-import filterIcon from '../../../Assets/filter.svg';
-import calenderIcon from '../../../Assets/calendar.svg';
-import Pagination from '../../../components/Pagination';
-
+import CountryTile from "../components/tile";
+import TableSelect from "../../../components/TableSelect";
+import filterIcon from "../../../Assets/green-filter.svg";
+import Pagination from "../../../components/Pagination";
 import { useCountriesCtx } from "../../../contexts";
 
 function Countrylist() {
@@ -44,7 +42,7 @@ function Countrylist() {
    * @returns
    */
   const formatAvailableCommodities = (commodites) => {
-    return commodites.split(' ').slice(0, 6).join(' ');
+    return commodites.split(" ").slice(0, 6).join(" ");
   };
 
   const populate = () => {
@@ -83,25 +81,18 @@ function Countrylist() {
 
             <div className='flex justify-between items-center pl-5 gap-5'>
               <TableSelect
-                defaultValue={'7 entries'}
+                defaultValue={"7 entries"}
                 updateValue={setPostsPerPage}
                 data={[
-                  { value: 7, label: '7 entries' },
-                  { value: 20, label: '20 entries' },
-                  { value: 100, label: '100 entries' },
-                  { value: 500, label: '500 entries' },
+                  { value: 7, label: "7 entries" },
+                  { value: 20, label: "20 entries" },
+                  { value: 100, label: "100 entries" },
+                  { value: 500, label: "500 entries" },
                 ]}
                 className='text-sm'
               />
 
-              <div className='flex justify-end items-center p-5 gap-5'>
-                <p className='text-[12px]'>Sort By</p>
-
-                <div className=' flex gap-12 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px'>
-                  <p>Date Registered</p>
-                  <img src={calenderIcon} alt='calendar icon' />
-                </div>
-
+              <div className='flex justify-end items-center p-5 gap-5 relative'>
                 <div className='relative'>
                   <input
                     type='text'

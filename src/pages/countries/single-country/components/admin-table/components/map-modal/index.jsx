@@ -131,7 +131,7 @@ const MapModal = ({
         onClose={() => setOpened(false)}
         title={`${title ? title : ""}`}
         size='85%'>
-        <div className=' border-t border-t-gray-200 mt-6 pt-6 flex w-full h-[75vh] px-6 text-textgrey'>
+        <div className=' border-t border-t-gray-200 mt-6 py-6 flex w-full h-[75vh] px-6 text-textgrey'>
           {title ? (
             <>
               <div className='w-[45%] maps relative rounded-[1.75rem] overflow-hidden'>

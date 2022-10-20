@@ -35,8 +35,13 @@ function ProductDropdown({ singleProduct }) {
       <Popover
         opened={opened}
         onChange={setOpened}
-        width={'100%'}
-        position='left-end'>
+        width={150}
+        styles={{
+          dropdown: {
+            right: '50%',
+          },
+        }}
+        closeOnClickOutside>
         <Popover.Target>
           <BsThreeDots
             onClick={() => setOpened(true)}

@@ -57,7 +57,7 @@ function Organisationlist() {
     const date = new Date(datex);
     return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
-  
+
   const handleSearch = (e) => {
     const { value } = e.target;
     // setItemsOffset(0)
@@ -84,10 +84,6 @@ function Organisationlist() {
     filter.CSD.length === 0 && filter.country.length === 0 && setPosts(tenants);
     //eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    // console.log(selected);
-  }, [selected]);
 
   const filterPosts = () => {
     let filtered = tenants;
@@ -135,8 +131,8 @@ function Organisationlist() {
   };
 
   useEffect(() => {
-    console.log(activeFilter, document.activeElement);
-  }, [activeFilter]);
+    filterPosts(); // eslint-disable-next-line
+  }, [filter]);
 
   const dateRangeFilter = () => {
     if (!startDate)
@@ -198,7 +194,7 @@ function Organisationlist() {
                   className='pt-6 drawer-form'
                   onSubmit={(e) => {
                     e.preventDefault();
-                    filterPosts();
+                    // filterPosts();
                     setOpened(false);
                   }}>
                   <div className=' py-6 border-y border-y-gray-300'>
@@ -256,7 +252,9 @@ function Organisationlist() {
                               id={item}
                               value={item}
                               className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
-                              onChange={(e) => {
+                              onClick={(e) => {
+                                e.preventDefault();
+                                console.log("click", filter.country);
                                 const value = e.target.value;
                                 let newCountries = filter.country;
                                 if (filter.country.includes(value)) {
@@ -271,7 +269,6 @@ function Organisationlist() {
                                   country: newCountries,
                                 });
                               }}
-                              onClick={(e) => e.preventDefault()}
                             />
 
                             <span

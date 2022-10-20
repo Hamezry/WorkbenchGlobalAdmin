@@ -10,6 +10,7 @@ import Pagination from '../../components/Pagination';
 import DateModule from '../../components/Datemodule';
 
 import { useTenantsCtx } from '../../contexts';
+import TableSelect from '../../components/TableSelect';
 
 import filterIcon from '../../Assets/filter.svg';
 import ActivateModal from './modal/activate';
@@ -41,7 +42,7 @@ function Organisationlist() {
     setPosts(tenants);
   };
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
+  const [postsPerPage, setPostsPerPage] = useState(7);
   const [currentPosts, setCurrentPosts] = useState([]);
   const [itemsOffset, setItemsOffset] = useState(0);
 
@@ -101,19 +102,17 @@ function Organisationlist() {
 
             {/*ORGANISATION LIST*/}
             <div className='flex justify-between items-center pl-5 gap-5'>
-              <div className='dropdown inline-block relative'>
-                <button className='bg-[#F9F9F9] text-gray-700 text-[12px] py-1 px-4 rounded-2xl inline-flex gap-8 items-center h-[50px] w-[186px]'>
-                  <p className='mr-1'>
-                    <span className='text-[#C9C8C6]'>Show</span> 100 Entries
-                  </p>
-                  <svg
-                    className='fill-current h-4 w-4'
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 20 20'>
-                    <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />{' '}
-                  </svg>
-                </button>
-              </div>
+              <TableSelect
+                defaultValue={'7 entries'}
+                updateValue={setPostsPerPage}
+                data={[
+                  { value: 7, label: '7 entries' },
+                  { value: 20, label: '20 entries' },
+                  { value: 100, label: '100 entries' },
+                  { value: 500, label: '500 entries' },
+                ]}
+                className='text-sm'
+              />
 
               {/*TASK BAR*/}
               <div className='flex justify-end items-center p-5 gap-5 '>

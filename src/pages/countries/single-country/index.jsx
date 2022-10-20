@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
-import Adminlist from "./components/admin-table";
-import NoAdminLevel from "./components/no-admin";
-import People from "./components/people";
-import StockPosition from "./components/stock-position";
+import Adminlist from './components/admin-table';
+import NoAdminLevel from './components/no-admin';
+import People from './components/people';
+import StockPosition from './components/stock-position';
 
-import axios from "../../../utils/axios";
-import { useCountriesCtx } from "../../../contexts";
+import axios from '../../../utils/axios';
+import { useCountriesCtx } from '../../../contexts';
 
 function Country() {
   const { id } = useParams();
@@ -30,12 +30,11 @@ function Country() {
   //Tenants calculation
   const tenantProgress = singleTenant / totalTenants;
   const tenantValue = tenantProgress * 100;
-
   useEffect(() => {
     const countryStockPosition = async () => {
       const resp = await axios.get(`country/stock/position/${id}`);
 
-      if (!resp.data || resp.data.responseCode !== "100") return;
+      if (!resp.data || resp.data.responseCode !== '100') return;
 
       setStock(resp.data.data);
     };
@@ -43,7 +42,7 @@ function Country() {
     const countryAdminLevels = async () => {
       const resp = await axios.get(`admin/levels/${id}`);
 
-      if (!resp.data || resp.data.responseCode !== "100") return;
+      if (!resp.data || resp.data.responseCode !== '100') return;
 
       setList(resp.data.data);
     };
@@ -57,7 +56,7 @@ function Country() {
   useEffect(() => {
     const singleCountry = countries.filter((el) => el.pk === Number(id))[0];
     if (!singleCountry || countries.length === 0) {
-      return navigate("/countries");
+      return navigate('/countries');
     }
     setSingleCountry(singleCountry);
 
@@ -85,7 +84,12 @@ function Country() {
 
       <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
-          <People farmerValue={farmerValue} tenantValue={tenantValue} />
+          <People
+            singleFarmer={singleFarmer}
+            singleTenant={singleTenant}
+            farmerValue={farmerValue}
+            tenantValue={tenantValue}
+          />
 
           <div className='rounded-3xl w-full mt-8'>
             {list.length < 1 ? (

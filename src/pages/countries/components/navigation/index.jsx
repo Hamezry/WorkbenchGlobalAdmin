@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const TabNavigation = () => {
   return (
     <div className='flex items-center w-[100%] h-[10%] p-4'>
-      <div className='flex w-full items-center gap-8 child:pb-2'>
+      <div className='flex w-full items-center gap-8  border-b-2 child:pb-2'>
         <NavLink
           to='/countries'
           className={({ isActive }) =>

@@ -40,22 +40,22 @@ function Activate({ setViewActivate, modalData }) {
         </span>
 
         <div className='flex mx-auto  gap-4 items-center '>
-          <div
-            className='flex justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] h-[50px] w-[200px] p-4'
+          <button
+            className='flex justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] h-[50px] w-full p-4'
             onClick={() => {
               setViewActivate(false);
             }}>
-            <button>Cancel</button>
-          </div>
+            Cancel
+          </button>
 
-          <div
-            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'
+          <button
+            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-full p-4'
             onClick={() => {
               setViewActivate(false);
               changeStatus();
             }}>
-            <button>Activate</button>
-          </div>
+            Activate
+          </button>
         </div>
       </div>
     </div>

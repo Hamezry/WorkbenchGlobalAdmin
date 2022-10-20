@@ -5,7 +5,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import Navigation from '../components/navigation';
 
 import CountryTile from '../components/tile';
-
+import TableSelect from '../../../components/TableSelect';
 import filterIcon from '../../../Assets/filter.svg';
 import calenderIcon from '../../../Assets/calendar.svg';
 import Pagination from '../../../components/Pagination';
@@ -17,7 +17,7 @@ function Countrylist() {
   const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
+  const [postsPerPage, setPostsPerPage] = useState(7);
   const [posts, setPosts] = useState([]);
   const [currentPosts, setCurrentPosts] = useState([]);
   const [itemsOffset, setItemsOffset] = useState(0);
@@ -82,13 +82,17 @@ function Countrylist() {
             </div>
 
             <div className='flex justify-between items-center pl-5 gap-5'>
-              <div className=' flex gap-2 p-3 rounded-2xl text-sm text-black bg-[#F9F9F9] h-[54px w-[186px]'>
-                <p>
-                  {' '}
-                  <span>Show </span> 100 Entries{' '}
-                </p>
-                <img src={calenderIcon} alt='calendar icon' />
-              </div>
+              <TableSelect
+                defaultValue={'7 entries'}
+                updateValue={setPostsPerPage}
+                data={[
+                  { value: 7, label: '7 entries' },
+                  { value: 20, label: '20 entries' },
+                  { value: 100, label: '100 entries' },
+                  { value: 500, label: '500 entries' },
+                ]}
+                className='text-sm'
+              />
 
               <div className='flex justify-end items-center p-5 gap-5'>
                 <p className='text-[12px]'>Sort By</p>

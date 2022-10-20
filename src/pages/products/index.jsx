@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { Filter } from 'iconsax-react';
 
 import Dropdown from './dropdown';
 import Query from '../../utils/query';
@@ -15,7 +16,6 @@ import DateModule from '../../components/Datemodule';
 import notification from '../../utils/notification';
 
 import recieptIcon from '../../Assets/receipt-text.png';
-import filterIcon from '../../Assets/filter.svg';
 import calenderIcon from '../../Assets/calendar.svg';
 
 function Productlist({ openModal }) {
@@ -186,8 +186,7 @@ function Productlist({ openModal }) {
                 onClick={() => {
                   setViewFilter(true);
                 }}>
-                <img src={filterIcon} alt='funnel' />
-                <span>Filter</span>
+                <Filter variant='Bold' />
               </button>
             </div>
           </div>

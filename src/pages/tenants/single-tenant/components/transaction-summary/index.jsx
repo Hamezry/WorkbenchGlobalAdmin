@@ -1,7 +1,15 @@
 import React from 'react';
 import TransactionDropdown from './dropdown';
 
-const TrasactionSummary = ({ transaction }) => {
+const TrasactionSummary = ({
+  transaction,
+  locationList,
+  warehouseList,
+  itemList,
+  handleLocationFilter,
+  handleWarehouseFilter,
+  handleItemFilter,
+}) => {
   const formatNumber = (value) => {
     return Intl.NumberFormat('en-US', {
       minimumFractionDigits: 2,
@@ -16,7 +24,14 @@ const TrasactionSummary = ({ transaction }) => {
         </div>
 
         <div className='flex gap-6'>
-          <TransactionDropdown />
+          <TransactionDropdown
+            locationList={locationList}
+            warehouseList={warehouseList}
+            itemList={itemList}
+            handleLocationFilter={handleLocationFilter}
+            handleWarehouseFilter={handleWarehouseFilter}
+            handleItemFilter={handleItemFilter}
+          />
         </div>
       </div>
 
@@ -67,18 +82,18 @@ const TrasactionSummary = ({ transaction }) => {
                 Goods Received
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border text-center block lg:table-cell relative lg:static'>
-                {transaction.goods_recieveed
-                  ? transaction.goods_recieveed.total_gross_weight
+                {transaction.goods_received
+                  ? formatNumber(transaction.goods_received.total_gross_weight)
                   : '0'}
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border text-center block lg:table-cell relative lg:static'>
-                {transaction.goods_recieveed
-                  ? transaction.goods_recieveed.total_net_weight
+                {transaction.goods_received
+                  ? formatNumber(transaction.goods_received.total_net_weight)
                   : '0'}
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border-2 text-center block lg:table-cell relative lg:static'>
-                {transaction.goods_recieveed
-                  ? transaction.goods_recieveed.total_units
+                {transaction.goods_received
+                  ? formatNumber(transaction.goods_received.total_units)
                   : '0'}
               </td>
             </tr>
@@ -88,13 +103,21 @@ const TrasactionSummary = ({ transaction }) => {
                 Received Transfer
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
-                21.780
+                {transaction.received_transfer
+                  ? formatNumber(
+                      transaction.received_transfer.total_gross_weight
+                    )
+                  : '0'}
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
-                21
+                {transaction.received_transfer
+                  ? formatNumber(transaction.received_transfer.total_net_weight)
+                  : '0'}
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
-                21
+                {transaction.received_transfer
+                  ? formatNumber(transaction.received_transfer.total_units)
+                  : '0'}
               </td>
             </tr>
 
@@ -146,13 +169,19 @@ const TrasactionSummary = ({ transaction }) => {
                 IWH Transfers
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
-                12
+                {transaction.iwh_transfers
+                  ? formatNumber(transaction.iwh_transfers.total_gross_weight)
+                  : '0'}
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
-                12
+                {transaction.iwh_transfers
+                  ? formatNumber(transaction.iwh_transfers.total_net_weight)
+                  : '0'}
               </td>
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
-                12
+                {transaction.iwh_transfers
+                  ? formatNumber(transaction.iwh_transfers.total_units)
+                  : '0'}
               </td>
             </tr>
 

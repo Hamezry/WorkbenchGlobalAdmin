@@ -1,8 +1,8 @@
 import React from 'react';
 
-function FilterLocation({
-  locationList,
-  handleLocationFilter,
+function WarehouseFilter({
+  warehouseList,
+  handleWarehouseFilter,
   setOpened,
   setDrop,
 }) {
@@ -12,12 +12,12 @@ function FilterLocation({
         Filter by location
       </div>
 
-      {locationList?.map((item) => (
+      {warehouseList?.map((item) => (
         <div
+          key={item.id}
           className='w-full text-sm flex gap-2 items-center  hover:bg-afexgreen-lighter cursor-pointer rounded p-2'
-          key={item.pk}
           onClick={() => {
-            handleLocationFilter(item.pk);
+            handleWarehouseFilter(item.id);
             setOpened((prev) => !prev);
             setDrop(true);
           }}>
@@ -28,4 +28,4 @@ function FilterLocation({
   );
 }
 
-export default FilterLocation;
+export default WarehouseFilter;

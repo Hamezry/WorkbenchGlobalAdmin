@@ -31,9 +31,6 @@ function Organisationlist() {
   const [modalData, setModalData] = useState({});
   const [countriesOptions, setCountriesOptions] = useState([]);
   const [isDate, setIsDate] = useState(false);
-  const csdBtn = useRef(null);
-  const searchBtn = useRef(null);
-  //PAGINATION FUNCTION
   const [posts, setPosts] = useState([]);
   const [opened, setOpened] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,6 +45,8 @@ function Organisationlist() {
     country: [],
     CSD: '',
   });
+  const csdBtn = useRef(null);
+  const searchBtn = useRef(null);
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
@@ -74,17 +73,6 @@ function Organisationlist() {
     const newOffset = (e.selected * postsPerPage) % posts.length;
     setItemsOffset(newOffset);
   };
-  useEffect(() => {
-    const options = tenants.map((item) => item.country.name);
-    let uniqueOptions = [...new Set(options)];
-    setCountriesOptions(uniqueOptions);
-  }, [tenants]);
-
-  useEffect(() => {
-    filter.CSD.length === 0 && filter.country.length === 0 && setPosts(tenants);
-    //eslint-disable-next-line
-  }, []);
-
   const filterPosts = () => {
     let filtered = tenants;
     let byCountry = [];
@@ -109,13 +97,6 @@ function Organisationlist() {
     }
     setPosts(filtered);
   };
-
-  useEffect(() => {
-    const endOffset = itemsOffset + postsPerPage;
-    setCurrentPosts(posts.slice(itemsOffset, endOffset));
-    setCurrentPage(Math.ceil(posts.length / postsPerPage));
-  }, [itemsOffset, currentPage, posts, postsPerPage]);
-
   const CSDFilter = (value) => {
     if (filter.CSD === value) {
       setFilter({
@@ -129,6 +110,25 @@ function Organisationlist() {
       });
     }
   };
+  useEffect(() => {
+    const options = tenants.map((item) => item.country.name);
+    let uniqueOptions = [...new Set(options)];
+    setCountriesOptions(uniqueOptions);
+  }, [tenants]);
+
+  useEffect(
+    () => {
+      if (filter.CSD.length === 0 && filter.country.length === 0)
+        setPosts(tenants);
+    }, //eslint-disable-next-line
+    [filter.CSD.length === 0 && filter.country.length === 0]
+  );
+
+  useEffect(() => {
+    const endOffset = itemsOffset + postsPerPage;
+    setCurrentPosts(posts.slice(itemsOffset, endOffset));
+    setCurrentPage(Math.ceil(posts.length / postsPerPage));
+  }, [itemsOffset, currentPage, posts, postsPerPage]);
 
   const dateRangeFilter = () => {
     if (!startDate)

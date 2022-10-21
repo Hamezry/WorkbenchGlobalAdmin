@@ -21,7 +21,7 @@ const TenantsTile = () => {
   return (
     <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-8 mt-10 space-y-4 '>
       <p>Overview</p>
-      <div className=' flex justify-between space-x-6 child:px-2'>
+      <div className=' flex justify-between space-x-6'>
         {/* Total Tenants */}
         {!dataLoaded ? (
           <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />

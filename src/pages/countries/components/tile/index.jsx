@@ -20,14 +20,14 @@ const CountryTile = () => {
   return (
     <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-8 mt-10 space-y-4 '>
       <p>Overview</p>
-      <div className=' flex justify-between space-x-6 child:px-2'>
+      <div className='flex justify-between space-x-6'>
         {/* Total Farmers & Tenants */}
         <div className=' flex flex-col flex-1 space-y-4 justify-between'>
           {/* Total Farmers */}
           {!dataLoaded ? (
             <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />
           ) : (
-            <div className='bg-white rounded-3xl flex-1 p-6 flex space-x-6 items-center'>
+            <div className='bg-white rounded-3xl h-full p-6 flex space-x-5 items-center'>
               <svg
                 width='35'
                 height='35'
@@ -137,7 +137,7 @@ const CountryTile = () => {
           {!dataLoaded ? (
             <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />
           ) : (
-            <div className='bg-white rounded-3xl flex-1 p-6 flex space-x-6 items-center'>
+            <div className='bg-white rounded-3xl h-full p-6 flex space-x-5 items-center'>
               <svg
                 width='35'
                 height='35'

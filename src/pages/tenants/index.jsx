@@ -118,10 +118,13 @@ function Organisationlist() {
 
   useEffect(
     () => {
-      if (filter.CSD.length === 0 && filter.country.length === 0)
+      if (filter.CSD.length === 0 && filter.country.length === 0) {
         setPosts(tenants);
+      } else {
+        filterPosts();
+      }
     }, //eslint-disable-next-line
-    [filter.CSD.length === 0 && filter.country.length === 0]
+    [tenants, filter]
   );
 
   useEffect(() => {

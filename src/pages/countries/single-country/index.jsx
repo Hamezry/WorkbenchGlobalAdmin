@@ -41,7 +41,6 @@ function Country() {
       const respI = await axios.get(`country/input/position/${id}`);
 
       if (!respI.data || respI.data.responseCode !== '100') return;
-      console.log(respI);
       setInput(respI.data.data);
     };
 
@@ -111,7 +110,7 @@ function Country() {
             <div className='mb-2  p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
-            
+       
             {stock.length > 0 ? (
               <div className='w-full'>
                 <Tabs

@@ -16,9 +16,8 @@ import Clients from "./components/clients";
 import empty from "../../../Assets/empty.gif";
 
 function SingleTenant() {
-  // Remember to fetch Organization list from context
   const { id } = useParams();
-  localStorage.setItem("fetchId", id);
+  localStorage.setItem('fetchId', id);
   const { tenants } = useTenantsCtx();
 
   const [client, setClient] = useState([]);
@@ -28,7 +27,7 @@ function SingleTenant() {
   const [warehouseList, setWarehouseList] = useState([]);
   const [locationList, setLocationList] = useState([]);
   const [itemList, setItemList] = useState([]);
-  const [title, setTitle] = useState("Stock");
+  const [title, setTitle] = useState('Stock');
   const [input, setInput] = useState([]);
 
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
@@ -46,7 +45,7 @@ function SingleTenant() {
   const tenantInputPosition = async () => {
     const respI = await axios.get(`input/position/${id}`);
 
-    if (!respI.data || respI.data.responseCode !== "100") return;
+    if (!respI.data || respI.data.responseCode !== '100') return;
     setInput(respI.data.data);
   };
   //SERVICE TOGGLE BUTTON FUNCTIONS
@@ -92,19 +91,19 @@ function SingleTenant() {
       value: value,
     });
 
-    if (!response.data || response.data.responseCode !== "100") {
+    if (!response.data || response.data.responseCode !== '100') {
       return notification({
-        id: "error",
-        heading: "Oops! Something went wrong",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        id: 'error',
+        heading: 'Oops! Something went wrong',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       });
     }
 
     await fetchServiceListInfo();
     notification({
-      id: "success",
-      heading: "Service List updated successfully",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      id: 'success',
+      heading: 'Service List updated successfully',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
     });
     closeModal();
   };
@@ -113,7 +112,7 @@ function SingleTenant() {
   const fetchClientGraph = async () => {
     const res = await axios.get(`client/graph/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setClient(res.data);
 
@@ -128,14 +127,14 @@ function SingleTenant() {
   const fetchClientTransactions = async () => {
     const res = await axios.get(`transaction/summary/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
     setTransaction(res.data.data);
   };
 
   const fetchServiceListInfo = async () => {
     const res = await axios.get(`tenant/info/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setService(res.data.data);
 
@@ -147,7 +146,7 @@ function SingleTenant() {
   const fetchStockPositon = async () => {
     const res = await axios.get(`stock/position/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setSummary(res.data.data);
   };
@@ -155,7 +154,7 @@ function SingleTenant() {
   const fetchWarehouseList = async () => {
     const res = await axios.get(`tenant/warehouses/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setWarehouseList(res.data.data);
   };
@@ -163,7 +162,7 @@ function SingleTenant() {
   const fetchLocationList = async () => {
     const res = await axios.get(`tenant/location/list/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setLocationList(res.data.data);
   };
@@ -171,7 +170,7 @@ function SingleTenant() {
   const fetchItemList = async () => {
     const res = await axios.get(`tenant/items/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setItemList(res.data.data);
   };
@@ -179,7 +178,7 @@ function SingleTenant() {
   const handleWarehouseFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?warehouse=${myId}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setTransaction(res.data.data);
   };
@@ -187,7 +186,7 @@ function SingleTenant() {
   const handleLocationFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?location=${myId}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setTransaction(res.data.data);
   };
@@ -195,7 +194,7 @@ function SingleTenant() {
   const handleItemFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?item=${myId}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setTransaction(res.data.data);
   };
@@ -242,9 +241,9 @@ function SingleTenant() {
 
         <div className='flex gap-3 rounded-lg items-center text-[12px] text-[#38CB89]'>
           <div>
-            {org.is_active === "True" ? (
+            {org.is_active === 'True' ? (
               <button
-                className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
+                className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4 hover:ring-1 hover:ring-[#e55851] hover:bg-white hover:text-[#e55851]'
                 onClick={() => {
                   setViewDeactivate(true);
                 }}>
@@ -252,7 +251,7 @@ function SingleTenant() {
               </button>
             ) : (
               <button
-                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
+                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4 hover:ring-1 hover:ring-afexgreen hover:bg-white hover:text-afexgreen'
                 onClick={() => {
                   setViewActivate(true);
                 }}>
@@ -263,7 +262,7 @@ function SingleTenant() {
 
           <Link
             to='/'
-            className='flex justify-center gap-2 rounded items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4'>
+            className='flex justify-center gap-2 rounded items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4 hover:ring-1 hover:ring-gray-500'>
             Back
           </Link>
         </div>
@@ -299,10 +298,11 @@ function SingleTenant() {
 
         <div className='w-[35%] flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 overflow-y-auto relative'>
           <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative h-full'>
-            {" "}
+            {' '}
             <div className='mb-2  p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
+            
             {summary.length > 0 ? (
               <Tabs
                 defaultValue='commodities'

@@ -3,13 +3,25 @@ import activateIcon from '../../../../Assets/ladyicon.svg';
 import deactivateIcon from '../../../Assets/shocked.svg';
 import axios from '../../../../utils/axios';
 
+import notification from '../../../../utils/notification';
+
 function ChangeStatus({ setViewActivate, setSuccess, modalData, activate }) {
   const changeStatus = async () => {
     const resp = await axios.get(`tenant/change/status/${modalData.id}`);
 
-    if (!resp.data || resp.data.responseCode !== '100') return;
+    if (!resp.data || resp.data.responseCode !== '100') {
+      return notification({
+        id: 'error',
+        heading: 'Oops! Something went wrong',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      });
+    }
 
-    console.log(resp.data);
+    return notification({
+      id: 'success',
+      heading: `Tenant ${activate ? 'activated' : 'deactivated'} successfully`,
+      text: 'Lorem ipsum dolor sit amet, consectetur adip',
+    });
   };
 
   return (

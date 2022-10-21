@@ -466,7 +466,7 @@ function Organisationlist() {
                     <th>
                       <input
                         type='checkbox'
-                        className='checkbox'
+                        className='checkbox white'
                         id='remember'
                         checked={
                           selected.length === currentPosts.length &&

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import ActivateModal from '../modal/activate';
-import DeactivateModal from '../modal/deactivate';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import ActivateModal from "../modal/activate";
+import DeactivateModal from "../modal/deactivate";
 
-import axios from '../../../utils/axios';
+import axios from "../../../utils/axios";
 
-import { useTenantsCtx } from '../../../contexts';
-import notification from '../../../utils/notification';
+import { useTenantsCtx } from "../../../contexts";
+import notification from "../../../utils/notification";
 
-import TransactionSummary from './components/transaction-summary';
-import ServiceList from './components/service-list';
-import StockPosition from './components/stock-position';
-import Clients from './components/clients';
+import TransactionSummary from "./components/transaction-summary";
+import ServiceList from "./components/service-list";
+import StockPosition from "./components/stock-position";
+import Clients from "./components/clients";
 
 function SingleTenant() {
   // Remember to fetch Organization list from context
   const { id } = useParams();
-  localStorage.setItem('fetchId', id);
+  localStorage.setItem("fetchId", id);
   const { tenants } = useTenantsCtx();
 
   const [client, setClient] = useState([]);
@@ -82,19 +82,19 @@ function SingleTenant() {
       value: value,
     });
 
-    if (!response.data || response.data.responseCode !== '100') {
+    if (!response.data || response.data.responseCode !== "100") {
       return notification({
-        id: 'error',
-        heading: 'Oops! Something went wrong',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        id: "error",
+        heading: "Oops! Something went wrong",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
       });
     }
 
     await fetchServiceListInfo();
     notification({
-      id: 'success',
-      heading: 'Service List updated successfully',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      id: "success",
+      heading: "Service List updated successfully",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     });
     closeModal();
   };
@@ -103,7 +103,7 @@ function SingleTenant() {
   const fetchClientGraph = async () => {
     const res = await axios.get(`client/graph/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setClient(res.data);
 
@@ -118,7 +118,7 @@ function SingleTenant() {
   const fetchClientTransactions = async () => {
     const res = await axios.get(`transaction/summary/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
     console.log(res.data);
     setTransaction(res.data.data);
   };
@@ -126,7 +126,7 @@ function SingleTenant() {
   const fetchServiceListInfo = async () => {
     const res = await axios.get(`tenant/info/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setService(res.data.data);
 
@@ -138,7 +138,7 @@ function SingleTenant() {
   const fetchStockPositon = async () => {
     const res = await axios.get(`stock/position/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setSummary(res.data);
     console.log(res.data);
@@ -147,34 +147,34 @@ function SingleTenant() {
   const fetchWarehouseList = async () => {
     const res = await axios.get(`tenant/warehouses/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setWarehouseList(res.data.data);
-    console.log('here ', res.data);
+    console.log("here ", res.data);
   };
 
   const fetchLocationList = async () => {
     const res = await axios.get(`tenant/location/list/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setLocationList(res.data.data);
-    console.log('here ', res.data);
+    console.log("here ", res.data);
   };
 
   const fetchItemList = async () => {
     const res = await axios.get(`tenant/items/${id}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setItemList(res.data.data);
-    console.log('here ', res.data);
+    console.log("here ", res.data);
   };
 
   const handleWarehouseFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?warehouse=${myId}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setTransaction(res.data.data);
     console.log(res.data.data);
@@ -183,7 +183,7 @@ function SingleTenant() {
   const handleLocationFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?location=${myId}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setTransaction(res.data.data);
     console.log(myId);
@@ -192,7 +192,7 @@ function SingleTenant() {
   const handleItemFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?item=${myId}`);
 
-    if (!res.data || res.data.responseCode !== '100') return;
+    if (!res.data || res.data.responseCode !== "100") return;
 
     setTransaction(res.data.data);
     console.log(myId);
@@ -237,7 +237,7 @@ function SingleTenant() {
 
         <div className='flex gap-3 rounded-lg items-center text-[12px] text-[#38CB89]'>
           <div>
-            {org.is_active === 'True' ? (
+            {org.is_active === "True" ? (
               <button
                 className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                 onClick={() => {

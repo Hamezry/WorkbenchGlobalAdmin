@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ActivateModal from "../modal/activate";
 import DeactivateModal from "../modal/deactivate";
+import { Tabs } from "@mantine/core";
 
 import axios from "../../../utils/axios";
 
@@ -10,7 +11,7 @@ import notification from "../../../utils/notification";
 
 import TransactionSummary from "./components/transaction-summary";
 import ServiceList from "./components/service-list";
-import StockPosition from "./components/stock-position";
+import Table from "./components/positions-table";
 import Clients from "./components/clients";
 
 function SingleTenant() {
@@ -26,6 +27,10 @@ function SingleTenant() {
   const [warehouseList, setWarehouseList] = useState([]);
   const [locationList, setLocationList] = useState([]);
   const [itemList, setItemList] = useState([]);
+  const [title, setTitle] = useState("Stock");
+  const [input, setInput] = useState([]);
+
+  const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
 
   const [userCount, setUserCount] = useState(true);
   const [storageCount, setStorageCount] = useState(false);
@@ -36,8 +41,13 @@ function SingleTenant() {
 
   const [viewActivate, setViewActivate] = useState(false);
   const [viewDeactivate, setViewDeactivate] = useState(false);
-  const modalData = org.id;
+  // const modalData = org.id;
+  const tenantInputPosition = async () => {
+    const respI = await axios.get(`input/position/${id}`);
 
+    if (!respI.data || respI.data.responseCode !== "100") return;
+    setInput(respI.data.data);
+  };
   //SERVICE TOGGLE BUTTON FUNCTIONS
   const [switch_list, setSwitchList] = useState({
     accounting_setting: false,
@@ -76,7 +86,6 @@ function SingleTenant() {
    * @param {'True' | 'False'} value
    */
   const change_status = async (setting, value) => {
-    console.log(switch_list);
     const response = await axios.post(`tenant/update/setting/${id}`, {
       setting: setting,
       value: value,
@@ -119,7 +128,6 @@ function SingleTenant() {
     const res = await axios.get(`transaction/summary/${id}`);
 
     if (!res.data || res.data.responseCode !== "100") return;
-    console.log(res.data);
     setTransaction(res.data.data);
   };
 
@@ -140,8 +148,7 @@ function SingleTenant() {
 
     if (!res.data || res.data.responseCode !== "100") return;
 
-    setSummary(res.data);
-    console.log(res.data);
+    setSummary(res.data.data);
   };
 
   const fetchWarehouseList = async () => {
@@ -150,7 +157,6 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== "100") return;
 
     setWarehouseList(res.data.data);
-    console.log("here ", res.data);
   };
 
   const fetchLocationList = async () => {
@@ -159,7 +165,6 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== "100") return;
 
     setLocationList(res.data.data);
-    console.log("here ", res.data);
   };
 
   const fetchItemList = async () => {
@@ -168,7 +173,6 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== "100") return;
 
     setItemList(res.data.data);
-    console.log("here ", res.data);
   };
 
   const handleWarehouseFilter = async (myId) => {
@@ -177,7 +181,6 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== "100") return;
 
     setTransaction(res.data.data);
-    console.log(res.data.data);
   };
 
   const handleLocationFilter = async (myId) => {
@@ -186,7 +189,6 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== "100") return;
 
     setTransaction(res.data.data);
-    console.log(myId);
   };
 
   const handleItemFilter = async (myId) => {
@@ -195,10 +197,12 @@ function SingleTenant() {
     if (!res.data || res.data.responseCode !== "100") return;
 
     setTransaction(res.data.data);
-    console.log(myId);
   };
 
   useEffect(() => {
+    //input postion call
+    tenantInputPosition();
+
     //CLIENT API CALL
     fetchClientGraph();
 
@@ -241,7 +245,6 @@ function SingleTenant() {
               <button
                 className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                 onClick={() => {
-                  console.log(modalData);
                   setViewDeactivate(true);
                 }}>
                 De-activate
@@ -250,7 +253,6 @@ function SingleTenant() {
               <button
                 className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
                 onClick={() => {
-                  console.log(modalData);
                   setViewActivate(true);
                 }}>
                 Activate
@@ -294,7 +296,47 @@ function SingleTenant() {
           />
         </div>
 
-        <StockPosition stock={summary?.data} />
+        <div className='w-[35%] flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 overflow-y-auto relative'>
+          <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative h-full'>
+            {" "}
+            <div className='mb-2  p-4'>
+              <h2 className='text-xl'>Overall {title} Position</h2>
+            </div>
+            <Tabs
+              defaultValue='commodities'
+              color='green'
+              onTabChange={(value) => setCurrentlyDisplayed(null)}>
+              <Tabs.List>
+                <Tabs.Tab value='commodities' onClick={() => setTitle("Stock")}>
+                  Stock
+                </Tabs.Tab>
+                <Tabs.Tab value='inputs' onClick={() => setTitle("Inputs")}>
+                  Inputs
+                </Tabs.Tab>
+              </Tabs.List>
+
+              <Tabs.Panel value='commodities' pt='xs'>
+                <Table
+                  data={summary}
+                  headers={["Commodity", "Grade", "Volume(MT)", "Lien(MT)"]}
+                  title='commodities'
+                  currentlyDisplayed={currentlyDisplayed}
+                  setCurrentlyDisplayed={setCurrentlyDisplayed}
+                />
+              </Tabs.Panel>
+
+              <Tabs.Panel value='inputs' pt='xs'>
+                <Table
+                  data={input}
+                  headers={["Input", "Lien units", "Units"]}
+                  title='inputs'
+                  currentlyDisplayed={currentlyDisplayed}
+                  setCurrentlyDisplayed={setCurrentlyDisplayed}
+                />
+              </Tabs.Panel>
+            </Tabs>
+          </div>
+        </div>
       </div>
 
       {/* Modals */}

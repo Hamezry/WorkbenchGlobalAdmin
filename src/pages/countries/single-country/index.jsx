@@ -114,7 +114,7 @@ function Country() {
         <div className='w-[35%] flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 overflow-y-auto relative'>
           <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative h-full'>
             <div className='mb-2  p-4'>
-              <h1 className='text-xl'>Overall {title} Position</h1>
+              <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
             <div className='w-full'>
               <Tabs
@@ -124,8 +124,8 @@ function Country() {
                 <Tabs.List>
                   <Tabs.Tab
                     value='commodities'
-                    onClick={() => setTitle("Commodities")}>
-                    Commodities
+                    onClick={() => setTitle("Stock")}>
+                    Stock
                   </Tabs.Tab>
                   <Tabs.Tab value='inputs' onClick={() => setTitle("Inputs")}>
                     Inputs

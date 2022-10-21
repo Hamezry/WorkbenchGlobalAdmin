@@ -31,7 +31,7 @@ const AdminTable = ({ list, id }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [state_id, setStateId] = useState(0);
 
-  const settingModal = async ({
+  const settingModal = ({
     pk = state_id,
     center = coordinates ? coordinates[0] : null,
     refresh = false,
@@ -100,8 +100,8 @@ const AdminTable = ({ list, id }) => {
       });
   };
   useEffect(() => {
-    const fetchLgas = async () => {
-      await request
+    const fetchLgas = () => {
+      request
         .get(`lgas`)
         .then((res) => {
           let temp = {};
@@ -121,7 +121,7 @@ const AdminTable = ({ list, id }) => {
           });
           setLgas(temp);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {});
     };
     Object.keys(lgas).length === 0 && fetchLgas();
     // eslint-disable-next-line

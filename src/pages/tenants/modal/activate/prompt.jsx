@@ -1,5 +1,5 @@
 import React from 'react';
-import ladyIcon from '../../../../Assets/ladyicon.svg';
+import ladyIcon from '../../../../Assets/shocked.svg';
 import axios from '../../../../utils/axios';
 
 import { useTenantsCtx } from '../../../../contexts';

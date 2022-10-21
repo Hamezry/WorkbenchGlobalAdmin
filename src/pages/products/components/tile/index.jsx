@@ -4,6 +4,8 @@ import { Skeleton } from '@mantine/core';
 import { HiChartBar, HiOutlineArrowUpRight } from 'react-icons/hi2';
 import { useProductsCtx } from '../../../../contexts';
 
+import { commaFormatter } from '../../../../utils/formatter';
+
 const GlobalProductTile = () => {
   const { cardData, dataLoaded } = useProductsCtx();
 
@@ -13,10 +15,6 @@ const GlobalProductTile = () => {
       month: 'long',
       year: 'numeric',
     });
-  };
-
-  const formatter = (value) => {
-    return Intl.NumberFormat('en-US').format(Number(value));
   };
 
   return (
@@ -33,7 +31,7 @@ const GlobalProductTile = () => {
               <div className='flex flex-col space-y-8'>
                 <p className=' text-[#47494E] text-[16px] pt-3'>Products</p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.total_products.value)}
+                  {commaFormatter(cardData.total_products.value)}
                 </span>
               </div>
               <span className='bg-[#FA5A7D] rounded-full p-4 flex items-center justify-center'>
@@ -51,7 +49,7 @@ const GlobalProductTile = () => {
                 <p className='text-sm space-x-4 flex items-center'>
                   <span>Certified Products: </span>
                   <span>
-                    {formatter(cardData.total_products.certified_products)}
+                    {commaFormatter(cardData.total_products.certified_products)}
                   </span>
                 </p>
               </p>
@@ -69,7 +67,7 @@ const GlobalProductTile = () => {
               <div className='flex flex-col space-y-8'>
                 <p className=' text-[#47494E] text-[16px] pt-3'>Commodity</p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.commodities.value)}
+                  {commaFormatter(cardData.commodities.value)}
                 </span>
               </div>
               <span className='bg-[#ff5630] rounded-full p-4 flex items-center justify-center'>
@@ -103,7 +101,7 @@ const GlobalProductTile = () => {
               <div className='flex flex-col space-y-8'>
                 <p className=' text-[#47494E] text-[16px] pt-3'>Input</p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.inputs.value)}
+                  {commaFormatter(cardData.inputs.value)}
                 </span>
               </div>
               <span className='bg-[#559BB1] rounded-full p-4 flex items-center justify-center'>
@@ -137,7 +135,7 @@ const GlobalProductTile = () => {
               <div className='flex flex-col space-y-8'>
                 <p className=' text-[#47494E] text-[16px] pt-3'>Fees</p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.fees.value)}
+                  {commaFormatter(cardData.fees.value)}
                 </span>
               </div>
               <span className='bg-[#3F6A83] rounded-full p-4 flex items-center justify-center'>

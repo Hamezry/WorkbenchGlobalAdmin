@@ -20,7 +20,6 @@ function Activate({ setViewActivate, modalData }) {
         refreshContext();
       })
       .catch((err) => {
-        console.log(err);
         customNotification({
           heading: 'Oops! Something went wrong',
           id: 'error',
@@ -30,18 +29,20 @@ function Activate({ setViewActivate, modalData }) {
   };
 
   return (
-    <div className='bg-[#FFFFFF] flex flex-col items-center absolute w-[500px] h-[420px] left-[35%] mt-[10%] rounded-3xl px-6'>
+    <div
+      className='bg-[#FFFFFF] flex flex-col items-center absolute w-[500px] rounded-3xl px-6'
+      onClick={(e) => e.stopPropagation()}>
       <div className='flex flex-col gap-5 mb-6 mt-14 items-center p-1 text-center'>
         <img src={ladyIcon} alt='' className='h-[150px]' />
         <p>Are you sure you want to activate this Account.</p>
         <span className='text-[#9FA19C] text-[14px]'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget
-          porttitor ultricies mauris et lobortis. Tristique pellentesque
+          porttitor
         </span>
 
-        <div className='flex mx-auto  gap-4 items-center '>
+        <div className='flex w-full gap-4 items-center pt-4 '>
           <button
-            className='flex justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] h-[50px] w-full p-4'
+            className='flex w-full justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] p-4 hover:ring-1 hover:ring-gray-500'
             onClick={() => {
               setViewActivate(false);
             }}>
@@ -49,7 +50,7 @@ function Activate({ setViewActivate, modalData }) {
           </button>
 
           <button
-            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-full p-4'
+            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-afexgreen w-full p-4 hover:ring-1 hover:ring-afexgreen hover:bg-white hover:text-afexgreen '
             onClick={() => {
               setViewActivate(false);
               changeStatus();

@@ -3,7 +3,7 @@ import { Skeleton } from '@mantine/core';
 import { HiOutlineArrowUpRight, HiOutlineFingerPrint } from 'react-icons/hi2';
 
 import { useCountriesCtx } from '../../../../contexts';
-import { formatter } from '../../../../utils/formatNumber';
+import { decimalFormatter } from '../../../../utils/formatter';
 
 const getPercentageDifference = (current, previous) => {
   return (((current - previous) / previous) * 100).toFixed(2);
@@ -187,7 +187,7 @@ const CountryTile = () => {
                   Total GRN Raised
                 </p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.total_grn)} MT
+                  {decimalFormatter(cardData.total_grn)} MT
                 </span>
               </div>
               <svg
@@ -256,7 +256,9 @@ const CountryTile = () => {
                 <span className=' bg-[#e7eff1] p-1 rounded-full'>
                   <HiOutlineFingerPrint className=' text-[#559BB1] text-base font-bold' />
                 </span>
-                <span className='text-sm'>10 countries active</span>
+                <span className='text-sm'>
+                  {cardData.total_countries} / 198 active countries
+                </span>
               </p>
             </div>
           </div>

@@ -1,35 +1,40 @@
 import { useState } from 'react';
+import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
-import axios from '../../utils/axios';
 import { useAuth } from '../../contexts';
+import axios from '../../utils/axios';
+import Button from '../../components/Button';
+import TextInput from '../../components/TextInput';
+import notification from '../../utils/notification';
 
 import logo from '../../Assets/afex-logo.png';
 import background from '../../Assets/backround.png';
-import Button from '../../components/Button';
 
 function Login() {
   const { signin } = useAuth();
-  const [user, setUser] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (values) => {
     setLoading(true);
-    e.preventDefault();
+    const resp = await axios.post('api-token-auth/', values);
 
-    const resp = await axios.post('api-token-auth/', {
-      username: user,
-      password: password,
-    });
-
-    if (!resp.data || resp.data.responseCode !== '100') return;
+    if (!resp.data || resp.data.responseCode !== '100') {
+      notification({
+        id: 'error',
+        heading: 'Login attempt failed!!!',
+        text: resp.data.errors.non_field_errors[0],
+      });
+      setLoading(false);
+      return;
+    }
 
     setLoading(false);
     signin(resp.data.token);
   };
 
   return (
-    <div className='flex w-full h-[100vh] z-50 fixed top-0 left-0 bg-white'>
+    <div className='flex w-full h-[100vh] z-50 fixed top-0 left-0 bg-[#F5F5F5]'>
       <img src={background} alt='bg' className='w-1/2' />
 
       <div className='bg[#F5F5F5] w-1/2'>
@@ -41,42 +46,36 @@ function Login() {
         <div className='w-[500px] ml-[150px] mt-[100px] p-8 rounded-xl '>
           <h1 className='text-[#54565B] text-[28px] font-medium'>Login</h1>
 
-          <form className='my-10' onSubmit={handleSubmit}>
-            <div className='flex flex-col space-y-5'>
-              <label>
-                <p className='text-[14px] text-[#54565B] pb-2'>Username</p>
-                <input
-                  value={user}
-                  onChange={(e) => setUser(e.target.value)}
-                  id='user'
-                  name='user'
-                  type='text'
-                  className='w-full py-3 border text-[#9FA19C] text-[14px] rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
-                  placeholder='Username'
-                />
-              </label>
-
-              <label>
-                <p className='font-medium text-slate-700 pb-2'>Password</p>
-                <input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  id='password'
-                  name='password'
-                  type='password'
-                  className='w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow'
-                  placeholder='...........'
-                />
-              </label>
-
-              <div className='flex flex-row justify-between'>
-                <div>
-                  <label>
-                    <input
-                      type='checkbox'
-                      id='remember'
-                      className='w-4 h-4 border-slate-200 focus:bg-green-400'
-                    />
+          <Formik
+            initialValues={{ username: '', password: '' }}
+            onSubmit={handleSubmit}
+            validationSchema={Yup.object({
+              username: Yup.string().required('Username is required'),
+              password: Yup.string().required('Password is required'),
+            })}>
+            <Form className='my-10 space-y-5'>
+              <TextInput
+                label='Username'
+                id='username'
+                name='username'
+                type='text'
+                placeholder='Username'
+              />
+              <TextInput
+                label='Password'
+                id='password'
+                name='password'
+                type='password'
+                placeholder='xxxxxxxxxxx'
+              />
+              <div className='flex flex-row justify-between items-center'>
+                <div className='flex items-center'>
+                  <input
+                    type='checkbox'
+                    id='remember'
+                    className='checkbox white'
+                  />
+                  <label className='ml-2' htmlFor='remember'>
                     Remember me
                   </label>
                 </div>
@@ -84,15 +83,13 @@ function Login() {
                   <p className='font-medium text-[#38CB89]'>Forgot Password?</p>
                 </div>
               </div>
-
               <Button text='Submit' loading={loading} type='submit' />
-
-              <p className='text-center'>
-                Create an account for your organization <br />{' '}
-                <span>Data Privacy Policy</span>
-              </p>
-            </div>
-          </form>
+            </Form>
+          </Formik>
+          <p className='text-center flex flex-col'>
+            <span>Create an account for your organization </span>
+            <span>Data Privacy Policy</span>
+          </p>
         </div>
       </div>
     </div>

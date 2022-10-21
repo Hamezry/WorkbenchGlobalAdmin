@@ -1,7 +1,7 @@
 import React from 'react';
 import RadialBar from './chart';
 
-const Clients = ({ clients, overallCount }) => {
+const Clients = ({ clients }) => {
   return (
     <div className='bg-[#FFFF] p-3 rounded-3xl w-full'>
       <div className='mb-3 border-b text-[20px] border-gray-200 p-5'>

@@ -12,7 +12,7 @@
   background-color: rgb(233, 230, 230);
 }
 
-.sidebar a[aria-current="page"] svg path {
+.sidebar a[aria-current='page'] svg path {
   fill: #38cb89;
 }
 
@@ -33,7 +33,7 @@
   background-color: transparent;
   color: #38cb89;
 }
-.mantine-Calendar-day[data-selected="true"] {
+.mantine-Calendar-day[data-selected='true'] {
   background-color: #38cb89;
 }
 .mantine-Pagination-item:first-child,
@@ -84,20 +84,23 @@ li.selected {
   cursor: pointer;
 }
 .checkbox::before {
-  content: "";
+  content: '';
   position: absolute;
-  top: 50%;
   left: 0;
-  transform: translateY(10%);
-  height: 20px;
-  width: 20px;
-  background-color: #f1f2f3;
+  transform: translateY(12%);
+  height: 22px;
+  width: 22px;
+  background-color: #f9f9fb;
   border-radius: 5px;
+}
+.checkbox.white::before {
+  background-color: #fff;
 }
 .checkbox:checked::before {
   background-color: #38cb89;
-  content: url("./Assets/check.svg");
-  padding-left: 3px;
+  content: url('./Assets/check.svg');
+  padding-top: 3px;
+  padding-left: 5px;
 }
 .mantine-vqs8oh {
   top: 10px;

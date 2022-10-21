@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import customNotification from "../../../../../utils/notification";
 import request from "../../../../../utils/axios";
 import MapModal from "./components/map-modal";
 
@@ -35,7 +36,7 @@ const AdminTable = ({ list, id }) => {
     center = coordinates ? coordinates[0] : null,
     refresh = false,
   }) => {
-    await request
+    request
       .get(`admin/levels/${pk}/locations`)
       .then((res) => {
         const temp = [];
@@ -90,7 +91,11 @@ const AdminTable = ({ list, id }) => {
         }
       })
       .catch((e) => {
-        console.log("error getting modal", pk, e);
+        customNotification({
+          heading: "Oops! Something went wrong",
+          id: "error",
+          text: e.message,
+        });
         setOpened(false);
       });
   };

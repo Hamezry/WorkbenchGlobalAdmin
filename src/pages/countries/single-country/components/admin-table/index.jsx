@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import customNotification from "../../../../../utils/notification";
-import request from "../../../../../utils/axios";
-import MapModal from "./components/map-modal";
+import customNotification from '../../../../../utils/notification';
+import request from '../../../../../utils/axios';
+import MapModal from './components/map-modal';
 
-import "./index.css";
+import './index.css';
 
 const AdminTable = ({ list, id }) => {
   const defaultModalData = {
     title: null,
     position: {
-      lat: "",
-      lng: "",
+      lat: '',
+      lng: '',
     },
     state_id: 0,
     data: [],
   };
   const defaultLocation = {
-    name: "",
+    name: '',
     state: 0,
     lgas: [],
   };
@@ -50,7 +50,7 @@ const AdminTable = ({ list, id }) => {
           };
           item.lgas.forEach((innerItem) => {
             tempExtras.data.push({
-              date: "Sept 1, 2022",
+              date: 'Sept 1, 2022',
               lga: innerItem.name,
               wards: innerItem.no_of_wards,
             });
@@ -60,7 +60,7 @@ const AdminTable = ({ list, id }) => {
             exchange_location: item.name,
             lgas: item.no_of_lgas,
             wards: item.no_of_wards,
-            action: "update",
+            action: 'update',
             extras: tempExtras,
             code: item.code,
             pk: item.pk,
@@ -92,8 +92,8 @@ const AdminTable = ({ list, id }) => {
       })
       .catch((e) => {
         customNotification({
-          heading: "Oops! Something went wrong",
-          id: "error",
+          heading: 'Oops! Something went wrong',
+          id: 'error',
           text: e.message,
         });
         setOpened(false);
@@ -153,7 +153,7 @@ const AdminTable = ({ list, id }) => {
         setMapLoaded={setMapLoaded}
         // showSuccessBanner={showSuccessBanner}
       />
-      <div className='overflow-y-auto  h-[330px]'>
+      <div className='overflow-y-auto h-[430px]'>
         <div className='px-5 overflow-y-auto mt-4 '>
           <table className='w-full  '>
             <thead className='sticky top-00'>
@@ -199,8 +199,8 @@ const AdminTable = ({ list, id }) => {
                             center: item.coordinates
                               ? item.coordinates[0]
                               : {
-                                  lat: "",
-                                  lng: "",
+                                  lat: '',
+                                  lng: '',
                                 },
                           });
                           const newCordinates = item.coordinates

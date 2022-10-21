@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
-import Adminlist from "./components/admin-table";
-import NoAdminLevel from "./components/no-admin";
-import People from "./components/people";
-import Table from "./components/position-table/table";
+import Adminlist from './components/admin-table';
+import NoAdminLevel from './components/no-admin';
+import People from './components/people';
+import Table from './components/position-table/table';
 
-import axios from "../../../utils/axios";
-import { useCountriesCtx } from "../../../contexts";
-import { Tabs } from "@mantine/core";
+import axios from '../../../utils/axios';
+import { useCountriesCtx } from '../../../contexts';
+import { Tabs } from '@mantine/core';
 
 function Country() {
   const { id } = useParams();
@@ -19,7 +19,7 @@ function Country() {
   const [stock, setStock] = useState([]);
   const [input, setInput] = useState([]);
   const [list, setList] = useState([]);
-  const [title, setTitle] = useState("Stock");
+  const [title, setTitle] = useState('Stock');
 
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
   const totalFarmers = cardData.total_farmers;
@@ -27,25 +27,18 @@ function Country() {
   const singleTenant = singleCountry.no_of_tenants;
   const singleFarmer = singleCountry.no_of_farmers;
 
-  //Farmers calculation
-  const farmerProgress = singleFarmer / totalFarmers;
-  const farmerValue = farmerProgress * 100;
-
-  //Tenants calculation
-  const tenantProgress = singleTenant / totalTenants;
-  const tenantValue = tenantProgress * 100;
   useEffect(() => {
     const countryStockPosition = async () => {
       const respS = await axios.get(`country/stock/position/${id}`);
 
-      if (!respS.data || respS.data.responseCode !== "100") return;
+      if (!respS.data || respS.data.responseCode !== '100') return;
 
       setStock(respS.data.data);
     };
     const countryInputPosition = async () => {
       const respI = await axios.get(`country/input/position/${id}`);
 
-      if (!respI.data || respI.data.responseCode !== "100") return;
+      if (!respI.data || respI.data.responseCode !== '100') return;
       console.log(respI);
       setInput(respI.data.data);
     };
@@ -53,7 +46,7 @@ function Country() {
     const countryAdminLevels = async () => {
       const resp = await axios.get(`admin/levels/${id}`);
 
-      if (!resp.data || resp.data.responseCode !== "100") return;
+      if (!resp.data || resp.data.responseCode !== '100') return;
 
       setList(resp.data.data);
     };
@@ -68,7 +61,7 @@ function Country() {
   useEffect(() => {
     const singleCountry = countries.filter((el) => el.pk === Number(id))[0];
     if (!singleCountry || countries.length === 0) {
-      return navigate("/countries");
+      return navigate('/countries');
     }
     setSingleCountry(singleCountry);
 
@@ -94,13 +87,13 @@ function Country() {
         </Link>
       </div>
 
-      <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
+      <div className='w-[100%] h-[calc[100vh-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
           <People
+            totalFarmers={totalFarmers}
+            totalTenants={totalTenants}
             singleFarmer={singleFarmer}
             singleTenant={singleTenant}
-            farmerValue={farmerValue}
-            tenantValue={tenantValue}
           />
 
           <div className='rounded-3xl w-full mt-6'>
@@ -124,10 +117,10 @@ function Country() {
                 <Tabs.List>
                   <Tabs.Tab
                     value='commodities'
-                    onClick={() => setTitle("Stock")}>
+                    onClick={() => setTitle('Stock')}>
                     Stock
                   </Tabs.Tab>
-                  <Tabs.Tab value='inputs' onClick={() => setTitle("Inputs")}>
+                  <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
                     Inputs
                   </Tabs.Tab>
                 </Tabs.List>
@@ -135,7 +128,7 @@ function Country() {
                 <Tabs.Panel value='commodities' pt='xs'>
                   <Table
                     data={stock}
-                    headers={["Commodity", "Grade", "Volume(MT)", "Lien(MT)"]}
+                    headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
                     title='commodities'
                     currentlyDisplayed={currentlyDisplayed}
                     setCurrentlyDisplayed={setCurrentlyDisplayed}
@@ -145,13 +138,13 @@ function Country() {
                 <Tabs.Panel value='inputs' pt='xs'>
                   <Table
                     data={input}
-                    headers={["Input", "Lien units", "Units"]}
+                    headers={['Input', 'Lien units', 'Units']}
                     title='inputs'
                     currentlyDisplayed={currentlyDisplayed}
                     setCurrentlyDisplayed={setCurrentlyDisplayed}
                   />
                 </Tabs.Panel>
-              </Tabs>{" "}
+              </Tabs>{' '}
             </div>
           </div>
         </div>

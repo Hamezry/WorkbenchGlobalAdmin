@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from '../../../../utils/axios';
-import ladyIcon from '../../../../Assets/ladyicon.svg';
+import ladyIcon from '../../../../Assets/shocked.svg';
 
 import { useTenantsCtx } from '../../../../contexts';
 

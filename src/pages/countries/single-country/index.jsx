@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Adminlist from "./components/admin-table";
 import NoAdminLevel from "./components/no-admin";
 import People from "./components/people";
-import Table from "./components/stock-position/table";
+import Table from "./components/position-table/table";
 
 import axios from "../../../utils/axios";
 import { useCountriesCtx } from "../../../contexts";

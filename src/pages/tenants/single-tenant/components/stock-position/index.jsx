@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { MdExpandMore } from 'react-icons/md';
-import Pagination from '../../../../../components/Pagination';
+import React, { useState, useEffect } from "react";
+import { MdExpandMore } from "react-icons/md";
+import Pagination from "../../../../../components/Pagination";
 
 const StockPosition = ({ stock }) => {
   //PAGINATION FUNCTION
@@ -91,7 +91,7 @@ const StockPosition = ({ stock }) => {
                         <div
                           className={`max-h-0 overflow-hidden flex w-full justify-end p-0 transition-[max-height] ${
                             indexToShow === index + 1
-                              ? ' max-h-64 p-3'
+                              ? " max-h-64 p-3"
                               : undefined
                           }`}>
                           <div className='flex flex-col'>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import ReactPaginate from "react-paginate";
-import { ArrowDown2, Refresh, LocationTick } from "iconsax-react";
+import { ArrowDown2 } from "iconsax-react";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
 export default function Table({
@@ -20,6 +20,7 @@ export default function Table({
     const endOffset = itemOffset + itemsPerPage;
     setCurrentList(data.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(data.length / itemsPerPage));
+    // eslint-disable-next-line
   }, [itemOffset, itemsPerPage, data]);
 
   const handlePageClick = (event) => {

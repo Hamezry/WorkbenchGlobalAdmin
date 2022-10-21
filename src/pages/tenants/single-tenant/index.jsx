@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import ActivateModal from '../modal/activate';
-import DeactivateModal from '../modal/deactivate';
+
 import { Tabs } from '@mantine/core';
-
 import axios from '../../../utils/axios';
-
 import { useTenantsCtx } from '../../../contexts';
 import notification from '../../../utils/notification';
 
+import ActivateModal from '../modal/activate';
+import DeactivateModal from '../modal/deactivate';
 import TransactionSummary from './components/transaction-summary';
 import ServiceList from './components/service-list';
 import Table from './components/positions-table';
 import Clients from './components/clients';
 
+import empty from '../../../Assets/empty.gif';
+
 function SingleTenant() {
-  // Remember to fetch Organization list from context
   const { id } = useParams();
   localStorage.setItem('fetchId', id);
   const { tenants } = useTenantsCtx();
@@ -302,39 +302,57 @@ function SingleTenant() {
             <div className='mb-2  p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
-            <Tabs
-              defaultValue='commodities'
-              color='green'
-              onTabChange={(value) => setCurrentlyDisplayed(null)}>
-              <Tabs.List>
-                <Tabs.Tab value='commodities' onClick={() => setTitle('Stock')}>
-                  Stock
-                </Tabs.Tab>
-                <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
-                  Inputs
-                </Tabs.Tab>
-              </Tabs.List>
+            {summary.length > 0 ? (
+              <Tabs
+                defaultValue='commodities'
+                color='green'
+                onTabChange={(value) => setCurrentlyDisplayed(null)}>
+                <Tabs.List>
+                  <Tabs.Tab
+                    value='commodities'
+                    onClick={() => setTitle('Stock')}>
+                    Stock
+                  </Tabs.Tab>
+                  <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
+                    Inputs
+                  </Tabs.Tab>
+                </Tabs.List>
 
-              <Tabs.Panel value='commodities' pt='xs'>
-                <Table
-                  data={summary}
-                  headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
-                  title='commodities'
-                  currentlyDisplayed={currentlyDisplayed}
-                  setCurrentlyDisplayed={setCurrentlyDisplayed}
-                />
-              </Tabs.Panel>
+                <Tabs.Panel value='commodities' pt='xs'>
+                  <Table
+                    data={summary}
+                    headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
+                    title='commodities'
+                    currentlyDisplayed={currentlyDisplayed}
+                    setCurrentlyDisplayed={setCurrentlyDisplayed}
+                  />
+                </Tabs.Panel>
 
-              <Tabs.Panel value='inputs' pt='xs'>
-                <Table
-                  data={input}
-                  headers={['Input', 'Lien units', 'Units']}
-                  title='inputs'
-                  currentlyDisplayed={currentlyDisplayed}
-                  setCurrentlyDisplayed={setCurrentlyDisplayed}
-                />
-              </Tabs.Panel>
-            </Tabs>
+                <Tabs.Panel value='inputs' pt='xs'>
+                  <Table
+                    data={input}
+                    headers={['Input', 'Lien units', 'Units']}
+                    title='inputs'
+                    currentlyDisplayed={currentlyDisplayed}
+                    setCurrentlyDisplayed={setCurrentlyDisplayed}
+                  />
+                </Tabs.Panel>
+              </Tabs>
+            ) : (
+              <div className='flex items-center  h-[70%]'>
+                <div className='gap-5 mb-6 mt-14 py-2 px-2 text-center '>
+                  <img
+                    src={empty}
+                    alt='no products gif'
+                    className='h-[150px] m-auto'
+                  />
+                  <p className='py-2'>No Records Created Yet.</p>
+                  <span className='text-[#9FA19C] text-[14px]'>
+                    There are no records logged in the database at this time.
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

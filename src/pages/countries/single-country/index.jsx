@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Tabs } from '@mantine/core';
+
+import axios from '../../../utils/axios';
+import { useCountriesCtx } from '../../../contexts';
 
 import Adminlist from './components/admin-table';
 import NoAdminLevel from './components/no-admin';
 import People from './components/people';
 import Table from './components/position-table/table';
 
-import axios from '../../../utils/axios';
-import { useCountriesCtx } from '../../../contexts';
-import { Tabs } from '@mantine/core';
+import empty from '../../../Assets/empty.gif';
 
 function Country() {
   const { id } = useParams();
@@ -27,13 +29,6 @@ function Country() {
   const singleTenant = singleCountry.no_of_tenants;
   const singleFarmer = singleCountry.no_of_farmers;
 
-  //Farmers calculation
-  const farmerProgress = singleFarmer / totalFarmers;
-  const farmerValue = farmerProgress * 100;
-
-  //Tenants calculation
-  const tenantProgress = singleTenant / totalTenants;
-  const tenantValue = tenantProgress * 100;
   useEffect(() => {
     const countryStockPosition = async () => {
       const respS = await axios.get(`country/stock/position/${id}`);
@@ -93,13 +88,13 @@ function Country() {
         </Link>
       </div>
 
-      <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
+      <div className='w-[100%] h-[calc[100vh-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
           <People
+            totalFarmers={totalFarmers}
+            totalTenants={totalTenants}
             singleFarmer={singleFarmer}
             singleTenant={singleTenant}
-            farmerValue={farmerValue}
-            tenantValue={tenantValue}
           />
 
           <div className='rounded-3xl w-full mt-6'>
@@ -115,43 +110,60 @@ function Country() {
             <div className='mb-2  p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
-            <div className='w-full'>
-              <Tabs
-                defaultValue='commodities'
-                color='green'
-                onTabChange={(value) => setCurrentlyDisplayed(null)}>
-                <Tabs.List>
-                  <Tabs.Tab
-                    value='commodities'
-                    onClick={() => setTitle('Stock')}>
-                    Stock
-                  </Tabs.Tab>
-                  <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
-                    Inputs
-                  </Tabs.Tab>
-                </Tabs.List>
 
-                <Tabs.Panel value='commodities' pt='xs'>
-                  <Table
-                    data={stock}
-                    headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
-                    title='commodities'
-                    currentlyDisplayed={currentlyDisplayed}
-                    setCurrentlyDisplayed={setCurrentlyDisplayed}
-                  />
-                </Tabs.Panel>
+            {stock.length > 0 ? (
+              <div className='w-full'>
+                <Tabs
+                  defaultValue='commodities'
+                  color='green'
+                  onTabChange={(value) => setCurrentlyDisplayed(null)}>
+                  <Tabs.List>
+                    <Tabs.Tab
+                      value='commodities'
+                      onClick={() => setTitle('Stock')}>
+                      Stock
+                    </Tabs.Tab>
+                    <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
+                      Inputs
+                    </Tabs.Tab>
+                  </Tabs.List>
 
-                <Tabs.Panel value='inputs' pt='xs'>
-                  <Table
-                    data={input}
-                    headers={['Input', 'Lien units', 'Units']}
-                    title='inputs'
-                    currentlyDisplayed={currentlyDisplayed}
-                    setCurrentlyDisplayed={setCurrentlyDisplayed}
+                  <Tabs.Panel value='commodities' pt='xs'>
+                    <Table
+                      data={stock}
+                      headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
+                      title='commodities'
+                      currentlyDisplayed={currentlyDisplayed}
+                      setCurrentlyDisplayed={setCurrentlyDisplayed}
+                    />
+                  </Tabs.Panel>
+
+                  <Tabs.Panel value='inputs' pt='xs'>
+                    <Table
+                      data={input}
+                      headers={['Input', 'Lien units', 'Units']}
+                      title='inputs'
+                      currentlyDisplayed={currentlyDisplayed}
+                      setCurrentlyDisplayed={setCurrentlyDisplayed}
+                    />
+                  </Tabs.Panel>
+                </Tabs>{' '}
+              </div>
+            ) : (
+              <div className='flex items-center  h-[70%]'>
+                <div className='gap-5 mb-6 mt-14 py-2 px-2 text-center '>
+                  <img
+                    src={empty}
+                    alt='no products gif'
+                    className='h-[150px] m-auto'
                   />
-                </Tabs.Panel>
-              </Tabs>{' '}
-            </div>
+                  <p className='py-2'>No Records Created Yet.</p>
+                  <span className='text-[#9FA19C] text-[14px]'>
+                    There are no records logged in the database at this time.
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

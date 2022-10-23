@@ -4,7 +4,8 @@ import { InfoCircle } from 'iconsax-react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import axios from '../../../../utils/axios';
+import { ProductsAPIs } from '../../api';
+
 import { useProductsCtx } from '../../../../contexts';
 import Button from '../../../../components/Button';
 import notification from '../../../../utils/notification';
@@ -18,7 +19,7 @@ function UpdateProductmodal({ close, modalData, show }) {
 
   const handleSubmit = async (values) => {
     setLoading(true);
-    const resp = await axios.post(`product/update/${product.pk}`, values);
+    const resp = await ProductsAPIs.update_product(product.pk, values);
     if (!resp.data || resp.data.responseCode !== '100') {
       setLoading(false);
       notification({
@@ -41,7 +42,10 @@ function UpdateProductmodal({ close, modalData, show }) {
   };
 
   const handleChecked = (e) => {
-    setProduct((prev) => ({ ...prev, certified: e.target.checked }));
+    setProduct((prev) => ({
+      ...prev,
+      certified: e.target.checked ? 'True' : 'False',
+    }));
   };
 
   return (
@@ -120,7 +124,7 @@ function UpdateProductmodal({ close, modalData, show }) {
                 type='checkbox'
                 name='certified_product'
                 id='certified_product'
-                checked={product.certified}
+                checked={product.certified === 'True' ? true : false}
                 onChange={handleChecked}
                 className='checkbox'
               />

@@ -76,7 +76,7 @@ function Country() {
           <img
             src={singleCountry.country_flag}
             alt={singleCountry.name}
-            className='w-[25px] rounded'
+            className='w-8 h-5'
           />
           <p>{singleCountry.name}</p>
         </div>
@@ -150,17 +150,17 @@ function Country() {
                 </Tabs>{' '}
               </div>
             ) : (
-              <div className='flex items-center  h-[70%]'>
-                <div className='gap-5 mb-6 mt-14 py-2 px-2 text-center '>
+              <div className='flex items-center h-[70%]'>
+                <div className='flex flex-col items-center py-2 px-6 text-center space-y-4 '>
                   <img
                     src={empty}
                     alt='no products gif'
-                    className='h-[150px] m-auto'
+                    className='h-[150px]'
                   />
-                  <p className='py-2'>No Records Created Yet.</p>
-                  <span className='text-[#9FA19C] text-[14px]'>
+                  <p>No Records Created Yet.</p>
+                  <p className='text-[#9FA19C] text-[14px]'>
                     There are no records logged in the database at this time.
-                  </span>
+                  </p>
                 </div>
               </div>
             )}

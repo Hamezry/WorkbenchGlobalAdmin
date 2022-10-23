@@ -464,7 +464,7 @@ function Organisationlist() {
           <div className='h-full'>
             <div className='h-[calc(100%-theme(space.36))] overflow-auto w-full pb-20'>
               <table className='overflow-auto w-full align-top text-[#54565B] text-[14px]'>
-                <thead className='bg-gray-100 sticky top-0 text-left whitespace-nowrap z-5'>
+                <thead className='bg-gray-100 sticky top-0 text-left whitespace-nowrap z-[5]'>
                   <tr className='child:py-4 child:px-6 child:cursor-default child:align-middle'>
                     <th>
                       <input
@@ -557,7 +557,7 @@ function Organisationlist() {
                         <td className='py-4 px-4 mr-10 w-[150px]'>
                           <span className='font-medium '>{item.location}</span>
                         </td>
-                        <td className='py-4 px-4 w-[100px]'>
+                        <td className='py-4 px-4 max-w-[250px] overflow-hidden text-ellipsis'>
                           <span className='font-medium '>{item.email}</span>
                         </td>
 

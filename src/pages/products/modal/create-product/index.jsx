@@ -4,7 +4,8 @@ import { InfoCircle } from 'iconsax-react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import axios from '../../../../utils/axios';
+import { ProductsAPIs } from '../../api';
+
 import { useProductsCtx } from '../../../../contexts';
 import Button from '../../../../components/Button';
 import notification from '../../../../utils/notification';
@@ -24,7 +25,7 @@ function CreateProductModal({ show, close }) {
 
   const handleSubmit = async (values) => {
     setLoading(true);
-    const resp = await axios.post('create-product', values);
+    const resp = await ProductsAPIs.create_product(values);
 
     if (!resp.data || resp.data.responseCode !== '100') {
       setLoading(false);

@@ -7,6 +7,8 @@ import { ArrowDown2 } from 'iconsax-react';
 
 import filterIcon from '../Assets/filter2.svg';
 
+import { capitalizeWords } from '../utils/formatter';
+
 /**
  *
  * filterObj is a state of type object
@@ -125,7 +127,12 @@ export function SideFilter({ filterObj, setFilterObj, show, close, data }) {
                 onClick={() =>
                   toggle_links(Object.keys(category)[0].toLowerCase())
                 }>
-                <span className='capitalize'>{Object.keys(category)[0]} </span>
+                <span
+                  className={`transition ${
+                    dropdown[Object.keys(category)[0]] && 'text-afexgreen'
+                  }`}>
+                  {capitalizeWords(Object.keys(category)[0])}
+                </span>
                 <ArrowDown2
                   size={16}
                   className={`transiton duration-300 ${
@@ -134,7 +141,7 @@ export function SideFilter({ filterObj, setFilterObj, show, close, data }) {
                 />
               </div>
               <ul
-                className={`max-h-0 overflow-hidden transition[max-height] duration-300 space-y-5 ${
+                className={`max-h-0 overflow-auto transition[max-height] duration-300 space-y-5 ${
                   dropdown[Object.keys(category)[0]]
                     ? 'max-h-60  py-3'
                     : undefined

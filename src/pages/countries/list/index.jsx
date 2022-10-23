@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { Filter } from 'iconsax-react';
 
-import Navigation from "../components/navigation";
+import Navigation from '../components/navigation';
 
-import CountryTile from "../components/tile";
-import TableSelect from "../../../components/TableSelect";
-import filterIcon from "../../../Assets/green-filter.svg";
-import Pagination from "../../../components/Pagination";
-import { useCountriesCtx } from "../../../contexts";
+import CountryTile from '../components/tile';
+import TableSelect from '../../../components/TableSelect';
+import Pagination from '../../../components/Pagination';
+import { useCountriesCtx } from '../../../contexts';
 
 function Countrylist() {
   const { countries } = useCountriesCtx();
@@ -27,8 +27,6 @@ function Countrylist() {
       el.name.toLowerCase().includes(value.toLowerCase())
     );
     setPosts(res);
-
-    setItemsOffset(0);
   };
 
   const handlePageChange = (e) => {
@@ -42,7 +40,7 @@ function Countrylist() {
    * @returns
    */
   const formatAvailableCommodities = (commodites) => {
-    return commodites.split(" ").slice(0, 6).join(" ");
+    return commodites.split(' ').slice(0, 6).join(' ');
   };
 
   const populate = () => {
@@ -73,21 +71,21 @@ function Countrylist() {
           <div className='flex flex-col gap-1 bg-[#FFFF] h-[100%] rounded-3xl w-[100%] py-3 px-8'>
             <div className='flex justify-between p-3 border-b-2'>
               <p>Country List</p>
-              <div className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
-                <img src={filterIcon} alt='funnel' />
-                <button>Filter</button>
-              </div>
+              <button className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4 hover:bg-afexgreen hover:text-white'>
+                <Filter variant='Bold' size={17} />
+                <span>Filter</span>
+              </button>
             </div>
 
             <div className='flex justify-between items-center pl-5 gap-5'>
               <TableSelect
-                defaultValue={"7 entries"}
+                defaultValue={'7 entries'}
                 updateValue={setPostsPerPage}
                 data={[
-                  { value: 7, label: "7 entries" },
-                  { value: 20, label: "20 entries" },
-                  { value: 100, label: "100 entries" },
-                  { value: 500, label: "500 entries" },
+                  { value: 7, label: '7 entries' },
+                  { value: 20, label: '20 entries' },
+                  { value: 100, label: '100 entries' },
+                  { value: 500, label: '500 entries' },
                 ]}
                 className='text-sm'
               />
@@ -105,10 +103,10 @@ function Countrylist() {
                   </span>
                 </div>
 
-                <div className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4'>
-                  <img src={filterIcon} alt='funnel' />
-                  <button>Select Action</button>
-                </div>
+                <button className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4 hover:bg-afexgreen hover:text-white'>
+                  <Filter variant='Bold' size={17} />
+                  <span>Select Action</span>
+                </button>
               </div>
             </div>
 
@@ -144,7 +142,7 @@ function Countrylist() {
                             <div className='flex gap-3'>
                               <img
                                 src={item.country_flag}
-                                className='w-[22px] rounded'
+                                className='w-[22px] h-[22px] object-contain rounded'
                                 alt={item.name}
                               />
                               <span className='font-medium '>{item.name}</span>

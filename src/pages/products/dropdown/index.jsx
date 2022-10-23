@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { Popover } from '@mantine/core';
 import { BsThreeDots } from 'react-icons/bs';
 
+import { ProductsAPIs } from '../api';
+
 import UpdateProductModal from '../modal/update-product';
 import DeactivateProductmodal from '../modal/deactivate';
 
-import axios from '../../../utils/axios';
 import notifcation from '../../../utils/notification';
 
 const changeStatus = async (pk) => {
-  const resp = await axios.get(`product/change/status/${pk}`);
+  const resp = await ProductsAPIs.deactivate_product(pk);
+
   if (!resp.data || !resp.data.responseCode) {
     notifcation({
       heading: 'Oops! Something went wrong',

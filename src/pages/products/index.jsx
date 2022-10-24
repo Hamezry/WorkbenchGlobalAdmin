@@ -15,7 +15,7 @@ import TableSelect from '../../components/TableSelect';
 import DateModule from '../../components/Datemodule';
 import notification from '../../utils/notification';
 
-function Productlist({ openModal }) {
+function Productlist() {
   const { products } = useProductsCtx();
 
   const [posts, setPosts] = useState([]);
@@ -117,16 +117,16 @@ function Productlist({ openModal }) {
       <section className='bg-[#F9FAFB] p-10 w-full h-full relative rounded-3xl'>
         <div className='rounded-3xl p-6 pr-4 py-10 bg-white h-full relative child:px-4 space-y-3'>
           <h2
-            className='text-xl font-bold border-b-[1px] border-[#F3F3F3] pb-2 w-full block'
+            className='text-xl border-b-[1px] border-[#F3F3F3] pb-3 w-full block'
             onClick={() => setShowDate(false)}>
             Overview
           </h2>
           {/* Table Controls */}
           <div className='flex justify-between items-center gap-5 relative'>
             <div className='flex items-start gap-4 align-middle'>
-              <div className=' flex flex-1 h-full text-left self-start'>
+              <div className=' flex h-full text-left self-start'>
                 <TableSelect
-                  defaultValue={'7 entries'}
+                  defaultValue='7 entries'
                   updateValue={setPostsPerPage}
                   data={[
                     { value: 7, label: '7 entries' },
@@ -259,7 +259,6 @@ function Productlist({ openModal }) {
                             setModal={() => {
                               setModal(true);
                             }}
-                            openModal={openModal}
                             singleProduct={item}
                           />
                         </td>

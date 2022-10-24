@@ -1,4 +1,4 @@
-const products_mock = [
+export const products_mock = [
   {
     certified: false,
     code: 'AAA',
@@ -44,3 +44,22 @@ const products_mock = [
     updated: '2022-10-21T15:54:56.972857+01:00',
   },
 ];
+
+export const card_data = {
+  commodities: {
+    value: 0,
+    last_added: new Date(),
+  },
+  fees: {
+    value: 0,
+    last_added: new Date(),
+  },
+  inputs: {
+    value: 0,
+    last_added: new Date(),
+  },
+  total_products: {
+    value: 0,
+    certified_products: 0,
+  },
+};

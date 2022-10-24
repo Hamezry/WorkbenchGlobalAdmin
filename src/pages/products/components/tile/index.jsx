@@ -42,7 +42,7 @@ const GlobalProductTile = () => {
             </div>
 
             <div className='flex items-center w-full'>
-              <p className='flex items-center justify-between px-6 space-x-3'>
+              <div className='flex items-center justify-between px-6 space-x-3'>
                 <span className=' bg-[#fae3e7] p-1 rounded-full'>
                   <CgEditBlackPoint className=' text-[#FA5A7D] text-base font-bold ' />
                 </span>
@@ -52,7 +52,7 @@ const GlobalProductTile = () => {
                     {commaFormatter(cardData.total_products.certified_products)}
                   </span>
                 </p>
-              </p>
+              </div>
             </div>
           </div>
         )}
@@ -78,7 +78,7 @@ const GlobalProductTile = () => {
             </div>
 
             <div className='flex items-center w-full'>
-              <p className='flex items-center justify-between px-6 space-x-3'>
+              <div className='flex items-center justify-between px-6 space-x-3'>
                 <span className=' bg-[#fef1ed] p-1 rounded-full'>
                   <HiOutlineArrowUpRight className=' text-[#ff5630] text-base font-bold ' />
                 </span>
@@ -86,7 +86,7 @@ const GlobalProductTile = () => {
                   <span>Last Added:</span>
                   <span>{formatDate(cardData.commodities.last_added)}</span>
                 </p>
-              </p>
+              </div>
             </div>
           </div>
         )}
@@ -112,7 +112,7 @@ const GlobalProductTile = () => {
             </div>
 
             <div className='flex items-center w-full'>
-              <p className='flex items-center justify-between px-6 space-x-3'>
+              <div className='flex items-center justify-between px-6 space-x-3'>
                 <span className=' bg-[#e7eff1] p-1 rounded-full'>
                   <HiOutlineArrowUpRight className=' text-[#559BB1] text-base font-bold ' />
                 </span>
@@ -120,7 +120,7 @@ const GlobalProductTile = () => {
                   <span>Last Added:</span>
                   <span>{formatDate(cardData.inputs.last_added)}</span>
                 </p>
-              </p>
+              </div>
             </div>
           </div>
         )}
@@ -146,7 +146,7 @@ const GlobalProductTile = () => {
             </div>
 
             <div className='flex items-center w-full'>
-              <p className='flex items-center justify-between px-6 space-x-3'>
+              <div className='flex items-center justify-between px-6 space-x-3'>
                 <span className=' bg-[#ecf5fb] p-1 rounded-full'>
                   <HiOutlineArrowUpRight className=' text-[#3F6A83] text-base font-bold ' />
                 </span>
@@ -154,7 +154,7 @@ const GlobalProductTile = () => {
                   <span>Last Added:</span>
                   <span>{formatDate(cardData.fees.last_added)}</span>
                 </p>
-              </p>
+              </div>
             </div>
           </div>
         )}

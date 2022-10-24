@@ -25,12 +25,12 @@ const TableSelect = ({
   const [showOpts, setShowOpts] = useState(false);
   return (
     <div className='relative cursor-pointer'>
-      <div className='relative w-full' onClick={() => setShowOpts((s) => !s)}>
+      <div className='relative w-3/4' onClick={() => setShowOpts((s) => !s)}>
         <span className='text-gray-400 absolute text-sm top-[13px] ml-2 left-1'>
           Show:{' '}
         </span>
         <input
-          className={`flex p-1 w-full border pl-14 py-3 bg-gray-50 text-sm rounded-2xl cursor-pointer ${className} ${
+          className={`flex p-1 w-full border pl-14 py-3 bg-gray-50 text-sm rounded-xl capitalize cursor-pointer ${className} ${
             showOpts && 'ring-1 ring-afexgreen'
           }`}
           disabled
@@ -41,8 +41,8 @@ const TableSelect = ({
         <MdKeyboardArrowDown className='absolute top-4 right-2 text-gray-400 text-lg' />
       </div>
       <ul
-        className={`overflow-auto absolute top-[120%] left-0 rounded-lg z-[12] px-2 transition-[max-height] child:p-1 hover:child:bg-afexgreen-lighter child:cursor-pointer  bg-[#F9FAFB] w-full ring-1 ring-afexgreen ${
-          showOpts ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        className={`overflow-auto absolute top-[120%] left-0 rounded-lg z-[12] px-2 transition-[max-height] child:p-1 hover:child:bg-afexgreen-lighter child:cursor-pointer  bg-[#F9FAFB] w-3/4 ring-1 ring-afexgreen ${
+          showOpts ? 'max-h-96 opacity-100 py-1' : 'max-h-0 opacity-0'
         }`}
         onClick={(e) => e.stopPropagation()}>
         {data.map((option, index) => (

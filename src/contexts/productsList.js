@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from '../utils/axios';
 import manager from '../utils/encryption';
 
-const ProductsListCtx = createContext();
+export const ProductsListCtx = createContext();
 
 const ProductsListProvider = ({ children }) => {
   const [dataLoaded, setDataLoaded] = useState(false);

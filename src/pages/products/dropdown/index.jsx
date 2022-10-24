@@ -40,18 +40,19 @@ function ProductDropdown({ singleProduct }) {
         width={150}
         styles={{
           dropdown: {
-            right: '50%',
+            left: '-90% !important',
+            zIndex: '1 !important',
           },
-        }}
-        closeOnClickOutside>
+        }}>
         <Popover.Target>
-          <BsThreeDots
-            onClick={() => setOpened(true)}
-            className='text-[20px] text-black cursor-pointer'
-          />
+          <button
+            onClick={() => setOpened((s) => !s)}
+            className='w-full relative'>
+            <BsThreeDots className='text-[20px] text-black cursor-pointer' />
+          </button>
         </Popover.Target>
 
-        <Popover.Dropdown className='child:cursor-pointer space-y-1 hover:child:bg-afexgreen-lighter child:p-1 p-1'>
+        <Popover.Dropdown className='child:cursor-pointer hover:child:bg-afexgreen-lighter child:p-1 p-1'>
           <p
             className='text-[14px] text-gray-400 rounded-md'
             onClick={() => {

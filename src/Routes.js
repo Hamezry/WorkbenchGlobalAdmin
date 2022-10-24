@@ -1,5 +1,5 @@
 // A Routing declariation File
-
+// Used for global site search results
 const Routes = [
   {
     route: 'Tenants',
@@ -14,7 +14,7 @@ const Routes = [
     ],
   },
   {
-    route: 'Prouducts',
+    route: 'Products',
     subtitle: 'Lorem ipsum dolor sit amet, consectetur adip',
     link: 'products',
     children: [

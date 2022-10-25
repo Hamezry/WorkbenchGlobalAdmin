@@ -190,7 +190,7 @@ const AdminTable = ({ list, id }) => {
 
                     <td className='py-6 px-6  '>
                       <button
-                        className='font-medium text-cyan-400 '
+                        className='font-medium text-[#0089C8]  underline '
                         onClick={() => {
                           setOpened(true);
                           setStateId(item.pk);

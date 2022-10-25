@@ -449,8 +449,8 @@ function Organisationlist() {
                   className='p-3 rounded-xl text-sm text-gray-400 border-none outline-none focus:outline-none bg-[#F9F9F9] h-full w-64'
                   onChange={handleSearch}
                 />
-                <span className='absolute left-[300px] top-3'>
-                  <AiOutlineSearch />
+                <span className='absolute right-2 top-3'>
+                  <AiOutlineSearch className='text-[25px] text-[#C9C8C6]' />
                 </span>
               </div>
 

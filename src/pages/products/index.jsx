@@ -193,7 +193,7 @@ function Productlist() {
           <div className='h-full'>
             <div className='h-[calc(100%-theme(space.36))] overflow-auto w-full pb-20'>
               <table className='overflow-auto w-full align-top text-[#54565B] text-[14px]'>
-                <thead className='bg-gray-100 sticky top-0 text-left whitespace-nowrap z-10'>
+                <thead className='bg-gray-100 sticky top-0 text-left whitespace-nowrap z-[3]'>
                   <tr className='child:py-4 child:px-6 child:cursor-default child:align-middle'>
                     <th>S/N</th>
                     <th className=''>Product Name</th>

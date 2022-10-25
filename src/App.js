@@ -45,7 +45,7 @@ function App() {
             </Route>
 
             <Route path='countries'>
-              <Route index exact element={<CountriesHeatMap />} />
+              <Route index element={<CountriesHeatMap />} />
               <Route path='list' element={<CountriesList />} />
               <Route path=':id' element={<SingleCountry />} />
             </Route>

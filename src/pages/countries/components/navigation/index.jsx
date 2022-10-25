@@ -7,6 +7,7 @@ const TabNavigation = () => {
       <div className='flex w-full items-center gap-8  border-b-2 child:pb-2'>
         <NavLink
           to='/countries'
+          end
           className={({ isActive }) =>
             isActive ? 'border-b-2 border-b-afexgreen' : undefined
           }>

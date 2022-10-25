@@ -51,7 +51,7 @@ function Deactivate({ setViewDeactivate, modalData }) {
           </button>
 
           <button
-            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#38CB89] h-[50px] w-[200px] p-4'
+            className='flex justify-center gap-2 rounded items-center text-[18px] text-white bg-[#DC372F] h-[50px] w-[200px] p-4'
             onClick={() => {
               setViewDeactivate(false);
               changeStatus();

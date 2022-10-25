@@ -17,9 +17,9 @@ import DeactivateModal from './modal/deactivate';
 
 import { useTenantsCtx } from '../../contexts';
 
-import greenFilterIcon from '../../Assets/green-filter.svg';
 import check from '../../Assets/white-check.svg';
 import filterIcon from '../../Assets/filter.svg';
+import { Filter } from 'iconsax-react';
 
 import './tenant.css';
 
@@ -159,18 +159,18 @@ function Organisationlist() {
     return setPosts(filtered);
   };
   return (
-    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)] space-y-14 overflow-y-auto'>
+    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)]  space-y-10 overflow-y-auto'>
       {/*CARDS */}
       <OrganisationlistTile />
 
       <section className='bg-[#F9FAFB] p-10 w-full h-full relative rounded-3xl'>
         <div className='rounded-3xl p-6 pr-4 py-10 bg-white h-full relative child:px-4 space-y-3'>
           <div className='flex justify-between border-b-[1px] border-[#F3F3F3] pb-2 '>
-            <h2 className='text-xl font-boldw-full block'>Overview</h2>
+            <h2 className='text-xl font-boldw-full block'>Tenant List</h2>
             <button
-              className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89] bg-white p-3'
+              className='flex gap-2 rounded-lg items-center text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[40px] p-4'
               onClick={() => setOpened(true)}>
-              <img src={greenFilterIcon} alt='rficon' />
+              <Filter variant='Bold' />
               <span>Filter</span>
             </button>
 
@@ -583,7 +583,7 @@ function Organisationlist() {
                           onClick={(e) => e.stopPropagation()}>
                           {item.is_active === 'True' ? (
                             <button
-                              className='flex  whitespace-nowrap justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
+                              className='flex  whitespace-nowrap justify-center cursor-pointer  gap-2  rounded-lg items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                               onClick={() => {
                                 setModalData(item);
                                 setViewDeactivate(true);
@@ -592,7 +592,7 @@ function Organisationlist() {
                             </button>
                           ) : (
                             <button
-                              className='flex whitespace-nowrap justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
+                              className='flex whitespace-nowrap justify-center cursor-pointer  gap-2 rounded-lg  items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
                               onClick={() => {
                                 setModalData(item);
                                 setViewActivate(true);

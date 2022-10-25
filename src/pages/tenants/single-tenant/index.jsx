@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
-import { Tabs } from "@mantine/core";
-import axios from "../../../utils/axios";
-import { useTenantsCtx } from "../../../contexts";
-import notification from "../../../utils/notification";
+import { Tabs } from '@mantine/core';
+import axios from '../../../utils/axios';
+import { useTenantsCtx } from '../../../contexts';
+import notification from '../../../utils/notification';
 
-import ActivateModal from "../modal/activate";
-import DeactivateModal from "../modal/deactivate";
-import TransactionSummary from "./components/transaction-summary";
-import ServiceList from "./components/service-list";
-import Table from "./components/positions-table";
-import Clients from "./components/clients";
+import ActivateModal from '../modal/activate';
+import DeactivateModal from '../modal/deactivate';
+import TransactionSummary from './components/transaction-summary';
+import ServiceList from './components/service-list';
+import Table from './components/positions-table';
+import Clients from './components/clients';
 
-import empty from "../../../Assets/empty.gif";
+import { ArrowLeft2 } from 'iconsax-react';
+
+import empty from '../../../Assets/empty.gif';
 
 function SingleTenant() {
   const { id } = useParams();
-  localStorage.setItem("fetchId", id);
+  localStorage.setItem('fetchId', id);
   const { tenants } = useTenantsCtx();
 
   const [client, setClient] = useState([]);
@@ -27,7 +29,7 @@ function SingleTenant() {
   const [warehouseList, setWarehouseList] = useState([]);
   const [locationList, setLocationList] = useState([]);
   const [itemList, setItemList] = useState([]);
-  const [title, setTitle] = useState("Stock");
+  const [title, setTitle] = useState('Stock');
   const [input, setInput] = useState([]);
 
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
@@ -45,7 +47,7 @@ function SingleTenant() {
   const tenantInputPosition = async () => {
     const respI = await axios.get(`input/position/${id}`);
 
-    if (!respI.data || respI.data.responseCode !== "100") return;
+    if (!respI.data || respI.data.responseCode !== '100') return;
     setInput(respI.data.data);
   };
   //SERVICE TOGGLE BUTTON FUNCTIONS
@@ -91,19 +93,19 @@ function SingleTenant() {
       value: value,
     });
 
-    if (!response.data || response.data.responseCode !== "100") {
+    if (!response.data || response.data.responseCode !== '100') {
       return notification({
-        id: "error",
-        heading: "Oops! Something went wrong",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        id: 'error',
+        heading: 'Oops! Something went wrong',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       });
     }
 
     await fetchServiceListInfo();
     notification({
-      id: "success",
-      heading: "Service List updated successfully",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      id: 'success',
+      heading: 'Service List updated successfully',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
     });
     closeModal();
   };
@@ -112,7 +114,7 @@ function SingleTenant() {
   const fetchClientGraph = async () => {
     const res = await axios.get(`client/graph/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setClient(res.data);
 
@@ -127,14 +129,14 @@ function SingleTenant() {
   const fetchClientTransactions = async () => {
     const res = await axios.get(`transaction/summary/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
     setTransaction(res.data.data);
   };
 
   const fetchServiceListInfo = async () => {
     const res = await axios.get(`tenant/info/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setService(res.data.data);
 
@@ -146,7 +148,7 @@ function SingleTenant() {
   const fetchStockPositon = async () => {
     const res = await axios.get(`stock/position/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setSummary(res.data.data);
   };
@@ -154,7 +156,7 @@ function SingleTenant() {
   const fetchWarehouseList = async () => {
     const res = await axios.get(`tenant/warehouses/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setWarehouseList(res.data.data);
   };
@@ -162,7 +164,7 @@ function SingleTenant() {
   const fetchLocationList = async () => {
     const res = await axios.get(`tenant/location/list/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setLocationList(res.data.data);
   };
@@ -170,7 +172,7 @@ function SingleTenant() {
   const fetchItemList = async () => {
     const res = await axios.get(`tenant/items/${id}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setItemList(res.data.data);
   };
@@ -178,7 +180,7 @@ function SingleTenant() {
   const handleWarehouseFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?warehouse=${myId}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setTransaction(res.data.data);
   };
@@ -186,7 +188,7 @@ function SingleTenant() {
   const handleLocationFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?location=${myId}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setTransaction(res.data.data);
   };
@@ -194,7 +196,7 @@ function SingleTenant() {
   const handleItemFilter = async (myId) => {
     const res = await axios.get(`transaction/summary/${id}?item=${myId}`);
 
-    if (!res.data || res.data.responseCode !== "100") return;
+    if (!res.data || res.data.responseCode !== '100') return;
 
     setTransaction(res.data.data);
   };
@@ -241,7 +243,7 @@ function SingleTenant() {
 
         <div className='flex gap-3 rounded-lg items-center text-[12px] text-[#38CB89]'>
           <div>
-            {org.is_active === "True" ? (
+            {org.is_active === 'True' ? (
               <button
                 className='flex justify-center gap-2 cursor-pointer rounded-lg  items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4 hover:ring-1 hover:ring-[#e55851] hover:bg-white hover:text-[#e55851]'
                 onClick={() => {
@@ -263,6 +265,7 @@ function SingleTenant() {
           <Link
             to='/'
             className='flex justify-center gap-2 rounded-lg  items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4 hover:ring-1 hover:ring-gray-500'>
+            <ArrowLeft2 size='32' />
             Back
           </Link>
         </div>
@@ -298,8 +301,8 @@ function SingleTenant() {
 
         <div className='w-[35%] flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 overflow-y-auto relative'>
           <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative h-full'>
-            {" "}
-            <div className='mb-2  p-4'>
+            {' '}
+            <div className='mb-2 p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
             {summary.length > 0 ? (
@@ -309,22 +312,22 @@ function SingleTenant() {
                 onTabChange={(value) => setCurrentlyDisplayed(null)}
                 styles={{
                   tab: {
-                    color: "#C9C8C6",
+                    color: '#C9C8C6',
                     '&[data-active="true"]': {
-                      color: "#38CB89",
+                      color: '#38CB89',
                     },
                   },
                   tabsList: {
-                    borderBottom: "1px solid rgba(201, 200, 198, .5)",
+                    borderBottom: '1px solid rgba(201, 200, 198, .5)',
                   },
                 }}>
                 <Tabs.List>
                   <Tabs.Tab
                     value='commodities'
-                    onClick={() => setTitle("Stock")}>
+                    onClick={() => setTitle('Stock')}>
                     Stock
                   </Tabs.Tab>
-                  <Tabs.Tab value='inputs' onClick={() => setTitle("Inputs")}>
+                  <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
                     Inputs
                   </Tabs.Tab>
                 </Tabs.List>
@@ -332,7 +335,7 @@ function SingleTenant() {
                 <Tabs.Panel value='commodities' pt='xs'>
                   <Table
                     data={summary}
-                    headers={["Commodity", "Grade", "Volume(MT)", "Lien(MT)"]}
+                    headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
                     title='commodities'
                     currentlyDisplayed={currentlyDisplayed}
                     setCurrentlyDisplayed={setCurrentlyDisplayed}
@@ -342,7 +345,7 @@ function SingleTenant() {
                 <Tabs.Panel value='inputs' pt='xs'>
                   <Table
                     data={input}
-                    headers={["Input", "Lien units", "Units"]}
+                    headers={['Input', 'Lien units', 'Units']}
                     title='inputs'
                     currentlyDisplayed={currentlyDisplayed}
                     setCurrentlyDisplayed={setCurrentlyDisplayed}

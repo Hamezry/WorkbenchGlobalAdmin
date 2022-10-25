@@ -71,13 +71,13 @@ function ProductDropdown({ singleProduct }) {
           </p>
         </Popover.Dropdown>
       </Popover>
-      {openUpdateModal && (
-        <UpdateProductModal
-          close={() => setOpenUpdateProductModal(false)}
-          show={openUpdateModal}
-          modalData={singleProduct}
-        />
-      )}
+
+      <UpdateProductModal
+        close={() => setOpenUpdateProductModal(false)}
+        show={openUpdateModal}
+        modalData={singleProduct}
+      />
+
       {openDecactivateModal && (
         <DeactivateProductmodal
           setDeactivateProduct={setOpenDecactivateModal}

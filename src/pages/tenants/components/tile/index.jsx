@@ -4,13 +4,10 @@ import { Skeleton } from '@mantine/core';
 import { HiChartBar, HiOutlineArrowUpRight } from 'react-icons/hi2';
 
 import { useTenantsCtx } from '../../../../contexts';
+import { commaFormatter } from '../../../../utils/formatter';
 
 const getPercentageDifference = (current, previous) => {
   return (((current - previous) / (previous || 1)) * 100).toFixed(2);
-};
-
-const formatter = (value) => {
-  return Intl.NumberFormat('en-US').format(Number(value));
 };
 
 const TenantsTile = () => {
@@ -24,7 +21,7 @@ const TenantsTile = () => {
   return (
     <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-8 mt-10 space-y-4 '>
       <p>Overview</p>
-      <div className=' flex justify-between space-x-6 child:px-2'>
+      <div className=' flex justify-between space-x-6'>
         {/* Total Tenants */}
         {!dataLoaded ? (
           <Skeleton className=' flex flex-col justify-between p-6 gap-4 rounded-3xl flex-1 h-40' />
@@ -37,7 +34,7 @@ const TenantsTile = () => {
                   Total Tenants
                 </p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.available_tenants.total)}
+                  {commaFormatter(cardData.available_tenants.total)}
                 </span>
               </div>
               <span className='bg-[#FF5630] rounded-full p-4 flex items-center justify-center'>
@@ -53,7 +50,8 @@ const TenantsTile = () => {
                   <HiOutlineArrowUpRight className=' text-[#FA5A7D] text-base font-bold ' />
                 </span>
                 <span className='text-sm'>
-                  Last month: {formatter(cardData.available_tenants.last_month)}
+                  Last month:{' '}
+                  {commaFormatter(cardData.available_tenants.last_month)}
                 </span>
               </p>
             </div>
@@ -72,7 +70,7 @@ const TenantsTile = () => {
                   Active Tenants
                 </p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.active_tenants.total_active)}
+                  {commaFormatter(cardData.active_tenants.total_active)}
                 </span>
               </div>
               <span className='bg-[#FA5A7D] rounded-full p-4 flex items-center justify-center'>
@@ -89,7 +87,7 @@ const TenantsTile = () => {
                 </span>
                 <span className='text-sm'>
                   Inactive Tenants:{' '}
-                  {formatter(cardData.active_tenants.inactive_tenants)}
+                  {commaFormatter(cardData.active_tenants.inactive_tenants)}
                 </span>
               </p>
             </div>
@@ -106,7 +104,7 @@ const TenantsTile = () => {
               <div className='flex flex-col space-y-8'>
                 <p className=' text-[#47494E] text-[16px] pt-3'>CSD Access</p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.csd_access.total)}
+                  {commaFormatter(cardData.csd_access.total)}
                 </span>
               </div>
               <span className='bg-[#FA5A7D] rounded-full p-4 flex items-center justify-center'>

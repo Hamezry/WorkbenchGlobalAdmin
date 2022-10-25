@@ -1,149 +1,93 @@
-import React from 'react';
-import Chart from 'react-apexcharts';
+import React, { useState, useEffect } from 'react';
+import { RadialBarChart, RadialBar, Legend } from 'recharts';
+import { commaFormatter } from '../../../../../../utils/formatter';
 
-const RadialBar = ({ data }) => {
-  console.log({ data });
-  const options = {
-    labels: [],
+const ClientGraph = ({ data }) => {
+  const [chartdata, setChartData] = useState(data);
 
-    colors: ['#003C51', '#F3722C', '#559BB1', '#FFA800', '#90BE6D', '#1D925D'],
-    stroke: {
-      lineCap: 'round',
-    },
-    legend: {
-      show: true,
-      showForSingleSeries: false,
-      showForNullSeries: true,
-      showForZeroSeries: true,
-
-      horizontalAlign: 'end',
-      floating: false,
-      fontSize: '16px',
-      width: undefined,
-      height: undefined,
-      formatter: undefined,
-      offsetX: -30,
-      offsetY: 80,
-      labels: {
-        colors: undefined,
-        useSeriesColors: false,
-      },
-      markers: {
-        width: 12,
-        height: 12,
-        strokeWidth: 0,
-        strokeColor: '#fff',
-        radius: 12,
-        customHTML: undefined,
-        onClick: undefined,
-        offsetX: 0,
-        offsetY: 0,
-      },
-
-      onItemClick: {
-        toggleDataSeries: true,
-      },
-      onItemHover: {
-        highlightDataSeries: true,
-      },
-    },
-    plotOptions: {
-      radialBar: {
-        size: undefined,
-        inverseOrder: false,
-        startAngle: 0,
-        endAngle: 359,
-        offsetX: 0,
-        offsetY: 0,
-        hollow: {
-          margin: 5,
-          size: '30%',
-          background: 'transparent',
-          image: undefined,
-          imageWidth: 0,
-          imageHeight: 0,
-          imageOffsetX: 0,
-          imageOffsetY: 0,
-          imageClipped: true,
-          position: 'front',
-          dropShadow: {
-            enabled: false,
-            top: 0,
-            left: 0,
-            blur: 3,
-            opacity: 0.5,
-          },
-        },
-        track: {
-          show: true,
-          startAngle: undefined,
-          endAngle: undefined,
-          background: '#f2f2f2',
-          strokeWidth: '10%',
-          opacity: 1,
-          margin: 6,
-          dropShadow: {
-            enabled: false,
-            top: 0,
-            left: 0,
-            blur: 3,
-            opacity: 0.5,
-          },
-        },
-        dataLabels: {
-          show: true,
-          name: {
-            show: true,
-            fontSize: '16px',
-            fontFamily: undefined,
-            color: undefined,
-            offsetY: -10,
-          },
-          value: {
-            show: true,
-            fontSize: '25px',
-            fontFamily: undefined,
-            color: undefined,
-            offsetY: 16,
-            formatter: function (val) {
-              return val;
-            },
-          },
-          total: {
-            show: true,
-            label: 'Total Numbers',
-            color: '',
-            formatter: function (w) {
-              return w.globals.seriesTotals.reduce((a, b) => {
-                return a + b;
-              }, 0);
-            },
-          },
-        },
-      },
-    },
+  const renderLegend = (props) => {
+    return (
+      <div className='ml-3'>
+        {props.payload.map((entry) => {
+          return (
+            <div className=' p-2 rounded-2xl gap-2 flex items-center'>
+              <span
+                className=' p-[6px] rounded-full'
+                style={{ background: entry.color }}></span>
+              <span className='text-[12px]'>{entry.value ?? 'Null'}</span>
+              <span className='text-[12px]'>
+                {commaFormatter(entry.payload.pv)}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
+
+  useEffect(() => {
+    const colorCodes = [
+      '#2d586a',
+      '#f3722b',
+      '#559bb0',
+      '#ffa800',
+      '#90be6d',
+      '#1c925c',
+      '#003d51',
+    ];
+
+    const populateChart = () => {
+      if (data && data.length > 0) {
+        let sum = 0;
+        for (let i = 0; i < data.length; i++) {
+          sum += data[i].count;
+        }
+
+        setChartData(() =>
+          data
+            .map((el, index) => {
+              return {
+                name: el.category,
+                fill: colorCodes[index],
+                pv: el.count,
+                uv: (el.count / sum) * 100,
+              };
+            })
+            .sort((a, b) => a.pv - b.pv)
+        );
+      }
+    };
+    populateChart();
+  }, [data]);
   return (
     <>
-      {data && data.length > 1 && (
-        <Chart
-          series={data.map((el) => el.count)}
-          type='radialBar'
+      {!data ||
+        (data.length === 0 && (
+          <div className='flex p-10 justify-center items-center'>
+            <p>This tenant has no Client Data</p>
+          </div>
+        ))}
+      {chartdata && chartdata.length > 0 && (
+        <RadialBarChart
           width={600}
-          options={{
-            ...options,
-            labels: data.map((el) => {
-              if (el.category === null) return '';
-              return el.category;
-            }),
-          }}
-        />
+          height={400}
+          innerRadius='20%'
+          outerRadius='80%'
+          data={chartdata}
+          startAngle={30}
+          endAngle={360}>
+          <RadialBar minAngle={30} background clockWise={false} dataKey='uv' />
+          <Legend
+            layout='vertical'
+            verticalAlign='middle'
+            align='right'
+            content={renderLegend}
+            wrapperStyle={{ right: -30 }}
+          />
+        </RadialBarChart>
       )}
-
-      {(!data || data.length < 1) && <p>No Char Found</p>}
     </>
-    //
   );
 };
 
-export default RadialBar;
+export default ClientGraph;

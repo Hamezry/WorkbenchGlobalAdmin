@@ -16,7 +16,6 @@ import Clients from "./components/clients";
 import empty from "../../../Assets/empty.gif";
 
 function SingleTenant() {
-  // Remember to fetch Organization list from context
   const { id } = useParams();
   localStorage.setItem("fetchId", id);
   const { tenants } = useTenantsCtx();
@@ -244,7 +243,7 @@ function SingleTenant() {
           <div>
             {org.is_active === "True" ? (
               <button
-                className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
+                className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4 hover:ring-1 hover:ring-[#e55851] hover:bg-white hover:text-[#e55851]'
                 onClick={() => {
                   setViewDeactivate(true);
                 }}>
@@ -252,7 +251,7 @@ function SingleTenant() {
               </button>
             ) : (
               <button
-                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
+                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4 hover:ring-1 hover:ring-afexgreen hover:bg-white hover:text-afexgreen'
                 onClick={() => {
                   setViewActivate(true);
                 }}>
@@ -263,7 +262,7 @@ function SingleTenant() {
 
           <Link
             to='/'
-            className='flex justify-center gap-2 rounded items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4'>
+            className='flex justify-center gap-2 rounded items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4 hover:ring-1 hover:ring-gray-500'>
             Back
           </Link>
         </div>
@@ -307,7 +306,18 @@ function SingleTenant() {
               <Tabs
                 defaultValue='commodities'
                 color='green'
-                onTabChange={(value) => setCurrentlyDisplayed(null)}>
+                onTabChange={(value) => setCurrentlyDisplayed(null)}
+                styles={{
+                  tab: {
+                    color: "#C9C8C6",
+                    '&[data-active="true"]': {
+                      color: "#38CB89",
+                    },
+                  },
+                  tabsList: {
+                    borderBottom: "1px solid rgba(201, 200, 198, .5)",
+                  },
+                }}>
                 <Tabs.List>
                   <Tabs.Tab
                     value='commodities'
@@ -340,17 +350,17 @@ function SingleTenant() {
                 </Tabs.Panel>
               </Tabs>
             ) : (
-              <div className='flex items-center  h-[70%]'>
-                <div className='gap-5 mb-6 mt-14 py-2 px-2 text-center '>
+              <div className='flex items-center h-[70%]'>
+                <div className='flex flex-col items-center py-2 px-6 text-center space-y-4 '>
                   <img
                     src={empty}
                     alt='no products gif'
-                    className='h-[150px] m-auto'
+                    className='h-[150px]'
                   />
-                  <p className='py-2'>No Records Created Yet.</p>
-                  <span className='text-[#9FA19C] text-[14px]'>
+                  <p>No Records Created Yet.</p>
+                  <p className='text-[#9FA19C] text-[14px]'>
                     There are no records logged in the database at this time.
-                  </span>
+                  </p>
                 </div>
               </div>
             )}

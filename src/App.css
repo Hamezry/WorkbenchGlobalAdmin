@@ -20,6 +20,10 @@
   padding: 0;
   border-radius: 1.75rem;
 }
+.mantine-Modal-overlay,
+.mantine-Drawer-overlay {
+  background-color: rgba(50, 59, 75, 0.8);
+}
 .mantine-Modal-header {
   color: #54565b;
   font-size: 1.25rem;
@@ -51,18 +55,7 @@
   padding: 15px;
   border-radius: 10px;
 }
-/* this style is affecting my modal, give your wrapper a name and style only your button -Faith */
-/* .mantine-UnstyledButton-root {
-  background-color: #ffff;
-  border-color: #38cb89;
-  color: #38cb89;
-  padding: 10px;
-  border-radius: 5px;
-}
-.mantine-UnstyledButton-root:hover {
-  background-color: #38cb89;
-  color: #ffff;
-} */
+
 .mantine-Progress-root {
   background-color: #eeefee;
 }
@@ -75,7 +68,12 @@
 li.selected {
   color: #38cb89;
 }
-
+li.previous.disabled svg,
+li.next.disabled svg {
+  background-color: #f3f3f3;
+  color: #9fa19c;
+  cursor: not-allowed;
+}
 .checkbox {
   appearance: none;
   position: relative;
@@ -86,51 +84,19 @@ li.selected {
 .checkbox::before {
   content: "";
   position: absolute;
-  top: 50%;
   left: 0;
-  transform: translateY(10%);
-  height: 20px;
-  width: 20px;
-  background-color: #f1f2f3;
+  transform: translateY(12%);
+  height: 22px;
+  width: 22px;
+  background-color: #f9f9fb;
   border-radius: 5px;
+}
+.checkbox.white::before {
+  background-color: #fff;
 }
 .checkbox:checked::before {
   background-color: #38cb89;
   content: url("./Assets/check.svg");
-  padding-left: 3px;
-}
-.mantine-vqs8oh {
-  top: 10px;
-  bottom: unset;
-}
-.mantine-Notification-root {
-  @apply rounded-2xl bg-white border border-afexgreen p-0 pr-6;
-}
-#success.mantine-Notification-root {
-  @apply border-afexgreen;
-}
-#warning.mantine-Notification-root {
-  @apply border-warninig;
-}
-#error.mantine-Notification-root {
-  @apply border-error;
-}
-.mantine-Notification-root button:hover {
-  @apply bg-transparent scale-125 transition-all duration-150;
-}
-.mantine-Notification-root::before {
-  @apply w-full h-full top-0 left-0 rounded-2xl;
-}
-#success.mantine-Notification-root::before {
-  @apply bg-afexgreen-lighter;
-}
-#warning.mantine-Notification-root::before {
-  @apply bg-warninig-lighter;
-}
-#error.mantine-Notification-root::before {
-  @apply bg-error-lighter;
-}
-
-.mantine-Notification-root .mantine-Notification-body {
-  @apply p-6;
+  padding-top: 3px;
+  padding-left: 5px;
 }

@@ -1,27 +1,30 @@
 import React from 'react';
+import { Drawer } from '@mantine/core';
+
 import profIcon from '../Assets/Ellipse 1.svg';
 import profIcon2 from '../Assets/Ellipse 2.svg';
 import dot from '../Assets/Ellipse.svg';
 
-function Notificationmodal({ setViewNotifications }) {
+function Notificationmodal({ close, show }) {
   return (
-    <div
-      className='w-screen font-muli h-screen bg-[rgba(50,59,75,0.7)] fixed top-0 left-0 z-50'
-      onClick={() => setViewNotifications(false)}>
-      <div
-        className='bg-white absolute right-4 top-4  mt-4 w-[430px] h-[calc(100%-64px)] rounded-3xl overflow-auto'
-        onClick={(e) => e.stopPropagation()}>
-        <div className='flex justify-between items-center border-b-2 p-5 w-full'>
-          <p>Notifications</p>
-
-          <button
-            onClick={() => {
-              setViewNotifications(false);
-            }}>
-            X
-          </button>
-        </div>
-
+    <Drawer
+      opened={show}
+      onClose={close}
+      position='right'
+      size='25%'
+      title='Notifications'
+      styles={{
+        drawer: {
+          right: '2rem',
+          top: '3rem',
+          transform: 'translateY(-3rem)',
+          borderRadius: '40px !important',
+          height: '90%',
+          overflow: ' auto',
+          padding: '1.5rem 1rem !important',
+        },
+      }}>
+      <div className='flex flex-col'>
         <div name='box1' className=' p-5'>
           <p>Today</p>
 
@@ -153,7 +156,7 @@ function Notificationmodal({ setViewNotifications }) {
           </div>
         </div>
       </div>
-    </div>
+    </Drawer>
   );
 }
 

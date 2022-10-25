@@ -25,7 +25,7 @@ module.exports = {
         },
         error: {
           DEFAULT: "rgb(254, 31, 17)",
-          lighter: "rgba(254, 31, 17,0.1)",
+          lighter: "rgba(254, 31, 17,0.05)",
         },
       },
     },

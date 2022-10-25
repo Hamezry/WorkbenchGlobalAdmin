@@ -72,9 +72,11 @@ function Navbar() {
         <img src={settings} alt='settings switch' />
         <img src={logo2} alt='AFEX' />
       </div>
-      {viewNotifications && (
-        <Notificationmodal setViewNotifications={setViewNotifications} />
-      )}
+
+      <Notificationmodal
+        close={() => setViewNotifications(false)}
+        show={viewNotifications}
+      />
     </div>
   );
 }

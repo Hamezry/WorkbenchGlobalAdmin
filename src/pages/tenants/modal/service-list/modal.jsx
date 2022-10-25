@@ -10,10 +10,11 @@ const ServiceModal = ({ show, close, activate, deactivate, active }) => {
       shadow='md'
       opened={show}
       centered
+      size='35%'
       withCloseButton={false}
-      className='px-8'>
+      styles={{ modal: { padding: '3rem' } }}>
       <>
-        <div className='flex items-center justify-center w-full space-y-6 mb-6 p-2 flex-col text-center'>
+        <div className='flex items-center justify-center w-full space-y-6 mb-6 p-2 px-4 flex-col text-center'>
           <img
             src={shockedFace}
             alt='Icon of black woman with shocked expression'
@@ -27,7 +28,7 @@ const ServiceModal = ({ show, close, activate, deactivate, active }) => {
             eiusmod tempor incididunt ut labore et dolore magna
           </p>
         </div>
-        <div className='flex gap-5'>
+        <div className='flex gap-5 pb-8 px-8'>
           <button
             onClick={close}
             className='p-3 flex-1 w-full bg-gray-50 ring-1 ring-gray-200 rounded-xl hover:ring-gray-400 text-gray-400'>

@@ -3,7 +3,7 @@ import { Skeleton } from '@mantine/core';
 import { HiOutlineArrowUpRight, HiOutlineFingerPrint } from 'react-icons/hi2';
 
 import { useCountriesCtx } from '../../../../contexts';
-import { formatter } from '../../../../utils/formatNumber';
+import { decimalFormatter } from '../../../../utils/formatter';
 
 const getPercentageDifference = (current, previous) => {
   return (((current - previous) / previous) * 100).toFixed(2);
@@ -20,14 +20,14 @@ const CountryTile = () => {
   return (
     <div className='w-full flex text-[16px] flex-col bg-[#F9FAFB] rounded-3xl gap-3 p-8 mt-10 space-y-4 '>
       <p>Overview</p>
-      <div className=' flex justify-between space-x-6 child:px-2'>
+      <div className='flex justify-between space-x-6'>
         {/* Total Farmers & Tenants */}
         <div className=' flex flex-col flex-1 space-y-4 justify-between'>
           {/* Total Farmers */}
           {!dataLoaded ? (
             <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />
           ) : (
-            <div className='bg-white rounded-3xl flex-1 p-6 flex space-x-6 items-center'>
+            <div className='bg-white rounded-3xl h-full p-6 flex space-x-5 items-center'>
               <svg
                 width='35'
                 height='35'
@@ -137,7 +137,7 @@ const CountryTile = () => {
           {!dataLoaded ? (
             <Skeleton className=' rounded-3xl flex-1 p-6 h-14' />
           ) : (
-            <div className='bg-white rounded-3xl flex-1 p-6 flex space-x-6 items-center'>
+            <div className='bg-white rounded-3xl h-full p-6 flex space-x-5 items-center'>
               <svg
                 width='35'
                 height='35'
@@ -187,7 +187,7 @@ const CountryTile = () => {
                   Total GRN Raised
                 </p>
                 <span className='text-[25px] font-bold '>
-                  {formatter(cardData.total_grn)} MT
+                  {decimalFormatter(cardData.total_grn)} MT
                 </span>
               </div>
               <svg
@@ -256,7 +256,9 @@ const CountryTile = () => {
                 <span className=' bg-[#e7eff1] p-1 rounded-full'>
                   <HiOutlineFingerPrint className=' text-[#559BB1] text-base font-bold' />
                 </span>
-                <span className='text-sm'>10 countries active</span>
+                <span className='text-sm'>
+                  {cardData.total_countries} / 198 active countries
+                </span>
               </p>
             </div>
           </div>

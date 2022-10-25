@@ -29,13 +29,6 @@ function Country() {
   const singleTenant = singleCountry.no_of_tenants;
   const singleFarmer = singleCountry.no_of_farmers;
 
-  //Farmers calculation
-  const farmerProgress = singleFarmer / totalFarmers;
-  const farmerValue = farmerProgress * 100;
-
-  //Tenants calculation
-  const tenantProgress = singleTenant / totalTenants;
-  const tenantValue = tenantProgress * 100;
   useEffect(() => {
     const countryStockPosition = async () => {
       const respS = await axios.get(`country/stock/position/${id}`);
@@ -48,7 +41,6 @@ function Country() {
       const respI = await axios.get(`country/input/position/${id}`);
 
       if (!respI.data || respI.data.responseCode !== "100") return;
-      console.log(respI);
       setInput(respI.data.data);
     };
 
@@ -84,7 +76,7 @@ function Country() {
           <img
             src={singleCountry.country_flag}
             alt={singleCountry.name}
-            className='w-[25px] rounded'
+            className='w-8 h-5'
           />
           <p>{singleCountry.name}</p>
         </div>
@@ -96,13 +88,13 @@ function Country() {
         </Link>
       </div>
 
-      <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
+      <div className='w-[100%] h-[calc[100vh-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
           <People
+            totalFarmers={totalFarmers}
+            totalTenants={totalTenants}
             singleFarmer={singleFarmer}
             singleTenant={singleTenant}
-            farmerValue={farmerValue}
-            tenantValue={tenantValue}
           />
 
           <div className='rounded-3xl w-full mt-6'>
@@ -118,12 +110,24 @@ function Country() {
             <div className='mb-2  p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
+
             {stock.length > 0 ? (
               <div className='w-full'>
                 <Tabs
                   defaultValue='commodities'
                   color='green'
-                  onTabChange={(value) => setCurrentlyDisplayed(null)}>
+                  onTabChange={(value) => setCurrentlyDisplayed(null)}
+                  styles={{
+                    tab: {
+                      color: "#C9C8C6",
+                      '&[data-active="true"]': {
+                        color: "#38CB89",
+                      },
+                    },
+                    tabsList: {
+                      borderBottom: "1px solid rgba(201, 200, 198, .5)",
+                    },
+                  }}>
                   <Tabs.List>
                     <Tabs.Tab
                       value='commodities'
@@ -157,17 +161,17 @@ function Country() {
                 </Tabs>{" "}
               </div>
             ) : (
-              <div className='flex items-center  h-[70%]'>
-                <div className='gap-5 mb-6 mt-14 py-2 px-2 text-center '>
+              <div className='flex items-center h-[70%]'>
+                <div className='flex flex-col items-center py-2 px-6 text-center space-y-4 '>
                   <img
                     src={empty}
                     alt='no products gif'
-                    className='h-[150px] m-auto'
+                    className='h-[150px]'
                   />
-                  <p className='py-2'>No Records Created Yet.</p>
-                  <span className='text-[#9FA19C] text-[14px]'>
+                  <p>No Records Created Yet.</p>
+                  <p className='text-[#9FA19C] text-[14px]'>
                     There are no records logged in the database at this time.
-                  </span>
+                  </p>
                 </div>
               </div>
             )}

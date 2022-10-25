@@ -21,7 +21,7 @@ root.render(
           <ProductsContextProvider>
             <TenantsContextProvider>
               <MantineProvider withNormalizeCSS withGlobalStyles>
-                <NotificationsProvider>
+                <NotificationsProvider position='top-right'>
                   <App />
                 </NotificationsProvider>
               </MantineProvider>

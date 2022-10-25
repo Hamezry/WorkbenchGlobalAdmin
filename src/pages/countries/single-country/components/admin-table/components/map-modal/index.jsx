@@ -55,47 +55,53 @@ const MapModal = ({
     if (id === currentlyDisplayed) return true;
     else return false;
   };
-  const addingLocation = async () => {
-    const response = await request({
+  const addingLocation = () => {
+    request({
       method: "post",
       url: `add/location/${id}`,
       data: addLocation,
-    });
-    if (response.data.responseCode === "100") {
-      settingModal({ refresh: true });
-      customNotification({
-        heading: "Success!",
-        text: "Location added successfully.",
-        id: "success",
+    })
+      .then((response) => {
+        if (response.data.responseCode === "100") {
+          settingModal({ refresh: true });
+          customNotification({
+            heading: "Success!",
+            text: "Location added successfully.",
+            id: "success",
+          });
+        }
+      })
+      .catch((e) => {
+        customNotification({
+          heading: "Error!",
+          text: "Add Location unsuccessful.",
+          id: "error",
+        });
       });
-    } else {
-      customNotification({
-        heading: "Error!",
-        text: "Add Location unsuccessful.",
-        id: "error",
-      });
-    }
   };
-  const updatingLocation = async (pk) => {
-    const response = await request({
+  const updatingLocation = (pk) => {
+    request({
       method: "put",
       url: `update/location/${id}/${pk}`,
       data: updateLocation,
-    });
-    if (response.data.responseCode === "100") {
-      settingModal({ refresh: true });
-      customNotification({
-        heading: "Success!",
-        text: "Location added successfully.",
-        id: "success",
+    })
+      .then((response) => {
+        if (response.data.responseCode === "100") {
+          settingModal({ refresh: true });
+          customNotification({
+            heading: "Success!",
+            text: "Location added successfully.",
+            id: "success",
+          });
+        }
+      })
+      .catch((e) => {
+        customNotification({
+          heading: "Error!",
+          text: "Add Location unsuccessful.",
+          id: "error",
+        });
       });
-    } else {
-      customNotification({
-        heading: "Error!",
-        text: "Add Location unsuccessful.",
-        id: "error",
-      });
-    }
   };
 
   useEffect(() => {

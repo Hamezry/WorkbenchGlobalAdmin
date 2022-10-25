@@ -10,8 +10,9 @@ const ServiceModal = ({ show, close, activate, deactivate, active }) => {
       shadow='md'
       opened={show}
       centered
+      size='35%'
       withCloseButton={false}
-      className='px-8'>
+      styles={{ modal: { padding: '3rem' } }}>
       <>
         <div className='flex items-center justify-center w-full space-y-6 mb-6 p-2 px-4 flex-col text-center'>
           <img

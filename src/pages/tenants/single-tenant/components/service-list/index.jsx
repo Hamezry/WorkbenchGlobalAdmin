@@ -54,16 +54,6 @@ const ServiceList = ({
                 showModal('account');
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
-
-            {modalsService.account && (
-              <AccountingModal
-                show={modalsService.account}
-                close={closeModal}
-                activate={() => change_status('accounting_setting', 'True')}
-                active={switch_list.accounting_setting}
-                deactivate={() => change_status('accounting_setting', 'False')}
-              />
-            )}
           </label>
         </div>
 
@@ -81,15 +71,6 @@ const ServiceList = ({
                 showModal('csd');
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
-            {modalsService.csd && (
-              <CSDModal
-                show={modalsService.csd}
-                close={closeModal}
-                activate={() => change_status('csd_setting', 'True')}
-                active={switch_list.csd_setting}
-                deactivate={() => change_status('csd_setting', 'False')}
-              />
-            )}
           </label>
         </div>
 
@@ -108,15 +89,6 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-          {modalsService.ewr && (
-            <EWRModal
-              show={modalsService.ewr}
-              close={closeModal}
-              activate={() => change_status('ewr_setting', 'True')}
-              active={switch_list.ewr_setting}
-              deactivate={() => change_status('ewr_setting', 'False')}
-            />
-          )}
         </div>
 
         <div className='flex justify-between mt-6 items-center'>
@@ -134,15 +106,6 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-          {modalsService.logistic && (
-            <LogisticsModal
-              show={modalsService.logistic}
-              close={closeModal}
-              activate={() => change_status('logistics_setting', 'True')}
-              active={switch_list.logistics_setting}
-              deactivate={() => change_status('logistics_setting', 'False')}
-            />
-          )}
         </div>
 
         <div className='flex justify-between mt-6 items-center'>
@@ -160,15 +123,6 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-          {modalsService.overage && (
-            <OverageModal
-              show={modalsService.overage}
-              close={closeModal}
-              activate={() => change_status('overage_setting', 'True')}
-              active={switch_list.overage_setting}
-              deactivate={() => change_status('overage_setting', 'False')}
-            />
-          )}
         </div>
 
         <div className='flex justify-between mt-6 items-center'>
@@ -186,15 +140,6 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-          {modalsService.plant && (
-            <PlantModal
-              show={modalsService.plant}
-              close={closeModal}
-              activate={() => change_status('plant_setting', 'True')}
-              active={switch_list.plant_setting}
-              deactivate={() => change_status('plant_setting', 'False')}
-            />
-          )}
         </div>
 
         <div className='flex justify-between mt-6 items-center'>
@@ -212,15 +157,6 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-          {modalsService.reg && (
-            <RegistrationModal
-              show={modalsService.reg}
-              close={closeModal}
-              activate={() => change_status('registration_setting', 'True')}
-              active={switch_list.registration_setting}
-              deactivate={() => change_status('registration_setting', 'False')}
-            />
-          )}
         </div>
 
         <div className='flex justify-between mt-6 items-center'>
@@ -238,15 +174,6 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-          {modalsService.verification && (
-            <VerificationModal
-              show={modalsService.verification}
-              close={closeModal}
-              activate={() => change_status('verification_setting', 'True')}
-              active={switch_list.registration_setting}
-              deactivate={() => change_status('verification_setting', 'False')}
-            />
-          )}
         </div>
       </div>
 
@@ -329,6 +256,64 @@ const ServiceList = ({
           </p>
         </div>
       </div>
+      {/* Modals */}
+      <AccountingModal
+        show={modalsService.account}
+        close={closeModal}
+        activate={() => change_status('accounting_setting', 'True')}
+        active={switch_list.accounting_setting}
+        deactivate={() => change_status('accounting_setting', 'False')}
+      />
+
+      <CSDModal
+        show={modalsService.csd}
+        close={closeModal}
+        activate={() => change_status('csd_setting', 'True')}
+        active={switch_list.csd_setting}
+        deactivate={() => change_status('csd_setting', 'False')}
+      />
+      <EWRModal
+        show={modalsService.ewr}
+        close={closeModal}
+        activate={() => change_status('ewr_setting', 'True')}
+        active={switch_list.ewr_setting}
+        deactivate={() => change_status('ewr_setting', 'False')}
+      />
+      <LogisticsModal
+        show={modalsService.logistic}
+        close={closeModal}
+        activate={() => change_status('logistics_setting', 'True')}
+        active={switch_list.logistics_setting}
+        deactivate={() => change_status('logistics_setting', 'False')}
+      />
+      <OverageModal
+        show={modalsService.overage}
+        close={closeModal}
+        activate={() => change_status('overage_setting', 'True')}
+        active={switch_list.overage_setting}
+        deactivate={() => change_status('overage_setting', 'False')}
+      />
+      <PlantModal
+        show={modalsService.plant}
+        close={closeModal}
+        activate={() => change_status('plant_setting', 'True')}
+        active={switch_list.plant_setting}
+        deactivate={() => change_status('plant_setting', 'False')}
+      />
+      <RegistrationModal
+        show={modalsService.reg}
+        close={closeModal}
+        activate={() => change_status('registration_setting', 'True')}
+        active={switch_list.registration_setting}
+        deactivate={() => change_status('registration_setting', 'False')}
+      />
+      <VerificationModal
+        show={modalsService.verification}
+        close={closeModal}
+        activate={() => change_status('verification_setting', 'True')}
+        active={switch_list.registration_setting}
+        deactivate={() => change_status('verification_setting', 'False')}
+      />
     </div>
   );
 };

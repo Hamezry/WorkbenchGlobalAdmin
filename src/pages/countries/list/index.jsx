@@ -60,7 +60,7 @@ function Countrylist() {
   }, [itemsOffset, currentPage, posts, postsPerPage]);
 
   return (
-    <div className='w-[82%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
+    <div className='w-[82%] flex flex-col gap-10 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
       {/*CARDS */}
       <CountryTile />
 

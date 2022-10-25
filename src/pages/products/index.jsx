@@ -110,7 +110,7 @@ function Productlist() {
   }, [itemsOffset, postsPerPage, posts, currentPage]);
 
   return (
-    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)] space-y-14 overflow-y-auto'>
+    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)] space-y-10 overflow-y-auto'>
       {/*CARDS */}
       <GlobalProductTile />
 
@@ -162,7 +162,7 @@ function Productlist() {
                   name=''
                   id=''
                   placeholder='Search'
-                  className='p-3 rounded-2xl text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9]'
+                  className='p-3 rounded-2xl w-64 text-sm text-black border outline-none focus:outline-none bg-[#F9F9F9]'
                   onChange={handleSearch}
                 />
                 <span className='absolute right-2 top-3'>
@@ -180,7 +180,7 @@ function Productlist() {
               </button>
 
               <button
-                className='border border-[#38CB89] flex gap-1 rounded-lg items-center  font-semibold text-[14px] text-[#38CB89]  bg-white p-3'
+                className='flex gap-2 rounded-lg items-center text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[40px] p-4'
                 onClick={() => {
                   setViewFilter(true);
                 }}>
@@ -211,7 +211,7 @@ function Productlist() {
                     return (
                       <tr
                         key={index}
-                        className='text-left border-b border-gray-200 hover:bg-[#e3f7ee] child:py-5 child:px-6'>
+                        className='text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] child:py-5 child:px-6'>
                         <td>
                           <span className='font-medium'>
                             {posts.indexOf(item) + 1}

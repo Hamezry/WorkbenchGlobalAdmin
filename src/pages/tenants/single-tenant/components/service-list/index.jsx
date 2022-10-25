@@ -32,6 +32,8 @@ const ServiceList = ({
     return Intl.NumberFormat('en-US').format(Number(value));
   };
 
+  const formatter = Intl.NumberFormat('en', { notation: 'compact' });
+
   return (
     <div className='flex gap-4 mt-3 p-6 '>
       <div className='w-[50%] h-[350px] flex flex-col gap-3 overflow-y-auto rounded-3xl p-6 bg-[#FFFF]'>
@@ -260,9 +262,9 @@ const ServiceList = ({
               <p>
                 {' '}
                 <span className='text-[#9FA19C]'>
-                  {service.users ? formatNumber(service.users.active) : '0'}{' '}
+                  {service.users ? formatter.format(service.users.active) : '0'}{' '}
                 </span>
-                /{service.users ? formatNumber(service.users.total) : '0'}
+                /{service.users ? formatter.format(service.users.total) : '0'}
               </p>
             </div>
 
@@ -293,12 +295,14 @@ const ServiceList = ({
                 {' '}
                 <span className='text-[#9FA19C]'>
                   {service.storage_capacity
-                    ? formatNumber(service.storage_capacity.total_capacity)
+                    ? formatter.format(
+                        service.storage_capacity.total_utilization
+                      )
                     : '0'}{' '}
                 </span>
                 /
                 {service.storage_capacity
-                  ? formatNumber(service.storage_capacity.total_utilization)
+                  ? formatter.format(service.storage_capacity.total_capacity)
                   : '0'}
               </p>
             </div>

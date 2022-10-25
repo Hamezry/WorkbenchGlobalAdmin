@@ -243,7 +243,7 @@ function SingleTenant() {
           <div>
             {org.is_active === 'True' ? (
               <button
-                className='flex justify-center gap-2 cursor-pointer rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4 hover:ring-1 hover:ring-[#e55851] hover:bg-white hover:text-[#e55851]'
+                className='flex justify-center gap-2 cursor-pointer rounded-lg  items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4 hover:ring-1 hover:ring-[#e55851] hover:bg-white hover:text-[#e55851]'
                 onClick={() => {
                   setViewDeactivate(true);
                 }}>
@@ -251,7 +251,7 @@ function SingleTenant() {
               </button>
             ) : (
               <button
-                className='flex justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4 hover:ring-1 hover:ring-afexgreen hover:bg-white hover:text-afexgreen'
+                className='flex justify-center cursor-pointer  gap-2 rounded-lg  items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4 hover:ring-1 hover:ring-afexgreen hover:bg-white hover:text-afexgreen'
                 onClick={() => {
                   setViewActivate(true);
                 }}>
@@ -262,7 +262,7 @@ function SingleTenant() {
 
           <Link
             to='/'
-            className='flex justify-center gap-2 rounded items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4 hover:ring-1 hover:ring-gray-500'>
+            className='flex justify-center gap-2 rounded-lg  items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4 hover:ring-1 hover:ring-gray-500'>
             Back
           </Link>
         </div>

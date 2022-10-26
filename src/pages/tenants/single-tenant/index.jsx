@@ -230,7 +230,7 @@ function SingleTenant() {
   }, []);
 
   return (
-    <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
+    <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-80px)] xl:h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
           <img
@@ -265,7 +265,7 @@ function SingleTenant() {
           <Link
             to='/'
             className='flex justify-center gap-2 rounded-lg  items-center text-[15px] text-gray-400 bg-[#f4f3f3] h-[40px] w-[90px] p-4 hover:ring-1 hover:ring-gray-500'>
-            <ArrowLeft2 size='32' />
+            <ArrowLeft2 size='18' />
             Back
           </Link>
         </div>

@@ -159,7 +159,7 @@ function Organisationlist() {
     return setPosts(filtered);
   };
   return (
-    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)]  space-y-10 overflow-y-auto'>
+    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-80px)]  xl:h-[calc(100vh-90px)]  space-y-10 overflow-y-auto'>
       {/*CARDS */}
       <OrganisationlistTile />
 
@@ -168,9 +168,9 @@ function Organisationlist() {
           <div className='flex justify-between border-b-[1px] border-[#F3F3F3] pb-2 '>
             <h2 className='text-xl font-boldw-full block'>Tenant List</h2>
             <button
-              className='flex gap-2 rounded-lg items-center text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[40px] p-4'
+              className='flex gap-2 rounded-lg items-center text-[14px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[35px] p-4'
               onClick={() => setOpened(true)}>
-              <Filter variant='Bold' />
+              <Filter size={14} variant='Bold' />
               <span>Filter</span>
             </button>
 
@@ -450,7 +450,7 @@ function Organisationlist() {
                   onChange={handleSearch}
                 />
                 <span className='absolute right-2 top-3'>
-                  <AiOutlineSearch className='text-[25px] text-[#C9C8C6]' />
+                  <AiOutlineSearch className='text-[20px] text-[#C9C8C6]' />
                 </span>
               </div>
 
@@ -463,7 +463,7 @@ function Organisationlist() {
           {/* Table */}
           <div className='h-full'>
             <div className='h-[calc(100%-theme(space.36))] overflow-auto w-full pb-20'>
-              <table className='overflow-auto w-full align-top text-[#54565B] text-[14px]'>
+              <table className='overflow-auto w-full align-top text-[#54565B] text-[12px] xl:text-[14px]'>
                 <thead className='bg-gray-100 sticky top-0 text-left whitespace-nowrap z-[5]'>
                   <tr className='child:py-4 child:px-6 child:cursor-default child:align-middle'>
                     <th>
@@ -490,7 +490,7 @@ function Organisationlist() {
                     </th>
 
                     <th className='py-3 px-4 '>S/N</th>
-                    <th className='py-3 px-4 '>Company Name</th>
+                    <th className='py-3 px-4 '>Organisation</th>
                     <th className='py-3 px-4 '>Country</th>
                     <th className='py-3 px-4 '>Location</th>
                     <th className='py-3 px-4 '>E-mail</th>
@@ -500,7 +500,7 @@ function Organisationlist() {
                     <th className='py-3 px-4 '>Action</th>
                   </tr>
                 </thead>
-                <tbody className='text-[12px]'>
+                <tbody className='text-[10px] xl:text-[12px]'>
                   {currentPosts.map((item, index) => {
                     return (
                       <tr
@@ -583,7 +583,7 @@ function Organisationlist() {
                           onClick={(e) => e.stopPropagation()}>
                           {item.is_active === 'True' ? (
                             <button
-                              className='flex  whitespace-nowrap justify-center cursor-pointer  gap-2  rounded-lg items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
+                              className='flex  whitespace-nowrap justify-center cursor-pointer  gap-2  rounded-lg items-center text-[14px] text-white h-[35px] bg-[#e55851] xl:h-[40px] w-full p-4'
                               onClick={() => {
                                 setModalData(item);
                                 setViewDeactivate(true);
@@ -592,7 +592,7 @@ function Organisationlist() {
                             </button>
                           ) : (
                             <button
-                              className='flex whitespace-nowrap justify-center cursor-pointer  gap-2 rounded-lg  items-center text-[15px] text-white bg-[#38CB89] h-[40px] w-full p-4'
+                              className='flex whitespace-nowrap justify-center cursor-pointer  gap-2 rounded-lg  items-center text-[14px] text-white bg-[#38CB89] h-[35px] xl:h-[40px] w-full p-4'
                               onClick={() => {
                                 setModalData(item);
                                 setViewActivate(true);
@@ -610,7 +610,7 @@ function Organisationlist() {
           </div>
           {/* Pagination */}
           <div className='absolute bottom-0 left-0 right-0 w-full'>
-            <div className='flex justify-between items-center text-gray-400 p-1 pr-6 pl-8 bg-gray-50 m-4 rounded-xl '>
+            <div className='flex justify-between items-center text-gray-400 xl:py-2 py-0 pr-6 pl-8 bg-gray-50 m-4 rounded-xl '>
               <p>
                 {currentPosts?.length > 0 ? itemsOffset + 1 : itemsOffset + 0}-
                 {itemsOffset + postsPerPage > posts?.length

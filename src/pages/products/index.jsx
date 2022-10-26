@@ -110,7 +110,7 @@ function Productlist() {
   }, [itemsOffset, postsPerPage, posts, currentPage]);
 
   return (
-    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-90px)] space-y-10 overflow-y-auto'>
+    <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-80px)]  xl:h-[calc(100vh-90px)] space-y-10 overflow-y-auto'>
       {/*CARDS */}
       <GlobalProductTile />
 
@@ -122,9 +122,9 @@ function Productlist() {
             Overview
           </h2>
           {/* Table Controls */}
-          <div className='flex justify-between items-center gap-5 relative'>
+          <div className='flex justify-between items-center Xl:gap-5 relative'>
             <div className='flex items-start gap-4 align-middle'>
-              <div className=' flex h-full text-left self-start'>
+              <div className=' flex h-full w-full text-left self-start'>
                 <TableSelect
                   defaultValue='7 entries'
                   updateValue={setPostsPerPage}
@@ -140,7 +140,7 @@ function Productlist() {
             </div>
             <div className='flex flex-1 justify-end items-center gap-5 relative'>
               <button
-                className=' flex items-center gap-4 p-3 rounded-2xl border text-sm text-gray-400 bg-[#F9F9F9] self-end'
+                className=' flex items-center  gap-2 p-2 xl:p-3 w-[150px] rounded-2xl border text-[12px] text-gray-400 bg-[#F9F9F9]'
                 onClick={() => setShowDate((s) => !s)}>
                 <span>Date Registered</span>
                 <Calendar size={18} variant='Bold' />
@@ -166,7 +166,7 @@ function Productlist() {
                   onChange={handleSearch}
                 />
                 <span className='absolute right-2 top-3'>
-                  <AiOutlineSearch className='text-[25px] text-gray-300' />
+                  <AiOutlineSearch className='text-[20px] xl:text-[25px] text-gray-300' />
                 </span>
               </div>
 
@@ -174,13 +174,13 @@ function Productlist() {
                 onClick={() => {
                   setModal(true);
                 }}
-                className='flex justify-between rounded-lg items-center text-[12px] font-semibold text-white bg-[#38CB89] p-3 gap-3'>
+                className='flex w-[140px] xl:w-[160px] gap-2 rounded-lg justify-center items-center text-sm font-semibold text-white bg-[#38CB89] p-2 xl:p-3'>
                 Create product
-                <ReceiptText size={18} />
+                <ReceiptText />
               </button>
 
               <button
-                className='flex gap-2 rounded-lg items-center text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[40px] p-4'
+                className='flex gap-2 rounded-lg items-center xl:text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[35px] xl:h-[40px] p-4'
                 onClick={() => {
                   setViewFilter(true);
                 }}>
@@ -271,7 +271,7 @@ function Productlist() {
           </div>
           {/* Pagination */}
           <div className='absolute bottom-0 left-0 right-0 w-full'>
-            <div className='flex justify-between items-center text-gray-400 p-1 pr-6 pl-8 bg-gray-50 m-4 rounded-xl '>
+            <div className='flex justify-between items-center text-gray-400 py-0 xl:py-2 pr-6 pl-8 bg-gray-50 m-4 rounded-xl '>
               <span>
                 {itemsOffset + 1 > posts.length ? currentPage : itemsOffset + 1}{' '}
                 -{' '}

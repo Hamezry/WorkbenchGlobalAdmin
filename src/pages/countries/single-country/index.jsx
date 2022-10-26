@@ -71,7 +71,7 @@ function Country() {
   }, [countries, id]);
 
   return (
-    <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
+    <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-80px)] xl:h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
           <img
@@ -90,7 +90,7 @@ function Country() {
         </Link>
       </div>
 
-      <div className='w-[100%] h-[calc[100vh-80px)] overflow-y-auto flex gap-9'>
+      <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
           <People
             totalFarmers={totalFarmers}
@@ -107,12 +107,13 @@ function Country() {
             )}
           </div>
         </div>
+
         <div className='w-[35%] flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 overflow-y-auto relative'>
           <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative h-full'>
-            <div className='mb-2  p-4'>
+            {' '}
+            <div className='mb-2 p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
-
             {stock.length > 0 ? (
               <div className='w-full'>
                 <Tabs

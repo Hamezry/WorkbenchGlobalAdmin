@@ -13,7 +13,7 @@ function TenantDropdown() {
       position='bottom-end'>
       <Popover.Target>
         <button
-          className='flex gap-4 border rounded-lg border-afexgreen text-afexgreen  items-center text-[14px] hover:bg-afexgreen hover:text-[#ffff]  bg-[#ffff] h-[40px] w-full p-3'
+          className='flex gap-4 border rounded-lg border-afexgreen text-afexgreen  items-center text-sm xl:text-[14px] hover:bg-afexgreen hover:text-[#ffff]  bg-[#ffff] xl:h-[40px] w-full p-2 xl:p-3'
           onClick={() => setOpened((o) => !o)}>
           Select Action{' '}
           <MdExpandMore

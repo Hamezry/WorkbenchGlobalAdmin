@@ -35,7 +35,7 @@ const ServiceList = ({
   const formatter = Intl.NumberFormat('en', { notation: 'compact' });
 
   return (
-    <div className='flex gap-4 mt-3 p-6 '>
+    <div className='flex gap-4 mt-3 p-6 overflow-x-auto '>
       <div className='w-[50%] h-[350px] flex flex-col gap-3 overflow-y-auto rounded-3xl p-6 bg-[#FFFF]'>
         <div className='flex justify-between p-3 border-b '>
           <p>Service List</p>
@@ -179,13 +179,13 @@ const ServiceList = ({
         </div>
       </div>
 
-      <div className='flex flex-col w-[50%] h-[350px] items-center gap-10'>
+      <div className='flex flex-col w-[50%] h-[350px] items-center gap-10 overflow-x-hidden'>
         {userCount && (
-          <div className='relative bg-[#FFFF] w-full h-[50%] rounded-xl  flex gap-10 px-8 items-center'>
-            <img src={profIcon} alt='avatar' />
+          <div className='relative bg-[#FFFF] w-full h-[50%] rounded-xl flex gap-3 xl:gap-10 px-4 xl:px-8 items-center'>
+            <img src={profIcon} alt='avatar' className='lg:h-[40px]' />
 
-            <div className='font-semibold text-[25px]'>
-              <p className='text-[14px] text-[#B4B4B0] mb-5'>User Account</p>
+            <div className='font-semibold text-[18px] xl:text-[25px]'>
+              <p className='text-[12px] text-[#B4B4B0] mb-5'>User Account</p>
               <p>
                 {' '}
                 <span className='text-[#9FA19C]'>
@@ -195,28 +195,28 @@ const ServiceList = ({
               </p>
             </div>
 
-            <div className=' absolute right-8 top-8 flex gap-5 '>
+            <div className=' absolute right-[8%] top-[33%] xl:top-[25%] flex gap-5 '>
               <button>
-                <FaLessThan className='h-[18px] text-[#B4B4B0] font-light ' />
+                <FaLessThan className='h-[10px] xl:h-[18px] text-[#B4B4B0] font-light ' />
               </button>
               <button
                 onClick={() => {
                   setUserCount(false);
                   setStorageCount(true);
                 }}>
-                <FaGreaterThan className='h-[18px]' />
+                <FaGreaterThan className='h-[10px] xl:h-[18px]' />
               </button>
             </div>
           </div>
         )}
 
         {storageCount && (
-          <div className='relative bg-[#FFFF] w-full h-[50%] rounded-xl  flex gap-10 px-8 items-center'>
-            <img src={building} alt='avatar' />
+          <div className='relative bg-[#FFFF] w-full h-[50%] rounded-xl flex gap-3 xl:gap-10 px-4 xl:px-8 items-center'>
+            <img src={building} alt='avatar' className='lg:h-[40px]' />
 
-            <div className='font-semibold text-[25px]'>
-              <p className='text-[14px] text-[#B4B4B0] mb-5'>
-                Storage Capacity (MT)
+            <div className='font-semibold text-[18px] xl:text-[25px]'>
+              <p className='lg:text-[10px] pr-10 text-[#B4B4B0] mb-5'>
+                Storage Capacity(MT)
               </p>
               <p>
                 {' '}
@@ -234,23 +234,23 @@ const ServiceList = ({
               </p>
             </div>
 
-            <div className=' absolute right-8 top-8 flex gap-5 '>
+            <div className=' absolute right-[3%] top-[33%] xl:top-[25%] flex gap-5'>
               <button
                 onClick={() => {
                   setUserCount(true);
                   setStorageCount(false);
                 }}>
-                <FaLessThan className='h-[18px] font-light ' />
+                <FaLessThan className='h-[10px] xl:h-[18px] font-light ' />
               </button>
               <button>
-                <FaGreaterThan className='h-[18px] text-[#B4B4B0]' />
+                <FaGreaterThan className='h-[10px] xl:h-[18px] text-[#B4B4B0]' />
               </button>
             </div>
           </div>
         )}
 
-        <div className=' bg-[#FFFF] w-full h-[50%] rounded-xl p-8 items-center flex gap-10'>
-          <img src={book} alt='avatar' />
+        <div className=' bg-[#FFFF] w-full h-[50%] rounded-xl p-3 xl:p-8 items-center flex gap-2 xl:gap-10'>
+          <img src={book} alt='avatar' className='lg:h-[40px]' />
           <p className='text-[25px]'>
             {' '}
             <span className='text-[14px]'>Warehouse Count</span> <br />{' '}

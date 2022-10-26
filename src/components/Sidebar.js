@@ -9,7 +9,7 @@ function Sidebar() {
   const baseStyle = 'flex items-center rounded hover:bg-[#e2f8ee] w-full mt-4';
 
   return (
-    <aside className='sticky flex flex-col font-muli left-0 w-[16%] bg-[#FFFFFF] h-[calc(100vh-90px)] border-none'>
+    <aside className='sticky flex flex-col font-muli left-0 w-[16%] bg-[#FFFFFF] h-[calc(100vh-80px)] xl:h-[calc(100vh-90px)] border-none'>
       <nav className='sidebar overflow-x-hidden text-[#8B908B] h-full border-r-0.5 flex flex-col'>
         <div className='flex flex-col border-r-2 border-r-[#F3F3F3] h-[100%] mr-8 pt-4 pl-3'>
           <div className='mt-4 ml-2'>

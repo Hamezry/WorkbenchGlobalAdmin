@@ -18,32 +18,32 @@ function Navbar() {
   const { currentLocation } = useBreadCrumbs();
 
   return (
-    <div className='sticky font-muli bg-[#FFFFFF] shadow shadow-gray-100  w-full flex items-center justify-between p-[35px] h-[90px] z-10'>
-      <div className='flex items-center border-none'>
-        <img src={logo1} alt='logo-icon' />
+    <div className='sticky font-muli bg-[#FFFFFF] shadow shadow-gray-100  w-full flex items-center justify-between p-5 h-[80px] xl:h-[90px] z-10'>
+      <div className='flex  xl:justify-between 2xl:justify-around items-center w-[25%] border-none'>
+        <img src={logo1} alt='logo-icon' className='lg:w-[130px] xl:w-[160px]' />
 
-        <div className='ml-[70px] text-[20px]'>
-          <p className='text-[12px]'>
+        <div className='xl:text-[20px] px-6 text-xl'>
+          <p className='text-[9px] xl:text-[12px]'>
             Pages <span className='text-[#C9C8C6]'>/ {currentLocation}</span>
           </p>
           <p>{currentLocation}</p>
         </div>
       </div>
 
-      <div className='relative'>
+      <div className='flex justify-center relative w-[45%] items-center'>
         <input
           type='text'
           placeholder='Search'
-          className='p-3 rounded-2xl text-sm text-gray-500 border-none  focus:ring-1 focus:ring-afexgreen outline-none  bg-[#F9F9F9] h-[56px] w-[370px] font-Muli'
+          className='p-3 rounded-2xl text-lg text-gray-500 border-none  focus:ring-1 focus:ring-afexgreen outline-none  bg-[#F9F9F9] h-[45px] xl:h-[56px] w-[330px] xl:w-[400px] font-Muli'
         />
-        <span className='absolute left-[300px] top-3'>
+        <span className='absolute 2xl:left-[70%] left-[75%] top-3'>
           <AiOutlineSearch className='text-[#C9C8C6] text-[30px]' />
         </span>
       </div>
 
-      <div className='flex gap-14 items-center'>
-        <div className='flex justify-center gap-2 items-center'>
-          <img src={moonIcon} alt='moon icon' />
+      <div className='flex justify-evenly items-center w-[30%]'>
+        <div className='flex gap-2 items-center'>
+          <img src={moonIcon} alt='moon icon' className='lg:w-[18px] xl:w-[25px]' />
           <label className='inline-flex relative items-center cursor-pointer'>
             <input
               type='checkbox'
@@ -58,7 +58,7 @@ function Navbar() {
               className='w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-whit after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] '></div>
           </label>
 
-          <img src={sunIcon} alt='sun icon' />
+          <img src={sunIcon} alt='sun icon' className='lg:w-[20px] xl:w-[18px]' />
         </div>
 
         <img
@@ -67,10 +67,10 @@ function Navbar() {
           onClick={() => {
             setViewNotifications(true);
           }}
-          className='cursor-pointer'
+          className='cursor-pointer lg:w-[20px] xl:w-[30px]'
         />
-        <img src={settings} alt='settings switch' />
-        <img src={logo2} alt='AFEX' />
+        <img src={settings} alt='settings switch' className='lg:w-[20px xl:w-[30px]' />
+        <img src={logo2} alt='AFEX' className='lg:w-[70px] xl:w-[95px]' />
       </div>
 
       <Notificationmodal

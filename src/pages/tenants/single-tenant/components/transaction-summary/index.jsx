@@ -19,7 +19,7 @@ const TrasactionSummary = ({
   return (
     <div className='bg-[#FFFF]  p-4 mt-8 rounded-3xl w-full'>
       <div className='flex items-center border-b border-gray-200 justify-between p-3'>
-        <div className='flex text-[20px] gap-2'>
+        <div className='flex text-[16px] xl:text-[20px] gap-2'>
           <p>Transaction Summary</p>
         </div>
 

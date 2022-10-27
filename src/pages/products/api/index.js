@@ -18,7 +18,7 @@ class ProductsAPICalls {
    *  }} form
    */
   create_product(form) {
-    return axios.post('create_product', form);
+    return axios.post('create-product', form);
   }
   /**
    * @param {number} pk

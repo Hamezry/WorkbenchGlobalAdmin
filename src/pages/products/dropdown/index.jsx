@@ -15,14 +15,14 @@ const changeStatus = async (pk) => {
   if (!resp.data || !resp.data.responseCode) {
     notifcation({
       heading: 'Oops! Something went wrong',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      text: '',
       id: 'error',
     });
   }
 
   notifcation({
     heading: 'Product deactivated successfully',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    text: '',
     id: 'success',
   });
 };
@@ -71,13 +71,13 @@ function ProductDropdown({ singleProduct }) {
           </p>
         </Popover.Dropdown>
       </Popover>
-      {openUpdateModal && (
-        <UpdateProductModal
-          close={() => setOpenUpdateProductModal(false)}
-          show={openUpdateModal}
-          modalData={singleProduct}
-        />
-      )}
+
+      <UpdateProductModal
+        close={() => setOpenUpdateProductModal(false)}
+        show={openUpdateModal}
+        modalData={singleProduct}
+      />
+
       {openDecactivateModal && (
         <DeactivateProductmodal
           setDeactivateProduct={setOpenDecactivateModal}

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-import { ArrowDown2 } from "iconsax-react";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import React, { useState, useEffect } from 'react';
+import ReactPaginate from 'react-paginate';
+import { ArrowDown2 } from 'iconsax-react';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 
 const Table = ({
   data,
@@ -46,33 +46,33 @@ const Table = ({
               </tr>
             </thead>
             <tbody className='text-[#54565B] text-[12px] font-light'>
-              {title === "commodities" &&
+              {title === 'commodities' &&
                 currentList.map((item, index) => {
                   return (
                     <>
                       <tr
                         key={index}
-                        className={`text-left border-b border-gray-200 hover:bg-[#e3f7ee] child:whitespace-nowrap bg-white ${
-                          arrowClicked("cm" + index)
-                            ? "sticky top-[54px] z-10"
-                            : ""
+                        className={`text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] child:whitespace-nowrap bg-white ${
+                          arrowClicked('cm' + index)
+                            ? 'sticky top-[54px] z-10'
+                            : ''
                         }`}>
                         <td className='w-8'>
                           <button
                             className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
-                              arrowClicked("cm" + index)
-                                ? "bg-afexgreen rotate-180"
-                                : "bg-bggrey rotate-0"
+                              arrowClicked('cm' + index)
+                                ? 'bg-afexgreen rotate-180'
+                                : 'bg-bggrey rotate-0'
                             }`}
                             onClick={() =>
                               setCurrentlyDisplayed((s) =>
-                                s === "cm" + index ? null : "cm" + index
+                                s === 'cm' + index ? null : 'cm' + index
                               )
                             }>
                             <ArrowDown2
                               size='12'
                               color={
-                                arrowClicked("cm" + index) ? "#fff" : "#54565b"
+                                arrowClicked('cm' + index) ? '#fff' : '#54565b'
                               }
                               variant='Outline'
                             />
@@ -104,15 +104,15 @@ const Table = ({
                         <td
                           colSpan={5}
                           className={`${
-                            arrowClicked("cm" + index)
-                              ? " px-[14px] py-[18px]"
-                              : "!p-0 "
+                            arrowClicked('cm' + index)
+                              ? ' px-[14px] py-[18px]'
+                              : '!p-0 '
                           }`}>
                           <div
                             className={`flex justify-end transition-all duration-400 overflow-hidden ${
-                              arrowClicked("cm" + index)
-                                ? "opacity-100 h-auto"
-                                : "opacity-0 h-0 "
+                              arrowClicked('cm' + index)
+                                ? 'opacity-100 h-auto'
+                                : 'opacity-0 h-0 '
                             }`}>
                             <div className=' min-w-[200px] max-w-[70%] '>
                               <table className={` w-full pb-3 relative `}>
@@ -151,35 +151,35 @@ const Table = ({
                 })}
 
               <>
-                {title === "inputs" &&
+                {title === 'inputs' &&
                   currentList.map((item, index) => {
                     return (
                       <>
                         <tr
                           key={index}
-                          className={`child:whitespace-nowrap text-left border-b border-gray-200 hover:bg-[#e3f7ee] bg-white ${
-                            arrowClicked("in" + index)
-                              ? "sticky top-[54px] z-10"
-                              : ""
+                          className={`child:whitespace-nowrap text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] bg-white ${
+                            arrowClicked('in' + index)
+                              ? 'sticky top-[54px] z-10'
+                              : ''
                           }`}>
                           <td className='w-8'>
                             <button
                               className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
-                                arrowClicked("in" + index)
-                                  ? "bg-afexgreen rotate-180"
-                                  : "bg-bggrey rotate-0"
+                                arrowClicked('in' + index)
+                                  ? 'bg-afexgreen rotate-180'
+                                  : 'bg-bggrey rotate-0'
                               }`}
                               onClick={() =>
                                 setCurrentlyDisplayed((s) =>
-                                  s === "in" + index ? null : "in" + index
+                                  s === 'in' + index ? null : 'in' + index
                                 )
                               }>
                               <ArrowDown2
                                 size='12'
                                 color={
-                                  arrowClicked("in" + index)
-                                    ? "#fff"
-                                    : "#54565b"
+                                  arrowClicked('in' + index)
+                                    ? '#fff'
+                                    : '#54565b'
                                 }
                                 variant='Outline'
                               />
@@ -209,15 +209,15 @@ const Table = ({
                           <td
                             colSpan={4}
                             className={`${
-                              arrowClicked("in" + index)
-                                ? " px-[14px] py-[18px]"
-                                : "!p-0 "
+                              arrowClicked('in' + index)
+                                ? ' px-[14px] py-[18px]'
+                                : '!p-0 '
                             }`}>
                             <div
                               className={`flex justify-end transition-all duration-400 overflow-hidden ${
-                                arrowClicked("in" + index)
-                                  ? "opacity-100 h-auto"
-                                  : "opacity-0 h-0 "
+                                arrowClicked('in' + index)
+                                  ? 'opacity-100 h-auto'
+                                  : 'opacity-0 h-0 '
                               }`}>
                               <div className=' min-w-[200px] max-w-[70%] '>
                                 <table className={` w-full pb-3 `}>

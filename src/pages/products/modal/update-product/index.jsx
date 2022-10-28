@@ -35,7 +35,7 @@ function UpdateProductmodal({ close, modalData, show }) {
 
     notification({
       heading: 'Product updated successfully',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      text: '',
       id: 'success',
     });
     refreshContext();

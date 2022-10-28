@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { Tabs } from "@mantine/core";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Tabs } from '@mantine/core';
+import { ArrowLeft2 } from 'iconsax-react';
 
-import axios from "../../../utils/axios";
-import { useCountriesCtx } from "../../../contexts";
+import axios from '../../../utils/axios';
+import { useCountriesCtx } from '../../../contexts';
 
-import Adminlist from "./components/admin-table";
-import NoAdminLevel from "./components/no-admin";
-import People from "./components/people";
-import Table from "./components/position-table/table";
+import Adminlist from './components/admin-table';
+import NoAdminLevel from './components/no-admin';
+import People from './components/people';
+import Table from './components/position-table/table';
 
-import empty from "../../../Assets/empty.gif";
+import empty from '../../../Assets/empty.gif';
 
 function Country() {
   const { id } = useParams();
@@ -21,7 +22,7 @@ function Country() {
   const [stock, setStock] = useState([]);
   const [input, setInput] = useState([]);
   const [list, setList] = useState([]);
-  const [title, setTitle] = useState("Stock");
+  const [title, setTitle] = useState('Stock');
 
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
   const totalFarmers = cardData.total_farmers;
@@ -33,21 +34,21 @@ function Country() {
     const countryStockPosition = async () => {
       const respS = await axios.get(`country/stock/position/${id}`);
 
-      if (!respS.data || respS.data.responseCode !== "100") return;
+      if (!respS.data || respS.data.responseCode !== '100') return;
 
       setStock(respS.data.data);
     };
     const countryInputPosition = async () => {
       const respI = await axios.get(`country/input/position/${id}`);
 
-      if (!respI.data || respI.data.responseCode !== "100") return;
+      if (!respI.data || respI.data.responseCode !== '100') return;
       setInput(respI.data.data);
     };
 
     const countryAdminLevels = async () => {
       const resp = await axios.get(`admin/levels/${id}`);
 
-      if (!resp.data || resp.data.responseCode !== "100") return;
+      if (!resp.data || resp.data.responseCode !== '100') return;
 
       setList(resp.data.data);
     };
@@ -62,7 +63,7 @@ function Country() {
   useEffect(() => {
     const singleCountry = countries.filter((el) => el.pk === Number(id))[0];
     if (!singleCountry || countries.length === 0) {
-      return navigate("/countries");
+      return navigate('/countries');
     }
     setSingleCountry(singleCountry);
 
@@ -70,7 +71,7 @@ function Country() {
   }, [countries, id]);
 
   return (
-    <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-90px)] p-1'>
+    <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-80px)] xl:h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
           <img
@@ -83,12 +84,13 @@ function Country() {
 
         <Link
           to='/countries/list'
-          className=' rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3 text-center hover:ring-1 hover:ring-gray-400'>
+          className=' flex gap-2 rounded-lg items-center text-[12px] text-gray-500  bg-[#FBFBFB] h-[40px] w-[80px] p-3 text-center hover:ring-1 hover:ring-gray-400'>
+          <ArrowLeft2 size='15' />
           Back
         </Link>
       </div>
 
-      <div className='w-[100%] h-[calc[100vh-80px)] overflow-y-auto flex gap-9'>
+      <div className='w-[100%]  h-[calc(100%-80px)] overflow-y-auto flex gap-9'>
         <div className='mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 w-[65%] overflow-y-auto'>
           <People
             totalFarmers={totalFarmers}
@@ -105,12 +107,13 @@ function Country() {
             )}
           </div>
         </div>
+
         <div className='w-[35%] flex mt-[30px] h-[800px] rounded-3xl bg-[#F9F9F9] p-8 overflow-y-auto relative'>
           <div className='bg-[#FFFF] w-full overflow-x-auto rounded-3xl relative h-full'>
-            <div className='mb-2  p-4'>
+            {' '}
+            <div className='mb-2 p-4'>
               <h2 className='text-xl'>Overall {title} Position</h2>
             </div>
-
             {stock.length > 0 ? (
               <div className='w-full'>
                 <Tabs
@@ -119,22 +122,22 @@ function Country() {
                   onTabChange={(value) => setCurrentlyDisplayed(null)}
                   styles={{
                     tab: {
-                      color: "#C9C8C6",
+                      color: '#C9C8C6',
                       '&[data-active="true"]': {
-                        color: "#38CB89",
+                        color: '#38CB89',
                       },
                     },
                     tabsList: {
-                      borderBottom: "1px solid rgba(201, 200, 198, .5)",
+                      borderBottom: '1px solid rgba(201, 200, 198, .5)',
                     },
                   }}>
                   <Tabs.List>
                     <Tabs.Tab
                       value='commodities'
-                      onClick={() => setTitle("Stock")}>
+                      onClick={() => setTitle('Stock')}>
                       Stock
                     </Tabs.Tab>
-                    <Tabs.Tab value='inputs' onClick={() => setTitle("Inputs")}>
+                    <Tabs.Tab value='inputs' onClick={() => setTitle('Inputs')}>
                       Inputs
                     </Tabs.Tab>
                   </Tabs.List>
@@ -142,7 +145,7 @@ function Country() {
                   <Tabs.Panel value='commodities' pt='xs'>
                     <Table
                       data={stock}
-                      headers={["Commodity", "Grade", "Volume(MT)", "Lien(MT)"]}
+                      headers={['Commodity', 'Grade', 'Volume(MT)', 'Lien(MT)']}
                       title='commodities'
                       currentlyDisplayed={currentlyDisplayed}
                       setCurrentlyDisplayed={setCurrentlyDisplayed}
@@ -152,13 +155,13 @@ function Country() {
                   <Tabs.Panel value='inputs' pt='xs'>
                     <Table
                       data={input}
-                      headers={["Input", "Lien units", "Units"]}
+                      headers={['Input', 'Lien units', 'Units']}
                       title='inputs'
                       currentlyDisplayed={currentlyDisplayed}
                       setCurrentlyDisplayed={setCurrentlyDisplayed}
                     />
                   </Tabs.Panel>
-                </Tabs>{" "}
+                </Tabs>{' '}
               </div>
             ) : (
               <div className='flex items-center h-[70%]'>

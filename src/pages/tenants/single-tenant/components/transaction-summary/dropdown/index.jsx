@@ -6,7 +6,6 @@ import WarehouseFilter from './warehouse-filter';
 import LocationFilter from './location-filter';
 import ItemFilter from './item-filter';
 
-
 function TransactionDropdown({
   locationList,
   warehouseList,
@@ -25,11 +24,11 @@ function TransactionDropdown({
     <Popover
       opened={opened}
       onChange={setOpened}
-      width={"350px"}
+      width={'350px'}
       position='bottom-end'>
       <Popover.Target>
         <button
-          className='flex gap-2 rounded-md items-center text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[40px] w-full p-4'
+          className='flex gap-2 rounded-md items-center text-[14px] xl:text-[18px] bg-[#ffff] text-[#38CB89] border border-[#38CB89] hover:bg-[#38CB89] hover:text-[#ffff] h-[40px] w-full p-4'
           onClick={() => {
             setOpened((prev) => !prev);
             setDrop(true);

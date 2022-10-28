@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Filter } from 'iconsax-react';
+import { MdExpandMore } from 'react-icons/md';
 
 import Navigation from '../components/navigation';
 
@@ -60,7 +61,7 @@ function Countrylist() {
   }, [itemsOffset, currentPage, posts, postsPerPage]);
 
   return (
-    <div className='w-[82%] flex flex-col gap-14 font-muli h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
+    <div className='w-[82%] flex flex-col gap-10 font-muli h-[calc(100vh-80px)]  xl:h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto '>
       {/*CARDS */}
       <CountryTile />
 
@@ -68,10 +69,10 @@ function Countrylist() {
         <Navigation />
 
         <div className='w-[100%] h-[calc(100%-10%)] rounded-2xl p-3 bg-[#F9F9F9] overflow-y-auto'>
-          <div className='flex flex-col gap-1 bg-[#FFFF] h-[100%] rounded-3xl w-[100%] py-3 px-8'>
-            <div className='flex justify-between p-3 border-b-2'>
-              <p>Country List</p>
-              <button className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4 hover:bg-afexgreen hover:text-white'>
+          <div className='relative flex flex-col gap-1 bg-[#FFFF] h-[100%] rounded-3xl w-[100%] py-3 px-8'>
+            <div className='flex justify-between items-center p-3 border-b border-b-[#F3F3F3]'>
+              <p className='text-[18px]'>Country List</p>
+              <button className='border border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[35px] xl:h-[40px] p-4 hover:bg-afexgreen hover:text-white'>
                 <Filter variant='Bold' size={17} />
                 <span>Filter</span>
               </button>
@@ -95,24 +96,24 @@ function Countrylist() {
                   <input
                     type='text'
                     placeholder='Search by Country Name'
-                    className='p-3 rounded-2xl text-sm text-black border-none outline-none focus:outline-none bg-[#F9F9F9] h-[54px w-[360px]'
+                    className='p-3 rounded-xl text-sm text-gray-400 border-none outline-none focus:outline-none bg-[#F9F9F9] h-full w-64'
                     onKeyUp={handleSearch}
                   />
-                  <span className='absolute left-[300px] top-3'>
-                    <AiOutlineSearch />
+                  <span className='absolute right-2 top-3'>
+                    <AiOutlineSearch className='text-[25px] text-[#C9C8C6]' />
                   </span>
                 </div>
 
-                <button className='border-2 border-[#38CB89]  flex gap-1 rounded-lg items-center text-[12px] text-[#38CB89]  bg-white h-[40px] p-4 hover:bg-afexgreen hover:text-white'>
-                  <Filter variant='Bold' size={17} />
-                  <span>Select Action</span>
+                <button className='flex gap-4 border rounded-lg border-afexgreen text-afexgreen items-center xl:text-[14px] hover:bg-afexgreen hover:text-[#ffff]  bg-[#ffff] h-[35px] xl:h-[40px] w-full p-2 xl:p-3'>
+                  Select Action
+                  <MdExpandMore />
                 </button>
               </div>
             </div>
 
             {/*TABLE */}
 
-            <div className='px-5 overflow-y-auto overflow-x-auto'>
+            <div className='px-5 pb-24 overflow-y-auto overflow-x-auto'>
               <table className='min-w-max w-full text-[14px] table-auto'>
                 <thead>
                   <tr className='bg-[#F9F9F9] text-[#54565B] text-left'>
@@ -131,7 +132,7 @@ function Countrylist() {
                     return (
                       <tr
                         key={index}
-                        className=' text-left  border-b border-gray-200 py-6 hover:bg-[#e3f7ee]'
+                        className=' text-left  border-b border-[#F9FAFB] py-6 hover:bg-[#e3f7ee]'
                         onClick={() => navigate(`/countries/${item.pk}`)}>
                         <td className='py-4 px-8'>
                           <span className='font-medium'>{index + 1}</span>
@@ -182,7 +183,7 @@ function Countrylist() {
                           className='py-4 px-8 '
                           onClick={(e) => e.stopPropagation()}>
                           <Link to={`/countries/${item.pk}`}>
-                            <span className='font-medium text-cyan-400 underline text-sm '>
+                            <span className='font-medium text-[#0089C8] underline text-sm '>
                               View Dashboard
                             </span>
                           </Link>
@@ -194,20 +195,27 @@ function Countrylist() {
               </table>
             </div>
 
-            <div className='flex justify-between p-2 px-4 rounded-2xl bg-[#F9F9F9] items-center'>
-              {/* {itemsOffset + 1} - {postsPerPage + itemsOffset} of {posts.length}{" "}
-              Entries */}
-              {currentPosts?.length > 0 ? itemsOffset + 1 : itemsOffset + 0}-
-              {itemsOffset + postsPerPage > posts?.length
-                ? posts?.length
-                : itemsOffset + postsPerPage}
-              &nbsp;of {posts?.length} entries
-              <Pagination
-                totalPosts={posts.length}
-                handlePageChange={handlePageChange}
-                currentPage={currentPage}
-                perPage={postsPerPage}
-              />
+            {/* Pagination */}
+            <div className='absolute bottom-0 left-0 right-0 w-full'>
+              <div className='flex justify-between items-center text-gray-400 py-0 xl:py-2 pr-6 pl-8 bg-gray-50 m-4 rounded-xl '>
+                <span>
+                  {itemsOffset + 1 > posts.length
+                    ? currentPage
+                    : itemsOffset + 1}{' '}
+                  -{' '}
+                  {postsPerPage + itemsOffset < posts.length
+                    ? postsPerPage + itemsOffset
+                    : posts?.length}{' '}
+                  of {posts.length} Entries
+                </span>
+
+                <Pagination
+                  totalPosts={posts.length}
+                  handlePageChange={handlePageChange}
+                  currentPage={currentPage}
+                  perPage={postsPerPage}
+                />
+              </div>
             </div>
           </div>
         </div>

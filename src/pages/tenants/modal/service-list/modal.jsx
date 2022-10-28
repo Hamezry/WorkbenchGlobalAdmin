@@ -3,7 +3,15 @@ import { Modal } from '@mantine/core';
 
 import shockedFace from '../../../../Assets/shocked.svg';
 
-const ServiceModal = ({ show, close, activate, deactivate, active }) => {
+const ServiceModal = ({
+  show,
+  close,
+  activate,
+  deactivate,
+  active,
+  A_message,
+  D_message,
+}) => {
   return (
     <Modal
       onClose={close}
@@ -24,8 +32,7 @@ const ServiceModal = ({ show, close, activate, deactivate, active }) => {
             service?
           </p>
           <p className='text-gray-400 text-[14px]'>
-            lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna
+            {!active ? A_message : D_message}
           </p>
         </div>
         <div className='flex gap-5 pb-8 px-8'>

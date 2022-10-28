@@ -13,14 +13,14 @@ function ChangeStatus({ setViewActivate, setSuccess, modalData, activate }) {
       return notification({
         id: 'error',
         heading: 'Oops! Something went wrong',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: '',
       });
     }
 
     return notification({
       id: 'success',
       heading: `Tenant ${activate ? 'activated' : 'deactivated'} successfully`,
-      text: 'Lorem ipsum dolor sit amet, consectetur adip',
+      text: '',
     });
   };
 
@@ -36,10 +36,7 @@ function ChangeStatus({ setViewActivate, setSuccess, modalData, activate }) {
           Are you sure you want to {activate ? 'activate' : 'deactivate'} this
           account?
         </p>
-        <span className='text-[#9FA19C] text-[14px]'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget
-          porttitor ultricies mauris et lobortis. Tristique pellentesque
-        </span>
+        <span className='text-[#9FA19C] text-[14px]'></span>
 
         <div className='flex mx-auto  gap-4 items-center '>
           <div className='flex justify-center gap-2 rounded items-center text-[18px]  bg-[#e9ebea] h-[50px] w-[200px] p-4'>

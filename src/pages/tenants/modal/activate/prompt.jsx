@@ -15,7 +15,7 @@ function Activate({ setViewActivate, modalData }) {
         customNotification({
           heading: 'Tenant activated successfully',
           id: 'success',
-          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+          text: '',
         });
         refreshContext();
       })
@@ -35,10 +35,7 @@ function Activate({ setViewActivate, modalData }) {
       <div className='flex flex-col gap-5 mb-6 mt-14 items-center p-1 text-center'>
         <img src={ladyIcon} alt='' className='h-[150px]' />
         <p>Are you sure you want to activate this Account.</p>
-        <span className='text-[#9FA19C] text-[14px]'>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget
-          porttitor
-        </span>
+        <span className='text-[#9FA19C] text-[14px]'></span>
 
         <div className='flex w-full gap-4 items-center pt-4 '>
           <button

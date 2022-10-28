@@ -6,10 +6,8 @@ import {
   CSDModal,
   EWRModal,
   LogisticsModal,
-  OverageModal,
   PlantModal,
   RegistrationModal,
-  VerificationModal,
 } from '../../../modal/service-list';
 
 import profIcon from '../../../../../Assets/profile.svg';
@@ -77,7 +75,7 @@ const ServiceList = ({
         </div>
 
         <div className='flex justify-between mt-6 items-center'>
-          <p>EWR Module</p>
+          <p>Electronic Warehouse Receipts</p>
           <label className='inline-flex relative items-center mr-5 cursor-pointer'>
             <input
               type='checkbox'
@@ -110,7 +108,7 @@ const ServiceList = ({
           </label>
         </div>
 
-        <div className='flex justify-between mt-6 items-center'>
+        {/* <div className='flex justify-between mt-6 items-center'>
           <p>Overage Module</p>
           <label className='inline-flex relative items-center mr-5 cursor-pointer'>
             <input
@@ -125,10 +123,10 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-        </div>
+        </div> */}
 
         <div className='flex justify-between mt-6 items-center'>
-          <p>Plant Module</p>
+          <p>Plant WIP Module</p>
           <label className='inline-flex relative items-center mr-5 cursor-pointer'>
             <input
               type='checkbox'
@@ -160,7 +158,7 @@ const ServiceList = ({
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
         </div>
-
+        {/* 
         <div className='flex justify-between mt-6 items-center'>
           <p>Verification Module</p>
           <label className='inline-flex relative items-center mr-5 cursor-pointer'>
@@ -176,7 +174,7 @@ const ServiceList = ({
               }}
               className="w-12 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-[#38CB89]  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#38CB89] "></div>
           </label>
-        </div>
+        </div> */}
       </div>
 
       <div className='flex flex-col w-[50%] h-[350px] items-center gap-10 overflow-x-hidden'>
@@ -262,6 +260,12 @@ const ServiceList = ({
       </div>
       {/* Modals */}
       <AccountingModal
+        A_message={
+          'Enabling this service will grant tenant access to the accounting module '
+        }
+        D_message={
+          "Disabling this service will revoke tenant's access to the accounting module "
+        }
         show={modalsService.account}
         close={closeModal}
         activate={() => change_status('accounting_setting', 'True')}
@@ -270,6 +274,12 @@ const ServiceList = ({
       />
 
       <CSDModal
+        A_message={
+          "Enabling this service will permit tenant's inventory flow to CSD "
+        }
+        D_message={
+          "Disabling this service will prevent tenant's inventory from flowing to CSD "
+        }
         show={modalsService.csd}
         close={closeModal}
         activate={() => change_status('csd_setting', 'True')}
@@ -277,6 +287,12 @@ const ServiceList = ({
         deactivate={() => change_status('csd_setting', 'False')}
       />
       <EWRModal
+        A_message={
+          'Enabling this service will allow tenant to raise e-warehouse receipts GRN for their clients. Kindly note commodities brought in using E-warehouse receipt will flow directly to the exchange '
+        }
+        D_message={
+          'Disabling this service will prevent tenant from being able to raise e-warehouse receipts for their clients  '
+        }
         show={modalsService.ewr}
         close={closeModal}
         activate={() => change_status('ewr_setting', 'True')}
@@ -284,20 +300,26 @@ const ServiceList = ({
         deactivate={() => change_status('ewr_setting', 'False')}
       />
       <LogisticsModal
+        A_message={
+          'Enabling this service will grant tenant access to the logistics module '
+        }
+        D_message={
+          "Disabling this service will revoke tenant's access to the Logistics module "
+        }
         show={modalsService.logistic}
         close={closeModal}
         activate={() => change_status('logistics_setting', 'True')}
         active={switch_list.logistics_setting}
         deactivate={() => change_status('logistics_setting', 'False')}
       />
-      <OverageModal
-        show={modalsService.overage}
-        close={closeModal}
-        activate={() => change_status('overage_setting', 'True')}
-        active={switch_list.overage_setting}
-        deactivate={() => change_status('overage_setting', 'False')}
-      />
+
       <PlantModal
+        A_message={
+          'Enabling this service will grant access to the Plant WIP module '
+        }
+        D_message={
+          "Disabling this service will revoke tenant's access to the Plant WIP module "
+        }
         show={modalsService.plant}
         close={closeModal}
         activate={() => change_status('plant_setting', 'True')}
@@ -305,18 +327,17 @@ const ServiceList = ({
         deactivate={() => change_status('plant_setting', 'False')}
       />
       <RegistrationModal
+        A_message={
+          'Enabling this service will allow tenant register clients and farmers '
+        }
+        D_message={
+          "Disabling this service will prevent tenant's from registering clients and farmers "
+        }
         show={modalsService.reg}
         close={closeModal}
         activate={() => change_status('registration_setting', 'True')}
         active={switch_list.registration_setting}
         deactivate={() => change_status('registration_setting', 'False')}
-      />
-      <VerificationModal
-        show={modalsService.verification}
-        close={closeModal}
-        activate={() => change_status('verification_setting', 'True')}
-        active={switch_list.registration_setting}
-        deactivate={() => change_status('verification_setting', 'False')}
       />
     </div>
   );

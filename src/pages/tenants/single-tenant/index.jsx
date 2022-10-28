@@ -97,7 +97,7 @@ function SingleTenant() {
       return notification({
         id: 'error',
         heading: 'Oops! Something went wrong',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: '',
       });
     }
 
@@ -105,7 +105,7 @@ function SingleTenant() {
     notification({
       id: 'success',
       heading: 'Service List updated successfully',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      text: '',
     });
     closeModal();
   };

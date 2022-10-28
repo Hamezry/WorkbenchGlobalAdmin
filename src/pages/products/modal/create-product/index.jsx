@@ -41,7 +41,7 @@ function CreateProductModal({ show, close }) {
     setLoading(false);
     notification({
       heading: 'Product created successfully',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+      text: '',
       id: 'success',
     });
     refreshContext();

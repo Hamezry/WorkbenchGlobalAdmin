@@ -18,10 +18,7 @@ function Deactivate({ setDeactivateProduct, deactivate }) {
           <p className='text-lg font-semibold'>
             Are you sure you want to Deactivate this Product?
           </p>
-          <span className='text-[#9FA19C] text-[14px]'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget
-            porttitor
-          </span>
+          <span className='text-[#9FA19C] text-[14px]'></span>
 
           <div className='flex flex-1 w-full grow gap-4 items-center pb-2 '>
             <button

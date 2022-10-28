@@ -63,7 +63,7 @@ function Productlist() {
       return notification({
         heading: 'Please specify an end date',
         id: 'error',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: '',
       });
 
     const res = QueryBuilder.data

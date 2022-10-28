@@ -1,60 +1,56 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { format } from 'date-fns';
-import { ArrowDown2 } from 'iconsax-react';
-import { Drawer } from '@mantine/core';
-import customNotification from '../../utils/notification';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
+import { format } from "date-fns";
+import customNotification from "../../utils/notification";
 
-import OrganisationlistTile from './components/tile';
-import TenantDropdown from './dropdown';
+import OrganisationlistTile from "./components/tile";
+import TenantDropdown from "./dropdown";
 
-import Pagination from '../../components/Pagination';
-import DateModule from '../../components/Datemodule';
-import Select from '../../components/Select';
-import ActivateModal from './modal/activate';
-import DeactivateModal from './modal/deactivate';
+import Pagination from "../../components/Pagination";
+import DateModule from "../../components/Datemodule";
+import Select from "../../components/Select";
+import TenantDrawer from "./components/drawer";
+import ActivateModal from "./modal/activate";
+import DeactivateModal from "./modal/deactivate";
 
-import { useTenantsCtx } from '../../contexts';
+import { useTenantsCtx } from "../../contexts";
 
-import greenFilterIcon from '../../Assets/green-filter.svg';
-import check from '../../Assets/white-check.svg';
-import filterIcon from '../../Assets/filter.svg';
+import greenFilterIcon from "../../Assets/green-filter.svg";
 
-import './tenant.css';
+import "./tenant.css";
 
 function Organisationlist() {
   const navigate = useNavigate();
   const { tenants } = useTenantsCtx();
+  const defaultFilter = {
+    country: [],
+    CSD: "",
+  };
   const [viewActivate, setViewActivate] = useState(false);
   const [viewDeactivate, setViewDeactivate] = useState(false);
   const [modalData, setModalData] = useState({});
   const [countriesOptions, setCountriesOptions] = useState([]);
+  const [opened, setOpened] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("");
   const [isDate, setIsDate] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [opened, setOpened] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(7);
   const [currentPosts, setCurrentPosts] = useState([]);
   const [selected, setSelected] = useState([]);
   const [itemsOffset, setItemsOffset] = useState(0);
-  const [activeFilter, setActiveFilter] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [filter, setFilter] = useState({
-    country: [],
-    CSD: '',
-  });
-  const csdBtn = useRef(null);
-  const searchBtn = useRef(null);
+  const [filter, setFilter] = useState(defaultFilter);
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
+    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
   };
   const formTime = (datex) => {
     const date = new Date(datex);
-    return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
+    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
   };
 
   const handleSearch = (e) => {
@@ -85,10 +81,10 @@ function Organisationlist() {
       filtered = byCountry;
     }
     if (filter.CSD.length !== 0) {
-      if (filter.CSD === 'yes') {
-        byCSD = tenants.filter((item) => item.csd_access === 'True');
-      } else if (filter.CSD === 'no') {
-        byCSD = tenants.filter((item) => item.csd_access === 'False');
+      if (filter.CSD === "yes") {
+        byCSD = tenants.filter((item) => item.csd_access === "True");
+      } else if (filter.CSD === "no") {
+        byCSD = tenants.filter((item) => item.csd_access === "False");
       }
       filtered = byCSD;
     }
@@ -97,19 +93,7 @@ function Organisationlist() {
     }
     setPosts(filtered);
   };
-  const CSDFilter = (value) => {
-    if (filter.CSD === value) {
-      setFilter({
-        ...filter,
-        CSD: '',
-      });
-    } else {
-      setFilter({
-        ...filter,
-        CSD: value,
-      });
-    }
-  };
+
   useEffect(() => {
     const options = tenants.map((item) => item.country.name);
     let uniqueOptions = [...new Set(options)];
@@ -136,15 +120,15 @@ function Organisationlist() {
   const dateRangeFilter = () => {
     if (!startDate)
       return customNotification({
-        heading: 'Please specify a start date',
-        id: 'error',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        heading: "Please specify a start date",
+        id: "error",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
       });
     if (!endDate)
       return customNotification({
-        heading: 'Please specify an end date',
-        id: 'error',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        heading: "Please specify an end date",
+        id: "error",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
       });
     let filtered = tenants
       .filter(
@@ -175,223 +159,17 @@ function Organisationlist() {
             </button>
 
             {/* FILTER DRAWER -> PLEASE REFACTOR */}
-            <Drawer
+            <TenantDrawer
+              filter={filter}
               opened={opened}
-              onClose={() => setOpened(false)}
-              title={
-                <div className='flex'>
-                  <img src={filterIcon} alt='filter icon' />
-                  <span className='text-2xl pl-2'>Filter</span>
-                </div>
-              }
-              padding='xl'
-              size='lg'
-              position='right'>
-              <form
-                className='pt-6 drawer-form'
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  filterPosts();
-                  setOpened(false);
-                }}>
-                <div className=' py-6 border-y border-y-gray-300'>
-                  <button
-                    className={`flex justify-between w-full px-6`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      activeFilter.includes('country')
-                        ? setActiveFilter([
-                            ...activeFilter.filter(
-                              (item) => item !== 'country'
-                            ),
-                          ])
-                        : setActiveFilter([...activeFilter, 'country']);
-                    }}>
-                    <span
-                      className={` transition-all duration-300 ${
-                        activeFilter.includes('country')
-                          ? 'text-afexgreen'
-                          : 'text-textgrey'
-                      }`}>
-                      Country
-                    </span>
-                    <ArrowDown2
-                      size='24'
-                      color={
-                        activeFilter.includes('country') ? '#38CB89' : '#54565B'
-                      }
-                      className={` transition-all duration-300 ${
-                        activeFilter.includes('country')
-                          ? 'rotate-180'
-                          : 'rotate-0'
-                      }`}
-                    />
-                  </button>
-                  {/* expand */}
-                  <ul
-                    className={`transition-all duration-200 child:py-1 child:px-6 child:relative overflow-hidden ${
-                      activeFilter.includes('country')
-                        ? 'max-h-36 opacity-100 z-10 py-3 '
-                        : 'max-h-0 opacity-0 -z-100 p-0'
-                    }`}>
-                    {countriesOptions.map((item, key) => {
-                      return (
-                        <li key={key}>
-                          <input
-                            onFocus={() =>
-                              !activeFilter.includes('country') &&
-                              csdBtn.current.focus()
-                            }
-                            type='checkbox'
-                            name='country'
-                            id={item}
-                            value={item}
-                            className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
-                            onChange={(e) => {
-                              const value = e.target.value;
-                              let newCountries = filter.country;
-                              if (filter.country.includes(value)) {
-                                newCountries = filter.country.filter(
-                                  (item) => item !== value
-                                );
-                              } else {
-                                newCountries = [...newCountries, value];
-                              }
-                              setFilter({
-                                ...filter,
-                                country: newCountries,
-                              });
-                            }}
-                            onClick={(e) => e.preventDefault()}
-                          />
-
-                          <span
-                            className={` inline-flex items-center justify-center w-5 h-5  border rounded-md  
-                            ${
-                              filter.country.includes(item)
-                                ? 'bg-afexgreen border-afexgreen'
-                                : 'bg-bggrey'
-                            }`}>
-                            <img className={``} alt='check mark' src={check} />
-                          </span>
-                          <label
-                            htmlFor='yes'
-                            className='inline-block pl-2 capitalize'>
-                            {item}
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-                <div className=' py-6 border-b border-b-gray-300'>
-                  <button
-                    ref={csdBtn}
-                    className={`flex justify-between w-full px-6`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      activeFilter.includes('CSD')
-                        ? setActiveFilter([
-                            ...activeFilter.filter((item) => item !== 'CSD'),
-                          ])
-                        : setActiveFilter([...activeFilter, 'CSD']);
-                    }}>
-                    <span
-                      className={` transition-all duration-300 ${
-                        activeFilter.includes('CSD')
-                          ? 'text-afexgreen'
-                          : 'text-textgrey'
-                      }`}>
-                      CSD Access
-                    </span>
-                    <ArrowDown2
-                      size='24'
-                      color={
-                        activeFilter.includes('CSD') ? '#38CB89' : '#54565B'
-                      }
-                      className={` transition-all duration-300 ${
-                        activeFilter.includes('CSD') ? 'rotate-180' : 'rotate-0'
-                      }`}
-                    />
-                  </button>
-                  {/* expand csd */}
-                  <ul
-                    className={`transition-all duration-200 child:py-1 child:px-6 child:relative  overflow-hidden ${
-                      activeFilter.includes('CSD')
-                        ? 'max-h-36 opacity-100 z-10 py-3 '
-                        : 'max-h-0 opacity-0 -z-100 p-0'
-                    }`}>
-                    <li>
-                      <input
-                        onFocus={() =>
-                          !activeFilter.includes('CSD') &&
-                          searchBtn.current.focus()
-                        }
-                        type='checkbox'
-                        name='CSD'
-                        id='yes'
-                        value='yes'
-                        className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
-                        onChange={(e) => {
-                          CSDFilter(e.target.value);
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                      <span
-                        className={` inline-flex items-center justify-center w-5 h-5  border rounded-md 
-                            ${
-                              filter.CSD === 'yes'
-                                ? 'bg-afexgreen border-afexgreen'
-                                : 'bg-bggrey'
-                            }`}>
-                        <img className={``} alt='check mark' src={check} />
-                      </span>
-                      <label htmlFor='yes' className='inline-block pl-2'>
-                        Yes
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        onFocus={() =>
-                          !activeFilter.includes('CSD') &&
-                          searchBtn.current.focus()
-                        }
-                        type='checkbox'
-                        name='CSD'
-                        id='no'
-                        value='no'
-                        className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
-                        onChange={(e) => {
-                          CSDFilter(e.target.value);
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                      />{' '}
-                      <span
-                        className={` inline-flex items-center justify-center w-5 h-5  border rounded-md  
-                            ${
-                              filter.CSD === 'no'
-                                ? 'bg-afexgreen border-afexgreen'
-                                : 'bg-bggrey'
-                            }`}>
-                        <img className={``} alt='check mark' src={check} />
-                      </span>
-                      <label htmlFor='no' className='inline-block pl-2'>
-                        No
-                      </label>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className='text-center pt-8'>
-                  <button
-                    ref={searchBtn}
-                    type='submit'
-                    className='bg-afexgreen px-5 py-4 text-center rounded-2xl text-white mb-3 mt-6'>
-                    Search
-                  </button>
-                </div>
-              </form>
-            </Drawer>
+              setOpened={setOpened}
+              filterPosts={filterPosts}
+              setFilter={setFilter}
+              activeFilter={activeFilter}
+              setActiveFilter={setActiveFilter}
+              countriesOptions={countriesOptions}
+              defaultFilter={defaultFilter}
+            />
           </div>
 
           {/* Table Controls */}
@@ -402,10 +180,10 @@ function Organisationlist() {
                   defaultValue={postsPerPage}
                   updateValue={setPostsPerPage}
                   data={[
-                    { value: 7, label: '7' },
-                    { value: 20, label: '20' },
-                    { value: 100, label: '100' },
-                    { value: 500, label: '500' },
+                    { value: 7, label: "7" },
+                    { value: 20, label: "20" },
+                    { value: 100, label: "100" },
+                    { value: 500, label: "500" },
                   ]}
                   className='text-sm'
                 />
@@ -421,7 +199,7 @@ function Organisationlist() {
                 <p className='whitespace-nowrap'>Date Registered</p>
                 <svg
                   className={`transition-all duration-200 fill-current h-4 w-4 ${
-                    isDate ? 'rotate-180' : 'rotate-0'
+                    isDate ? "rotate-180" : "rotate-0"
                   }`}
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'>
@@ -569,7 +347,7 @@ function Organisationlist() {
 
                         <td className='py-4 px-4'>
                           <span className='font-medium '>
-                            {item.csd_access === 'True' ? 'Yes' : 'No'}
+                            {item.csd_access === "True" ? "Yes" : "No"}
                           </span>
                         </td>
 
@@ -581,7 +359,7 @@ function Organisationlist() {
                         <td
                           className='py-4 px-4 text-center'
                           onClick={(e) => e.stopPropagation()}>
-                          {item.is_active === 'True' ? (
+                          {item.is_active === "True" ? (
                             <button
                               className='flex  whitespace-nowrap justify-center cursor-pointer  gap-2 rounded items-center text-[15px] text-white bg-[#e55851] h-[40px] w-full p-4'
                               onClick={() => {

@@ -7,14 +7,17 @@ const ClientGraph = ({ data }) => {
 
   const renderLegend = (props) => {
     return (
-      <div className='ml-3'>
+      <div className='ml-3 space-y-3 bg-white drop-shadow-lg p-4 rounded-3xl'>
+        <span className='font-semibold mb-2'>Impressions</span>
         {props.payload.map((entry) => {
           return (
-            <div className=' p-2 rounded-2xl gap-2 flex items-center'>
-              <span
-                className=' p-[6px] rounded-full'
-                style={{ background: entry.color }}></span>
-              <span className='text-[12px]'>{entry.value ?? 'Null'}</span>
+            <div className='p-2 rounded-2xl gap-2 flex items-center bg-gray-50 justify-between'>
+              <p className='flex items-center gap-2'>
+                <span
+                  className=' w-1 h-1 p-1 rounded-full'
+                  style={{ background: entry.color }}></span>
+                <span className='text-[12px]'>{entry.value ?? 'Null'}</span>
+              </p>
               <span className='text-[12px]'>
                 {commaFormatter(entry.payload.pv)}
               </span>
@@ -68,23 +71,39 @@ const ClientGraph = ({ data }) => {
           </div>
         ))}
       {chartdata && chartdata.length > 0 && (
-        <RadialBarChart
-          width={600}
-          height={400}
-          innerRadius='20%'
-          outerRadius='80%'
-          data={chartdata}
-          startAngle={30}
-          endAngle={360}>
-          <RadialBar minAngle={30} background clockWise={false} dataKey='uv' />
-          <Legend
-            layout='vertical'
-            verticalAlign='middle'
-            align='right'
-            content={renderLegend}
-            wrapperStyle={{ right: -30 }}
-          />
-        </RadialBarChart>
+        <div className='flex flex-col w-full relative py-4 items-start justify-start'>
+          <p className='text-center absolute left-[30%] top-0 space-y-4 flex flex-col'>
+            <span>Total Number</span>
+            <span className='text-xl font-semibold'>
+              {commaFormatter(
+                data.map((el) => el.count).reduce((a, b) => a + b)
+              )}
+            </span>
+          </p>
+          <RadialBarChart
+            width={600}
+            height={400}
+            innerRadius='20%'
+            outerRadius='80%'
+            data={chartdata}
+            startAngle={30}
+            endAngle={360}
+            className='flex justify-between'>
+            <RadialBar
+              minAngle={30}
+              background
+              clockWise={false}
+              dataKey='uv'
+            />
+            <Legend
+              layout='vertical'
+              verticalAlign='middle'
+              align='right'
+              content={renderLegend}
+              wrapperStyle={{ right: '-30%', width: '40%' }}
+            />
+          </RadialBarChart>
+        </div>
       )}
     </>
   );

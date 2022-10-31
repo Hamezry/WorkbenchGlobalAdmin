@@ -65,10 +65,6 @@ function Organisationlist() {
     setItemsOffset(0);
   };
 
-  const handlePageChange = (e) => {
-    const newOffset = (e.selected * postsPerPage) % posts.length;
-    setItemsOffset(newOffset);
-  };
   const filterPosts = () => {
     let filtered = tenants;
     let byCountry = [];
@@ -398,7 +394,7 @@ function Organisationlist() {
               </p>
               <Pagination
                 totalPosts={posts.length}
-                handlePageChange={handlePageChange}
+                setItemsOffset={setItemsOffset}
                 currentPage={currentPage}
                 perPage={postsPerPage}
               />

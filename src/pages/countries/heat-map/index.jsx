@@ -4,6 +4,7 @@ import Navigation from '../components/navigation';
 import CountryTile from '../components/tile';
 
 import africanMap from '../../../Assets/Map of Africa.svg';
+// import Map from './farmer';
 
 function HeatMap() {
   return (
@@ -15,6 +16,7 @@ function HeatMap() {
         <Navigation />
 
         <div className='w-full h-[calc(100%-10%)] rounded-2xl p-6  bg-[#F9F9F9]'>
+          {/* <Map /> */}
           <div className='bg-[#FFFFFF] flex justify-around p-5 h-[98%] overflow-y-auto rounded-3xl'>
             <img src={africanMap} alt='map of Africa' className='h-' />
             <div className='flex flex-col items-center'>

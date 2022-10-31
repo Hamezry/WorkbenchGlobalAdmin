@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from '../utils/axios';
-import manager from '../utils/encryption';
 
 export const ProductsListCtx = createContext();
 
@@ -30,7 +29,8 @@ const ProductsListProvider = ({ children }) => {
   const refreshContext = () => setRefresh((s) => !s);
 
   useEffect(() => {
-    const fetchGlobalProductsCardData = async () => {
+    const fetchGlobalProducts = async () => {
+      setDataLoaded(false)
       const response = await axios.get('global-products');
 
       if (response.data.responseCode !== '100') return;
@@ -38,30 +38,12 @@ const ProductsListProvider = ({ children }) => {
       const { summary } = response.data;
 
       setCardData((prev) => ({ ...prev, ...summary }));
+      setProducts(response.data.data)
+      setDataLoaded(true)
     };
 
-    const fetProducts = async () => {
-      setDataLoaded(false);
-      const resp = await axios.get('encrypted-products');
 
-      if (!resp.data || resp.data.responseCode !== '100') return;
-
-      const decrypted = manager.decrypt(resp.data.data);
-
-      if (!decrypted) return;
-
-      setProducts(
-        decrypted.sort(
-          (a, b) =>
-            new Date(b.created).getTime() - new Date(a.created).getTime()
-        )
-      );
-
-      setDataLoaded(true);
-    };
-
-    fetchGlobalProductsCardData();
-    fetProducts();
+    fetchGlobalProducts();;
   }, [refresh]);
   return (
     <ProductsListCtx.Provider

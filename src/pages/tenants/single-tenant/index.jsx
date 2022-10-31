@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
+import { ArrowLeft2 } from 'iconsax-react';
 import { Tabs } from '@mantine/core';
+
 import axios from '../../../utils/axios';
 import { useTenantsCtx } from '../../../contexts';
 import notification from '../../../utils/notification';
@@ -13,8 +14,7 @@ import ServiceList from './components/service-list';
 import Table from './components/positions-table';
 import Clients from './components/clients';
 
-import { ArrowLeft2 } from 'iconsax-react';
-
+import { capitalizeWords } from '../../../utils/formatter';
 import empty from '../../../Assets/empty.gif';
 
 function SingleTenant() {
@@ -104,7 +104,9 @@ function SingleTenant() {
     await fetchServiceListInfo();
     notification({
       id: 'success',
-      heading: 'Service List updated successfully',
+      heading: `${capitalizeWords(setting.split('_')[0])} Module ${
+        value === 'True' ? 'activated' : 'deactivated'
+      } successfully for ${org.company_name}`,
       text: '',
     });
     closeModal();

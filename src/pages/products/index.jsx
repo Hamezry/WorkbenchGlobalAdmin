@@ -83,11 +83,6 @@ function Productlist() {
     setPosts(QueryBuilder.data);
   };
 
-  const handlePageChange = (e) => {
-    const newOffset = (e.selected * postsPerPage) % posts.length;
-    setItemsOffset(newOffset);
-  };
-
   const handleSearch = (e) => {
     const { value } = e.target;
     setPosts(
@@ -234,7 +229,7 @@ function Productlist() {
 
                         <td>
                           <span className='font-medium '>
-                            {item.certified === 'True' ? 'Yes' : 'No'}
+                            {item.certified ? 'Yes' : 'No'}
                           </span>
                         </td>
 
@@ -255,11 +250,9 @@ function Productlist() {
                         </td>
                         <td className='relative'>
                           <Dropdown
-                            item={item}
-                            setModal={() => {
-                              setModal(true);
-                            }}
-                            singleProduct={item}
+                            singleProduct={
+                              posts.filter((el) => el.pk === item.pk)[0]
+                            }
                           />
                         </td>
                       </tr>
@@ -283,7 +276,8 @@ function Productlist() {
 
               <Pagination
                 totalPosts={posts.length}
-                handlePageChange={handlePageChange}
+                setItemsOffset={setItemsOffset}
+                // handlePageChange={handlePageChange}
                 currentPage={currentPage}
                 perPage={postsPerPage}
               />

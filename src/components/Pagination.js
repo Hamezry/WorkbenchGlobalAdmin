@@ -2,8 +2,14 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
-const MyPagination = ({ totalPosts, handlePageChange, perPage }) => {
+const MyPagination = ({ totalPosts, postsPerPage, setItemsOffset, perPage }) => {
   const stop = Math.ceil(totalPosts / perPage);
+
+  const handlePageChange = (e) => {
+    const newOffset = (e.selected * perPage) % totalPosts;
+
+    setItemsOffset(newOffset);
+  };
 
   return (
     <ReactPaginate

@@ -11,15 +11,16 @@ import Button from '../../../../components/Button';
 import notification from '../../../../utils/notification';
 import DropdownSelect from '../../../../components/DropDownSelect';
 import TextInput from '../../../../components/TextInput';
+import Checkbox from '../../../../components/Checkbox';
 
 function UpdateProductmodal({ close, modalData, show }) {
   const { refreshContext } = useProductsCtx();
-  const [product, setProduct] = useState(modalData);
+
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values) => {
     setLoading(true);
-    const resp = await ProductsAPIs.update_product(product.pk, values);
+    const resp = await ProductsAPIs.update_product(modalData.pk, values);
     if (!resp.data || resp.data.responseCode !== '100') {
       setLoading(false);
       notification({
@@ -41,18 +42,17 @@ function UpdateProductmodal({ close, modalData, show }) {
     refreshContext();
   };
 
-  const handleChecked = (e) => {
-    setProduct((prev) => ({
-      ...prev,
-      certified: e.target.checked ? 'True' : 'False',
-    }));
-  };
-
   return (
     <Modal title='Update Product' onClose={close} opened={show} centered>
       <div className='px-8 pt-6 pb-10 border-t-[1px] border-color'>
         <Formik
-          initialValues={product}
+          initialValues={{
+            name: modalData.name,
+            code: modalData.code,
+            product_type: modalData.product_type,
+            unit_type: modalData.unit_type,
+            certified: modalData.certified,
+          }}
           validationSchema={Yup.object({
             name: Yup.string().required('Product name is required'),
             code: Yup.string().required('Product code is required'),
@@ -120,17 +120,12 @@ function UpdateProductmodal({ close, modalData, show }) {
             />
 
             <div className='flex items-center space-x-3'>
-              <input
-                type='checkbox'
-                name='certified_product'
-                id='certified_product'
-                checked={product.certified === 'True' ? true : false}
-                onChange={handleChecked}
-                className='checkbox'
+              <Checkbox
+                id='certified'
+                label='Certified Product?'
+                name='certified'
+                checked={true}
               />
-              <label htmlFor='certified_product' className='text-sm mt-1'>
-                Certified Product?
-              </label>
               <Tooltip
                 label='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita placeat totam deserunt suscipit necessitatibus iusto, ab dolore eveniet porro ipsum?'
                 multiline

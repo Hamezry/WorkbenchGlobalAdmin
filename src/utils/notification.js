@@ -9,8 +9,8 @@ const customNotification = ({ heading, text, id }) => {
     id === "success"
       ? " #38CB89"
       : id === "error"
-      ? "rgb(254, 31, 17)"
-      : "rgb(250, 232, 76)";
+        ? "rgb(254, 31, 17)"
+        : "rgb(250, 232, 76)";
   const icon =
     id === "success" ? (
       <img src={successIcon} alt='success icon' />
@@ -46,20 +46,19 @@ const customNotification = ({ heading, text, id }) => {
     icon: icon,
     message: (
       <div
-        className={`flex items-start  rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${
-          id === "success"
+        className={`flex items-start  rounded-2xl before:content-[''] before:inset-0 before:absolute before:w-full before:h-full before:rounded-2xl ${id === "success"
             ? "before:bg-afexgreen-lighter"
             : id === "error"
-            ? "before:bg-error-lighter"
-            : "before:bg-warninig-lighter"
-        }`}>
+              ? "before:bg-error-lighter"
+              : "before:bg-warninig-lighter"
+          }`}>
         <div className='pl-5 pr-4 child:py-1'>
           <p className='font-bold text-md '>{heading}</p>
           <p className=''>{text}</p>
         </div>
       </div>
     ),
-    autoClose: false,
+    autoClose: 3000,
     // id: id,
   });
 };

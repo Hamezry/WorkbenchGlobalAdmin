@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from '../utils/axios';
+import { default as fetchMap } from 'axios';
 
 const CountriesCtx = createContext();
 
@@ -7,6 +8,7 @@ const CountriesContextProvider = ({ children }) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [mapData, setMapData] = useState(null);
   const [cardData, setCardData] = useState({
     grn_change: 0,
     last_month_grn: 0,
@@ -43,12 +45,21 @@ const CountriesContextProvider = ({ children }) => {
       setDataLoaded(true);
     };
 
+    const fetchCountriesMap = async () => {
+      const resp = await fetchMap.get('https://code.highcharts.com/mapdata/custom/africa.geo.json');
+      if (!resp.data || resp.status !== 200) return;
+      setMapData(
+        resp.data
+      );
+    };
+
+    fetchCountriesMap();
     fetchCountryCardData();
     fetchCountries();
   }, [refresh]);
   return (
     <CountriesCtx.Provider
-      value={{ countries, dataLoaded, cardData, refreshContext }}>
+      value={{ countries, dataLoaded, cardData, refreshContext, mapData }}>
       {children}
     </CountriesCtx.Provider>
   );

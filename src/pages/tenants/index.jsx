@@ -48,6 +48,7 @@ function Organisationlist() {
     const date = new Date(datex);
     return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
   };
+
   const formTime = (datex) => {
     const date = new Date(datex);
     return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
@@ -90,29 +91,6 @@ function Organisationlist() {
     setPosts(filtered);
   };
 
-  useEffect(() => {
-    const options = tenants.map((item) => item.country.name);
-    let uniqueOptions = [...new Set(options)];
-    setCountriesOptions(uniqueOptions);
-  }, [tenants]);
-
-  useEffect(
-    () => {
-      if (filter.CSD.length === 0 && filter.country.length === 0) {
-        setPosts(tenants);
-      } else {
-        filterPosts();
-      }
-    }, //eslint-disable-next-line
-    [tenants, filter]
-  );
-
-  useEffect(() => {
-    const endOffset = itemsOffset + postsPerPage;
-    setCurrentPosts(posts.slice(itemsOffset, endOffset));
-    setCurrentPage(Math.ceil(posts.length / postsPerPage));
-  }, [itemsOffset, currentPage, posts, postsPerPage]);
-
   const dateRangeFilter = () => {
     if (!startDate)
       return customNotification({
@@ -138,6 +116,30 @@ function Organisationlist() {
 
     return setPosts(filtered);
   };
+
+  useEffect(() => {
+    const options = tenants.map((item) => item.country.name);
+    let uniqueOptions = [...new Set(options)];
+    setCountriesOptions(uniqueOptions);
+  }, [tenants]);
+
+  useEffect(
+    () => {
+      if (filter.CSD.length === 0 && filter.country.length === 0) {
+        setPosts(tenants);
+      } else {
+        filterPosts();
+      }
+    }, //eslint-disable-next-line
+    [tenants, filter]
+  );
+
+  useEffect(() => {
+    const endOffset = itemsOffset + postsPerPage;
+    setCurrentPosts(posts.slice(itemsOffset, endOffset));
+    setCurrentPage(Math.ceil(posts.length / postsPerPage));
+  }, [itemsOffset, currentPage, posts, postsPerPage]);
+
   return (
     <div className='w-[82%] flex flex-col font-muli bg-[#FFFFFF] h-[calc(100vh-80px)]  xl:h-[calc(100vh-90px)]  space-y-10 overflow-y-auto'>
       {/*CARDS */}
@@ -229,7 +231,7 @@ function Organisationlist() {
               </div>
 
               <div className='relative tenant-popover'>
-                <TenantDropdown />
+                <TenantDropdown selected={selected} />
               </div>
             </div>
           </div>
@@ -285,12 +287,12 @@ function Organisationlist() {
                           <input
                             type='checkbox'
                             id='remember'
-                            className='checkbox'
+                            className='checkbox white'
                             value={item.id}
                             checked={selected.includes(item.id)}
                             // className='w-4 h-4 border-slate-200 focus:bg-green-400'
                             onChange={(e) => {
-                              const value = e.target.value;
+                              const value = +e.target.value;
                               if (selected.includes(value)) {
                                 const newSelected = selected.filter(
                                   (item) => item !== value

@@ -47,11 +47,11 @@ function UpdateProductmodal({ close, modalData, show }) {
       <div className='px-8 pt-6 pb-10 border-t-[1px] border-color'>
         <Formik
           initialValues={{
-            name: modalData.name,
-            code: modalData.code,
-            product_type: modalData.product_type,
-            unit_type: modalData.unit_type,
-            certified: modalData.certified,
+            name: modalData?.name,
+            code: modalData?.code,
+            product_type: modalData?.product_type,
+            unit_type: modalData?.unit_type,
+            certified: modalData?.certified,
           }}
           validationSchema={Yup.object({
             name: Yup.string().required('Product name is required'),

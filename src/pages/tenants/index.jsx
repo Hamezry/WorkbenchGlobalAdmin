@@ -301,7 +301,6 @@ function Organisationlist() {
                               } else {
                                 setSelected((prev) => [...prev, value]);
                               }
-                              console.log(selected.includes(item.id));
                             }}
                           />
                         </td>

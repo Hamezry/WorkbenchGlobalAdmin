@@ -13,7 +13,6 @@ function TenantDropdown({ selected }) {
 
   const bulkAction = (value) => {
     const selectedIds = selected.map((item) => +item);
-    console.log(selectedIds);
     request({
       method: "post",
       url: `tenant/change/status/bulk`,
@@ -23,7 +22,6 @@ function TenantDropdown({ selected }) {
       },
     })
       .then((response) => {
-        console.log(response);
         if (response.data.responseCode === "100") {
           refreshContext();
           customNotification({

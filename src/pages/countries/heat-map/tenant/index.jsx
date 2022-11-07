@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Highmaps from 'highcharts/highmaps';
 import {
   HighchartsMapChart,
@@ -13,39 +13,31 @@ import {
 import { useCountriesCtx } from '../../../../contexts';
 
 const TenanatsHeatMap = () => {
-  const [item, setItem] = useState(null);
-  const { countries } = useCountriesCtx();
-  const tenants = countries.map((el) => el.no_of_tenants);
+  const { countries, mapData } = useCountriesCtx();
+  const africanCountries = countries
+    .map((el) => ({
+      cont: el.country_code_2.toLowerCase(),
+      tenants: el.no_of_tenants,
+    }))
+    .map((el) => [el.cont, el.tenants]);
 
-  useEffect(() => {
-    fetch('https://code.highcharts.com/mapdata/custom/africa.geo.json')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setItem(data);
-      })
-      .catch((err) => console.log('Error', err));
-  }, []);
   return (
     <>
-      {item && (
+      {
         <HighmapsProvider Highcharts={Highmaps}>
-          <HighchartsMapChart map={item}>
+          <HighchartsMapChart map={mapData}>
             <Title></Title>
 
             <MapSeries
               name='Tenants'
               states={{
                 hover: {
-                  color: '#BADA55',
+                  color: '#e2f8ee',
                 },
               }}
-              data={[
-                ['ng', tenants[0]],
-                ['ke', tenants[1]],
-              ]}
+              data={africanCountries}
               dataLabels={{
-                enabled: true,
+                enabled: false,
                 color: '#FFFFFF',
                 format: '{point.name}',
               }}
@@ -62,7 +54,7 @@ const TenanatsHeatMap = () => {
             <Credits />
           </HighchartsMapChart>
         </HighmapsProvider>
-      )}
+      }
     </>
   );
 };

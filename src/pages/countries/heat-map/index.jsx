@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '../components/navigation';
 import Select from '../components/select/Select';
 
 import CountryTile from '../components/tile';
 
 import FarmerHeatMap from './farmer';
-// import TenantHeatMap from './tenant';
+import TenantHeatMap from './tenant';
+import CommodityHeatMap from './commodity';
 
 function HeatMap() {
   // const [viewFarmerMap, setViewFarmerMap] = useState(true);
   // const [viewTenantMap, setViewTenantMap] = useState(false);
+  const [selectValue, setSelectValue] = useState(true);
+
+  // const DisplayFarmer = () => {
+  //   setViewFarmerMap(true);
+  //   setViewTenantMap(false);
+  // };
+
+  // const DisplayTenant = () => {
+  //   setViewFarmerMap(false);
+  //   setViewTenantMap(true);
+  // };
 
   return (
     <div className='w-[82%] flex flex-col gap-10 font-muli h-[calc(100vh-80px)]  xl:h-[calc(100vh-90px)] bg-[#FFFF] overflow-y-auto'>
@@ -21,16 +33,29 @@ function HeatMap() {
 
         <div className='w-full h-[calc(100%-10%)] rounded-2xl p-6  bg-[#F9F9F9]'>
           <div className='bg-[#FFFFFF] flex justify-around p-5 h-[98%] overflow-y-auto rounded-3xl'>
-            <FarmerHeatMap />
+            {selectValue === 'Tenants' ? (
+              <TenantHeatMap />
+            ) : selectValue === 'Commodities' ? (
+              <CommodityHeatMap />
+            ) : (
+              <FarmerHeatMap />
+            )}
 
             <div className='flex flex-col p-2'>
               <Select
                 data={[
-                  { value: 'Farmers', label: 'Farmers' },
-                  { value: 'Tenants', label: 'Tenants' },
-                  { value: 'Commodities', label: 'Commodities' },
-                  { value: 'Transactions', label: 'Transactions' },
+                  {
+                    value: 'Farmers',
+                    label: 'Farmers',
+                  },
+                  {
+                    value: 'Tenants',
+                    label: 'Tenants',
+                  },
+                  // { value: 'Commodities', label: 'Commodities' },
                 ]}
+                defaultValue={selectValue}
+                updateValue={setSelectValue}
                 className='text-sm'
               />
 

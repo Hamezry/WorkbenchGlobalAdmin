@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineSearch } from "react-icons/ai";
-import { format } from "date-fns";
-import customNotification from "../../utils/notification";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { format } from 'date-fns';
+import customNotification from '../../utils/notification';
 
-import OrganisationlistTile from "./components/tile";
-import TenantDropdown from "./dropdown";
+import OrganisationlistTile from './components/tile';
+import TenantDropdown from './dropdown';
 
-import Pagination from "../../components/Pagination";
-import DateModule from "../../components/Datemodule";
-import Select from "../../components/Select";
-import TenantDrawer from "./components/drawer";
-import ActivateModal from "./modal/activate";
-import DeactivateModal from "./modal/deactivate";
+import Pagination from '../../components/Pagination';
+import DateModule from '../../components/Datemodule';
+import Select from '../../components/Select';
+import TenantDrawer from './components/drawer';
+import ActivateModal from './modal/activate';
+import DeactivateModal from './modal/deactivate';
 
-import { useTenantsCtx } from "../../contexts";
+import { useTenantsCtx } from '../../contexts';
 
-import { Filter } from "iconsax-react";
+import { Filter } from 'iconsax-react';
 
-import "./tenant.css";
+import './tenant.css';
 
 function Organisationlist() {
   const navigate = useNavigate();
   const { tenants } = useTenantsCtx();
   const defaultFilter = {
     country: [],
-    CSD: "",
+    CSD: '',
   };
   const [viewActivate, setViewActivate] = useState(false);
   const [viewDeactivate, setViewDeactivate] = useState(false);
   const [modalData, setModalData] = useState({});
   const [countriesOptions, setCountriesOptions] = useState([]);
   const [opened, setOpened] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("");
+  const [activeFilter, setActiveFilter] = useState('');
   const [isDate, setIsDate] = useState(false);
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,13 +46,14 @@ function Organisationlist() {
   //DATE FORMAT FUNCTION
   const formDate = (datex) => {
     const date = new Date(datex);
-    return `${format(date, "MMM")} ${format(date, "ii")} ${format(date, "Y")}`;
+    return `${format(date, 'MMM')} ${format(date, 'ii')} ${format(date, 'Y')}`;
   };
 
   const formTime = (datex) => {
     const date = new Date(datex);
-    return `${format(date, "K")}:${format(date, "mm")} ${format(date, "aaa")}`;
+    return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
   };
+  console.log(selected);
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -78,10 +79,10 @@ function Organisationlist() {
       filtered = byCountry;
     }
     if (filter.CSD.length !== 0) {
-      if (filter.CSD === "yes") {
-        byCSD = tenants.filter((item) => item.csd_access === "True");
-      } else if (filter.CSD === "no") {
-        byCSD = tenants.filter((item) => item.csd_access === "False");
+      if (filter.CSD === 'yes') {
+        byCSD = tenants.filter((item) => item.csd_access === 'True');
+      } else if (filter.CSD === 'no') {
+        byCSD = tenants.filter((item) => item.csd_access === 'False');
       }
       filtered = byCSD;
     }
@@ -94,15 +95,15 @@ function Organisationlist() {
   const dateRangeFilter = () => {
     if (!startDate)
       return customNotification({
-        heading: "Please specify a start date",
-        id: "error",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        heading: 'Please specify a start date',
+        id: 'error',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       });
     if (!endDate)
       return customNotification({
-        heading: "Please specify an end date",
-        id: "error",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        heading: 'Please specify an end date',
+        id: 'error',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       });
     let filtered = tenants
       .filter(
@@ -178,10 +179,10 @@ function Organisationlist() {
                   defaultValue={postsPerPage}
                   updateValue={setPostsPerPage}
                   data={[
-                    { value: 7, label: "7" },
-                    { value: 20, label: "20" },
-                    { value: 100, label: "100" },
-                    { value: 500, label: "500" },
+                    { value: 7, label: '7' },
+                    { value: 20, label: '20' },
+                    { value: 100, label: '100' },
+                    { value: 500, label: '500' },
                   ]}
                   className='text-sm'
                 />
@@ -197,7 +198,7 @@ function Organisationlist() {
                 <p className='whitespace-nowrap'>Date Registered</p>
                 <svg
                   className={`transition-all duration-200 fill-current h-4 w-4 ${
-                    isDate ? "rotate-180" : "rotate-0"
+                    isDate ? 'rotate-180' : 'rotate-0'
                   }`}
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 20 20'>
@@ -231,7 +232,7 @@ function Organisationlist() {
               </div>
 
               <div className='relative tenant-popover'>
-                <TenantDropdown selected={selected} />
+                <TenantDropdown selected={selected} setSelected={setSelected} />
               </div>
             </div>
           </div>
@@ -254,7 +255,7 @@ function Organisationlist() {
                         // className='w-4 h-4 border-slate-200 checked:bg-green-400'
                         onChange={(e) => {
                           const currentlySelected = currentPosts.map(
-                            (item) => item.id
+                            (item) => +item.id
                           );
                           if (selected.length !== currentPosts.length) {
                             setSelected(currentlySelected);
@@ -288,8 +289,8 @@ function Organisationlist() {
                             type='checkbox'
                             id='remember'
                             className='checkbox white'
-                            value={item.id}
-                            checked={selected.includes(item.id)}
+                            value={+item.id}
+                            checked={selected.includes(+item.id)}
                             // className='w-4 h-4 border-slate-200 focus:bg-green-400'
                             onChange={(e) => {
                               const value = +e.target.value;
@@ -345,7 +346,7 @@ function Organisationlist() {
 
                         <td className='py-4 px-4'>
                           <span className='font-medium '>
-                            {item.csd_access === "True" ? "Yes" : "No"}
+                            {item.csd_access === 'True' ? 'Yes' : 'No'}
                           </span>
                         </td>
 
@@ -357,7 +358,7 @@ function Organisationlist() {
                         <td
                           className='py-4 px-4 text-center'
                           onClick={(e) => e.stopPropagation()}>
-                          {item.is_active === "True" ? (
+                          {item.is_active === 'True' ? (
                             <button
                               className='flex  whitespace-nowrap justify-center cursor-pointer  gap-2  rounded-lg items-center text-[14px] text-white h-[35px] bg-[#e55851] xl:h-[40px] w-full p-4'
                               onClick={() => {

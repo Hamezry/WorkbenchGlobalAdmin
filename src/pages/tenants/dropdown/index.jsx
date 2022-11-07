@@ -1,20 +1,28 @@
-import { useState } from "react";
-import { Popover } from "@mantine/core";
-import { MdExpandMore } from "react-icons/md";
+import { useState } from 'react';
+import { Popover } from '@mantine/core';
+import { MdExpandMore } from 'react-icons/md';
 
-import request from "../../../utils/axios";
-import customNotification from "../../../utils/notification";
+import request from '../../../utils/axios';
+import customNotification from '../../../utils/notification';
 
-import { useTenantsCtx } from "../../../contexts";
+import { useTenantsCtx } from '../../../contexts';
 
-function TenantDropdown({ selected }) {
+function TenantDropdown({ selected, setSelected }) {
   const { refreshContext } = useTenantsCtx();
   const [opened, setOpened] = useState(false);
 
   const bulkAction = (value) => {
+    if (selected.length === 0) {
+      customNotification({
+        heading: 'Warning!!',
+        text: `Select Tenants to ${value ? 'Deactivate' : 'Activate'}`,
+        id: 'warning',
+      });
+      return;
+    }
     const selectedIds = selected.map((item) => +item);
     request({
-      method: "post",
+      method: 'post',
       url: `tenant/change/status/bulk`,
       data: {
         tenant_ids: selectedIds,
@@ -22,20 +30,21 @@ function TenantDropdown({ selected }) {
       },
     })
       .then((response) => {
-        if (response.data.responseCode === "100") {
+        if (response.data.responseCode === '100') {
           refreshContext();
+          setSelected([]);
           customNotification({
-            heading: "Success!",
+            heading: 'Success!',
             text: response.data.message,
-            id: "success",
+            id: 'success',
           });
         }
       })
       .catch((e) => {
         customNotification({
-          heading: "Error!",
+          heading: 'Error!',
           text: e.data.message,
-          id: "error",
+          id: 'error',
         });
       });
   };
@@ -44,7 +53,7 @@ function TenantDropdown({ selected }) {
     <Popover
       opened={opened}
       onChange={setOpened}
-      width={"target"}
+      width={'target'}
       position='bottom-end'>
       <Popover.Target>
         <button
@@ -52,10 +61,10 @@ function TenantDropdown({ selected }) {
           onClick={() => {
             setOpened((o) => !o);
           }}>
-          Select Action{" "}
+          Select Action{' '}
           <MdExpandMore
             className={`transition-all duration-200 ${
-              opened ? "rotate-180" : "rotate-0"
+              opened ? 'rotate-180' : 'rotate-0'
             }`}
           />
         </button>
@@ -77,7 +86,7 @@ function TenantDropdown({ selected }) {
             setOpened((o) => !o);
             bulkAction(true);
           }}>
-          {" "}
+          {' '}
           Deactivate all
         </button>
       </Popover.Dropdown>

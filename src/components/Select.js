@@ -19,9 +19,8 @@ const Select = ({ data, defaultValue, className, updateValue }) => {
   return (
     <div className='relative'>
       <button
-        className={`relative flex items-center py-2 px-2 child:px-1 child:whitespace-nowrap w-full border border-gray-50 bg-gray-50  text-base rounded-lg cursor-pointer ${className} ${
-          showOpts && 'ring-1 ring-afexgreen'
-        }`}
+        className={`relative flex items-center py-2 px-2 child:px-1 child:whitespace-nowrap w-full border border-gray-50 bg-gray-50  text-base rounded-lg cursor-pointer ${className} ${showOpts && 'ring-1 ring-afexgreen'
+          }`}
         onClick={() => {
           setShowOpts((s) => !s);
         }}>
@@ -31,9 +30,8 @@ const Select = ({ data, defaultValue, className, updateValue }) => {
       </button>
 
       <ul
-        className={` overflow-auto absolute top-12 rounded-lg z-10 px-2 transition-[max-height] hover:child:bg-afexgreen-lighter child:cursor-pointer child:m-1 bg-gray-50 w-full ring-1 ring-afexgreen rounded-lg${
-          showOpts ? 'max-h-96 opacity-100 z-10' : 'max-h-0 opacity-0 w-0 -z-10'
-        }`}>
+        className={` overflow-auto absolute top-12 rounded-lg z-10 px-2 transition-[max-height] hover:child:bg-afexgreen-lighter child:cursor-pointer child:m-1 bg-gray-50 w-full ring-1 ring-afexgreen rounded-lg${showOpts ? 'max-h-96 opacity-100 z-10' : 'max-h-0 opacity-0 w-0 -z-10'
+          }`}>
         {data.map((option, index) => (
           <li key={index}>
             <button

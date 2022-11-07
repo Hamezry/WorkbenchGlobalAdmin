@@ -14,8 +14,9 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
  * default: string
  */
 const Select = ({ data, defaultValue, className, updateValue }) => {
-  const [value, setValue] = useState(defaultValue ?? 'Farmers');
+  const [value, setValue] = useState('Farmers');
   const [showOpts, setShowOpts] = useState(false);
+  console.log(data);
   return (
     <div className='relative'>
       <button

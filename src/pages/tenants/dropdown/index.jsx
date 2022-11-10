@@ -75,7 +75,7 @@ function TenantDropdown({ selected, setSelected }) {
           className='cursor-pointer hover:bg-afexgreen-lighter rounded-xl p-2 text-sm text-left'
           onClick={() => {
             setOpened((o) => !o);
-            bulkAction(false);
+            bulkAction(true);
           }}>
           Activate all
         </button>
@@ -84,7 +84,7 @@ function TenantDropdown({ selected, setSelected }) {
           className='cursor-pointer hover:bg-afexgreen-lighter rounded-xl p-2 text-sm text-left'
           onClick={() => {
             setOpened((o) => !o);
-            bulkAction(true);
+            bulkAction(false);
           }}>
           {' '}
           Deactivate all

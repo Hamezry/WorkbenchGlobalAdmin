@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Tooltip } from "@mantine/core";
 
 import ReactPaginate from "react-paginate";
 import { ArrowDown2 } from "iconsax-react";
@@ -58,7 +59,13 @@ export default function Table({
                         className={`text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] child:whitespace-nowrap bg-white ${arrowClicked("cm" + index)
                           ? "sticky top-[54px] z-10"
                           : ""
-                          }`}>
+                          }`}
+                        onClick={() =>
+                          setCurrentlyDisplayed((s) =>
+                            s === "cm" + index ? null : "cm" + index
+                          )
+                        }
+                      >
                         <td className='w-8'>
                           <button
                             className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${arrowClicked("cm" + index)
@@ -79,8 +86,19 @@ export default function Table({
                             />
                           </button>
                         </td>
-                        <td className='py-4 px-4'>
-                          <span className='font-medium'>{item.item_code}</span>
+                        <td className='py-4 px-4 cursor-pointer'>
+                          <Tooltip
+                            label={item.item_name}
+                            multiline
+                            withArrow
+                            offset={20}
+                            radius='md'
+                            className='mt-1'>
+                            <span className='font-medium'>
+                              {item.item_code}
+                            </span>
+                          </Tooltip>
+
                         </td>
 
                         <td className='py-4 px-4 '>
@@ -159,7 +177,13 @@ export default function Table({
                           className={`child:whitespace-nowrap text-left border-b border-[#F9FAFB] hover:bg-[#e3f7ee] bg-white ${arrowClicked("in" + index)
                             ? "sticky top-[54px] z-10"
                             : ""
-                            }`}>
+                            }`}
+                          onClick={() =>
+                            setCurrentlyDisplayed((s) =>
+                              s === "in" + index ? null : "in" + index
+                            )
+                          }
+                        >
                           <td className='w-8'>
                             <button
                               className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${arrowClicked("in" + index)
@@ -182,9 +206,24 @@ export default function Table({
                               />
                             </button>
                           </td>
+                          <td className='py-4 px-4 cursor-pointer'>
+                            <Tooltip
+                              label={item.item_name}
+                              multiline
+                              withArrow
+                              offset={20}
+                              radius='md'
+                              className='mt-1'>
+                              <span className='font-medium'>
+                                {item.item_code}
+                              </span>
+                            </Tooltip>
+
+                          </td>
+
                           <td className='py-4 px-4'>
-                            <span className='font-medium'>
-                              {item.item_code}
+                            <span className='font-medium '>
+                              {item.total_unit}
                             </span>
                           </td>
 
@@ -196,7 +235,7 @@ export default function Table({
 
                           <td className='py-4 px-4'>
                             <span className='font-medium '>
-                              {item.total_unit}
+                              {item.unit_type}
                             </span>
                           </td>
                         </tr>
@@ -204,7 +243,7 @@ export default function Table({
                           key={`exp${index}`}
                           className='child:whitespace-nowrap'>
                           <td
-                            colSpan={4}
+                            colSpan={5}
                             className={`${arrowClicked("in" + index)
                               ? " px-[14px] py-[18px]"
                               : "!p-0 "

@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import { ArrowDown2 } from "iconsax-react";
-import { Drawer } from "@mantine/core";
+import React, { useRef } from 'react';
+import { ArrowDown2 } from 'iconsax-react';
+import { Drawer } from '@mantine/core';
 
-import check from "../../../../Assets/white-check.svg";
-import filterIcon from "../../../../Assets/filter.svg";
-import cancel from "../../../../Assets/cancel.svg";
+import check from '../../../../Assets/white-check.svg';
+import filterIcon from '../../../../Assets/filter.svg';
+import cancel from '../../../../Assets/cancel.svg';
 
 export default function TenantDrawer({
   filter,
@@ -24,7 +24,7 @@ export default function TenantDrawer({
     if (filter.CSD === value) {
       setFilter({
         ...filter,
-        CSD: "",
+        CSD: '',
       });
     } else {
       setFilter({
@@ -39,7 +39,7 @@ export default function TenantDrawer({
       onClose={() => setOpened(false)}
       styles={{
         drawer: {
-          boxSizing: "border-box",
+          boxSizing: 'border-box',
         },
       }}
       title={
@@ -72,8 +72,8 @@ export default function TenantDrawer({
                           (value) => item !== value
                         );
                         const newCSDFilter =
-                          item === filter.CSD ? "" : filter.CSD;
-                        console.log(newCSDFilter, filter.CSD);
+                          item === filter.CSD ? '' : filter.CSD;
+
                         setFilter({
                           country: newCountriesFilter,
                           CSD: newCSDFilter,
@@ -113,39 +113,39 @@ export default function TenantDrawer({
             className={`flex justify-between w-full px-6`}
             onClick={(e) => {
               e.preventDefault();
-              activeFilter === "country"
-                ? setActiveFilter("")
-                : setActiveFilter("country");
+              activeFilter === 'country'
+                ? setActiveFilter('')
+                : setActiveFilter('country');
             }}>
             <span
               className={` transition-all duration-300 ${
-                activeFilter.includes("country")
-                  ? "text-afexgreen"
-                  : "text-textgrey"
+                activeFilter.includes('country')
+                  ? 'text-afexgreen'
+                  : 'text-textgrey'
               }`}>
               Country
             </span>
             <ArrowDown2
               size='24'
-              color={activeFilter.includes("country") ? "#38CB89" : "#54565B"}
+              color={activeFilter.includes('country') ? '#38CB89' : '#54565B'}
               className={` transition-all duration-300 ${
-                activeFilter.includes("country") ? "rotate-180" : "rotate-0"
+                activeFilter.includes('country') ? 'rotate-180' : 'rotate-0'
               }`}
             />
           </button>
           {/* expand */}
           <ul
             className={`transition-all duration-200 child:py-1 child:px-6 child:relative overflow-hidden ${
-              activeFilter.includes("country")
-                ? "max-h-36 opacity-100 z-10 py-3 "
-                : "max-h-0 opacity-0 -z-100 p-0"
+              activeFilter.includes('country')
+                ? 'max-h-36 opacity-100 z-10 py-3 '
+                : 'max-h-0 opacity-0 -z-100 p-0'
             }`}>
             {countriesOptions.map((item, key) => {
               return (
                 <li key={key}>
                   <input
                     onFocus={() => {
-                      if (!activeFilter.includes("country"))
+                      if (!activeFilter.includes('country'))
                         csdBtn.current.focus();
                     }}
                     type='checkbox'
@@ -156,7 +156,7 @@ export default function TenantDrawer({
                     onClick={(e) => {
                       const value = e.target.value;
                       let newCountries = filter.country;
-                      console.log("here");
+
                       if (filter.country.includes(value)) {
                         newCountries = filter.country.filter(
                           (item) => item !== value
@@ -176,8 +176,8 @@ export default function TenantDrawer({
                     className={` inline-flex items-center justify-center w-5 h-5  border rounded-md  
                             ${
                               filter.country.includes(item)
-                                ? "bg-afexgreen border-afexgreen"
-                                : "bg-bggrey"
+                                ? 'bg-afexgreen border-afexgreen'
+                                : 'bg-bggrey'
                             }`}>
                     <img className={``} alt='check mark' src={check} />
                   </span>
@@ -195,43 +195,43 @@ export default function TenantDrawer({
             className={`flex justify-between w-full px-6`}
             onClick={(e) => {
               e.preventDefault();
-              activeFilter === "CSD"
-                ? setActiveFilter("")
-                : setActiveFilter("CSD");
+              activeFilter === 'CSD'
+                ? setActiveFilter('')
+                : setActiveFilter('CSD');
             }}>
             <span
               className={` transition-all duration-300 ${
-                activeFilter.includes("CSD")
-                  ? "text-afexgreen"
-                  : "text-textgrey"
+                activeFilter.includes('CSD')
+                  ? 'text-afexgreen'
+                  : 'text-textgrey'
               }`}>
               CSD Access
             </span>
             <ArrowDown2
               size='24'
-              color={activeFilter.includes("CSD") ? "#38CB89" : "#54565B"}
+              color={activeFilter.includes('CSD') ? '#38CB89' : '#54565B'}
               className={` transition-all duration-300 ${
-                activeFilter.includes("CSD") ? "rotate-180" : "rotate-0"
+                activeFilter.includes('CSD') ? 'rotate-180' : 'rotate-0'
               }`}
             />
           </button>
           {/* expand csd */}
           <ul
             className={`transition-all duration-200 child:py-1 child:px-6 child:relative  overflow-hidden ${
-              activeFilter.includes("CSD")
-                ? "max-h-36 opacity-100 z-10 py-3 "
-                : "max-h-0 opacity-0 -z-100 p-0"
+              activeFilter.includes('CSD')
+                ? 'max-h-36 opacity-100 z-10 py-3 '
+                : 'max-h-0 opacity-0 -z-100 p-0'
             }`}>
             <li>
               <input
                 onFocus={() => {
-                  if (!activeFilter.includes("CSD")) searchBtn.current.focus();
+                  if (!activeFilter.includes('CSD')) searchBtn.current.focus();
                 }}
                 type='radio'
                 name='CSD'
                 id='yes'
                 value='yes'
-                checked={filter.CSD === "yes"}
+                checked={filter.CSD === 'yes'}
                 className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
                 onChange={(e) => {
                   CSDFilter(e.target.value);
@@ -244,9 +244,9 @@ export default function TenantDrawer({
               <span
                 className={` inline-flex items-center justify-center w-5 h-5  border rounded-md 
                             ${
-                              filter.CSD === "yes"
-                                ? "bg-afexgreen border-afexgreen"
-                                : "bg-bggrey"
+                              filter.CSD === 'yes'
+                                ? 'bg-afexgreen border-afexgreen'
+                                : 'bg-bggrey'
                             }`}>
                 <img className={``} alt='check mark' src={check} />
               </span>
@@ -257,24 +257,24 @@ export default function TenantDrawer({
             <li>
               <input
                 onFocus={() => {
-                  if (!activeFilter.includes("CSD")) searchBtn.current.focus();
+                  if (!activeFilter.includes('CSD')) searchBtn.current.focus();
                 }}
                 className='opacity-0 absolute inset-0 hover:cursor-pointer w-full h-full'
                 type='radio'
                 name='CSD'
                 id='no'
                 value='no'
-                checked={filter.CSD === "no"}
+                checked={filter.CSD === 'no'}
                 onChange={(e) => {
                   CSDFilter(e.target.value);
                 }}
-              />{" "}
+              />{' '}
               <span
                 className={` inline-flex items-center justify-center w-5 h-5  border rounded-md  
                             ${
-                              filter.CSD === "no"
-                                ? "bg-afexgreen border-afexgreen"
-                                : "bg-bggrey"
+                              filter.CSD === 'no'
+                                ? 'bg-afexgreen border-afexgreen'
+                                : 'bg-bggrey'
                             }`}>
                 <img className={``} alt='check mark' src={check} />
               </span>

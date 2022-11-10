@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { ArrowDown2 } from 'iconsax-react';
+import { Tooltip } from '@mantine/core';
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 
 const Table = ({
@@ -56,7 +57,12 @@ const Table = ({
                           arrowClicked('cm' + index)
                             ? 'sticky top-[54px] z-10'
                             : ''
-                        }`}>
+                        }`}
+                        onClick={() =>
+                          setCurrentlyDisplayed((s) =>
+                            s === 'cm' + index ? null : 'cm' + index
+                          )
+                        }>
                         <td className='w-8'>
                           <button
                             className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
@@ -78,8 +84,18 @@ const Table = ({
                             />
                           </button>
                         </td>
-                        <td className='py-4 px-4'>
-                          <span className='font-medium'>{item.item_code}</span>
+                        <td className='py-4 cursor-pointer px-4'>
+                          <Tooltip
+                            label={item.item_name}
+                            multiline
+                            withArrow
+                            offset={20}
+                            radius='md'
+                            className='mt-1'>
+                            <span className='font-medium'>
+                              {item.item_code}
+                            </span>
+                          </Tooltip>
                         </td>
 
                         <td className='py-4 px-4 '>
@@ -161,7 +177,12 @@ const Table = ({
                             arrowClicked('in' + index)
                               ? 'sticky top-[54px] z-10'
                               : ''
-                          }`}>
+                          }`}
+                          onClick={() =>
+                            setCurrentlyDisplayed((s) =>
+                              s === 'in' + index ? null : 'in' + index
+                            )
+                          }>
                           <td className='w-8'>
                             <button
                               className={`w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 ${
@@ -185,9 +206,23 @@ const Table = ({
                               />
                             </button>
                           </td>
+                          <td className='py-4 cursor-pointer px-4'>
+                            <Tooltip
+                              label={item.item_name}
+                              multiline
+                              withArrow
+                              offset={20}
+                              radius='md'
+                              className='mt-1'>
+                              <span className='font-medium'>
+                                {item.item_code}
+                              </span>
+                            </Tooltip>
+                          </td>
+
                           <td className='py-4 px-4'>
                             <span className='font-medium'>
-                              {item.item_code}
+                              {item.total_unit}
                             </span>
                           </td>
 
@@ -199,7 +234,7 @@ const Table = ({
 
                           <td className='py-4 px-4'>
                             <span className='font-medium '>
-                              {item.total_unit}
+                              {item.unit_type}
                             </span>
                           </td>
                         </tr>
@@ -207,7 +242,7 @@ const Table = ({
                           key={`exp${index}`}
                           className='child:whitespace-nowrap'>
                           <td
-                            colSpan={4}
+                            colSpan={5}
                             className={`${
                               arrowClicked('in' + index)
                                 ? ' px-[14px] py-[18px]'

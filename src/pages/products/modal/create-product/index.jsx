@@ -11,16 +11,10 @@ import Button from '../../../../components/Button';
 import notification from '../../../../utils/notification';
 import DropdownSelect from '../../../../components/DropDownSelect';
 import TextInput from '../../../../components/TextInput';
+import Checkbox from '../../../../components/Checkbox';
 
 function CreateProductModal({ show, close }) {
   const { refreshContext } = useProductsCtx();
-  const [product, setProduct] = useState({
-    name: '',
-    code: '',
-    product_type: '',
-    unit_type: '',
-    certified: false,
-  });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values) => {
@@ -47,15 +41,17 @@ function CreateProductModal({ show, close }) {
     refreshContext();
   };
 
-  const handleChecked = (e) => {
-    setProduct((prev) => ({ ...prev, certified: e.target.checked }));
-  };
-
   return (
     <Modal title='Create Product' onClose={close} opened={show} centered>
       <div className='px-8 pt-6 pb-10 border-t-[1px] border-color'>
         <Formik
-          initialValues={product}
+          initialValues={{
+            name: '',
+            code: '',
+            product_type: '',
+            unit_type: '',
+            certified: false,
+          }}
           validationSchema={Yup.object({
             name: Yup.string().required('Product name is required'),
             code: Yup.string().required('Product code is required'),
@@ -123,19 +119,13 @@ function CreateProductModal({ show, close }) {
             />
 
             <div className='flex items-center space-x-3'>
-              <input
-                type='checkbox'
-                name='certified_product'
-                id='certified_product'
-                checked={product.certified}
-                onChange={handleChecked}
-                className='checkbox'
+              <Checkbox
+                id='certified'
+                name='certified'
+                label='Certified Product?'
               />
-              <label htmlFor='certified_product' className='text-sm mt-1'>
-                Certified Product?
-              </label>
               <Tooltip
-                label='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita placeat totam deserunt suscipit necessitatibus iusto, ab dolore eveniet porro ipsum?'
+                label='Certified products are commodities that are traceable. Transactions done on them would require scanning of QR code.'
                 multiline
                 withArrow
                 width={309}

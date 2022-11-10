@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft2 } from 'iconsax-react';
 import { Tabs } from '@mantine/core';
 
@@ -19,7 +19,7 @@ import empty from '../../../Assets/empty.gif';
 
 function SingleTenant() {
   const { id } = useParams();
-  localStorage.setItem('fetchId', id);
+  const navigate = useNavigate();
   const { tenants } = useTenantsCtx();
 
   const [client, setClient] = useState([]);
@@ -31,15 +31,13 @@ function SingleTenant() {
   const [itemList, setItemList] = useState([]);
   const [title, setTitle] = useState('Stock');
   const [input, setInput] = useState([]);
-
+  const [org, setOrg] = useState({});
   const [currentlyDisplayed, setCurrentlyDisplayed] = useState(null);
 
   const [userCount, setUserCount] = useState(true);
   const [storageCount, setStorageCount] = useState(false);
 
   const [overallCount, setOverallCount] = useState(0);
-
-  const org = tenants.filter((el) => el.id === id)[0];
 
   const [viewActivate, setViewActivate] = useState(false);
   const [viewDeactivate, setViewDeactivate] = useState(false);
@@ -231,12 +229,23 @@ function SingleTenant() {
     // eslint-disable-next-line
   }, []);
 
+  // Redirect to countries on reload;
+  useEffect(() => {
+    const tenant = tenants.filter((el) => el.id === id)[0];
+    if (!tenant || tenants.length === 0) {
+      return navigate('/tenants');
+    }
+    setOrg(tenant);
+
+    //eslint-disable-next-line
+  }, [tenants, id]);
+
   return (
     <div className='w-[84%] font-muli text-[#54565B] h-[calc(100vh-80px)] xl:h-[calc(100vh-90px)] p-1'>
       <div className='w-[100%] h-[80px] bg-white p-4 flex justify-between'>
         <div className='flex w-[400px] items-center gap-2'>
           <img
-            src={org.country.country_flag}
+            src={org.country?.country_flag}
             alt={org.company_name}
             className='w-[22px] rounded'
           />

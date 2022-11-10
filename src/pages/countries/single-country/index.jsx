@@ -42,6 +42,7 @@ function Country() {
       const respI = await axios.get(`country/input/position/${id}`);
 
       if (!respI.data || respI.data.responseCode !== '100') return;
+
       setInput(respI.data.data);
     };
 
@@ -155,7 +156,12 @@ function Country() {
                   <Tabs.Panel value='inputs' pt='xs'>
                     <Table
                       data={input}
-                      headers={['Input', 'Lien units', 'Units']}
+                      headers={[
+                        'Input',
+                        'Total units',
+                        'Lien units',
+                        'Unit type',
+                      ]}
                       title='inputs'
                       currentlyDisplayed={currentlyDisplayed}
                       setCurrentlyDisplayed={setCurrentlyDisplayed}

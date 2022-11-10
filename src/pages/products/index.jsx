@@ -57,7 +57,7 @@ function Productlist() {
       return notification({
         heading: 'Please specify a start date',
         id: 'error',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: '',
       });
     if (!endDate)
       return notification({
@@ -148,6 +148,7 @@ function Productlist() {
                   setEndDate={setEndDate}
                   close={() => setShowDate(false)}
                   filterFunc={dateRangeFilter}
+                  resetFunc={() => setPosts(products)}
                 />
               )}
 

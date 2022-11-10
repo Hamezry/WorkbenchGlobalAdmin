@@ -25,7 +25,7 @@ const TableSelect = ({
   const [showOpts, setShowOpts] = useState(false);
   return (
     <div className='relative cursor-pointer'>
-      <div className='relative  w-[100px] xl:w-[150px]' onClick={() => setShowOpts((s) => !s)}>
+      <div className='relative  w-[150px] xl:w-[150px]' onClick={() => setShowOpts((s) => !s)}>
         <span className='text-gray-400 absolute text-sm top-[10px] xl:top-[13px] ml-2 left-1'>
           Show:{' '}
         </span>

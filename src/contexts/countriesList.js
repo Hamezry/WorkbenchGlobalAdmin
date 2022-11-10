@@ -9,6 +9,8 @@ const CountriesContextProvider = ({ children }) => {
   const [refresh, setRefresh] = useState(false);
   const [countries, setCountries] = useState([]);
   const [mapData, setMapData] = useState(null);
+  const [listItem, setListItem] = useState();
+  const [singleCommodity, setSingleCommodity] = useState();
   const [cardData, setCardData] = useState({
     grn_change: 0,
     last_month_grn: 0,
@@ -20,6 +22,7 @@ const CountriesContextProvider = ({ children }) => {
   });
 
   const refreshContext = () => setRefresh((s) => !s);
+
 
   useEffect(() => {
     const fetchCountryCardData = async () => {
@@ -53,13 +56,45 @@ const CountriesContextProvider = ({ children }) => {
       );
     };
 
+    const fetchItemList = async () => {
+      const response = await axios.get('global-products?product_type=Commodity');
+
+      if (response.data.responseCode !== '100') return;
+
+
+      setListItem(response.data.data);
+    };
+
+    const fetchCommodityList = async () => {
+      const response = await axios.get('countries?commodity=CCO');
+
+      if (response.data.responseCode !== '100') return;
+
+
+      setSingleCommodity(response.data.data);
+    };
+
+
+
+
     fetchCountriesMap();
     fetchCountryCardData();
     fetchCountries();
+    fetchItemList();
+    fetchCommodityList();
   }, [refresh]);
+
+  const handleCommodityFilter = async (code) => {
+    const res = await axios.get(`countries?commodity=${code}`);
+
+    if (!res.data || res.data.responseCode !== '100') return;
+
+    setSingleCommodity(res.data.data);
+  };
+
   return (
     <CountriesCtx.Provider
-      value={{ countries, dataLoaded, cardData, refreshContext, mapData }}>
+      value={{ countries, dataLoaded, cardData, refreshContext, mapData, listItem, singleCommodity, handleCommodityFilter }}>
       {children}
     </CountriesCtx.Provider>
   );

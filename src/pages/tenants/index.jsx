@@ -53,7 +53,6 @@ function Organisationlist() {
     const date = new Date(datex);
     return `${format(date, 'K')}:${format(date, 'mm')} ${format(date, 'aaa')}`;
   };
-  console.log(selected);
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -97,13 +96,13 @@ function Organisationlist() {
       return customNotification({
         heading: 'Please specify a start date',
         id: 'error',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: '',
       });
     if (!endDate)
       return customNotification({
         heading: 'Please specify an end date',
         id: 'error',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+        text: '',
       });
     let filtered = tenants
       .filter(
@@ -214,6 +213,7 @@ function Organisationlist() {
                   setEndDate={setEndDate}
                   filterFunc={dateRangeFilter}
                   close={() => setIsDate(false)}
+                  resetFunc={() => setPosts(tenants)}
                 />
               )}
 

@@ -48,7 +48,12 @@ const TenanatsHeatMap = () => {
                 [1, '#1D925D'],
               ]}
             />
-            <Legend />
+            <Legend
+              layout='horizontal'
+              verticalAlign='bottom'
+              align='right'
+              wrapperStyle={{ right: '-70%', width: '60%' }}
+            />
             <Tooltip />
 
             <Credits />

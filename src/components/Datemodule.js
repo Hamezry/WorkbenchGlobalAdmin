@@ -7,6 +7,7 @@ const DateModule = ({
   endDate,
   setStartDate,
   setEndDate,
+  resetFunc,
   filterFunc,
   close,
 }) => {
@@ -55,7 +56,10 @@ const DateModule = ({
             className='p-2 hover:bg-afexgreen-light hover:text-afexgreen rounded-2xl transition hover:font-semibold cursor-pointer'>
             Last Month
           </li>
-          <li className='p-2'>Custom Range</li>
+          <li className='p-2 hover:bg-afexgreen-light text-center text-white bg-afexgreen hover:text-afexgreen rounded-lg transition hover:font-semibold cursor-pointer' onClick={() => {
+            resetFunc()
+            close()
+          }}>Reset Date</li>
         </ul>
         <div className='flex gap-5'>
           <div>

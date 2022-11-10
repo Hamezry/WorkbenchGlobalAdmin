@@ -127,7 +127,7 @@ function UpdateProductmodal({ close, modalData, show }) {
                 checked={true}
               />
               <Tooltip
-                label='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita placeat totam deserunt suscipit necessitatibus iusto, ab dolore eveniet porro ipsum?'
+                label='Certified products are commodities that are traceable. Transactions done on them would require scanning of QR code.'
                 multiline
                 withArrow
                 width={309}

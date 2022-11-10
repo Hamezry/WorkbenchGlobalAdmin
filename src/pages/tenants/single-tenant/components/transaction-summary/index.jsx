@@ -113,7 +113,7 @@ const TrasactionSummary = ({
               </td>
             </tr>
 
-            <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+            {/* <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
               <td className='w-full lg:w-auto p-3 text-[#54565B] text-center border border-b table-cell relative lg:static'>
                 Received Transfer
               </td>
@@ -132,7 +132,7 @@ const TrasactionSummary = ({
                   transaction?.received_transfer?.total_units ?? 0
                 )}
               </td>
-            </tr>
+            </tr> */}
 
             {/*TOTAL IN */}
             <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
@@ -171,7 +171,7 @@ const TrasactionSummary = ({
               </td>
             </tr>
 
-            <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
+            {/* <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
               <td className='w-full lg:w-auto p-3 text-[#54565B] text-center border border-b table-cell relative lg:static'>
                 IWH Transfers
               </td>
@@ -188,7 +188,7 @@ const TrasactionSummary = ({
               <td className='w-full lg:w-auto p-3 text-[#54565B] border border-b text-center block lg:table-cell relative lg:static'>
                 {commaFormatter(transaction?.iwh_transfers?.total_units ?? 0)}
               </td>
-            </tr>
+            </tr> */}
 
             <tr className='bg-[#FBFBFB] lg:hover:bg-[#e3f7ee] flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0'>
               <td className='bg-white w-auto p-3 text-[#54565B] text-center'>

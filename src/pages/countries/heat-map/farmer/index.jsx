@@ -14,13 +14,15 @@ import { useCountriesCtx } from '../../../../contexts';
 
 const FarmersHeatMap = () => {
   const { countries, mapData } = useCountriesCtx();
-  console.log({ mapData });
+
   const africanCountries = countries
     .map((el) => ({
       cont: el.country_code_2.toLowerCase(),
       farmers: el.no_of_farmers,
     }))
-    .map((el) => [el.cont, el.farmers]);
+    .map((el) => {
+      return el.farmers > 0 ? [el.cont, el.farmers] : [];
+    });
 
   return (
     <>
@@ -33,7 +35,7 @@ const FarmersHeatMap = () => {
               name='Farmers'
               states={{
                 hover: {
-                  color: '#BADA55',
+                  color: '#e2f8ee',
                 },
               }}
               data={africanCountries}
@@ -49,7 +51,13 @@ const FarmersHeatMap = () => {
                 [1, '#1D925D'],
               ]}
             />
-            <Legend />
+
+            <Legend
+              layout='horizontal'
+              verticalAlign='bottom'
+              align='right'
+              wrapperStyle={{ width: '80%' }}
+            />
             <Tooltip />
 
             <Credits />
@@ -60,4 +68,4 @@ const FarmersHeatMap = () => {
   );
 };
 
-export default React.memo(FarmersHeatMap);
+export default FarmersHeatMap;

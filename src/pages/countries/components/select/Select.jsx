@@ -16,7 +16,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 const Select = ({ data, defaultValue, className, updateValue }) => {
   const [value, setValue] = useState('Farmers');
   const [showOpts, setShowOpts] = useState(false);
-  console.log(data);
+
   return (
     <div className='relative'>
       <button
@@ -28,7 +28,7 @@ const Select = ({ data, defaultValue, className, updateValue }) => {
         }}>
         <span className='text-gray-400'></span>
         <span>{`${value}`}</span>
-        <MdKeyboardArrowDown className=' text-gray-400 text-lg hover:cursor-pointer' />
+        <MdKeyboardArrowDown className=' text-gray-400 text-[20px] hover:cursor-pointer' />
       </button>
 
       <ul
